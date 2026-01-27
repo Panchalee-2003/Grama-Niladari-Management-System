@@ -1,49 +1,56 @@
-.auth-bg{
+.auth-bg {
   min-height: 100vh;
   width: 100vw;
 
   display: flex;
-  align-items: center;      /* vertical center */
-  justify-content: center;  /* horizontal center */
+  align-items: center;
+  /* vertical center */
+  justify-content: center;
+  /* horizontal center */
 
   background-image:
-    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+    linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
     url("../assets/bg.jpg");
 
-  background-size: cover;        /* full screen */
-  background-position: center;   /* center image */
+  background-size: cover;
+  /* full screen */
+  background-position: center;
+  /* center image */
   background-repeat: no-repeat;
 
-  padding: 40px; /* spacing on small screens */
+  padding: 40px;
+  /* spacing on small screens */
 }
 
 
-.auth-card{
-  width:min(760px, 92vw);
-  background:#e6e6e6;
-  border-radius:12px;
-  margin : auto;
-  overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,.25);
-  border:3px solid rgba(0, 140, 255, 0.45); /* blue outline like figma */
+.auth-card {
+  width: min(760px, 92vw);
+  background: #e6e6e6;
+  border-radius: 12px;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+  border: 3px solid rgba(0, 140, 255, 0.45);
+  /* blue outline like figma */
 }
 
-.auth-header{
-  padding:18px 22px;
-  color:white;
-  background:linear-gradient(90deg, #2e3192, #0f8a3e);
+.auth-header {
+  padding: 18px 22px;
+  color: white;
+  background: linear-gradient(90deg, #2e3192, #0f8a3e);
 }
 
-.auth-header h1{
-  margin:0;
-  font-size:26px;
-  font-weight:800;
-  letter-spacing:.6px;
-  text-transform:uppercase;
-  text-align:center;
-  line-height:1.15;
+.auth-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.15;
 }
-.header-text{
+
+.header-text {
   color: #ffffff;
   font-size: 26px;
   font-weight: 800;
@@ -54,234 +61,268 @@
 }
 
 
-.auth-body{ padding:18px 28px 22px; }
-
-.sub-title{
-  font-size:20px;
-  font-weight:700;
-  margin:0;
-  color:#222;
+.auth-body {
+  padding: 18px 28px 22px;
 }
 
-.sub-desc{
-  margin:4px 0 14px;
-  color:#555;
-  font-size:14px;
+.sub-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #222;
 }
 
-.label{
-  font-weight:700;
-  margin:10px 0 6px;
-  display:block;
-  color:#222;
-  font-size:13.5px;
+.sub-desc {
+  margin: 4px 0 14px;
+  color: #555;
+  font-size: 14px;
 }
 
-.field{
-  position:relative;
+.label {
+  font-weight: 700;
+  margin: 10px 0 6px;
+  display: block;
+  color: #222;
+  font-size: 13.5px;
 }
 
-.input, .select{
-  width:100%;
-  padding:10px 12px 10px 42px; /* space for icon */
-  border-radius:8px;
-  border:1px solid #a9a9a9;
-  outline:none;
-  background:#f2f2f2;
+.field {
+  position: relative;
 }
 
-.select{
-  padding-left:12px;
-  color:black; /* dropdown has no icon in figma */
+.input,
+.select {
+  width: 100%;
+  padding: 10px 12px 10px 42px;
+  /* space for icon */
+  border-radius: 8px;
+  border: 1px solid #a9a9a9;
+  outline: none;
+  background: #f2f2f2;
+}
+
+.select {
+  padding-left: 12px;
+  color: black;
+  /* dropdown has no icon in figma */
 }
 
 
 
-.icon{
-  position:absolute;
-  left:12px;
-  top:50%;
-  transform:translateY(-50%);
-  opacity:.75;
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: .75;
 }
 
-.btn-main{
-  margin-top:14px;
-  width:100%;
-  padding:10px 14px;
-  border:none;
-  color:white;
-  font-weight:800;
-  border-radius:8px;
-  background:linear-gradient(90deg, #2e3192, #0f8a3e);
-  cursor:pointer;
-  font-size:15px;
+.btn-main {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2e3192, #0f8a3e);
+  cursor: pointer;
+  font-size: 15px;
 }
 
-.link-row{
-  margin-top:10px;
-  font-size:13px;
-  color:#2e3192;
+.link-row {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #2e3192;
 }
 
-.center-links{
-  margin-top:12px;
-  text-align:center;
-  font-size:13px;
-  color:#333;
+.center-links {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #333;
 }
-.center-links a{ color:#2e3192; text-decoration:none; }
-.center-links a:hover{ text-decoration:underline; }
 
-.msg-err{ color:#b00020; font-weight:700; margin-bottom:10px; }
+.center-links a {
+  color: #2e3192;
+  text-decoration: none;
+}
+
+.center-links a:hover {
+  text-decoration: underline;
+}
+
+.msg-err {
+  color: #b00020;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
 
 
 /* Header (Citizen Registration style) */
-.reg-header-title{
-  color:#fff;
-  font-size:22px;
-  font-weight:800;
-  text-align:left;
+.reg-header-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: left;
 }
 
-.reg-header-sub{
-  margin-top:4px;
-  color:rgba(255,255,255,.92);
-  font-size:12.5px;
-  text-align:left;
+.reg-header-sub {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, .92);
+  font-size: 12.5px;
+  text-align: left;
 }
 
 /*Form grid (2 columns like Figma)*/
 
-.form-grid{
-  display:grid;
+.form-grid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap:14px 18px;
-  margin-top:10px;
+  gap: 14px 18px;
+  margin-top: 10px;
 }
 
-.form-grid.full{
+.form-grid.full {
   grid-template-columns: 1fr;
 }
 
-@media (max-width: 780px){
-  .form-grid{ grid-template-columns: 1fr; }
+@media (max-width: 780px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
+
 /* EInputs with icons like Figma*/
-.field{ position:relative; }
-
-.icon{
-  position:absolute;
-  left:12px;
-  top:50%;
-  transform:translateY(-50%);
-  opacity:.9;
+.field {
+  position: relative;
 }
 
-.input{
-  padding-left:42px;   /* leave space for icons */
-  border-radius: 6px;    /* like screenshot */
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: .9;
+}
+
+.input {
+  padding-left: 42px;
+  /* leave space for icons */
+  border-radius: 6px;
+  /* like screenshot */
   height: 38px;
   background: #efefef;
   border: 1px solid #9d9d9d;
   color: #000;
 }
 
-.input::placeholder{ color:#666; }
+.input::placeholder {
+  color: #666;
+}
 
 /*Labels + red star exactly */
-.label-row{
-  display:flex;
-  gap:6px;
-  align-items:center;
-  margin:8px 0 6px;
+.label-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 8px 0 6px;
 }
 
-.label-row span{
-  font-weight:700;
-  color:#000;
-  font-size:13px;
+.label-row span {
+  font-weight: 700;
+  color: #000;
+  font-size: 13px;
 }
 
-.req-star{
-  color:#d00000;
-  font-weight:900;
+.req-star {
+  color: #d00000;
+  font-weight: 900;
 }
 
 /* Different sizes for Login vs Register */
-.auth-card--login{
+.auth-card--login {
   width: 980px;
   max-width: 92vw;
 }
 
-.auth-card--register{
-  width: 620px;          /* similar to your screenshot */
+.auth-card--register {
+  width: 620px;
+  /* similar to your screenshot */
   max-width: 92vw;
 }
 
 /* ✅ Make small rectangles like Figma (Register page) */
 .auth-card--register .input,
-.auth-card--register .select{
-  height: 40px;                 /* small */
-  border-radius: 7px;           /* rounded like figma */
+.auth-card--register .select {
+  height: 40px;
+  /* small */
+  border-radius: 7px;
+  /* rounded like figma */
   background: #f3f3f3;
   border: 1px solid #9c9c9c;
   font-size: 13.5px;
-  padding: 8px 12px 8px 44px;   /* icon space */
+  padding: 8px 12px 8px 44px;
+  /* icon space */
   box-sizing: border-box;
-  color:#000;
+  color: #000;
 }
 
-.auth-card--register .icon{
+.auth-card--register .icon {
   left: 14px;
   opacity: 0.85;
 }
 
-.auth-card--register .field{
+.auth-card--register .field {
   position: relative;
 }
 
-.auth-card--register .form-grid{
-  gap: 10px 22px;      /* row gap, column gap */
+.auth-card--register .form-grid {
+  gap: 10px 22px;
+  /* row gap, column gap */
   margin-top: 6px;
 }
 
-.auth-card--register .label-row{
+.auth-card--register .label-row {
   margin: 6px 0 6px;
 }
 
-.auth-card--register .auth-body{
+.auth-card--register .auth-body {
   padding: 16px 22px 18px;
 }
 
 /* 🔥 Remove blue outline / border around auth card */
-.auth-card{
+.auth-card {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
 }
+
 /* ===========================
    FIGMA LOGIN EXACT STYLES
    =========================== */
 
-.auth-card--login{
-  width: 520px;        /* card size like screenshot */
+.auth-card--login {
+  width: 520px;
+  /* card size like screenshot */
   max-width: 92vw;
 }
 
 /* tighter padding like figma */
-.auth-card--login .auth-body{
+.auth-card--login .auth-body {
   padding: 16px 38px 18px;
 }
 
 /* make form elements narrower and centered */
-.auth-card--login form{
-  width: 100%;        /* input width like screenshot */
-  margin: 0 auto;      /* center inside card */
+.auth-card--login form {
+  width: 100%;
+  /* input width like screenshot */
+  margin: 0 auto;
+  /* center inside card */
 }
 
 /* dropdown centered and small */
-.auth-card--login .select{
+.auth-card--login .select {
   height: 36px;
   border-radius: 6px;
   background: #f3f3f3;
@@ -292,30 +333,31 @@
 }
 
 /* inputs smaller like figma */
-.auth-card--login .input{
+.auth-card--login .input {
   height: 36px;
   border-radius: 6px;
   background: #f3f3f3;
   border: 1px solid #9c9c9c;
   font-size: 13px;
-  padding: 6px 10px 6px 38px; /* icon space */
+  padding: 6px 10px 6px 38px;
+  /* icon space */
   color: #000;
 }
 
 /* icon placement for small inputs */
-.auth-card--login .icon{
+.auth-card--login .icon {
   left: 12px;
   opacity: 0.85;
 }
 
 /* labels spacing like figma */
-.auth-card--login .label{
+.auth-card--login .label {
   margin: 10px 0 6px;
   font-size: 13px;
 }
 
 /* button same width as inputs */
-.auth-card--login .btn-main{
+.auth-card--login .btn-main {
   height: 36px;
   border-radius: 6px;
   margin-top: 14px;
@@ -324,188 +366,214 @@
 }
 
 /* center the bottom links */
-.auth-card--login .link-row{
+.auth-card--login .link-row {
   margin-top: 10px;
   text-align: left;
   font-size: 13px;
 }
 
-.auth-card--login .center-links{
+.auth-card--login .center-links {
   margin-top: 12px;
   text-align: center;
   font-size: 13px;
 }
 
-.auth-card--login .label{
+.auth-card--login .label {
   display: block;
   text-align: left;
 }
 
 /* 🔹 LEFT ALIGN LOGIN FORM CONTENT (FIGMA MATCH) */
-.auth-card--login form{
+.auth-card--login form {
   width: 320px;
   margin: 0 auto;
-  text-align: left;      /* 👈 KEY FIX */
+  text-align: left;
+  /* 👈 KEY FIX */
 }
 
 /* labels left aligned */
 .auth-card--login label,
 .auth-card--login .label,
-.auth-card--login .label-row{
+.auth-card--login .label-row {
   text-align: left;
   display: block;
 }
 
 /* dropdown left aligned */
-.auth-card--login select{
+.auth-card--login select {
   width: 100%;
   margin-left: 0;
 }
 
 /* inputs left aligned */
-.auth-card--login .input{
+.auth-card--login .input {
   width: 100%;
   margin-left: 0;
 }
 
 /* button aligned with inputs (not centered text block) */
-.auth-card--login .btn-main{
+.auth-card--login .btn-main {
   width: 100%;
-  text-align: center; /* button text stays centered */
+  text-align: center;
+  /* button text stays centered */
 }
 
-.auth-card--login form{ margin:0 !important; width:100% !important; }
+.auth-card--login form {
+  margin: 0 !important;
+  width: 100% !important;
+}
 
 /* ✅ FIGMA-STYLE LOGIN INPUT RECTANGLES */
-.auth-card--login .input{
-  height: 34px;                 /* Figma-like compact */
-  border-radius: 4px;           /* less round */
-  background: #efefef;          /* light grey fill */
-  border: 1px solid #8f8f8f;    /* thin border */
+.auth-card--login .input {
+  height: 34px;
+  /* Figma-like compact */
+  border-radius: 4px;
+  /* less round */
+  background: #efefef;
+  /* light grey fill */
+  border: 1px solid #8f8f8f;
+  /* thin border */
   font-size: 13px;
-  padding: 6px 10px 6px 36px;   /* space for icon */
+  padding: 6px 10px 6px 36px;
+  /* space for icon */
   box-sizing: border-box;
 }
 
 /* icon position inside login inputs */
-.auth-card--login .icon{
+.auth-card--login .icon {
   left: 10px;
   opacity: 0.9;
 }
 
 /* placeholder color like figma */
-.auth-card--login .input::placeholder{
+.auth-card--login .input::placeholder {
   color: #6b6b6b;
 }
 
 
 /* ===== Forgot Password page styles (match figma) ===== */
 
-.fp-subtext{
+.fp-subtext {
   text-align: center;
   color: #111;
   font-size: 15px;
   margin: 10px 0 18px;
 }
 
-.fp-form{
+.fp-form {
   width: 100%;
 }
 
 /* make this page look like the figma (medium width block) */
 .auth-card--login.fp-card,
-.auth-card--register.fp-card{
+.auth-card--register.fp-card {
   width: 620px;
   max-width: 92vw;
 }
 
-.fp-btn{
+.fp-btn {
   margin-top: 18px;
 }
 
 /* back to login */
-.fp-back{
+.fp-back {
   margin-top: 22px;
   text-align: center;
 }
 
-.fp-back-link{
+.fp-back-link {
   text-decoration: none;
   color: #444;
   font-weight: 600;
 }
 
-.fp-arrow{
+.fp-arrow {
   display: inline-block;
   margin-right: 8px;
 }
 
-.fp-subtext{
-  text-align:center;
-  color:#111;
-  font-size:15px;
+.fp-subtext {
+  text-align: center;
+  color: #111;
+  font-size: 15px;
   margin: 10px 0 18px;
 }
-.fp-form{
+
+.fp-form {
   width: 320px;
   margin: 0 auto;
 }
-.fp-btn{ margin-top: 16px; }
-.fp-back{ margin-top: 18px; text-align:center; }
-.fp-back-link{ color:#444; font-weight:600; text-decoration:none; }
+
+.fp-btn {
+  margin-top: 16px;
+}
+
+.fp-back {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.fp-back-link {
+  color: #444;
+  font-weight: 600;
+  text-decoration: none;
+}
 
 /* Forgot Password header centered */
-.fp-card .auth-header{
+.fp-card .auth-header {
   text-align: center;
 }
 
 .fp-card .reg-header-title,
-.fp-card .reg-header-sub{
+.fp-card .reg-header-sub {
   text-align: center;
 }
 
 /* Forgot Password form left aligned inside the rectangle */
-.fp-form{
+.fp-form {
   width: 420px;
   max-width: 100%;
   margin: 0 auto;
   text-align: left;
 }
 
-.fp-form .label-row{
+.fp-form .label-row {
   justify-content: flex-start;
   text-align: left;
 }
 
-.fp-form .label-row{
+.fp-form .label-row {
   justify-content: flex-start;
   text-align: left;
 }
+
 /* Forgot Password card rectangle size */
 .auth-card.fp-card,
- .forgot-page .auth-card{ 
+.forgot-page .auth-card {
   width: 480px;
   max-width: 90vw;
 }
+
 /* ✅ FORCE forgot password card size (override login/register widths) */
-.auth-card.fp-card{
+.auth-card.fp-card {
   width: 500px !important;
   max-width: 90vw !important;
 }
+
 /* ✅ Header center only */
 .auth-card.fp-card .auth-header,
 .auth-card.fp-card .reg-header-title,
-.auth-card.fp-card .reg-header-sub{
+.auth-card.fp-card .reg-header-sub {
   text-align: center !important;
 }
 
 /* ✅ Body content left */
-.auth-card.fp-card .auth-body{
+.auth-card.fp-card .auth-body {
   text-align: left !important;
 }
 
 /* ✅ Make form block left aligned (not centered text) */
-.auth-card.fp-card .fp-form{
+.auth-card.fp-card .fp-form {
   width: 420px;
   max-width: 100%;
   margin: 0 auto;
@@ -514,93 +582,99 @@
 
 /* ✅ Force label to left */
 .auth-card.fp-card .fp-form .label-row,
-.auth-card.fp-card .fp-form .label-row span{
+.auth-card.fp-card .fp-form .label-row span {
   text-align: left !important;
   justify-content: flex-start !important;
   display: flex;
 }
- /* =========================
+
+/* =========================
    FORGOT PASSWORD OVERRIDES
    (stronger than login rules)
    ========================= */
 
 /* Make card a rectangle like figma */
-.forgot-page{
+.forgot-page {
   width: 100%;
 }
 
 /* force card size */
 .forgot-page .auth-card,
-.auth-card.fp-card{
-  width: 760px !important;     /* rectangle width */
+.auth-card.fp-card {
+  width: 760px !important;
+  /* rectangle width */
   max-width: 92vw !important;
 }
 
 /* header centered (title) */
-.forgot-page .auth-header{
+.forgot-page .auth-header {
   text-align: center !important;
 }
+
 .forgot-page .reg-header-title,
-.forgot-page .reg-header-sub{
+.forgot-page .reg-header-sub {
   text-align: center !important;
 }
 
 /* body content left aligned */
-.forgot-page .auth-body{
+.forgot-page .auth-body {
   text-align: left !important;
 }
 
 /* form should NOT be centered like login */
-.forgot-page form{
-  width: 100% !important; 
-  max-width: 380px;    /* field block width */
-  margin: 0 auto !important;   /* centered block but content left */
+.forgot-page form {
+  width: 100% !important;
+  max-width: 380px;
+  /* field block width */
+  margin: 0 auto !important;
+  /* centered block but content left */
   text-align: left !important;
 }
 
 /* force label left */
-.forgot-page .label-row{
+.forgot-page .label-row {
   justify-content: flex-start !important;
   text-align: left !important;
 }
 
 /* input + button full width of the form block */
 .forgot-page .input,
-.forgot-page .btn-main{
+.forgot-page .btn-main {
   width: 100% !important;
 }
+
 /* Increase height visually (square feel) */
-.forgot-page .auth-body{
+.forgot-page .auth-body {
   padding-top: 40px !important;
   padding-bottom: 44px !important;
 }
 
 /* ===== Reset Password page (Figma style) ===== */
-.reset-page{
+.reset-page {
   width: 100%;
 }
 
-.reset-subtext{
+.reset-subtext {
   text-align: center;
   color: #111;
   font-size: 16px;
   margin: 10px 0 18px;
 }
 
-.reset-form{
+.reset-form {
   width: 520px;
   max-width: 100%;
   margin: 0 auto;
   text-align: left;
 }
 
-.reset-btn{
+.reset-btn {
   margin-top: 22px;
 }
 
 /* ===== Password Updated page (Figma) ===== */
 
-.pw-updated-page{
+.pw-updated-page {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -608,7 +682,7 @@
 }
 
 /* grey square/rectangle like figma */
-.pw-updated-card{
+.pw-updated-card {
   width: 560px;
   max-width: 92vw;
   background: #d9d9d9;
@@ -618,14 +692,14 @@
 }
 
 /* check icon spacing */
-.pw-check{
+.pw-check {
   display: flex;
   justify-content: center;
   margin-bottom: 18px;
 }
 
 /* big bold title */
-.pw-title{
+.pw-title {
   font-size: 44px;
   font-weight: 800;
   color: #000;
@@ -633,23 +707,114 @@
 }
 
 /* subtitle */
-.pw-sub{
+.pw-sub {
   font-size: 18px;
   color: #333;
   margin-bottom: 42px;
 }
 
 /* button width like figma */
-.pw-btn{
+.pw-btn {
   width: 520px;
   max-width: 100%;
   height: 44px;
   border-radius: 8px;
   font-size: 20px;
   font-weight: 800;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.25);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
 }
 
+/* ===== VALIDATION STYLES ===== */
 
+/* Field error message */
+.field-error {
+  color: #c41e3a;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 600;
+  display: block;
+}
 
+/* Input error state */
+.input-error {
+  border-color: #c41e3a !important;
+  background: #fff5f5 !important;
+}
 
+/* Input success state */
+.input-success {
+  border-color: #10b981 !important;
+  background: #f0fdf4 !important;
+}
+
+/* Validation icon (checkmark or X) */
+.validation-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.validation-icon.success {
+  color: #10b981;
+}
+
+.validation-icon.error {
+  color: #c41e3a;
+}
+
+/* Password strength indicator */
+.password-strength {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Password requirements list */
+.password-requirements {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.password-requirements li {
+  list-style: none;
+  padding-left: 18px;
+  position: relative;
+}
+
+.password-requirements li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
+
+.password-requirements li.met {
+  color: #10b981;
+}
+
+.password-requirements li.met:before {
+  content: "✓";
+}

@@ -3,6 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import AuthLayout from "../components/AuthLayout";
 import { saveAuth } from "../auth/auth";
+import {
+  validateName,
+  validateNIC,
+  validateEmail,
+  validatePhone,
+  validatePassword,
+  validatePasswordMatch,
+  getPasswordStrength,
+} from "../utils/validation";
 
 // ----- Icons (safe SVG) -----
 function IconUser() {
@@ -68,16 +77,109 @@ export default function RegisterCitizen() {
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
 
+  // Validation errors
+  const [nameError, setNameError] = useState("");
+  const [nicError, setNicError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
+
+  // Password strength
+  const passwordStrength = getPasswordStrength(password);
+
+  // Validation handlers
+  const handleNameChange = (e) => {
+    setFullName(e.target.value);
+    setNameError("");
+  };
+
+  const handleNameBlur = () => {
+    const validation = validateName(full_name);
+    if (!validation.valid) setNameError(validation.message);
+  };
+
+  const handleNicChange = (e) => {
+    setNic(e.target.value);
+    setNicError("");
+  };
+
+  const handleNicBlur = () => {
+    const validation = validateNIC(nic);
+    if (!validation.valid) setNicError(validation.message);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError("");
+  };
+
+  const handleEmailBlur = () => {
+    const validation = validateEmail(email);
+    if (!validation.valid) setEmailError(validation.message);
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+    setPhoneError("");
+  };
+
+  const handlePhoneBlur = () => {
+    const validation = validatePhone(phone);
+    if (!validation.valid) setPhoneError(validation.message);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setPasswordError("");
+  };
+
+  const handlePasswordBlur = () => {
+    const validation = validatePassword(password);
+    if (!validation.valid) setPasswordError(validation.message);
+  };
+
+  const handleConfirmChange = (e) => {
+    setConfirm(e.target.value);
+    setConfirmError("");
+  };
+
+  const handleConfirmBlur = () => {
+    const validation = validatePasswordMatch(password, confirm);
+    if (!validation.valid) setConfirmError(validation.message);
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     setErr(""); setOk("");
 
-    if (!full_name || !nic || !email || !phone || !address || !password || !confirm) {
-      setErr("Please fill all required fields.");
-      return;
-    }
-    if (password !== confirm) {
-      setErr("Passwords do not match.");
+    // Validate all fields
+    const nameValidation = validateName(full_name);
+    const nicValidation = validateNIC(nic);
+    const emailValidation = validateEmail(email);
+    const phoneValidation = validatePhone(phone);
+    const passwordValidation = validatePassword(password);
+    const confirmValidation = validatePasswordMatch(password, confirm);
+
+    // Set all errors
+    if (!nameValidation.valid) setNameError(nameValidation.message);
+    if (!nicValidation.valid) setNicError(nicValidation.message);
+    if (!emailValidation.valid) setEmailError(emailValidation.message);
+    if (!phoneValidation.valid) setPhoneError(phoneValidation.message);
+    if (!passwordValidation.valid) setPasswordError(passwordValidation.message);
+    if (!confirmValidation.valid) setConfirmError(confirmValidation.message);
+
+    // Check if any validation failed
+    if (
+      !nameValidation.valid ||
+      !nicValidation.valid ||
+      !emailValidation.valid ||
+      !phoneValidation.valid ||
+      !passwordValidation.valid ||
+      !confirmValidation.valid ||
+      !address.trim()
+    ) {
+      setErr("Please fix all validation errors before submitting");
       return;
     }
 
@@ -113,32 +215,60 @@ export default function RegisterCitizen() {
             <div className="label-row"><span>Full Name</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconUser /></span>
-              <input className="input" value={full_name} onChange={(e) => setFullName(e.target.value)} placeholder="Samadhi Perera" />
+              <input
+                className={`input ${nameError ? 'input-error' : ''}`}
+                value={full_name}
+                onChange={handleNameChange}
+                onBlur={handleNameBlur}
+                placeholder="Samadhi Perera"
+              />
             </div>
+            {nameError && <div className="field-error">{nameError}</div>}
           </div>
 
           <div>
             <div className="label-row"><span>NIC Number</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconId /></span>
-              <input className="input" value={nic} onChange={(e) => setNic(e.target.value)} placeholder="123456789V" />
+              <input
+                className={`input ${nicError ? 'input-error' : ''}`}
+                value={nic}
+                onChange={handleNicChange}
+                onBlur={handleNicBlur}
+                placeholder="123456789V"
+              />
             </div>
+            {nicError && <div className="field-error">{nicError}</div>}
           </div>
 
           <div>
             <div className="label-row"><span>Email Address</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconMail /></span>
-              <input className="input" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+              <input
+                className={`input ${emailError ? 'input-error' : ''}`}
+                value={email}
+                onChange={handleEmailChange}
+                onBlur={handleEmailBlur}
+                placeholder="you@example.com"
+              />
             </div>
+            {emailError && <div className="field-error">{emailError}</div>}
           </div>
 
           <div>
             <div className="label-row"><span>Phone Number</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconPhone /></span>
-              <input className="input" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="0704367446" />
+              <input
+                className={`input ${phoneError ? 'input-error' : ''}`}
+                value={phone}
+                onChange={handlePhoneChange}
+                onBlur={handlePhoneBlur}
+                placeholder="0704367446"
+              />
             </div>
+            {phoneError && <div className="field-error">{phoneError}</div>}
           </div>
         </div>
 
@@ -157,16 +287,48 @@ export default function RegisterCitizen() {
             <div className="label-row"><span>Password</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconLock /></span>
-              <input className="input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="......." />
+              <input
+                className={`input ${passwordError ? 'input-error' : ''}`}
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                onBlur={handlePasswordBlur}
+                placeholder="......."
+              />
             </div>
+            {passwordError && <div className="field-error">{passwordError}</div>}
+            {password && passwordStrength.level > 0 && (
+              <div className="password-strength">
+                <div className="strength-bar">
+                  <div
+                    className="strength-fill"
+                    style={{
+                      width: `${(passwordStrength.level / 3) * 100}%`,
+                      backgroundColor: passwordStrength.color
+                    }}
+                  />
+                </div>
+                <span className="strength-text" style={{ color: passwordStrength.color }}>
+                  {passwordStrength.text}
+                </span>
+              </div>
+            )}
           </div>
 
           <div>
             <div className="label-row"><span>Confirm Password</span><span className="req-star">*</span></div>
             <div className="field">
               <span className="icon"><IconLock /></span>
-              <input className="input" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="......." />
+              <input
+                className={`input ${confirmError ? 'input-error' : ''}`}
+                type="password"
+                value={confirm}
+                onChange={handleConfirmChange}
+                onBlur={handleConfirmBlur}
+                placeholder="......."
+              />
             </div>
+            {confirmError && <div className="field-error">{confirmError}</div>}
           </div>
         </div>
 

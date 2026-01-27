@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { saveAuth } from "../auth/auth";
 import AuthLayout from "../components/AuthLayout";
+import { validateEmail, validateRequired } from "../utils/validation";
 
 function UserIcon() {
   return (
@@ -29,18 +30,55 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
 
+  // Validation errors
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Handle email change with validation
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(""); // Clear error on change
+  };
+
+  // Handle email blur (validate when user leaves field)
+  const handleEmailBlur = () => {
+    const validation = validateEmail(email);
+    if (!validation.valid) {
+      setEmailError(validation.message);
+    }
+  };
+
+  // Handle password change
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(""); // Clear error on change
+  };
+
+  // Handle password blur
+  const handlePasswordBlur = () => {
+    const validation = validateRequired(password, "Password");
+    if (!validation.valid) {
+      setPasswordError(validation.message);
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setErr("");
 
-    // Input validation
-    if (!email || !password) {
-      setErr("Please enter both email and password");
+    // Validate all fields before submission
+    const emailValidation = validateEmail(email);
+    const passwordValidation = validateRequired(password, "Password");
+
+    if (!emailValidation.valid) {
+      setEmailError(emailValidation.message);
       return;
     }
 
-    if (!email.includes('@')) {
-      setErr("Please enter a valid email address");
+    if (!passwordValidation.valid) {
+      setPasswordError(passwordValidation.message);
       return;
     }
 
@@ -126,24 +164,28 @@ export default function Login() {
         <div className="field">
           <span className="icon"><UserIcon /></span>
           <input
-            className="input"
+            className={`input ${emailError ? 'input-error' : ''}`}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
             placeholder="you@example.com"
           />
         </div>
+        {emailError && <div className="field-error">{emailError}</div>}
 
         <label className="label">Password</label>
         <div className="field">
           <span className="icon"><LockIcon /></span>
           <input
-            className="input"
+            className={`input ${passwordError ? 'input-error' : ''}`}
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
+            onBlur={handlePasswordBlur}
             placeholder="••••••••"
           />
         </div>
+        {passwordError && <div className="field-error">{passwordError}</div>}
 
         <button className="btn-main">Sign In</button>
 
@@ -152,7 +194,7 @@ export default function Login() {
         </div>
 
         <div className="center-links">
-          Don’t have an account? <Link to="/register">Register as citizen</Link>
+          Don't have an account? <Link to="/register">Register as citizen</Link>
         </div>
       </form>
     </AuthLayout>
