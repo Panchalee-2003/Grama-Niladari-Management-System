@@ -1,0 +1,249 @@
+/* IMPORTANT: removes the default body margin that causes width issues */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* PAGE */
+.nt-page{
+  width: 100vw;
+  min-height: 100vh;
+  background: #D9D9D9;
+  color: #111;
+  overflow-x: hidden; /* prevents side scroll + fixes partial width look */
+}
+
+/* FORCE full width header/nav/footer (this is the real fix) */
+.cd-top,
+.cd-nav,
+.cd-footer{
+  width: 100%;
+}
+
+/* ------------------ TOP HEADER ------------------ */
+.cd-top{
+  height: 86px;
+  background: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 26px;
+  box-sizing: border-box;
+}
+
+.cd-top-left{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cd-emblem{
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.cd-title{
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.cd-subtitle{
+  font-size: 14px;
+  margin-top: 2px;
+  opacity: 0.85;
+}
+
+.cd-top-right{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cd-about-btn{
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 800;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.cd-profile-circle{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cd-profile-circle svg{
+  width: 24px;
+  height: 24px;
+}
+.cd-profile-circle svg path{
+  stroke: #fff !important;
+}
+
+/* ------------------ NAV (fixed to always fill screen) ------------------ */
+.cd-nav{
+  height: 62px;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* each item gets equal width => perfectly fits screen */
+.cd-nav-item{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #111;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.cd-nav-item svg{
+  width: 34px;
+  height: 34px;
+}
+
+.cd-active{
+  filter: none;
+}
+
+/* ------------------ MAIN ------------------ */
+.nt-main{
+  width: 100%;
+  padding: 48px 80px 24px;
+  box-sizing: border-box;
+}
+
+.nt-grid{
+  display: grid;
+  grid-template-columns: 560px 1fr; /* was 520px */
+  gap: 140px;                      /* was 110px */
+  align-items: start;
+}
+
+/* collage block (layout like figma) */
+.nt-collage{
+  width: 520px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.nt-photo{
+  background: #CFCFCF; /* if you add images later, keep this as fallback */
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+}
+
+/* left tall image */
+.nt-photo-a{
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+
+/* right column 3 stacked */
+.nt-photo-b{ grid-column: 2; grid-row: 1; }
+.nt-photo-c{ grid-column: 2; grid-row: 2; }
+.nt-photo-d{ grid-column: 2; grid-row: 3; }
+
+/* optional extra overlay/extra small frame feel */
+.nt-photo-e{
+  display: none; /* keep hidden (no pixel changes). remove if you need extra tile */
+}
+
+/* right text */
+.nt-right{ padding-top: 10px; }
+
+.nt-title{
+  font-size: 34px;
+  font-weight: 800;
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.nt-item-title{
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.nt-more{
+  font-size: 22px;
+  color: #0C7A3B;
+  font-weight: 500;
+  text-decoration: none;   /* remove underline */
+  cursor: pointer;/* aligns like figma */
+}
+
+.nt-item{ margin-top: 10px; }
+.nt-item-2{ margin-top: 60px; }
+
+/* paragraph */
+.nt-desc{
+  margin-top: 24px;
+  font-size: 18px;
+  line-height: 1.35;
+  max-width: 900px;
+}
+
+/* ------------------ FOOTER ------------------ */
+.cd-footer{
+  background: #0C7A3B;
+  color: #fff;
+  padding: 18px 22px 10px;
+  box-sizing: border-box;
+}
+
+.cd-footer-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cd-footer-title{
+  font-weight: 900;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.cd-footer-text{
+  font-size: 14px;
+  opacity: 0.95;
+  margin: 4px 0;
+}
+
+.cd-footer-bottom{
+  max-width: 1200px;
+  margin: 14px auto 0;
+  border-top: 1px solid rgba(255,255,255,0.35);
+  padding-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* keep layout stable but usable on smaller widths */
+@media (max-width: 1200px){
+  .nt-main{ padding: 40px 24px 24px; }
+  .nt-grid{ grid-template-columns: 1fr; gap: 28px; }
+  .nt-collage{ width: 520px; max-width: 100%; }
+  .nt-more{ margin-left: 0; }
+  .cd-footer-grid{ grid-template-columns: 1fr; gap: 16px; }
+}

@@ -1,0 +1,300 @@
+/* PAGE */
+
+.cp-page{
+  width: 100vw;
+  min-height: 100vh;
+  background: #D9D9D9;
+  color: #111;
+}
+
+/* ------------------ TOP HEADER (same as your other pages) ------------------ */
+.cd-top{
+  height: 86px;
+  background: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 26px;
+}
+
+.cd-top-left{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cd-emblem{
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.cd-title{
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #111;
+}
+
+.cd-subtitle{
+  font-size: 14px;
+  margin-top: 2px;
+  opacity: 0.85;
+  color: #111;
+}
+
+.cd-top-right{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cd-about-btn{
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 800;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.cd-profile-circle{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cd-profile-circle svg{
+  width: 24px;
+  height: 24px;
+}
+.cd-profile-circle svg path{
+  stroke: #fff !important;
+}
+
+/* ------------------ NAV ------------------ */
+.cd-nav{
+  height: 62px;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.cd-nav-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #111;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.cd-nav-item svg{
+  width: 34px;
+  height: 34px;
+}
+
+.cd-active{
+  filter: none;
+}
+
+/* ------------------ MAIN LAYOUT ------------------ */
+.cp-main{
+  padding: 70px 90px 70px;
+  min-height: calc(100vh - 86px - 62px - 220px);
+}
+
+.cp-title{
+  font-size: 40px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 26px;
+}
+
+.cp-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 140px;
+  align-items: start;
+}
+
+/* Fields */
+.cp-field{
+  margin-bottom: 28px;
+}
+
+.cp-label{
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.cp-input{
+  width: 620px;
+  max-width: 100%;
+  height: 56px;
+  border: 1px solid #6f6f6f;
+  border-radius: 10px;
+  background: #D9D9D9;
+  padding: 0 22px;
+  font-size: 20px;
+  outline: none;
+  color: #111;
+}
+
+.cp-textarea{
+  width: 620px;
+  max-width: 100%;
+  height: 220px;
+  border: 1px solid #6f6f6f;
+  border-radius: 10px;
+  background: #D9D9D9;
+  padding: 22px;
+  font-size: 20px;
+  outline: none;
+  resize: none;
+  color: #111;
+}
+
+.cp-input::placeholder,
+.cp-textarea::placeholder{
+  color: #666;
+}
+
+/* Attachment upload box */
+.cp-upload{
+  width: 380px;
+  max-width: 100%;
+  height: 56px;
+  border: 1px solid #6f6f6f;
+  border-radius: 10px;
+  background: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px 0 22px;
+  position: relative;
+}
+
+.cp-upload-text{
+  font-size: 20px;
+  color: #666;
+}
+
+.cp-upload-ico{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* invisible real input */
+.cp-file{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Submit button */
+.cp-submit{
+  margin-top: 22px;
+  width: 190px;
+  height: 56px;
+  background: #0C7A3B;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.cp-submit-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* center under button */
+  gap: 14px;
+  margin-top: 24px;
+}
+
+/* Submit button (unchanged) */
+.cp-submit-btn{
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 36px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Link under submit */
+.cp-link{
+  font-size: 18px;
+  color: #0C7A3B;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.cp-link:hover{
+  text-decoration: underline;
+}
+
+
+/* ------------------ FOOTER (same as your other pages) ------------------ */
+.cd-footer{
+  background: #0C7A3B;
+  color: #fff;
+  padding: 18px 22px 10px;
+}
+
+.cd-footer-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cd-footer-title{
+  font-weight: 900;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.cd-footer-text{
+  font-size: 14px;
+  opacity: 0.95;
+  margin: 4px 0;
+}
+
+.cd-footer-bottom{
+  max-width: 1200px;
+  margin: 14px auto 0;
+  border-top: 1px solid rgba(255,255,255,0.35);
+  padding-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* responsive */
+@media (max-width: 1100px){
+  .cp-main{ padding: 50px 30px 60px; }
+  .cp-grid{ grid-template-columns: 1fr; gap: 40px; }
+  .cp-input, .cp-textarea{ width: 100%; }
+  .cp-upload{ width: 100%; }
+}
+@media (max-width: 980px){
+  .cd-footer-grid{ grid-template-columns: 1fr; gap: 16px; }
+}

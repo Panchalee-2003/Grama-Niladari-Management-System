@@ -1,0 +1,123 @@
+/* Page padding similar to Figma spacing */
+.gnc-page{
+  padding: 34px 48px;
+}
+
+/* Title */
+.gnc-title{
+  font-size: 34px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 18px;
+}
+
+/* Table container */
+.gnc-table-wrap{
+  width: 100%;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Table */
+.gnc-table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.gnc-table thead th{
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e6e6e6;
+  background: #fff;
+}
+
+.gnc-table tbody td{
+  padding: 16px 16px;
+  border-bottom: 1px solid #ededed;
+  vertical-align: middle;
+  font-size: 13px;
+  color: #111;
+}
+
+.gnc-table tbody tr:last-child td{
+  border-bottom: none;
+}
+
+/* Columns */
+.gnc-id{
+  color: #111;
+  font-weight: 500;
+  width: 130px;
+}
+
+.gnc-name{
+  color: #5f7f6e;
+  font-weight: 600;
+}
+
+.gnc-type{
+  color: #5f7f6e;
+  font-weight: 600;
+}
+
+.gnc-type-line{
+  display: block;
+  line-height: 1.25;
+}
+
+.gnc-date{
+  color: #5f7f6e;
+  font-weight: 600;
+}
+
+/* Status pill */
+.gnc-pill{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 18px;
+  border-radius: 7px;
+  background: #eef2ef;      /* pending background */
+  color: #111;
+  font-weight: 600;
+  font-size: 12px;
+  min-width: 92px;
+}
+
+.gnc-pill-approved{
+  background: #eef2ef;
+  color: #111;
+}
+
+.gnc-pill-rejected{
+  background: #eef2ef;
+  color: #111;
+}
+
+/* Actions column */
+.gnc-actions-head{
+  text-align: left;
+}
+
+.gnc-actions{
+  color: #5f7f6e;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gnc-action{
+  color: #5f7f6e;
+  font-weight: 700;
+  display: inline;
+}
+
+.gnc-sep{
+  padding: 0 6px;
+  color: #5f7f6e;
+}

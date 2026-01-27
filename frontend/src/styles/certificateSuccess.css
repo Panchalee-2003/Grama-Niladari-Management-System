@@ -1,0 +1,277 @@
+body { outline: 5px solid red; }
+
+/* page base */
+.cmp-wrap{
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  background: #ffffff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   LEFT SIDEBAR
+========================= */
+.cmp-side{
+  width: 340px;
+  background: #0C7A3B;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cmp-brand{
+  color: #0B1B12;
+  margin-bottom: 22px;
+}
+.cmp-brand-title{
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.cmp-brand-sub{
+  font-size: 13px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+/* nav */
+.cmp-nav{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.cmp-item{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #0B1B12;
+  font-weight: 600;
+  background: rgba(255,255,255,0.07);
+}
+
+.cmp-item:hover{
+  background: rgba(255,255,255,0.12);
+}
+
+.cmp-active{
+  background: #BFF3B2; /* light green highlight like figma */
+}
+
+.cmp-i{
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmp-side-bottom{
+  margin-top: auto;
+  padding-top: 18px;
+}
+.cmp-gear{
+  color: #0B1B12;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* =========================
+   MAIN AREA
+========================= */
+.cmp-main{
+  flex: 1;
+  background: #ffffff;
+}
+
+/* top bar */
+.cmp-top{
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e9eef3;
+  padding: 0 34px;
+  gap: 18px;
+}
+
+.cmp-top-left{
+  font-weight: 800;
+  color: #1b1b1b;
+  width: 170px;
+}
+
+.cmp-top-center{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.cmp-search-bar{
+  width: 540px;
+  height: 28px;
+  background: #E6F0EA;
+  border-radius: 2px;
+}
+
+.cmp-top-right{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.cmp-search-icon{
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmp-profile{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cmp-profile svg path{
+  stroke: #ffffff !important;
+}
+
+/* content */
+.cmp-content{
+  padding: 34px 54px;
+}
+
+.cmp-title{
+  font-size: 40px;
+  font-weight: 900;
+  margin: 10px 0 22px;
+  color: #0b0b0b;
+}
+
+/* tabs */
+.cmp-tabs{
+  display: flex;
+  gap: 38px;
+  align-items: flex-end;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  padding-left: 6px;
+}
+
+.cmp-tab{
+  font-weight: 700;
+  color: #6f8e7b; /* muted green */
+  padding-bottom: 10px;
+  cursor: default;
+}
+
+.cmp-tab-active{
+  color: #0b0b0b;
+  position: relative;
+}
+
+.cmp-tab-active::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 26px;
+  height: 3px;
+  background: #d9dde3;
+  border-radius: 2px;
+}
+
+.cmp-tabs-line{
+  height: 1px;
+  background: #e9eef3;
+  margin-top: 6px;
+}
+
+/* table card */
+.cmp-card{
+  margin-top: 36px;
+  border: 1px solid #dbe6de;
+  border-radius: 8px;
+  padding: 0;
+  width: 940px;
+  background: #fff;
+}
+
+.cmp-table{
+  display: grid;
+}
+
+.cmp-row{
+  display: grid;
+  grid-template-columns: 140px 1.2fr 120px 140px 160px 180px;
+  align-items: center;
+  padding: 16px 18px;
+  border-top: 1px solid #e9eef3;
+  font-size: 14px;
+}
+
+.cmp-head{
+  border-top: none;
+  font-weight: 800;
+  color: #1b1b1b;
+}
+
+.cmp-muted{
+  color: #6f8e7b;
+  font-weight: 600;
+}
+
+/* status pill */
+.cmp-pill{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 118px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: #EEF3F0;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+/* actions */
+.cmp-actions{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  color: #6f8e7b;
+  font-weight: 700;
+}
+
+.cmp-link{
+  color: #6f8e7b;
+  text-decoration: none;
+}
+.cmp-link:hover{
+  text-decoration: underline;
+}
+
+.cmp-sep{
+  color: #6f8e7b;
+}
+
+/* responsive - keeps layout but fits smaller screens */
+@media (max-width: 1200px){
+  .cmp-card{ width: 100%; }
+  .cmp-row{ grid-template-columns: 120px 1.2fr 110px 130px 150px 170px; }
+}
+@media (max-width: 980px){
+  .cmp-side{ width: 280px; }
+  .cmp-content{ padding: 24px; }
+  .cmp-search-bar{ width: 360px; }
+}

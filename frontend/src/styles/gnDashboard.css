@@ -1,0 +1,273 @@
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
+#root { height: 100%; }
+
+/* WRAPPER */
+.gn-wrap{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background: #ffffff;
+}
+
+/* SIDEBAR */
+.gn-sidebar{
+  width: 320px;
+  background: #0C7A3B;   /* deep green */
+  padding: 26px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gn-brand{
+  color: #000;
+  margin-bottom: 20px;
+}
+.gn-brand-title{
+  font-size: 24px;
+  font-weight: 800;
+}
+.gn-brand-sub{
+  font-size: 14px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.gn-menu{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.gn-item{
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.05);
+}
+
+.gn-item .gn-ico{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0B2B16;
+}
+
+.gn-item-active{
+  background: #B8F7B8; /* light green highlight */
+}
+
+.gn-settings{
+  margin-top: auto;
+}
+
+.gn-item-settings{
+  background: transparent;
+  padding-left: 0;
+}
+
+/* MAIN */
+.gn-main{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* TOP BAR */
+.gn-topbar{
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.gn-top-left{
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.gn-search{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 520px;
+}
+
+.gn-search-input{
+  flex: 1;
+  height: 28px;
+  border: none;
+  outline: none;
+  background: #EAF5ED;
+  border-radius: 2px;
+}
+
+.gn-search-ico{
+  color: #111;
+  display: flex;
+  align-items: center;
+}
+
+.gn-profile-circle{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gn-profile-circle svg{
+  display: block;
+}
+
+/* CONTENT */
+.gn-content{
+  padding: 34px 48px;
+}
+
+.gn-welcome{
+  font-size: 44px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+.gn-section-title{
+  font-size: 22px;
+  font-weight: 800;
+  color: #111;
+  margin-top: 18px;
+  margin-bottom: 14px;
+}
+
+/* SUMMARY CARDS */
+.gn-summary{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 34px;
+}
+
+.gn-summary-card{
+  background: #EAF5ED;
+  border-radius: 10px;
+  padding: 18px 18px;
+  min-height: 110px;
+}
+
+.gn-s-title{
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.25;
+}
+
+.gn-s-number{
+  font-size: 26px;
+  font-weight: 900;
+  margin-top: 10px;
+  color: #111;
+}
+
+/* ACTION SHORTCUTS */
+.gn-actions{
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.gn-action-btn{
+  background: #0B5F2E;
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+/* ANALYTICS */
+.gn-analytics{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Chart card */
+.gn-chart{
+  border: 1px solid #d9e9dc;
+  border-radius: 10px;
+  padding: 16px 18px;
+  height: 200px;
+  background: #fff;
+
+  /* ✅ lock everything inside */
+  overflow: hidden;
+
+  /* ✅ Figma-like layout */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 12px;
+}
+
+.gn-chart-title{
+  margin-bottom: 8px;  /* tighter */
+  font-size: 16px;
+  font-weight: 800;
+  color: #111;
+}
+
+/* Bars area stays INSIDE the card */
+.gn-bars{
+  min-height: 0;                 /* ✅ important for grid overflow */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 12px;
+  overflow: hidden;              /* ✅ never show outside */
+}
+
+/* bars */
+.gn-bar{
+  width: 18px;
+  height: 110px;   
+  max-height: 100%;              /* keep your figma height */
+  background: #EAF5ED;
+  border: 1px solid #d9e9dc;
+  border-radius: 3px;
+}
+
+/* months row ALWAYS inside card */
+.gn-months{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  color: #0C7A3B;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  margin-top: 4px; 
+}
+
+/* --- HARD FIX: prevent analytics overflow --- */
+.gn-chart { 
+    min-height: 0; }
+
+.gn-bars{
+  min-height: 0 !important;   /* ✅ important for flex overflow */
+  overflow: hidden !important;
+}
+
+
