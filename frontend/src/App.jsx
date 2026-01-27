@@ -21,6 +21,7 @@ import ComplaintStatus from "./pages/ComplaintStatus";
 import GNDashboard from "./pages/GNDashboard";
 import HouseholdVerify from "./pages/HouseholdVerify";
 import HouseholdDetail from "./pages/HouseholdDetail";
+import GNCertificates from "./pages/GNCertificates";
 import ComplaintManagement from "./pages/ComplaintManagement.jsx";
 import PostNotice from "./pages/PostNotice";
 import AllowancesAids from "./pages/AllowancesAids";
@@ -125,7 +126,7 @@ export default function App() {
           path="/gn-certificates"
           element={
             <ProtectedRoute roles={["GN"]}>
-              <HouseholdVerify />
+              <GNCertificates />
             </ProtectedRoute>
           }
         />
