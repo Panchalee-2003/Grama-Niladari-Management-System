@@ -69,6 +69,23 @@
   
 }
 
+.cd-logout {
+  border: none;
+  background: #c41e3a;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+}
+
+.cd-logout:hover {
+  background: #a01729;
+  transform: scale(1.05);
+}
+
 
 /* ===== NAV ===== */
 .cd-nav {

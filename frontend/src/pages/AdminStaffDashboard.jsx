@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminStaffDashboard.css";
+import { clearAuth } from "../auth/auth";
 
 /* ========= ICONS (SVG) ========= */
 function IconDashboard() {
@@ -81,7 +82,40 @@ function IconSettings() {
   );
 }
 
+function IconLogout() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 17l5-5-5-5"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 12H9"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function AdminStaffDashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/login");
+  };
+
   return (
     <div className="asd-page">
       {/* LEFT SIDEBAR */}
@@ -108,6 +142,10 @@ export default function AdminStaffDashboard() {
             <IconSettings />
             <span>Settings</span>
           </Link>
+          <button onClick={handleLogout} className="asd-settings-link" style={{ width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left', padding: '0' }}>
+            <IconLogout />
+            <span>Logout</span>
+          </button>
         </div>
       </aside>
 
