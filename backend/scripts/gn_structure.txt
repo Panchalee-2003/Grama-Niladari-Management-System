@@ -1,0 +1,4 @@
+✅ Grama_niladhari table structure:
+  gn_id (integer) - Nullable: NO
+  user_id (integer) - Nullable: NO
+  name (character varying) - Nullable: NO

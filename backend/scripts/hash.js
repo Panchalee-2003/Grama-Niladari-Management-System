@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt");
 
 const password = process.argv[2];
 if (!password) {
@@ -6,5 +6,7 @@ if (!password) {
   process.exit(1);
 }
 
-const hash = await bcrypt.hash(password, 12);
-console.log(hash);
+(async () => {
+  const hash = await bcrypt.hash(password, 12);
+  console.log(hash);
+})();

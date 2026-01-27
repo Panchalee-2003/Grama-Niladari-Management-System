@@ -1,0 +1,24 @@
+📋 All tables in database:
+  - audit_log
+  - citizen
+  - complaint
+  - family_member
+  - grama_niladhari
+  - household
+  - password_reset_otp
+  - user_table
+
+✅ Citizen table structure:
+  citizen_id (integer) - Nullable: NO
+  user_id (integer) - Nullable: NO
+  nic_number (character varying) - Nullable: NO
+  full_name (character varying) - Nullable: NO
+  phone_number (character varying) - Nullable: NO
+
+✅ User_table structure:
+  user_id (integer) - Nullable: NO
+  email (character varying) - Nullable: NO
+  password_hash (text) - Nullable: NO
+  role (character varying) - Nullable: NO
+  status (character varying) - Nullable: NO
+  created _at (time without time zone) - Nullable: NO
