@@ -258,35 +258,41 @@
 .cd-footer {
   background: #118246;
   margin-top: auto;
-  /* pushes footer to bottom if page is short */
-  padding: 2opx 26px 14px;
+  padding: 20px 26px 14px;
   color: #ffffff;
 }
 
 .cd-footer-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 40px;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+  padding: 20px 0;
 }
 
 .cd-footer h4 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-size: 20px;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .cd-footer p {
-  margin: 6px 0;
-  font-size: 18px;
-  line-height: 1.2;
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .cd-footer-link {
   cursor: pointer;
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.cd-footer-link:hover {
+  opacity: 0.8;
 }
 
 .cd-footer-line {
