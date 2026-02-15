@@ -161,7 +161,7 @@ export default function CitizenDashboard() {
         </div>
 
         <div className="cd-top-actions">
-          <button className="cd-about">About Us</button>
+          <Link to="/about" className="cd-about">About Us</Link>
           <button className="cd-profile" aria-label="Profile">
             <IconProfileSmall />
           </button>

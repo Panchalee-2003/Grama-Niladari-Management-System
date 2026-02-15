@@ -1,0 +1,319 @@
+/* About Us Page Styles */
+
+/* Make sure page fits nicely on screen */
+.au-page {
+    width: 100vw;
+    min-height: 100vh;
+    background: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== TOP HEADER ===== */
+.au-top {
+    background: #d9d9d9;
+    padding: 18px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.au-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.au-emblem {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+}
+
+.au-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1f1f1f;
+    line-height: 1.05;
+}
+
+.au-subtitle {
+    margin-top: 2px;
+    font-size: 18px;
+    color: #2e2e2e;
+    font-weight: 500;
+}
+
+.au-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.au-about-btn {
+    border: none;
+    background: #0f6f3a;
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.au-profile {
+    border: none;
+    background: #0f6f3a;
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.au-logout {
+    border: none;
+    background: #c41e3a;
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+}
+
+.au-logout:hover {
+    background: #a01729;
+    transform: scale(1.05);
+}
+
+/* ===== NAV ===== */
+.au-nav {
+    background: #118246;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 14px 14px;
+}
+
+.au-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.au-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #1f1f1f;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* ===== HERO WITH VISION & MISSION ===== */
+.au-hero {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.au-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.au-vision-card,
+.au-mission-card {
+    background: rgba(217, 217, 217, 0.85);
+    border-radius: 8px;
+    padding: 24px 28px;
+    flex: 1;
+}
+
+.au-vision-card h2,
+.au-mission-card h2 {
+    margin: 0 0 12px 0;
+    font-size: 28px;
+    font-weight: 900;
+    color: #111;
+    text-align: center;
+}
+
+.au-vision-card p,
+.au-mission-card p {
+    margin: 0;
+    font-size: 16px;
+    color: #1f1f1f;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ===== SERVICES TABLE ===== */
+.au-services {
+    padding: 40px 20px;
+    background: #d9d9d9;
+    overflow-x: auto;
+}
+
+.au-table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.au-table thead {
+    background: #0f6f3a;
+    color: #ffffff;
+}
+
+.au-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.au-table th:last-child {
+    border-right: none;
+}
+
+.au-table tbody tr {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.au-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.au-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.au-table td {
+    padding: 14px 20px;
+    font-size: 15px;
+    color: #1f1f1f;
+    border-right: 1px solid #e6e6e6;
+}
+
+.au-table td:first-child {
+    font-weight: 700;
+    color: #0f6f3a;
+    text-align: center;
+    width: 100px;
+}
+
+.au-table td:last-child {
+    border-right: none;
+    text-align: center;
+    font-weight: 600;
+    color: #2e2e2e;
+    width: 150px;
+}
+
+/* ===== FOOTER ===== */
+.au-footer {
+    background: #118246;
+    margin-top: auto;
+    padding: 20px 26px 14px;
+    color: #ffffff;
+}
+
+.au-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.au-footer h4 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.au-footer p {
+    margin: 8px 0;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.au-footer-link {
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.au-footer-link:hover {
+    opacity: 0.8;
+}
+
+.au-footer-line {
+    width: 100%;
+    max-width: 1200px;
+    margin: 18px auto 14px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.au-footer-copy {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.9;
+    padding-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .au-title {
+        font-size: 24px;
+    }
+
+    .au-hero-content {
+        flex-direction: column;
+    }
+
+    .au-footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .au-services {
+        padding: 20px 10px;
+    }
+
+    .au-table {
+        font-size: 14px;
+    }
+
+    .au-table th,
+    .au-table td {
+        padding: 10px 12px;
+    }
+}

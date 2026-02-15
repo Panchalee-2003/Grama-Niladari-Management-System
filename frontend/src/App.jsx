@@ -9,6 +9,7 @@ import ResetPassword from "./pages/ResetPassword";
 import PasswordUpdated from "./pages/PasswordUpdated";
 
 import CitizenDashboard from "./pages/CitizenDashboard";
+import AboutUs from "./pages/AboutUs";
 import Notices from "./pages/Notices";
 import HouseholdRegistration from "./pages/HouseholdRegistration";
 import CertificateRequest from "./pages/CertificateRequest";
@@ -94,6 +95,14 @@ export default function App() {
           element={
             <ProtectedRoute roles={["CITIZEN"]}>
               <Complaints />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute roles={["CITIZEN"]}>
+              <AboutUs />
             </ProtectedRoute>
           }
         />
