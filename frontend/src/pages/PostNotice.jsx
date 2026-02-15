@@ -5,74 +5,74 @@ import "../styles/postNotice.css";
 function IconDashboard() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M4 4h7v7H4V4ZM13 4h7v7h-7V4ZM4 13h7v7H4v-7ZM13 13h7v7h-7v-7Z" stroke="#0b0b0b" strokeWidth="2"/>
+      <path d="M4 4h7v7H4V4ZM13 4h7v7h-7V4ZM4 13h7v7H4v-7ZM13 13h7v7h-7v-7Z" stroke="#0b0b0b" strokeWidth="2" />
     </svg>
   );
 }
 function IconUsers() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M4 20a8 8 0 0 1 16 0" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconDoc() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M14 3v4h4" stroke="#0b0b0b" strokeWidth="2"/>
+      <path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M14 3v4h4" stroke="#0b0b0b" strokeWidth="2" />
     </svg>
   );
 }
 function IconFlag() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M6 3v18" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M6 4h11l-2 4 2 4H6" stroke="#0b0b0b" strokeWidth="2" strokeLinejoin="round"/>
+      <path d="M6 3v18" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round" />
+      <path d="M6 4h11l-2 4 2 4H6" stroke="#0b0b0b" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   );
 }
 function IconBell() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="#0b0b0b" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconCoin() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 20c4.418 0 8-1.79 8-4s-3.582-4-8-4-8 1.79-8 4 3.582 4 8 4Z" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M4 16V8" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M20 16V8" stroke="#0b0b0b" strokeWidth="2"/>
-      <path d="M12 12c4.418 0 8-1.79 8-4s-3.582-4-8-4-8 1.79-8 4 3.582 4 8 4Z" stroke="#0b0b0b" strokeWidth="2"/>
+      <path d="M12 20c4.418 0 8-1.79 8-4s-3.582-4-8-4-8 1.79-8 4 3.582 4 8 4Z" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M4 16V8" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M20 16V8" stroke="#0b0b0b" strokeWidth="2" />
+      <path d="M12 12c4.418 0 8-1.79 8-4s-3.582-4-8-4-8 1.79-8 4 3.582 4 8 4Z" stroke="#0b0b0b" strokeWidth="2" />
     </svg>
   );
 }
 function IconSearch() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="#111" strokeWidth="2"/>
-      <path d="M21 21l-4.3-4.3" stroke="#111" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="#111" strokeWidth="2" />
+      <path d="M21 21l-4.3-4.3" stroke="#111" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconProfile() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#fff" strokeWidth="2"/>
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#fff" strokeWidth="2" />
+      <path d="M4 20a8 8 0 0 1 16 0" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconCalendar() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3v3M17 3v3" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M4 7h16" stroke="#2f6b45" strokeWidth="2"/>
-      <path d="M6 5h12a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="#2f6b45" strokeWidth="2"/>
+      <path d="M7 3v3M17 3v3" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round" />
+      <path d="M4 7h16" stroke="#2f6b45" strokeWidth="2" />
+      <path d="M6 5h12a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="#2f6b45" strokeWidth="2" />
     </svg>
   );
 }
@@ -121,7 +121,7 @@ export default function PostNotice() {
             <span>Notices</span>
           </Link>
 
-          <Link className="pn-item" to="/allowances">
+          <Link className="pn-item" to="/gn-allowances">
             <span className="pn-ico"><IconCoin /></span>
             <span>Allowances &amp; Aids</span>
           </Link>
@@ -176,19 +176,19 @@ export default function PostNotice() {
             </div>
 
             <div className="pn-field">
-  <div className="pn-label">Image Upload (optional)</div>
+              <div className="pn-label">Image Upload (optional)</div>
 
-  <label className="pn-upload">
-    <input className="pn-upload-input" type="file" accept="image/*" />
-    <span className="pn-upload-icon" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M12 16V4" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M7 9l5-5 5 5" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M4 20h16" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round"/>
-      </svg>
-    </span>
-  </label>
-</div>
+              <label className="pn-upload">
+                <input className="pn-upload-input" type="file" accept="image/*" />
+                <span className="pn-upload-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 16V4" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M7 9l5-5 5 5" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 20h16" stroke="#2f6b45" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </label>
+            </div>
 
 
             <button className="pn-btn" type="button">

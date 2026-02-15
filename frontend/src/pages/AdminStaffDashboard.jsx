@@ -131,7 +131,7 @@ export default function AdminStaffDashboard() {
             <span>Dashboard</span>
           </Link>
 
-          <Link to="#" className="asd-nav-item asd-nav-muted">
+          <Link to="/admin-verify-certificates" className="asd-nav-item asd-nav-muted">
             <IconDoc />
             <span>Verify Certificates</span>
           </Link>

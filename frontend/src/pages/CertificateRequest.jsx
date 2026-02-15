@@ -125,31 +125,31 @@ export default function CertificateRequest() {
 
       {/* Nav */}
       <nav className="gn-nav">
-  <Link to="/" className="gn-nav-item">
-    <IconHome />
-    <span>Home</span>
-  </Link>
+        <Link to="/citizen" className="gn-nav-item">
+          <IconHome />
+          <span>Home</span>
+        </Link>
 
-  <Link to="/household" className="gn-nav-item">
-    <IconUser />
-    <span>Household</span>
-  </Link>
+        <Link to="/household" className="gn-nav-item">
+          <IconUser />
+          <span>Household</span>
+        </Link>
 
-  <Link to="/certificates" className="gn-nav-item">
-    <IconDoc />
-    <span>Certificates</span>
-  </Link>
+        <Link to="/certificates" className="gn-nav-item">
+          <IconDoc />
+          <span>Certificates</span>
+        </Link>
 
-  <Link to="/complaints" className="gn-nav-item">
-    <IconComplaint />
-    <span>Complaints</span>
-  </Link>
+        <Link to="/complaints" className="gn-nav-item">
+          <IconComplaint />
+          <span>Complaints</span>
+        </Link>
 
-  <Link to="/notices" className="gn-nav-item">
-    <IconBell />
-    <span>Notices</span>
-  </Link>
-</nav>
+        <Link to="/notices" className="gn-nav-item">
+          <IconBell />
+          <span>Notices</span>
+        </Link>
+      </nav>
 
       {/* Content */}
       <main className="gn-content">

@@ -28,6 +28,7 @@ import AllowancesAids from "./pages/AllowancesAids";
 
 
 import AdminStaffDashboard from "./pages/AdminStaffDashboard.jsx";
+import AdminVerifyCertificates from "./pages/AdminVerifyCertificates.jsx";
 
 
 
@@ -169,6 +170,14 @@ export default function App() {
           element={
             <ProtectedRoute roles={["ADMIN"]}>
               <AdminStaffDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-verify-certificates"
+          element={
+            <ProtectedRoute roles={["ADMIN"]}>
+              <AdminVerifyCertificates />
             </ProtectedRoute>
           }
         />
