@@ -15,32 +15,32 @@ function IconHome() {
 function IconUser() {
   return (
     <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#1f1f1f" strokeWidth="2"/>
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#1f1f1f" strokeWidth="2" />
+      <path d="M4 20a8 8 0 0 1 16 0" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconDoc() {
   return (
     <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#1f1f1f" strokeWidth="2"/>
-      <path d="M14 3v4h4" stroke="#1f1f1f" strokeWidth="2"/>
+      <path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#1f1f1f" strokeWidth="2" />
+      <path d="M14 3v4h4" stroke="#1f1f1f" strokeWidth="2" />
     </svg>
   );
 }
 function IconComplaint() {
   return (
     <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3h10a2 2 0 0 1 2 2v16l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2Z" stroke="#1f1f1f" strokeWidth="2"/>
-      <path d="M8 7h8M8 11h8M8 15h6" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M7 3h10a2 2 0 0 1 2 2v16l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2Z" stroke="#1f1f1f" strokeWidth="2" />
+      <path d="M8 7h8M8 11h8M8 15h6" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function IconBell() {
   return (
     <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#1f1f1f" strokeWidth="2"/>
-      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#1f1f1f" strokeWidth="2" />
+      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -113,7 +113,7 @@ export default function HouseholdRegistration() {
         </div>
 
         <div className="cd-top-right">
-          <button className="cd-about-btn">About Us</button>
+          <Link to="/about" className="cd-about-btn">About Us</Link>
           <div className="cd-profile-circle" aria-label="profile">
             <IconUser />
           </div>

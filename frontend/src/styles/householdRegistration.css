@@ -1,5 +1,5 @@
 /* PAGE BACKGROUND like figma */
-.hh-page{
+.hh-page {
   width: 100vw;
   min-height: 100vh;
   background: #D9D9D9;
@@ -7,7 +7,7 @@
 }
 
 /* ------------------ TOP HEADER (same style used before) ------------------ */
-.cd-top{
+.cd-top {
   height: 86px;
   background: #D9D9D9;
   display: flex;
@@ -16,37 +16,37 @@
   padding: 0 26px;
 }
 
-.cd-top-left{
+.cd-top-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.cd-emblem{
+.cd-emblem {
   width: 44px;
   height: 44px;
   object-fit: contain;
 }
 
-.cd-title{
+.cd-title {
   font-size: 28px;
   font-weight: 800;
   line-height: 1.1;
 }
 
-.cd-subtitle{
+.cd-subtitle {
   font-size: 14px;
   margin-top: 2px;
   opacity: 0.85;
 }
 
-.cd-top-right{
+.cd-top-right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.cd-about-btn{
+.cd-about-btn {
   background: #0C7A3B;
   color: #fff;
   border: none;
@@ -55,9 +55,13 @@
   font-weight: 800;
   font-size: 18px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cd-profile-circle{
+.cd-profile-circle {
   width: 44px;
   height: 44px;
   border-radius: 999px;
@@ -66,16 +70,18 @@
   align-items: center;
   justify-content: center;
 }
-.cd-profile-circle svg{
+
+.cd-profile-circle svg {
   width: 24px;
   height: 24px;
 }
-.cd-profile-circle svg path{
+
+.cd-profile-circle svg path {
   stroke: #fff !important;
 }
 
 /* ------------------ NAV ------------------ */
-.cd-nav{
+.cd-nav {
   height: 62px;
   background: #0C7A3B;
   display: flex;
@@ -83,7 +89,7 @@
   justify-content: space-evenly;
 }
 
-.cd-nav-item{
+.cd-nav-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -93,51 +99,54 @@
   font-size: 16px;
 }
 
-.cd-nav-item svg{
+.cd-nav-item svg {
   width: 34px;
   height: 34px;
 }
 
-.cd-active{
+.cd-active {
   filter: none;
 }
 
 /* ------------------ MAIN CONTENT ------------------ */
-.hh-main{
+.hh-main {
   width: 100%;
   padding: 22px 16px 20px;
 }
 
-.hh-page-title{
+.hh-page-title {
   font-size: 26px;
   font-weight: 800;
   margin: 10px 0 14px;
 }
 
 /* FORM width like figma (wide center) */
-.hh-form{
+.hh-form {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 /* Each green bordered section box */
-.hh-box{
+.hh-box {
   background: #fff;
   border: 2px solid #0C7A3B;
   padding: 18px 18px 16px;
   margin-bottom: 18px;
 }
 
-.hh-box-title{
+.hh-box-title {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 14px;
 }
 
 /* fields */
-.hh-field{ margin-bottom: 14px; }
-.hh-label{
+.hh-field {
+  margin-bottom: 14px;
+}
+
+.hh-label {
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -146,7 +155,7 @@
 }
 
 .hh-input,
-.hh-select{
+.hh-select {
   width: 100%;
   height: 36px;
   border: 1px solid #9E9E9E;
@@ -157,10 +166,12 @@
   font-size: 14px;
 }
 
-.hh-input-lg{ height: 36px; }
+.hh-input-lg {
+  height: 36px;
+}
 
 /* selects should show arrow like figma */
-.hh-select{
+.hh-select {
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, #333 50%),
     linear-gradient(135deg, #333 50%, transparent 50%);
@@ -171,26 +182,31 @@
 }
 
 /* grids like figma */
-.hh-grid-3{
+.hh-grid-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 22px;
 }
-.hh-grid-2{
+
+.hh-grid-2 {
   display: grid;
   grid-template-columns: 260px 260px;
   gap: 40px;
 }
-.hh-grid-tight{ margin-top: 6px; }
+
+.hh-grid-tight {
+  margin-top: 6px;
+}
 
 /* small male/female/total buttons */
-.hh-mini-btns{
+.hh-mini-btns {
   display: flex;
   gap: 10px;
   align-items: center;
   margin-top: 2px;
 }
-.hh-mini{
+
+.hh-mini {
   background: #D9D9D9;
   border: 1px solid #9E9E9E;
   height: 32px;
@@ -201,19 +217,23 @@
 }
 
 /* member label */
-.hh-member-row{ margin: 2px 0 8px; }
-.hh-member-label{
+.hh-member-row {
+  margin: 2px 0 8px;
+}
+
+.hh-member-label {
   font-size: 13px;
   font-weight: 700;
   opacity: 0.85;
 }
 
 /* add member button aligned to right inside last column */
-.hh-add-wrap{
+.hh-add-wrap {
   position: relative;
   padding-bottom: 36px;
 }
-.hh-add-btn{
+
+.hh-add-btn {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -227,14 +247,18 @@
 }
 
 /* financial section grid to match figma */
-.hh-fin-grid{
+.hh-fin-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 300px;
   gap: 22px 28px;
   align-items: start;
 }
-.hh-notes{ grid-row: span 2; }
-.hh-textarea{
+
+.hh-notes {
+  grid-row: span 2;
+}
+
+.hh-textarea {
   width: 100%;
   height: 130px;
   resize: none;
@@ -247,36 +271,40 @@
 }
 
 /* declaration block */
-.hh-declare{
+.hh-declare {
   max-width: 980px;
   margin: 6px auto 0;
   padding: 10px 0 12px;
 }
-.hh-declare-text{
+
+.hh-declare-text {
   font-size: 14px;
   opacity: 0.85;
   margin-bottom: 12px;
 }
-.hh-check{
+
+.hh-check {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 14px;
 }
-.hh-check input{
+
+.hh-check input {
   width: 18px;
   height: 18px;
 }
 
 /* buttons bottom right like figma */
-.hh-actions{
+.hh-actions {
   max-width: 980px;
   margin: 8px auto 18px;
   display: flex;
   justify-content: flex-end;
   gap: 18px;
 }
-.hh-btn{
+
+.hh-btn {
   width: 120px;
   height: 38px;
   border: none;
@@ -284,27 +312,30 @@
   font-weight: 900;
   cursor: pointer;
 }
-.hh-btn-reset{
+
+.hh-btn-reset {
   background: #0C7A3B;
   color: #fff;
 }
-.hh-btn-submit{
+
+.hh-btn-submit {
   background: #0C7A3B;
   color: #fff;
 }
-.hh-btn-submit:disabled{
+
+.hh-btn-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 /* ------------------ FOOTER (same as your citizen dashboard) ------------------ */
-.cd-footer{
+.cd-footer {
   background: #0C7A3B;
   color: #fff;
   padding: 18px 22px 10px;
 }
 
-.cd-footer-grid{
+.cd-footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
@@ -312,22 +343,22 @@
   margin: 0 auto;
 }
 
-.cd-footer-title{
+.cd-footer-title {
   font-weight: 900;
   margin-bottom: 10px;
   font-size: 16px;
 }
 
-.cd-footer-text{
+.cd-footer-text {
   font-size: 14px;
   opacity: 0.95;
   margin: 4px 0;
 }
 
-.cd-footer-bottom{
+.cd-footer-bottom {
   max-width: 1200px;
   margin: 14px auto 0;
-  border-top: 1px solid rgba(255,255,255,0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
   padding-top: 10px;
   text-align: center;
   font-size: 14px;
@@ -335,17 +366,38 @@
 }
 
 /* ------------------ RESPONSIVE (keeps same layout but fits screen) ------------------ */
-@media (max-width: 1100px){
-  .hh-form{ max-width: 900px; }
-  .hh-fin-grid{ grid-template-columns: 1fr 1fr 280px; }
+@media (max-width: 1100px) {
+  .hh-form {
+    max-width: 900px;
+  }
+
+  .hh-fin-grid {
+    grid-template-columns: 1fr 1fr 280px;
+  }
 }
 
-@media (max-width: 980px){
-  .hh-grid-3{ grid-template-columns: 1fr; }
-  .hh-grid-2{ grid-template-columns: 1fr; gap: 18px; }
-  .hh-fin-grid{ grid-template-columns: 1fr; }
-  .hh-notes{ grid-row: auto; }
-  .cd-footer-grid{ grid-template-columns: 1fr; gap: 16px; }
+@media (max-width: 980px) {
+  .hh-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .hh-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .hh-fin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hh-notes {
+    grid-row: auto;
+  }
+
+  .cd-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 /* ================================
@@ -356,15 +408,18 @@
 input,
 textarea,
 select {
-  color: #000;                 /* BLACK text */
+  color: #000;
+  /* BLACK text */
   font-weight: 500;
 }
 
 /* Placeholder text */
 input::placeholder,
 textarea::placeholder {
-  color: #000;                 /* BLACK placeholder */
-  opacity: 1;                  /* remove light gray */
+  color: #000;
+  /* BLACK placeholder */
+  opacity: 1;
+  /* remove light gray */
 }
 
 /* Dropdown selected value */
@@ -406,5 +461,3 @@ select:disabled {
 .hh-form button {
   color: #000;
 }
-
-

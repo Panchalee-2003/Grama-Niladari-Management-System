@@ -92,7 +92,7 @@ export default function Notices() {
         </div>
 
         <div className="cd-top-right">
-          <button className="cd-about-btn">About Us</button>
+          <Link to="/about" className="cd-about-btn">About Us</Link>
           <div className="cd-profile-circle" aria-label="profile">
             <IconUser />
           </div>
@@ -157,7 +157,7 @@ export default function Notices() {
                 Ceremony - 2025
               </div>
               <Link to="/notices/housing-project" className="nt-more">
-                 View more...
+                View more...
               </Link>
 
 

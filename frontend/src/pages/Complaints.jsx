@@ -106,7 +106,7 @@ export default function Complaints() {
         </div>
 
         <div className="cd-top-right">
-          <button className="cd-about-btn">About Us</button>
+          <Link to="/about" className="cd-about-btn">About Us</Link>
           <div className="cd-profile-circle" aria-label="profile">
             <IconUser />
           </div>
@@ -182,9 +182,9 @@ export default function Complaints() {
             <div className="cp-submit-wrap">
               <button className="cp-submit-btn">Submit</button>
 
-               <Link to="/complaint-status" className="cp-link">
-                  View previous complaint status...
-                </Link>
+              <Link to="/complaint-status" className="cp-link">
+                View previous complaint status...
+              </Link>
             </div>
 
 

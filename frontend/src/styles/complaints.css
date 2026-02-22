@@ -1,6 +1,6 @@
 /* PAGE */
 
-.cp-page{
+.cp-page {
   width: 100vw;
   min-height: 100vh;
   background: #D9D9D9;
@@ -8,7 +8,7 @@
 }
 
 /* ------------------ TOP HEADER (same as your other pages) ------------------ */
-.cd-top{
+.cd-top {
   height: 86px;
   background: #D9D9D9;
   display: flex;
@@ -17,39 +17,39 @@
   padding: 0 26px;
 }
 
-.cd-top-left{
+.cd-top-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.cd-emblem{
+.cd-emblem {
   width: 44px;
   height: 44px;
   object-fit: contain;
 }
 
-.cd-title{
+.cd-title {
   font-size: 28px;
   font-weight: 800;
   line-height: 1.1;
   color: #111;
 }
 
-.cd-subtitle{
+.cd-subtitle {
   font-size: 14px;
   margin-top: 2px;
   opacity: 0.85;
   color: #111;
 }
 
-.cd-top-right{
+.cd-top-right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.cd-about-btn{
+.cd-about-btn {
   background: #0C7A3B;
   color: #fff;
   border: none;
@@ -58,9 +58,13 @@
   font-weight: 800;
   font-size: 18px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cd-profile-circle{
+.cd-profile-circle {
   width: 44px;
   height: 44px;
   border-radius: 999px;
@@ -69,16 +73,18 @@
   align-items: center;
   justify-content: center;
 }
-.cd-profile-circle svg{
+
+.cd-profile-circle svg {
   width: 24px;
   height: 24px;
 }
-.cd-profile-circle svg path{
+
+.cd-profile-circle svg path {
   stroke: #fff !important;
 }
 
 /* ------------------ NAV ------------------ */
-.cd-nav{
+.cd-nav {
   height: 62px;
   background: #0C7A3B;
   display: flex;
@@ -86,7 +92,7 @@
   justify-content: space-evenly;
 }
 
-.cd-nav-item{
+.cd-nav-item {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -96,29 +102,29 @@
   font-size: 16px;
 }
 
-.cd-nav-item svg{
+.cd-nav-item svg {
   width: 34px;
   height: 34px;
 }
 
-.cd-active{
+.cd-active {
   filter: none;
 }
 
 /* ------------------ MAIN LAYOUT ------------------ */
-.cp-main{
+.cp-main {
   padding: 70px 90px 70px;
   min-height: calc(100vh - 86px - 62px - 220px);
 }
 
-.cp-title{
+.cp-title {
   font-size: 40px;
   font-weight: 800;
   color: #111;
   margin-bottom: 26px;
 }
 
-.cp-grid{
+.cp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 140px;
@@ -126,11 +132,11 @@
 }
 
 /* Fields */
-.cp-field{
+.cp-field {
   margin-bottom: 28px;
 }
 
-.cp-label{
+.cp-label {
   display: block;
   font-size: 18px;
   font-weight: 500;
@@ -139,7 +145,7 @@
 }
 
 /* Inputs */
-.cp-input{
+.cp-input {
   width: 620px;
   max-width: 100%;
   height: 56px;
@@ -152,7 +158,7 @@
   color: #111;
 }
 
-.cp-textarea{
+.cp-textarea {
   width: 620px;
   max-width: 100%;
   height: 220px;
@@ -167,12 +173,12 @@
 }
 
 .cp-input::placeholder,
-.cp-textarea::placeholder{
+.cp-textarea::placeholder {
   color: #666;
 }
 
 /* Attachment upload box */
-.cp-upload{
+.cp-upload {
   width: 380px;
   max-width: 100%;
   height: 56px;
@@ -186,19 +192,19 @@
   position: relative;
 }
 
-.cp-upload-text{
+.cp-upload-text {
   font-size: 20px;
   color: #666;
 }
 
-.cp-upload-ico{
+.cp-upload-ico {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 /* invisible real input */
-.cp-file{
+.cp-file {
   position: absolute;
   inset: 0;
   opacity: 0;
@@ -206,7 +212,7 @@
 }
 
 /* Submit button */
-.cp-submit{
+.cp-submit {
   margin-top: 22px;
   width: 190px;
   height: 56px;
@@ -218,16 +224,18 @@
   font-weight: 800;
   cursor: pointer;
 }
-.cp-submit-wrap{
+
+.cp-submit-wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* center under button */
+  align-items: center;
+  /* center under button */
   gap: 14px;
   margin-top: 24px;
 }
 
 /* Submit button (unchanged) */
-.cp-submit-btn{
+.cp-submit-btn {
   background: #0C7A3B;
   color: #fff;
   border: none;
@@ -239,26 +247,26 @@
 }
 
 /* Link under submit */
-.cp-link{
+.cp-link {
   font-size: 18px;
   color: #0C7A3B;
   font-weight: 500;
   text-decoration: none;
 }
 
-.cp-link:hover{
+.cp-link:hover {
   text-decoration: underline;
 }
 
 
 /* ------------------ FOOTER (same as your other pages) ------------------ */
-.cd-footer{
+.cd-footer {
   background: #0C7A3B;
   color: #fff;
   padding: 18px 22px 10px;
 }
 
-.cd-footer-grid{
+.cd-footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
@@ -266,22 +274,22 @@
   margin: 0 auto;
 }
 
-.cd-footer-title{
+.cd-footer-title {
   font-weight: 900;
   margin-bottom: 10px;
   font-size: 16px;
 }
 
-.cd-footer-text{
+.cd-footer-text {
   font-size: 14px;
   opacity: 0.95;
   margin: 4px 0;
 }
 
-.cd-footer-bottom{
+.cd-footer-bottom {
   max-width: 1200px;
   margin: 14px auto 0;
-  border-top: 1px solid rgba(255,255,255,0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
   padding-top: 10px;
   text-align: center;
   font-size: 14px;
@@ -289,12 +297,29 @@
 }
 
 /* responsive */
-@media (max-width: 1100px){
-  .cp-main{ padding: 50px 30px 60px; }
-  .cp-grid{ grid-template-columns: 1fr; gap: 40px; }
-  .cp-input, .cp-textarea{ width: 100%; }
-  .cp-upload{ width: 100%; }
+@media (max-width: 1100px) {
+  .cp-main {
+    padding: 50px 30px 60px;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cp-input,
+  .cp-textarea {
+    width: 100%;
+  }
+
+  .cp-upload {
+    width: 100%;
+  }
 }
-@media (max-width: 980px){
-  .cd-footer-grid{ grid-template-columns: 1fr; gap: 16px; }
+
+@media (max-width: 980px) {
+  .cd-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }

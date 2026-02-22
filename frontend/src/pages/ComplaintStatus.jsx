@@ -61,7 +61,7 @@ export default function ComplaintStatus() {
         </div>
 
         <div className="cd-top-right">
-          <button className="cd-about-btn">About Us</button>
+          <Link to="/about" className="cd-about-btn">About Us</Link>
           <div className="cd-profile-circle" aria-label="profile">
             <IconUser />
           </div>

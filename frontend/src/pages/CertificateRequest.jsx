@@ -114,9 +114,9 @@ export default function CertificateRequest() {
         </div>
 
         <div className="gn-header-right">
-          <button className="gn-about-btn" type="button">
+          <Link to="/about" className="gn-about-btn">
             About Us
-          </button>
+          </Link>
           <div className="gn-profile-btn" role="button" tabIndex={0} aria-label="Profile">
             <ProfileIcon />
           </div>
