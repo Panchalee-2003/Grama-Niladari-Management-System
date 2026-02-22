@@ -196,6 +196,9 @@ export default function Login() {
         <div className="center-links">
           Don't have an account? <Link to="/register">Register as citizen</Link>
         </div>
+        <div className="center-links">
+          GN Officer? <Link to="/signup">Create an officer account</Link>
+        </div>
       </form>
     </AuthLayout>
   );

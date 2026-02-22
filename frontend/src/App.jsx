@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import RegisterCitizen from "./pages/RegisterCitizen.jsx";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyOTP from "./pages/VerifyOTP";
@@ -43,6 +44,7 @@ export default function App() {
 
         {/* auth */}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/register" element={<RegisterCitizen />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
