@@ -79,9 +79,11 @@ export default function HouseholdRegistration() {
     income_source: "",
     govt_aid: "",
     income_range: "",
-    aid_type: "",
     notes: "",
   });
+
+  // Each entry: { aid_type: string, receivers: string[] }
+  const [aidEntries, setAidEntries] = useState([{ aid_type: "", receivers: [] }]);
 
   function updateMember(index, key, value) {
     setMembers((prev) => prev.map((m, i) => (i === index ? { ...m, [key]: value } : m)));
@@ -98,6 +100,35 @@ export default function HouseholdRegistration() {
 
   function onReset() {
     window.location.reload();
+  }
+
+  function addAidEntry() {
+    setAidEntries((prev) => [...prev, { aid_type: "", receivers: [] }]);
+  }
+
+  function removeAidEntry(index) {
+    setAidEntries((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function updateAidType(index, value) {
+    setAidEntries((prev) =>
+      prev.map((e, i) => (i === index ? { ...e, aid_type: value } : e))
+    );
+  }
+
+  function toggleReceiver(index, memberName) {
+    setAidEntries((prev) =>
+      prev.map((e, i) => {
+        if (i !== index) return e;
+        const already = e.receivers.includes(memberName);
+        return {
+          ...e,
+          receivers: already
+            ? e.receivers.filter((n) => n !== memberName)
+            : [...e.receivers, memberName],
+        };
+      })
+    );
   }
 
   return (
@@ -427,25 +458,77 @@ export default function HouseholdRegistration() {
                   <option>&gt; 100,000</option>
                 </select>
               </div>
-
-              <div className="hh-field">
-                <label className="hh-label">If yes, Specify Type</label>
-                <select
-                  className="hh-select"
-                  value={fin.aid_type}
-                  onChange={(e) => setFin({ ...fin, aid_type: e.target.value })}
-                >
-                  <option value=""></option>
-                  <option>Samurdhi</option>
-                  <option>Comfort Allowance</option>
-                  <option>Elder</option>
-                  <option>Public Assistance</option>
-                  <option>Disability</option>
-                  <option>Sickness Assistance</option>
-                  <option>Other</option>
-                </select>
-              </div>
             </div>
+
+            {/* ── Aid entries panel — only when Govt Aid = Yes ── */}
+            {fin.govt_aid === "Yes" && (
+              <div className="hh-aid-section">
+                {aidEntries.map((entry, idx) => (
+                  <div key={idx} className="hh-aid-entry">
+                    <div className="hh-aid-entry-header">
+                      <span className="hh-aid-entry-num">Aid #{idx + 1}</span>
+                      {aidEntries.length > 1 && (
+                        <button
+                          type="button"
+                          className="hh-aid-remove"
+                          onClick={() => removeAidEntry(idx)}
+                        >
+                          ✕ Remove
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="hh-field">
+                      <label className="hh-label">Aid / Benefit Type</label>
+                      <select
+                        className="hh-select hh-aid-select"
+                        value={entry.aid_type}
+                        onChange={(e) => updateAidType(idx, e.target.value)}
+                      >
+                        <option value=""></option>
+                        <option>Samurdhi</option>
+                        <option>Comfort Allowance</option>
+                        <option>Elder</option>
+                        <option>Public Assistance</option>
+                        <option>Disability</option>
+                        <option>Sickness Assistance</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+
+                    <div className="hh-field">
+                      <label className="hh-label">Receiver(s) / Beneficiary(ies)</label>
+                      <div className="hh-receiver-grid">
+                        {members.map((m, mi) => {
+                          const name =
+                            m.full_name.trim() ||
+                            `Member ${String(mi + 1).padStart(2, "0")}`;
+                          const checked = entry.receivers.includes(name);
+                          return (
+                            <label key={mi} className="hh-receiver-item">
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => toggleReceiver(idx, name)}
+                              />
+                              <span>{name}</span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  className="hh-aid-add"
+                  onClick={addAidEntry}
+                >
+                  + Add Another Aid Type
+                </button>
+              </div>
+            )}
           </section>
 
           {/* DECLARATION */}

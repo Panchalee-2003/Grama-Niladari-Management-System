@@ -461,3 +461,84 @@ select:disabled {
 .hh-form button {
   color: #000;
 }
+
+/* ── Aid entries panel ── */
+.hh-aid-section {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hh-aid-entry {
+  background: #f3fbf7;
+  border: 1px solid #0C7A3B;
+  border-radius: 8px;
+  padding: 14px 16px 12px;
+}
+
+.hh-aid-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.hh-aid-entry-num {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0C7A3B;
+  letter-spacing: 0.3px;
+}
+
+.hh-aid-remove {
+  background: #fff;
+  border: 1px solid #DC2626;
+  color: #DC2626 !important;
+  border-radius: 6px;
+  padding: 4px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hh-aid-select {
+  max-width: 320px;
+}
+
+.hh-receiver-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  padding: 8px 2px 4px;
+}
+
+.hh-receiver-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #111;
+}
+
+.hh-receiver-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0C7A3B;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hh-aid-add {
+  align-self: flex-start;
+  background: #0C7A3B;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
