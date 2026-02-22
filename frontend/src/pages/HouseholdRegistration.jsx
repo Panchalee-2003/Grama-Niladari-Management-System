@@ -437,8 +437,11 @@ export default function HouseholdRegistration() {
                 >
                   <option value=""></option>
                   <option>Samurdhi</option>
+                  <option>Comfort Allowance</option>
                   <option>Elder</option>
+                  <option>Public Assistance</option>
                   <option>Disability</option>
+                  <option>Sickness Assistance</option>
                   <option>Other</option>
                 </select>
               </div>
