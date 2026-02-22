@@ -212,9 +212,22 @@ export default function HouseholdRegistration() {
               <div className="hh-field">
                 <label className="hh-label">No of Family Members</label>
                 <div className="hh-mini-btns">
-                  <button type="button" className="hh-mini">Male</button>
-                  <button type="button" className="hh-mini">Female</button>
-                  <button type="button" className="hh-mini">Total</button>
+                  <div className="hh-count-chip">
+                    <span className="hh-count-lbl">Male</span>
+                    <span className="hh-count-val">
+                      {members.filter((m) => m.gender === "Male").length}
+                    </span>
+                  </div>
+                  <div className="hh-count-chip">
+                    <span className="hh-count-lbl">Female</span>
+                    <span className="hh-count-val">
+                      {members.filter((m) => m.gender === "Female").length}
+                    </span>
+                  </div>
+                  <div className="hh-count-chip hh-count-total">
+                    <span className="hh-count-lbl">Total</span>
+                    <span className="hh-count-val">{members.length}</span>
+                  </div>
                 </div>
               </div>
             </div>
