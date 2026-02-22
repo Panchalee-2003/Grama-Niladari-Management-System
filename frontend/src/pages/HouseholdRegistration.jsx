@@ -89,8 +89,21 @@ export default function HouseholdRegistration() {
     setMembers((prev) => prev.map((m, i) => (i === index ? { ...m, [key]: value } : m)));
   }
 
+  function isMemberComplete(m) {
+    return (
+      m.full_name.trim() !== "" &&
+      m.nic.trim() !== "" &&
+      m.dob.trim() !== "" &&
+      m.relationship.trim() !== ""
+    );
+  }
+
   function addMember() {
     setMembers((prev) => [...prev, emptyMember()]);
+  }
+
+  function removeMember(index) {
+    setMembers((prev) => prev.filter((_, i) => i !== index));
   }
 
   function onSubmit(e) {
@@ -244,28 +257,50 @@ export default function HouseholdRegistration() {
             </div>
           </section>
 
-          {/* SECTION 2 - ✅ Dynamic Members */}
+          {/* SECTION 2 — Dynamic Members */}
           <section className="hh-box">
             <h2 className="hh-box-title">Family member details</h2>
 
             {members.map((m, idx) => (
-              <div key={idx} style={{ marginBottom: idx === members.length - 1 ? 0 : 18 }}>
-                <div className="hh-member-row">
-                  <div className="hh-member-label">Member {String(idx + 1).padStart(2, "0")}</div>
+              <div key={idx} className="hh-member-card">
+                {/* Card header: label + remove button */}
+                <div className="hh-member-header">
+                  <span className="hh-member-label">
+                    Member {String(idx + 1).padStart(2, "0")}
+                    {idx === 0 && (
+                      <span className="hh-member-primary-badge">Primary Householder</span>
+                    )}
+                  </span>
+                  {idx > 0 && (
+                    <button
+                      type="button"
+                      className="hh-remove-btn"
+                      onClick={() => removeMember(idx)}
+                    >
+                      ✕ Remove Member
+                    </button>
+                  )}
                 </div>
 
+                {/* Full Name */}
                 <div className="hh-field">
-                  <label className="hh-label">Full Name</label>
+                  <label className="hh-label">
+                    Full Name <span className="hh-required">*</span>
+                  </label>
                   <input
                     className="hh-input hh-input-lg"
                     value={m.full_name}
+                    placeholder="Enter full name"
                     onChange={(e) => updateMember(idx, "full_name", e.target.value)}
                   />
                 </div>
 
+                {/* Row 1: Relationship | Gender | Religion */}
                 <div className="hh-grid-3">
                   <div className="hh-field">
-                    <label className="hh-label">Relationship To Head</label>
+                    <label className="hh-label">
+                      Relationship To Head <span className="hh-required">*</span>
+                    </label>
                     <select
                       className="hh-select"
                       value={m.relationship}
@@ -310,6 +345,7 @@ export default function HouseholdRegistration() {
                   </div>
                 </div>
 
+                {/* Row 2: Civil Status | NIC | DOB */}
                 <div className="hh-grid-3">
                   <div className="hh-field">
                     <label className="hh-label">Civil Status</label>
@@ -327,25 +363,32 @@ export default function HouseholdRegistration() {
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">NIC Number</label>
+                    <label className="hh-label">
+                      NIC Number <span className="hh-required">*</span>
+                    </label>
                     <input
                       className="hh-input"
                       value={m.nic}
+                      placeholder="000000000V"
                       onChange={(e) => updateMember(idx, "nic", e.target.value)}
                     />
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">Date of Birth</label>
+                    <label className="hh-label">
+                      Date of Birth <span className="hh-required">*</span>
+                    </label>
                     <input
                       className="hh-input"
+                      type="date"
                       value={m.dob}
                       onChange={(e) => updateMember(idx, "dob", e.target.value)}
                     />
                   </div>
                 </div>
 
-                <div className="hh-grid-3 hh-grid-last">
+                {/* Row 3: Education | Employment | Special Needs */}
+                <div className="hh-grid-3">
                   <div className="hh-field">
                     <label className="hh-label">Education Level</label>
                     <select
@@ -377,7 +420,7 @@ export default function HouseholdRegistration() {
                     </select>
                   </div>
 
-                  <div className="hh-field hh-add-wrap">
+                  <div className="hh-field">
                     <label className="hh-label">Special Needs or Disability</label>
                     <select
                       className="hh-select"
@@ -388,17 +431,27 @@ export default function HouseholdRegistration() {
                       <option>None</option>
                       <option>Yes</option>
                     </select>
-
-                    {/* ✅ only show the add button on the LAST member (same as figma position) */}
-                    {idx === members.length - 1 && (
-                      <button type="button" className="hh-add-btn" onClick={addMember}>
-                        Add member
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
             ))}
+
+            {/* ── Add Member row – below all cards ── */}
+            <div className="hh-add-member-row">
+              <button
+                type="button"
+                className="hh-add-member-btn"
+                disabled={!isMemberComplete(members[members.length - 1])}
+                onClick={addMember}
+              >
+                + Add Member
+              </button>
+              {!isMemberComplete(members[members.length - 1]) && (
+                <span className="hh-add-hint">
+                  Fill required fields (*) on the current member to add another
+                </span>
+              )}
+            </div>
           </section>
 
           {/* SECTION 3 */}

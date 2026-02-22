@@ -542,3 +542,101 @@ select:disabled {
   font-size: 14px;
   cursor: pointer;
 }
+
+/* ── Member cards ── */
+.hh-member-card {
+  background: #fff;
+  border-left: 4px solid #0C7A3B;
+  border-radius: 6px;
+  padding: 14px 16px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.hh-member-card:last-of-type {
+  margin-bottom: 0;
+}
+
+.hh-member-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.hh-member-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0C7A3B;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hh-member-primary-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background: #e6f4ec;
+  color: #0C7A3B;
+  border: 1px solid #b2dfc4;
+  border-radius: 20px;
+  padding: 2px 10px;
+  letter-spacing: 0.2px;
+}
+
+.hh-remove-btn {
+  background: #fff;
+  border: 1px solid #DC2626;
+  color: #DC2626 !important;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.hh-remove-btn:hover {
+  background: #fff5f5;
+}
+
+/* Required asterisk */
+.hh-required {
+  color: #DC2626;
+  font-weight: 900;
+  margin-left: 2px;
+}
+
+/* ── Add Member row (below member list) ── */
+.hh-add-member-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.hh-add-member-btn {
+  height: 36px;
+  padding: 0 22px;
+  background: #0C7A3B;
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.hh-add-member-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.hh-add-hint {
+  font-size: 13px;
+  font-style: italic;
+  color: #888;
+}
