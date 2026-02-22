@@ -85,8 +85,36 @@ export default function HouseholdRegistration() {
   // Each entry: { aid_type: string, receivers: string[] }
   const [aidEntries, setAidEntries] = useState([{ aid_type: "", receivers: [] }]);
 
+  // ── Validation error states ──
+  // Phone error for household (Section 1)
+  const [houseErrors, setHouseErrors] = useState({ phone: "" });
+  // NIC error per member — parallel array to `members`
+  const [nicErrors, setNicErrors] = useState([""]);
+
+
   function updateMember(index, key, value) {
     setMembers((prev) => prev.map((m, i) => (i === index ? { ...m, [key]: value } : m)));
+  }
+
+  // ── Validation helpers ──
+  function validateNIC(val) {
+    const trimmed = val.trim();
+    if (trimmed === "") return ""; // let the required-field check handle empty
+    const oldFmt = /^\d{9}[VXvx]$/;
+    const newFmt = /^\d{12}$/;
+    if (!oldFmt.test(trimmed) && !newFmt.test(trimmed)) {
+      return "Please enter a valid Sri Lankan NIC number.";
+    }
+    return "";
+  }
+
+  function validatePhone(val) {
+    const trimmed = val.trim();
+    if (trimmed === "") return ""; // empty rule handled separately
+    if (!/^0\d{9}$/.test(trimmed)) {
+      return "Invalid phone number. Must be 10 digits starting with 0.";
+    }
+    return "";
   }
 
   function isMemberComplete(m) {
@@ -100,10 +128,12 @@ export default function HouseholdRegistration() {
 
   function addMember() {
     setMembers((prev) => [...prev, emptyMember()]);
+    setNicErrors((prev) => [...prev, ""]);
   }
 
   function removeMember(index) {
     setMembers((prev) => prev.filter((_, i) => i !== index));
+    setNicErrors((prev) => prev.filter((_, i) => i !== index));
   }
 
   function onSubmit(e) {
@@ -196,8 +226,20 @@ export default function HouseholdRegistration() {
                 <input
                   className="hh-input"
                   value={house.phone}
-                  onChange={(e) => setHouse({ ...house, phone: e.target.value })}
+                  placeholder="0771234567"
+                  style={houseErrors.phone ? { borderColor: "#DC2626" } : {}}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setHouse({ ...house, phone: val });
+                    setHouseErrors((prev) => ({ ...prev, phone: validatePhone(val) }));
+                  }}
+                  onBlur={() =>
+                    setHouseErrors((prev) => ({ ...prev, phone: validatePhone(house.phone) }))
+                  }
                 />
+                {houseErrors.phone && (
+                  <span className="hh-err-msg">{houseErrors.phone}</span>
+                )}
               </div>
 
               <div className="hh-field">
@@ -382,9 +424,24 @@ export default function HouseholdRegistration() {
                     <input
                       className="hh-input"
                       value={m.nic}
-                      placeholder="000000000V"
-                      onChange={(e) => updateMember(idx, "nic", e.target.value)}
+                      placeholder="000000000V or 199012345678"
+                      style={nicErrors[idx] ? { borderColor: "#DC2626" } : {}}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        updateMember(idx, "nic", val);
+                        setNicErrors((prev) =>
+                          prev.map((err, i) => (i === idx ? validateNIC(val) : err))
+                        );
+                      }}
+                      onBlur={() =>
+                        setNicErrors((prev) =>
+                          prev.map((err, i) => (i === idx ? validateNIC(m.nic) : err))
+                        )
+                      }
                     />
+                    {nicErrors[idx] && (
+                      <span className="hh-err-msg">{nicErrors[idx]}</span>
+                    )}
                   </div>
 
                   <div className="hh-field">
@@ -454,16 +511,22 @@ export default function HouseholdRegistration() {
               <button
                 type="button"
                 className="hh-add-member-btn"
-                disabled={!isMemberComplete(members[members.length - 1])}
+                disabled={
+                  !isMemberComplete(members[members.length - 1]) ||
+                  !!nicErrors[members.length - 1]
+                }
                 onClick={addMember}
               >
                 + Add Member
               </button>
-              {!isMemberComplete(members[members.length - 1]) && (
-                <span className="hh-add-hint">
-                  Fill required fields (*) on the current member to add another
-                </span>
-              )}
+              {(!isMemberComplete(members[members.length - 1]) ||
+                !!nicErrors[members.length - 1]) && (
+                  <span className="hh-add-hint">
+                    {nicErrors[members.length - 1]
+                      ? "Fix the NIC error before adding another member"
+                      : "Fill required fields (*) on the current member to add another"}
+                  </span>
+                )}
             </div>
           </section>
 

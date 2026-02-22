@@ -642,6 +642,16 @@ select:disabled {
   margin-left: 2px;
 }
 
+/* Inline validation error messages */
+.hh-err-msg {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #DC2626;
+  line-height: 1.3;
+}
+
 /* ── Add Member row (below member list) ── */
 .hh-add-member-row {
   display: flex;
