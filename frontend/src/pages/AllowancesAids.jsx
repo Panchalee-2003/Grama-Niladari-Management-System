@@ -234,37 +234,37 @@ function AllowancesAids() {
         </div>
 
         <nav className="aa-nav">
-          <a className="aa-navItem" href="#">
+          <Link className="aa-navItem" to="/gn">
             <span className="aa-navIcon"><IconHome /></span>
             <span className="aa-navText">Dashboard</span>
-          </a>
-          <a className="aa-navItem" href="#">
+          </Link>
+          <Link className="aa-navItem" to="/gn-households">
             <span className="aa-navIcon"><IconUsers /></span>
             <span className="aa-navText">Households</span>
-          </a>
-          <a className="aa-navItem" href="#">
+          </Link>
+          <Link className="aa-navItem" to="/gn-certificates">
             <span className="aa-navIcon"><IconDoc /></span>
             <span className="aa-navText">Certificates</span>
-          </a>
-          <a className="aa-navItem" href="#">
+          </Link>
+          <Link className="aa-navItem" to="/gn-complaints">
             <span className="aa-navIcon"><IconFlag /></span>
             <span className="aa-navText">Complaints</span>
-          </a>
-          <a className="aa-navItem" href="#">
+          </Link>
+          <Link className="aa-navItem" to="/gn-notices">
             <span className="aa-navIcon"><IconBell /></span>
             <span className="aa-navText">Notices</span>
-          </a>
-          <a className="aa-navItem aa-active" href="#">
+          </Link>
+          <Link className="aa-navItem aa-active" to="/gn-allowances">
             <span className="aa-navIcon"><IconAid /></span>
             <span className="aa-navText">Allowances &amp; Aids</span>
-          </a>
+          </Link>
         </nav>
 
         <div className="aa-sideBottom">
-          <a className="aa-settings" href="#">
+          <Link className="aa-settings" to="/gn">
             <span className="aa-navIcon"><IconGear /></span>
             <span className="aa-navText">Settings</span>
-          </a>
+          </Link>
         </div>
       </aside>
 
