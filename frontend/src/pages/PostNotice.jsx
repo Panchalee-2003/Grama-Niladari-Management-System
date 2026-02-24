@@ -100,7 +100,7 @@ export default function PostNotice() {
             <span>Dashboard</span>
           </Link>
 
-          <Link className="pn-item" to="/household-verify">
+          <Link className="pn-item" to="/gn-households">
             <span className="pn-ico"><IconUsers /></span>
             <span>Households</span>
           </Link>
@@ -110,7 +110,7 @@ export default function PostNotice() {
             <span>Certificates</span>
           </Link>
 
-          <Link className="pn-item" to="/complaint-management">
+          <Link className="pn-item" to="/gn-complaints">
             <span className="pn-ico"><IconFlag /></span>
             <span>Complaints</span>
           </Link>
