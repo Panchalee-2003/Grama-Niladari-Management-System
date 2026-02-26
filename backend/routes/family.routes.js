@@ -10,7 +10,7 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     const {
       household_id,
       full_name,
-      nic,
+      nic_number,
       dob,
       gender,
       relationship_to_head,
@@ -40,14 +40,14 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
 
     const result = await pool.query(
       `INSERT INTO family_member
-       (household_id, full_name, nic, dob, gender, relationship_to_head, civil_status,
+       (household_id, full_name, nic_number, dob, gender, relationship_to_head, civil_status,
         education_level, employment_status, religion, special_needs)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
        RETURNING member_id`,
       [
         household_id,
         full_name,
-        nic || null,
+        nic_number || null,
         dob || null,
         gender || null,
         relationship_to_head || null,
@@ -61,7 +61,7 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
 
     return res.status(201).json({ ok: true, member_id: result.rows[0].member_id });
   } catch (err) {
-    if (err.code === "23505") { // Postgres unique violation
+    if (err.code === "23505") {
       return res.status(409).json({ ok: false, error: "NIC already exists" });
     }
     console.error(err);

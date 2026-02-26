@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/householdRegistration.css";
+import api from "../api/api";
 
 import emblem from "../assets/emblem.png";
 
@@ -45,6 +46,36 @@ function IconBell() {
   );
 }
 
+// --- Success banner shown after submit ---
+function SuccessBanner({ householdId }) {
+  return (
+    <div className="hh-success-wrap">
+      <div className="hh-success-card">
+        <div className="hh-success-icon">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#16a34a" />
+            <path d="M7 12.5l3.5 3.5 6-7" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <h2 className="hh-success-title">Registration Submitted!</h2>
+        <p className="hh-success-msg">
+          Your household registration has been received and is now{" "}
+          <span className="hh-pending-badge">Pending Verification</span> by the
+          Grama Niladhari officer.
+        </p>
+        {householdId && (
+          <p className="hh-success-id">Reference ID: <strong>#{householdId}</strong></p>
+        )}
+        <p className="hh-success-note">
+          You will be notified once the GN officer reviews your application.
+          Please visit the office if further information is required.
+        </p>
+        <Link to="/citizen" className="hh-success-home-btn">Back to Home</Link>
+      </div>
+    </div>
+  );
+}
+
 const emptyMember = () => ({
   full_name: "",
   relationship: "",
@@ -60,8 +91,12 @@ const emptyMember = () => ({
 
 export default function HouseholdRegistration() {
   const [agree, setAgree] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [householdId, setHouseholdId] = useState(null);
 
-  // household basic info (UI only)
+  // household basic info
   const [house, setHouse] = useState({
     holder_name: "",
     phone: "",
@@ -71,10 +106,10 @@ export default function HouseholdRegistration() {
     water: "",
   });
 
-  // ✅ dynamic members
+  // dynamic members
   const [members, setMembers] = useState([emptyMember()]);
 
-  // financial (UI only)
+  // financial
   const [fin, setFin] = useState({
     income_source: "",
     govt_aid: "",
@@ -86,9 +121,7 @@ export default function HouseholdRegistration() {
   const [aidEntries, setAidEntries] = useState([{ aid_type: "", receivers: [] }]);
 
   // ── Validation error states ──
-  // Phone error for household (Section 1)
   const [houseErrors, setHouseErrors] = useState({ phone: "" });
-  // NIC error per member — parallel array to `members`
   const [nicErrors, setNicErrors] = useState([""]);
 
 
@@ -99,7 +132,7 @@ export default function HouseholdRegistration() {
   // ── Validation helpers ──
   function validateNIC(val) {
     const trimmed = val.trim();
-    if (trimmed === "") return ""; // let the required-field check handle empty
+    if (trimmed === "") return "";
     const oldFmt = /^\d{9}[VXvx]$/;
     const newFmt = /^\d{12}$/;
     if (!oldFmt.test(trimmed) && !newFmt.test(trimmed)) {
@@ -110,7 +143,7 @@ export default function HouseholdRegistration() {
 
   function validatePhone(val) {
     const trimmed = val.trim();
-    if (trimmed === "") return ""; // empty rule handled separately
+    if (trimmed === "") return "";
     if (!/^0\d{9}$/.test(trimmed)) {
       return "Invalid phone number. Must be 10 digits starting with 0.";
     }
@@ -136,9 +169,77 @@ export default function HouseholdRegistration() {
     setNicErrors((prev) => prev.filter((_, i) => i !== index));
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
-    // UI only for now
+    setSubmitError("");
+
+    // Basic required-field guard
+    if (!house.holder_name.trim() || !house.address.trim()) {
+      setSubmitError("Please fill in Householder Name and Address.");
+      return;
+    }
+    if (houseErrors.phone) {
+      setSubmitError("Please fix the phone number error before submitting.");
+      return;
+    }
+    const hasNicError = nicErrors.some((err) => err !== "");
+    if (hasNicError) {
+      setSubmitError("Please fix the NIC errors before submitting.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      // 1️⃣ Create the household
+      const hhRes = await api.post("/api/household", {
+        householder_name: house.holder_name.trim(),
+        household_no: house.house_no.trim() || null,
+        address: house.address.trim(),
+        electricity_connection: house.electricity || "No",
+        water_supply: house.water || "No",
+        phone_number: house.phone.trim() || null,
+        income_source: fin.income_source || null,
+        govt_aid: fin.govt_aid || null,
+        income_range: fin.income_range || null,
+        notes: fin.notes.trim() || null,
+      });
+
+      if (!hhRes.data.ok) {
+        throw new Error(hhRes.data.error || "Failed to create household");
+      }
+
+      const newHouseholdId = hhRes.data.household_id;
+
+      // 2️⃣ Create each family member
+      for (const m of members) {
+        if (!m.full_name.trim()) continue; // skip blank slots
+        await api.post("/api/family", {
+          household_id: newHouseholdId,
+          full_name: m.full_name.trim(),
+          nic_number: m.nic.trim() || null,
+          dob: m.dob || null,
+          gender: m.gender || null,
+          relationship_to_head: m.relationship || null,
+          civil_status: m.civil_status || null,
+          education_level: m.education || null,
+          employment_status: m.employment || null,
+          religion: m.religion || null,
+          special_needs: m.special_needs || null,
+        });
+      }
+
+      // 3️⃣ Show success state
+      setHouseholdId(newHouseholdId);
+      setSubmitted(true);
+    } catch (err) {
+      const msg =
+        err?.response?.data?.error ||
+        err?.message ||
+        "Something went wrong. Please try again.";
+      setSubmitError(msg);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function onReset() {
@@ -171,6 +272,40 @@ export default function HouseholdRegistration() {
             : [...e.receivers, memberName],
         };
       })
+    );
+  }
+
+  // Show success banner when submitted
+  if (submitted) {
+    return (
+      <div className="hh-page">
+        {/* TOP HEADER */}
+        <header className="cd-top">
+          <div className="cd-top-left">
+            <img className="cd-emblem" src={emblem} alt="Emblem" />
+            <div className="cd-top-text">
+              <div className="cd-title">Grama Niladhari Division - Maspanna</div>
+              <div className="cd-subtitle">Ministry of Home Affairs</div>
+            </div>
+          </div>
+          <div className="cd-top-right">
+            <Link to="/about" className="cd-about-btn">About Us</Link>
+            <div className="cd-profile-circle" aria-label="profile">
+              <IconUser />
+            </div>
+          </div>
+        </header>
+
+        <nav className="cd-nav">
+          <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
+          <Link className="cd-nav-item cd-active" to="/household"><IconUser /><span>Household</span></Link>
+          <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
+          <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
+          <Link className="cd-nav-item" to="/notices"><IconBell /><span>Notices</span></Link>
+        </nav>
+
+        <SuccessBanner householdId={householdId} />
+      </div>
     );
   }
 
@@ -212,7 +347,7 @@ export default function HouseholdRegistration() {
             <h2 className="hh-box-title">Household basic Information</h2>
 
             <div className="hh-field">
-              <label className="hh-label">Householder’s Full Name</label>
+              <label className="hh-label">Householder's Full Name</label>
               <input
                 className="hh-input hh-input-lg"
                 value={house.holder_name}
@@ -676,13 +811,31 @@ export default function HouseholdRegistration() {
             </label>
           </div>
 
+          {/* Inline error message */}
+          {submitError && (
+            <div className="hh-submit-error">
+              ⚠️ {submitError}
+            </div>
+          )}
+
           {/* ACTION BUTTONS */}
           <div className="hh-actions">
-            <button type="button" className="hh-btn hh-btn-reset" onClick={onReset}>
+            <button type="button" className="hh-btn hh-btn-reset" onClick={onReset} disabled={submitting}>
               Reset
             </button>
-            <button type="submit" className="hh-btn hh-btn-submit" disabled={!agree}>
-              Submit
+            <button
+              type="submit"
+              className="hh-btn hh-btn-submit"
+              disabled={!agree || submitting}
+            >
+              {submitting ? (
+                <span className="hh-spinner-wrap">
+                  <span className="hh-spinner" />
+                  Submitting…
+                </span>
+              ) : (
+                "Submit"
+              )}
             </button>
           </div>
         </form>
