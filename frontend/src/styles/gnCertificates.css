@@ -1,10 +1,10 @@
 /* Page padding similar to Figma spacing */
-.gnc-page{
+.gnc-page {
   padding: 34px 48px;
 }
 
 /* Title */
-.gnc-title{
+.gnc-title {
   font-size: 34px;
   font-weight: 800;
   color: #111;
@@ -12,7 +12,7 @@
 }
 
 /* Table container */
-.gnc-table-wrap{
+.gnc-table-wrap {
   width: 100%;
   border: 1px solid #e6e6e6;
   border-radius: 8px;
@@ -21,13 +21,13 @@
 }
 
 /* Table */
-.gnc-table{
+.gnc-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.gnc-table thead th{
+.gnc-table thead th {
   text-align: left;
   font-size: 13px;
   font-weight: 700;
@@ -37,7 +37,7 @@
   background: #fff;
 }
 
-.gnc-table tbody td{
+.gnc-table tbody td {
   padding: 16px 16px;
   border-bottom: 1px solid #ededed;
   vertical-align: middle;
@@ -45,79 +45,313 @@
   color: #111;
 }
 
-.gnc-table tbody tr:last-child td{
+.gnc-table tbody tr:last-child td {
   border-bottom: none;
 }
 
 /* Columns */
-.gnc-id{
+.gnc-id {
   color: #111;
   font-weight: 500;
   width: 130px;
 }
 
-.gnc-name{
+.gnc-name {
   color: #5f7f6e;
   font-weight: 600;
 }
 
-.gnc-type{
+.gnc-type {
   color: #5f7f6e;
   font-weight: 600;
 }
 
-.gnc-type-line{
+.gnc-type-line {
   display: block;
   line-height: 1.25;
 }
 
-.gnc-date{
+.gnc-date {
   color: #5f7f6e;
   font-weight: 600;
 }
 
 /* Status pill */
-.gnc-pill{
+.gnc-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 6px 18px;
   border-radius: 7px;
-  background: #eef2ef;      /* pending background */
+  background: #eef2ef;
+  /* pending background */
   color: #111;
   font-weight: 600;
   font-size: 12px;
   min-width: 92px;
 }
 
-.gnc-pill-approved{
+.gnc-pill-approved {
   background: #eef2ef;
   color: #111;
 }
 
-.gnc-pill-rejected{
+.gnc-pill-rejected {
   background: #eef2ef;
   color: #111;
 }
 
 /* Actions column */
-.gnc-actions-head{
+.gnc-actions-head {
   text-align: left;
 }
 
-.gnc-actions{
+.gnc-actions {
   color: #5f7f6e;
   font-weight: 700;
   line-height: 1.35;
 }
 
-.gnc-action{
+.gnc-action {
   color: #5f7f6e;
   font-weight: 700;
   display: inline;
 }
 
-.gnc-sep{
+.gnc-sep {
   padding: 0 6px;
   color: #5f7f6e;
+}
+
+/* ── New elements ───────────────────────────────────────── */
+
+/* Tab filters */
+.gnc-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.gnc-tab-btn {
+  background: #eef2ef;
+  border: 1px solid #c8ddd0;
+  color: #333;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gnc-tab-btn:hover {
+  background: #d6ece0;
+}
+
+.gnc-tab-active {
+  background: #0C7A3B;
+  color: #fff;
+  border-color: #0C7A3B;
+}
+
+/* State messages */
+.gnc-state {
+  padding: 24px 0;
+  font-size: 15px;
+  color: #666;
+}
+
+.gnc-state-err {
+  color: #dc3545;
+}
+
+/* Extra columns */
+.gnc-nic {
+  color: #888;
+  font-size: 12px;
+}
+
+/* Status pill colours */
+.gnc-pill {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* PENDING */
+.gnc-pill-approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.gnc-pill-rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Review button */
+.gnc-action-btn {
+  background: none;
+  border: 1px solid #0C7A3B;
+  color: #0C7A3B;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gnc-action-btn:hover {
+  background: #e8f5ee;
+}
+
+/* ─────────── MODAL ─────────── */
+.gnc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.gnc-modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 540px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px 34px;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.gnc-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+}
+
+.gnc-modal-close:hover {
+  color: #000;
+}
+
+.gnc-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 18px;
+}
+
+.gnc-modal-section {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gnc-modal-row {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.gnc-modal-row span {
+  color: #888;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.gnc-modal-desc {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.gnc-modal-desc p {
+  margin: 6px 0 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.gnc-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #e0e9e4;
+  padding-top: 18px;
+}
+
+.gnc-modal-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gnc-modal-select {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: #f8f9fa;
+}
+
+.gnc-modal-textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+}
+
+.gnc-modal-textarea:focus {
+  border-color: #0C7A3B;
+}
+
+.gnc-modal-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.gnc-save-btn {
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gnc-save-btn:hover {
+  background: #0a6532;
+}
+
+.gnc-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gnc-cancel-btn {
+  background: none;
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.gnc-cancel-btn:hover {
+  background: #f5f5f5;
 }

@@ -38,6 +38,7 @@ app.use('/api/family', require('./routes/family.routes'));
 app.use('/api/gn', require('./routes/gn.routes'));
 app.use('/api/complaint', require('./routes/complaint.routes'));
 app.use('/api/notice', require('./routes/notice.routes'));
+app.use('/api/certificate', require('./routes/certificate.routes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

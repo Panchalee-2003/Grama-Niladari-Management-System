@@ -1,106 +1,87 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styles/certificateRequest.css";
 import emblem from "../assets/emblem.png";
-import { Link } from "react-router-dom";
+import api from "../api/api";
 
+const CERT_TYPES = [
+  "Residence Certificate",
+  "Income Certificate",
+  "Character Certificate",
+  "Birth Certificate",
+  "Death Certificate",
+  "Housing Loan Approval",
+  "Other",
+];
 
-function IconHome() {
-  return (
-    <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+function statusBadge(s) {
+  const map = {
+    PENDING: { label: "Pending", cls: "cr-badge cr-badge-pending" },
+    APPROVED: { label: "Approved", cls: "cr-badge cr-badge-approved" },
+    REJECTED: { label: "Rejected", cls: "cr-badge cr-badge-rejected" },
+  };
+  return map[s] || { label: s, cls: "cr-badge" };
 }
-function IconUser() {
-  return (
-    <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 21a8 8 0 0 1 16 0"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+
+function formatDate(ts) {
+  if (!ts) return "—";
+  return new Date(ts).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "2-digit" });
 }
-function IconDoc() {
-  return (
-    <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path d="M14 3v4h4" stroke="#2b2b2b" strokeWidth="2" />
-    </svg>
-  );
-}
-function IconComplaint() {
-  return (
-    <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8 8h8M8 12h6"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function IconBell() {
-  return (
-    <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 19a2 2 0 0 0 4 0"
-        stroke="#2b2b2b"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function ProfileIcon() {
-  return (
-    <svg className="gn-profile-ico" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-        stroke="#1c1c1c"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 20a8 8 0 0 1 16 0"
-        stroke="#1c1c1c"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+
+/* --- Icons --- */
+function IconHome() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /></svg>; }
+function IconUser() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#2b2b2b" strokeWidth="2" /><path d="M4 21a8 8 0 0 1 16 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function IconDoc() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M14 3v4h4" stroke="#2b2b2b" strokeWidth="2" /></svg>; }
+function IconComplaint() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M8 8h8M8 12h6" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function IconBell() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function ProfileIcon() { return <svg className="gn-profile-ico" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#1c1c1c" strokeWidth="2" /><path d="M4 20a8 8 0 0 1 16 0" stroke="#1c1c1c" strokeWidth="2" strokeLinecap="round" /></svg>; }
 
 export default function CertificateRequest() {
+  /* Form state */
+  const [certType, setCertType] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [contactNumber, setContact] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
+
+  /* Request history */
+  const [requests, setRequests] = useState([]);
+  const [listLoading, setListLoading] = useState(true);
+  const [listError, setListError] = useState("");
+
+  const loadRequests = async () => {
+    setListLoading(true);
+    try {
+      const r = await api.get("/api/certificate/my");
+      if (r.data.ok) setRequests(r.data.requests);
+    } catch {
+      setListError("Failed to load your requests.");
+    } finally {
+      setListLoading(false);
+    }
+  };
+
+  useEffect(() => { loadRequests(); }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitError(""); setSubmitSuccess("");
+    if (!certType) { setSubmitError("Please select a certificate type."); return; }
+
+    setSubmitting(true);
+    try {
+      await api.post("/api/certificate", { cert_type: certType, purpose, contact_number: contactNumber });
+      setSubmitSuccess("✅ Your request has been submitted successfully!");
+      setCertType(""); setPurpose(""); setContact("");
+      loadRequests();
+    } catch (ex) {
+      setSubmitError(ex.response?.data?.error || "Failed to submit request.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="gn-page">
       {/* Header */}
@@ -112,92 +93,107 @@ export default function CertificateRequest() {
             <div className="gn-subtitle">Ministry of Home Affairs</div>
           </div>
         </div>
-
         <div className="gn-header-right">
-          <Link to="/about" className="gn-about-btn">
-            About Us
-          </Link>
-          <div className="gn-profile-btn" role="button" tabIndex={0} aria-label="Profile">
-            <ProfileIcon />
-          </div>
+          <Link to="/about" className="gn-about-btn">About Us</Link>
+          <div className="gn-profile-btn" role="button" tabIndex={0} aria-label="Profile"><ProfileIcon /></div>
         </div>
       </header>
 
       {/* Nav */}
       <nav className="gn-nav">
-        <Link to="/citizen" className="gn-nav-item">
-          <IconHome />
-          <span>Home</span>
-        </Link>
-
-        <Link to="/household" className="gn-nav-item">
-          <IconUser />
-          <span>Household</span>
-        </Link>
-
-        <Link to="/certificates" className="gn-nav-item">
-          <IconDoc />
-          <span>Certificates</span>
-        </Link>
-
-        <Link to="/complaints" className="gn-nav-item">
-          <IconComplaint />
-          <span>Complaints</span>
-        </Link>
-
-        <Link to="/notices" className="gn-nav-item">
-          <IconBell />
-          <span>Notices</span>
-        </Link>
+        <Link to="/citizen" className="gn-nav-item"><IconHome /><span>Home</span></Link>
+        <Link to="/household" className="gn-nav-item"><IconUser /><span>Household</span></Link>
+        <Link to="/certificates" className="gn-nav-item gn-nav-active"><IconDoc /><span>Certificates</span></Link>
+        <Link to="/complaints" className="gn-nav-item"><IconComplaint /><span>Complaints</span></Link>
+        <Link to="/notices" className="gn-nav-item"><IconBell /><span>Notices</span></Link>
       </nav>
 
       {/* Content */}
       <main className="gn-content">
         <div className="gn-form-wrap">
-          <h2 className="gn-form-title">Request Form</h2>
+          <h2 className="gn-form-title">Certificate Request Form</h2>
+          <p className="gn-form-sub">Submit a request for official certificates issued by the Grama Niladhari office.</p>
 
-          <div className="gn-form-grid">
+          {submitSuccess && <div className="cr-alert cr-alert-ok">{submitSuccess}</div>}
+          {submitError && <div className="cr-alert cr-alert-err">{submitError}</div>}
+
+          <form className="gn-form-grid" onSubmit={handleSubmit}>
             {/* Left column */}
             <div className="gn-left-col">
               <div className="gn-field">
-                <select className="gn-input gn-select" defaultValue="">
-                  <option value="" disabled>
-                    Select Request Type
-                  </option>
-                  <option>Residence Certificate</option>
-                  <option>Income Certificate</option>
-                  <option>Character Certificate</option>
+                <label className="cr-label">Certificate Type <span className="cr-req">*</span></label>
+                <select className="gn-input gn-select" value={certType} onChange={e => setCertType(e.target.value)}>
+                  <option value="">Select Certificate Type</option>
+                  {CERT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
 
               <div className="gn-field">
-                <input className="gn-input" type="text" placeholder="Full Name" />
+                <label className="cr-label">Contact Number</label>
+                <input className="gn-input" type="tel" placeholder="07X-XXXXXXX" value={contactNumber} onChange={e => setContact(e.target.value)} maxLength={15} />
               </div>
 
               <div className="gn-field">
-                <input className="gn-input" type="text" placeholder="National ID Number" />
+                <label className="cr-label">Purpose / Additional Information</label>
+                <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={5} />
               </div>
 
-              <div className="gn-field">
-                <input className="gn-input" type="text" placeholder="Address" />
-              </div>
-
-              <div className="gn-field">
-                <input className="gn-input" type="text" placeholder="Contact Number" />
+              <div className="gn-submit-row">
+                <button className="gn-submit-btn" type="submit" disabled={submitting}>
+                  {submitting ? "Submitting…" : "Submit Request"}
+                </button>
               </div>
             </div>
 
-            {/* Right column */}
+            {/* Right column — info */}
             <div className="gn-right-col">
-              <textarea className="gn-textarea" placeholder="Additional Information" />
+              <div className="cr-info-box">
+                <h3>📄 Supported Certificate Types</h3>
+                <ul>
+                  {CERT_TYPES.map(t => <li key={t}>{t}</li>)}
+                </ul>
+                <p className="cr-info-note">Your personal details (name, NIC, address) will be automatically filled from your registered profile.</p>
+              </div>
             </div>
-          </div>
+          </form>
+        </div>
 
-          <div className="gn-submit-row">
-            <button className="gn-submit-btn" type="button">
-              Submit
-            </button>
-          </div>
+        {/* Request History */}
+        <div className="cr-history">
+          <h2 className="cr-history-title">My Certificate Requests</h2>
+          {listLoading && <div className="cr-state">Loading…</div>}
+          {listError && <div className="cr-state cr-state-err">{listError}</div>}
+          {!listLoading && requests.length === 0 && <div className="cr-state">You have not submitted any requests yet.</div>}
+
+          {!listLoading && requests.length > 0 && (
+            <table className="cr-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Purpose</th>
+                  <th>Status</th>
+                  <th>GN Note</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requests.map((r) => {
+                  const badge = statusBadge(r.status);
+                  return (
+                    <tr key={r.request_id}>
+                      <td className="cr-td-id">#{r.request_id}</td>
+                      <td>{r.cert_type}</td>
+                      <td className="cr-td-muted">{r.purpose || "—"}</td>
+                      <td><span className={badge.cls}>{badge.label}</span></td>
+                      <td className="cr-td-muted">{r.gn_note || "—"}</td>
+                      <td className="cr-td-date">{formatDate(r.created_at)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </main>
 
@@ -211,14 +207,12 @@ export default function CertificateRequest() {
               <div className="gn-footer-text">Phone: 0768187908</div>
               <div className="gn-footer-text">Email: chasara88@gmail.com</div>
             </div>
-
             <div className="gn-footer-col">
               <div className="gn-footer-title">Office Hours</div>
               <div className="gn-footer-text">Tuesday 08:15 to 16:30</div>
               <div className="gn-footer-text">Thursday 08:15 to 16:30</div>
               <div className="gn-footer-text">Saturday 08:15 to 12:30</div>
             </div>
-
             <div className="gn-footer-col">
               <div className="gn-footer-title">Quick links</div>
               <div className="gn-footer-text">Citizen Login</div>
@@ -226,12 +220,8 @@ export default function CertificateRequest() {
               <div className="gn-footer-text">Complaints</div>
             </div>
           </div>
-
           <div className="gn-footer-line" />
-
-          <div className="gn-copyright">
-            © 2025 Grama Niladhari Division - Maspanna. All rights reserved.
-          </div>
+          <div className="gn-copyright">© 2025 Grama Niladhari Division - Maspanna. All rights reserved.</div>
         </div>
       </footer>
     </div>
