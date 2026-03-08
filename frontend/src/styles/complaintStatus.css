@@ -1,6 +1,6 @@
 /* IMPORTANT: UNIQUE CLASS PREFIX (cst-*) to avoid conflict with CertificateSuccess (cs-*) */
 
-.cst-page{
+.cst-page {
   width: 100vw;
   min-height: 100vh;
   background: #D9D9D9;
@@ -10,22 +10,23 @@
 }
 
 /* keep footer at bottom */
-.cst-main{
+.cst-main {
   flex: 1;
   padding: 95px 0 90px;
 }
 
 /* Title */
-.cst-title{
+.cst-title {
   font-size: 40px;
   font-weight: 800;
   color: #111;
-  margin-left: 110px; /* matches figma left spacing */
+  margin-left: 110px;
+  /* matches figma left spacing */
   margin-bottom: 40px;
 }
 
 /* Table wrapper (same width/position as figma) */
-.cst-table{
+.cst-table {
   width: 900px;
   margin-left: 150px;
   background: #DFF0D8;
@@ -34,29 +35,29 @@
 }
 
 /* Rows */
-.cst-row{
+.cst-row {
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
   align-items: center;
   padding: 16px 26px;
-  border-bottom: 1px solid rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
   font-size: 22px;
   color: #111;
 }
 
-.cst-row:last-child{
+.cst-row:last-child {
   border-bottom: none;
 }
 
 /* Header row */
-.cst-head{
+.cst-head {
   background: #B7FF9E;
   font-weight: 500;
   font-size: 24px;
 }
 
 /* Status pills */
-.cst-status{
+.cst-status {
   width: 260px;
   height: 52px;
   border-radius: 16px;
@@ -69,14 +70,154 @@
 }
 
 /* colors exactly like figma */
-.cst-pending{
+.cst-pending {
   background: #FFFFB3;
 }
 
-.cst-processing{
+.cst-processing {
   background: #AFC4DE;
 }
 
-.cst-completed{
+.cst-completed {
   background: #7CFA6B;
+}
+
+/* ---- New: header row, empty/loading states ---- */
+.cst-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 110px 28px;
+}
+
+.cst-new-btn {
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cst-loading,
+.cst-error,
+.cst-empty {
+  margin-left: 150px;
+  font-size: 18px;
+  color: #555;
+  padding: 20px 0;
+}
+
+.cst-error {
+  color: #dc3545;
+}
+
+.cst-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Override table layout for 6 columns */
+.cst-table {
+  width: auto;
+  max-width: 1100px;
+  margin: 0 110px;
+}
+
+.cst-row {
+  grid-template-columns: 90px 2fr 1fr 1fr 1fr 80px;
+  font-size: 16px;
+}
+
+.cst-head {
+  font-size: 15px;
+}
+
+.cst-id {
+  font-weight: 700;
+  color: #0C7A3B;
+}
+
+/* Status pills (resized for inline table) */
+.cst-status {
+  width: auto;
+  height: 30px;
+  min-width: 100px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: 0;
+  padding: 0 10px;
+}
+
+/* Toggle button */
+.cst-toggle-btn {
+  background: none;
+  border: 1px solid #0C7A3B;
+  color: #0C7A3B;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cst-toggle-btn:hover {
+  background: #e8f5ee;
+}
+
+/* Detail expand panel */
+.cst-detail-panel {
+  background: #f0f7f3;
+  border-top: 1px solid #cde0d5;
+  padding: 20px 26px;
+  margin: 0;
+}
+
+.cst-detail-desc {
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.cst-detail-desc p {
+  margin: 6px 0 0;
+  color: #333;
+}
+
+/* Responses */
+.cst-responses {
+  font-size: 15px;
+}
+
+.cst-response-bubble {
+  background: #fff;
+  border: 1px solid #c8ddd2;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+}
+
+.cst-response-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.cst-response-author {
+  font-weight: 700;
+  color: #0C7A3B;
+}
+
+.cst-response-msg {
+  margin: 0;
+  color: #222;
+  font-size: 15px;
+  line-height: 1.5;
 }
