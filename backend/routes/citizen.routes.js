@@ -41,7 +41,7 @@ router.get("/me/profile", requireAuth, requireRole("CITIZEN"), async (req, res) 
   try {
     const userId = req.user.id;
     const result = await pool.query(
-      `SELECT c.citizen_id, c.nic_number as nic, c.phone_number as phone, u.full_name, u.email
+      `SELECT c.citizen_id, c.nic_number as nic, c.phone_number as phone, c.full_name, u.email
        FROM citizen c
        JOIN user_table u ON u.user_id = c.user_id
        WHERE c.user_id=$1 LIMIT 1`,
