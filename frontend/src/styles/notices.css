@@ -296,3 +296,112 @@ body {
     gap: 16px;
   }
 }
+
+/* ── New: page title, card grid, states ────────────────── */
+.nt-page-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.nt-page-sub {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 32px;
+}
+
+.nt-state {
+  font-size: 16px;
+  color: #666;
+  padding: 24px 0;
+}
+
+.nt-state-err {
+  color: #dc3545;
+}
+
+/* Notice Cards */
+.nt-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.nt-card {
+  background: #fff;
+  border: 1px solid #d0e0d5;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s;
+}
+
+.nt-card:hover {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.nt-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.nt-card-body {
+  padding: 18px 20px;
+}
+
+.nt-card-date {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.nt-card-author {
+  color: #0C7A3B;
+  font-weight: 600;
+}
+
+.nt-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.nt-card-desc {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+/* Truncate / expand */
+.nt-collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.nt-expanded {
+  display: block;
+}
+
+.nt-toggle-btn {
+  background: none;
+  border: none;
+  color: #0C7A3B;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nt-toggle-btn:hover {
+  text-decoration: underline;
+}
