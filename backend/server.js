@@ -31,6 +31,7 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/citizen', require('./routes/citizen.routes'));
 app.use('/api/household', require('./routes/household.routes'));
 app.use('/api/family', require('./routes/family.routes'));
+app.use('/api/gn', require('./routes/gn.routes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/gnDashboard.css";
 import { clearAuth } from "../auth/auth";
+import api from "../api/api";
 
-/* --- Icons (inline SVG to avoid import errors) --- */
+/* --- Icons (inline SVG) --- */
 function IconHome() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -86,8 +88,50 @@ function IconLogout() {
   );
 }
 
+function StatCard({ title, value, loading }) {
+  return (
+    <div className="gn-summary-card">
+      <div className="gn-s-title">{title}</div>
+      <div className="gn-s-number">
+        {loading ? <span className="gn-loading-num">—</span> : value}
+      </div>
+    </div>
+  );
+}
+
 export default function GNDashboard() {
   const navigate = useNavigate();
+
+  const [gnName, setGnName] = useState("");
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [profileRes, statsRes] = await Promise.all([
+          api.get("/api/gn/profile"),
+          api.get("/api/gn/stats"),
+        ]);
+
+        if (profileRes.data.ok && profileRes.data.profile) {
+          setGnName(profileRes.data.profile.name);
+        }
+
+        if (statsRes.data.ok) {
+          setStats(statsRes.data.stats);
+        }
+      } catch (err) {
+        console.error("GN Dashboard fetch error:", err);
+        setError("Failed to load dashboard data.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const handleLogout = () => {
     clearAuth();
@@ -140,7 +184,11 @@ export default function GNDashboard() {
             <span className="gn-ico"><IconSettings /></span>
             <span>Settings</span>
           </Link>
-          <button onClick={handleLogout} className="gn-item gn-item-settings" style={{ width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
+          <button
+            onClick={handleLogout}
+            className="gn-item gn-item-settings"
+            style={{ width: "100%", border: "none", background: "transparent", cursor: "pointer", textAlign: "left" }}
+          >
             <span className="gn-ico"><IconLogout /></span>
             <span>Logout</span>
           </button>
@@ -154,7 +202,7 @@ export default function GNDashboard() {
           <div className="gn-top-left">GN Digital System</div>
 
           <div className="gn-search">
-            <input className="gn-search-input" type="text" />
+            <input className="gn-search-input" type="text" placeholder="Search..." />
             <span className="gn-search-ico"><IconSearch /></span>
           </div>
 
@@ -167,67 +215,92 @@ export default function GNDashboard() {
 
         {/* CONTENT */}
         <div className="gn-content">
-          <h1 className="gn-welcome">Welcome, Mr.Suraweera</h1>
+          <h1 className="gn-welcome">
+            Welcome, {gnName ? `${gnName}` : loading ? "Loading..." : "Officer"}
+          </h1>
+
+          {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
 
           <h2 className="gn-section-title">Quick Summary</h2>
           <div className="gn-summary">
-            <div className="gn-summary-card">
-              <div className="gn-s-title">Total Registered<br />Households</div>
-              <div className="gn-s-number">2,345</div>
-            </div>
-            <div className="gn-summary-card">
-              <div className="gn-s-title">Certificates Issued<br />This Month</div>
-              <div className="gn-s-number">123</div>
-            </div>
-            <div className="gn-summary-card">
-              <div className="gn-s-title">New Complaints<br />Received</div>
-              <div className="gn-s-number">15</div>
-            </div>
-            <div className="gn-summary-card">
-              <div className="gn-s-title">Active Notices</div>
-              <div className="gn-s-number">3</div>
-            </div>
+            <StatCard
+              title={<>Total Registered<br />Households</>}
+              value={stats?.total_households ?? 0}
+              loading={loading}
+            />
+            <StatCard
+              title={<>Pending<br />Verifications</>}
+              value={stats?.pending_households ?? 0}
+              loading={loading}
+            />
+            <StatCard
+              title={<>Verified<br />Households</>}
+              value={stats?.verified_households ?? 0}
+              loading={loading}
+            />
+            <StatCard
+              title="Open Complaints"
+              value={stats?.open_complaints ?? 0}
+              loading={loading}
+            />
           </div>
 
           <h2 className="gn-section-title">Action Shortcuts</h2>
           <div className="gn-actions">
-            <button className="gn-action-btn">Verify Households</button>
-            <button className="gn-action-btn">Issue Certificates</button>
-            <button className="gn-action-btn">View Complaints</button>
-            <button className="gn-action-btn">Post Notice</button>
+            <button className="gn-action-btn" onClick={() => navigate("/gn-households")}>Verify Households</button>
+            <button className="gn-action-btn" onClick={() => navigate("/gn-certificates")}>Issue Certificates</button>
+            <button className="gn-action-btn" onClick={() => navigate("/gn-complaints")}>View Complaints</button>
+            <button className="gn-action-btn" onClick={() => navigate("/gn-notices")}>Post Notice</button>
             <button className="gn-action-btn">Generate Reports</button>
           </div>
 
           <h2 className="gn-section-title">Analytics</h2>
           <div className="gn-analytics">
             <div className="gn-chart">
-              <div className="gn-chart-title">Certificates Issued Per Month</div>
-              <div className="gn-bars">
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-              </div>
-              <div className="gn-months">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-              </div>
+              <div className="gn-chart-title">Household Status Breakdown</div>
+              {!loading && stats && (
+                <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-end", height: "120px", padding: "0 1rem" }}>
+                  {[
+                    { label: "Pending", value: stats.pending_households, color: "#f59e0b" },
+                    { label: "Verified", value: stats.verified_households, color: "#22c55e" },
+                    { label: "Rejected", value: stats.rejected_households, color: "#ef4444" },
+                  ].map(({ label, value, color }) => {
+                    const max = Math.max(stats.pending_households, stats.verified_households, stats.rejected_households, 1);
+                    const height = Math.max((value / max) * 100, 4);
+                    return (
+                      <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, gap: "0.4rem" }}>
+                        <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>{value}</span>
+                        <div style={{ width: "100%", height: `${height}px`, background: color, borderRadius: "4px 4px 0 0", transition: "height 0.5s ease" }} />
+                        <span style={{ fontSize: "0.7rem", color: "var(--text-muted, #666)" }}>{label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              {loading && <div style={{ padding: "2rem", textAlign: "center", color: "#888" }}>Loading...</div>}
+              <div className="gn-months" />
             </div>
 
             <div className="gn-chart">
-              <div className="gn-chart-title">Complaints Per Month</div>
-              <div className="gn-bars">
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-                <div className="gn-bar"></div>
-              </div>
-              <div className="gn-months">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-              </div>
+              <div className="gn-chart-title">Complaints Overview</div>
+              {!loading && stats && (
+                <div style={{ padding: "1rem 1.5rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                    <span style={{ fontSize: "0.9rem" }}>Total Complaints</span>
+                    <strong>{stats.total_complaints}</strong>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                    <span style={{ fontSize: "0.9rem" }}>Open / Unresolved</span>
+                    <strong style={{ color: "#ef4444" }}>{stats.open_complaints}</strong>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: "0.9rem" }}>Resolved</span>
+                    <strong style={{ color: "#22c55e" }}>{stats.total_complaints - stats.open_complaints}</strong>
+                  </div>
+                </div>
+              )}
+              {loading && <div style={{ padding: "2rem", textAlign: "center", color: "#888" }}>Loading...</div>}
+              <div className="gn-months" />
             </div>
           </div>
         </div>
