@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "../styles/complaintManagement.css";
+import "../styles/householdVerify.css";
 import api from "../api/api";
 
 // --- Icons ---
@@ -155,13 +156,17 @@ export default function ComplaintManagement() {
 
       {/* MAIN */}
       <section className="cmp-main">
-        {/* TOP BAR */}
-        <div className="cmp-top">
-          <div className="cmp-top-left">GN Digital System</div>
-          <div className="cmp-top-right">
-            <div className="cmp-profile" aria-label="profile"><IconProfile /></div>
+        {/* TOP BAR — same as all other GN pages */}
+        <header className="hv-topbar">
+          <div className="hv-top-title">GN Digital System</div>
+          <div className="hv-top-search">
+            <input className="hv-top-search-input" placeholder="Search complaints…" readOnly />
           </div>
-        </div>
+          <div className="hv-top-icons">
+            <div className="hv-top-search-ico" aria-label="search"><IconProfile /></div>
+            <div className="hv-profile" aria-label="profile"><IconProfile /></div>
+          </div>
+        </header>
 
         {/* CONTENT */}
         <div className="cmp-content">
