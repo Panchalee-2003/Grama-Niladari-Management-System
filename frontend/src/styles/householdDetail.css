@@ -674,3 +674,62 @@ body,
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* outer wrapper that stacks the reject panel + action bar */
+.hd-actions-wrap {
+  border-top: 1px solid #E6ECF5;
+  background: #ffffff;
+}
+
+/* ── GN Reject panel (textarea + confirm/cancel row) ── */
+.hd-reject-panel {
+  padding: 16px 22px 14px;
+  border-bottom: 1px solid #E6ECF5;
+  background: #FFF9F9;
+}
+
+.hd-reject-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  color: #B91C1C;
+  margin-bottom: 8px;
+}
+
+.hd-reject-textarea {
+  width: 100%;
+  border: 1.5px solid #FECACA;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b2b4b;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.hd-reject-textarea:focus {
+  border-color: #DC2626;
+}
+
+.hd-reject-textarea::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.hd-reject-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Solid red button variant */
+.hd-btn.solid.red {
+  border: none;
+  background: #DC2626;
+  color: #fff;
+  padding: 0 22px;
+}

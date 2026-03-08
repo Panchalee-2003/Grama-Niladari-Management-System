@@ -803,3 +803,138 @@ select:disabled {
 .hh-success-home-btn:hover {
   opacity: 0.88;
 }
+
+/* ── StatusCard: status badge pill ── */
+.hh-status-badge-row {
+  margin: 10px 0 14px;
+}
+
+.hh-status-badge {
+  display: inline-block;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+/* ── StatusCard: info table ── */
+.hh-status-info-box {
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 10px;
+  padding: 6px 16px;
+  margin: 16px 0 18px;
+  text-align: left;
+}
+
+.hh-status-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.hh-status-info-row:last-child {
+  border-bottom: none;
+}
+
+.hh-status-info-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6B7C99;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.hh-status-info-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1b2b4b;
+  text-align: right;
+}
+
+/* ── Rejected contact note ── */
+.hh-status-rejected-note {
+  font-size: 13px;
+  color: #DC2626;
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* ── Loading page (while checking existing) ── */
+.hh-loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 148px);
+  gap: 18px;
+}
+
+.hh-spinner-lg {
+  width: 40px !important;
+  height: 40px !important;
+  border-width: 4px !important;
+  border-color: rgba(12, 122, 59, 0.2) !important;
+  border-top-color: #0C7A3B !important;
+}
+
+.hh-loading-txt {
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ── Rejection reason box (shown in StatusCard when REJECTED) ── */
+.hh-rejection-reason {
+  background: #FFF1F1;
+  border: 1.5px solid #DC2626;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 14px 0;
+  text-align: left;
+}
+
+.hh-rejection-reason-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: #DC2626;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+
+.hh-rejection-reason-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #7f1d1d;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* ── Re-submit button ── */
+.hh-resubmit-btn {
+  display: inline-block;
+  width: 100%;
+  background: #0C7A3B;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 6px;
+  margin-bottom: 4px;
+  transition: opacity 0.15s;
+}
+
+.hh-resubmit-btn:hover {
+  opacity: 0.88;
+}

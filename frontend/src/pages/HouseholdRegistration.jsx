@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/householdRegistration.css";
 import api from "../api/api";
@@ -89,12 +89,162 @@ const emptyMember = () => ({
   special_needs: "",
 });
 
+// ── Status card shown when citizen has already registered ──
+function StatusCard({ household, onResubmit }) {
+  const STATUS_CONFIG = {
+    PENDING: {
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#F59E0B" />
+          <path d="M12 7v5l3 3" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
+      title: "Pending Verification",
+      color: "#B45309",
+      bg: "#FEF3C7",
+      border: "#F59E0B",
+      msg: "Your registration has been received. The Grama Niladhari officer will review it shortly. No further action is needed.",
+    },
+    VERIFIED: {
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#16A34A" />
+          <path d="M7 12.5l3.5 3.5 6-7" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
+      title: "Registration Approved ✅",
+      color: "#15803D",
+      bg: "#E9FBF0",
+      border: "#16A34A",
+      msg: "Your household registration has been verified and approved by the Grama Niladhari officer.",
+    },
+    REJECTED: {
+      icon: (
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#DC2626" />
+          <path d="M8 8l8 8M16 8l-8 8" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
+        </svg>
+      ),
+      title: "Registration Rejected",
+      color: "#DC2626",
+      bg: "#FFF1F1",
+      border: "#DC2626",
+      msg: "Your application was reviewed and rejected by the Grama Niladhari officer.",
+    },
+  };
+
+  const cfg = STATUS_CONFIG[household.status] || STATUS_CONFIG["PENDING"];
+
+  return (
+    <div className="hh-success-wrap">
+      <div
+        className="hh-success-card"
+        style={{ borderColor: cfg.border, background: cfg.bg }}
+      >
+        <div className="hh-success-icon">{cfg.icon}</div>
+        <h2 className="hh-success-title" style={{ color: cfg.color }}>
+          {cfg.title}
+        </h2>
+
+        <div className="hh-status-badge-row">
+          <span
+            className="hh-status-badge"
+            style={{ background: cfg.border, color: "#fff" }}
+          >
+            {household.status}
+          </span>
+        </div>
+
+        <p className="hh-success-msg">{cfg.msg}</p>
+
+        {/* Rejection reason box — shown prominently for REJECTED */}
+        {household.status === "REJECTED" && household.rejection_reason && (
+          <div className="hh-rejection-reason">
+            <div className="hh-rejection-reason-title">📋 Reason for Rejection</div>
+            <div className="hh-rejection-reason-text">{household.rejection_reason}</div>
+          </div>
+        )}
+
+        <div className="hh-status-info-box">
+          <div className="hh-status-info-row">
+            <span className="hh-status-info-label">Reference ID</span>
+            <span className="hh-status-info-value">#{household.household_id}</span>
+          </div>
+          {household.householder_name && (
+            <div className="hh-status-info-row">
+              <span className="hh-status-info-label">Householder</span>
+              <span className="hh-status-info-value">{household.householder_name}</span>
+            </div>
+          )}
+          {household.address && (
+            <div className="hh-status-info-row">
+              <span className="hh-status-info-label">Address</span>
+              <span className="hh-status-info-value">{household.address}</span>
+            </div>
+          )}
+          <div className="hh-status-info-row">
+            <span className="hh-status-info-label">Submitted</span>
+            <span className="hh-status-info-value">
+              {new Date(household.created_at).toLocaleDateString("en-GB", {
+                day: "numeric", month: "long", year: "numeric",
+              })}
+            </span>
+          </div>
+        </div>
+
+        {/* Re-submit button for REJECTED applications */}
+        {household.status === "REJECTED" && (
+          <>
+            <p className="hh-status-rejected-note">
+              Review the reason above, correct the details, and re-submit your application.
+            </p>
+            <button
+              className="hh-resubmit-btn"
+              onClick={() => onResubmit(household.household_id)}
+            >
+              🔄 Re-submit Application
+            </button>
+          </>
+        )}
+
+        <Link
+          to="/citizen"
+          className="hh-success-home-btn"
+          style={{ background: cfg.border, display: "block", marginTop: 14 }}
+        >
+          Back to Home
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function HouseholdRegistration() {
+  // ── Existing registration check (duplicate prevention) ──
+  const [checkingExisting, setCheckingExisting] = useState(true);
+  const [existingHousehold, setExistingHousehold] = useState(null);
+
   const [agree, setAgree] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [householdId, setHouseholdId] = useState(null);
+  // When re-submitting a rejected application, holds the existing household_id
+  const [resubmitHouseholdId, setResubmitHouseholdId] = useState(null);
+
+  // On mount — check if this citizen already has a registration
+  useEffect(() => {
+    api.get("/api/household/my")
+      .then((res) => {
+        if (res.data.ok && res.data.households.length > 0) {
+          setExistingHousehold(res.data.households[0]);
+        }
+      })
+      .catch(() => {
+        // silently ignore (e.g. token missing — ProtectedRoute handles redirect)
+      })
+      .finally(() => setCheckingExisting(false));
+  }, []);
 
   // household basic info
   const [house, setHouse] = useState({
@@ -190,45 +340,61 @@ export default function HouseholdRegistration() {
 
     setSubmitting(true);
     try {
-      // 1️⃣ Create the household
-      const hhRes = await api.post("/api/household", {
-        householder_name: house.holder_name.trim(),
-        household_no: house.house_no.trim() || null,
-        address: house.address.trim(),
-        electricity_connection: house.electricity || "No",
-        water_supply: house.water || "No",
-        phone_number: house.phone.trim() || null,
-        income_source: fin.income_source || null,
-        govt_aid: fin.govt_aid || null,
-        income_range: fin.income_range || null,
-        notes: fin.notes.trim() || null,
-      });
+      let newHouseholdId;
 
-      if (!hhRes.data.ok) {
-        throw new Error(hhRes.data.error || "Failed to create household");
-      }
-
-      const newHouseholdId = hhRes.data.household_id;
-
-      // 2️⃣ Create each family member
-      for (const m of members) {
-        if (!m.full_name.trim()) continue; // skip blank slots
-        await api.post("/api/family", {
-          household_id: newHouseholdId,
-          full_name: m.full_name.trim(),
-          nic_number: m.nic.trim() || null,
-          dob: m.dob || null,
-          gender: m.gender || null,
-          relationship_to_head: m.relationship || null,
-          civil_status: m.civil_status || null,
-          education_level: m.education || null,
-          employment_status: m.employment || null,
-          religion: m.religion || null,
-          special_needs: m.special_needs || null,
+      if (resubmitHouseholdId) {
+        // ♻️ RE-SUBMIT: Update the existing rejected household
+        const hhRes = await api.patch(`/api/household/${resubmitHouseholdId}/resubmit`, {
+          householder_name: house.holder_name.trim(),
+          household_no: house.house_no.trim() || null,
+          address: house.address.trim(),
+          electricity_connection: house.electricity || "No",
+          water_supply: house.water || "No",
+          phone_number: house.phone.trim() || null,
+          income_source: fin.income_source || null,
+          govt_aid: fin.govt_aid || null,
+          income_range: fin.income_range || null,
+          notes: fin.notes.trim() || null,
         });
+        if (!hhRes.data.ok) throw new Error(hhRes.data.error || "Failed to re-submit");
+        newHouseholdId = hhRes.data.household_id;
+      } else {
+        // 1️⃣ NEW: Create the household
+        const hhRes = await api.post("/api/household", {
+          householder_name: house.holder_name.trim(),
+          household_no: house.house_no.trim() || null,
+          address: house.address.trim(),
+          electricity_connection: house.electricity || "No",
+          water_supply: house.water || "No",
+          phone_number: house.phone.trim() || null,
+          income_source: fin.income_source || null,
+          govt_aid: fin.govt_aid || null,
+          income_range: fin.income_range || null,
+          notes: fin.notes.trim() || null,
+        });
+        if (!hhRes.data.ok) throw new Error(hhRes.data.error || "Failed to create household");
+        newHouseholdId = hhRes.data.household_id;
+
+        // 2️⃣ Create each family member (only on new submission)
+        for (const m of members) {
+          if (!m.full_name.trim()) continue;
+          await api.post("/api/family", {
+            household_id: newHouseholdId,
+            full_name: m.full_name.trim(),
+            nic_number: m.nic.trim() || null,
+            dob: m.dob || null,
+            gender: m.gender || null,
+            relationship_to_head: m.relationship || null,
+            civil_status: m.civil_status || null,
+            education_level: m.education || null,
+            employment_status: m.employment || null,
+            religion: m.religion || null,
+            special_needs: m.special_needs || null,
+          });
+        }
       }
 
-      // 3️⃣ Show success state
+      // Show success state
       setHouseholdId(newHouseholdId);
       setSubmitted(true);
     } catch (err) {
@@ -275,7 +441,57 @@ export default function HouseholdRegistration() {
     );
   }
 
-  // Show success banner when submitted
+  // ── Shared page shell (header + nav) for status views ──
+  const pageShell = (content) => (
+    <div className="hh-page">
+      <header className="cd-top">
+        <div className="cd-top-left">
+          <img className="cd-emblem" src={emblem} alt="Emblem" />
+          <div className="cd-top-text">
+            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
+            <div className="cd-subtitle">Ministry of Home Affairs</div>
+          </div>
+        </div>
+        <div className="cd-top-right">
+          <Link to="/about" className="cd-about-btn">About Us</Link>
+          <div className="cd-profile-circle" aria-label="profile"><IconUser /></div>
+        </div>
+      </header>
+      <nav className="cd-nav">
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
+        <Link className="cd-nav-item cd-active" to="/household"><IconUser /><span>Household</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
+        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
+        <Link className="cd-nav-item" to="/notices"><IconBell /><span>Notices</span></Link>
+      </nav>
+      {content}
+    </div>
+  );
+
+  // 1️⃣ Loading while we check for existing registration
+  if (checkingExisting) {
+    return pageShell(
+      <div className="hh-loading-wrap">
+        <span className="hh-spinner hh-spinner-lg" />
+        <p className="hh-loading-txt">Checking registration status…</p>
+      </div>
+    );
+  }
+
+  // 2️⃣ Citizen already has a registration — show status card
+  if (existingHousehold) {
+    return pageShell(
+      <StatusCard
+        household={existingHousehold}
+        onResubmit={(hhId) => {
+          setResubmitHouseholdId(hhId);
+          setExistingHousehold(null); // clear to show form
+        }}
+      />
+    );
+  }
+
+  // 3️⃣ Show success banner when submitted
   if (submitted) {
     return (
       <div className="hh-page">

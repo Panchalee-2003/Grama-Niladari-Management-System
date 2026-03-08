@@ -137,6 +137,9 @@ export default function HouseholdDetail() {
   const [error, setError] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
   const [actionMsg, setActionMsg] = useState("");
+  // Reject-with-reason
+  const [rejectMode, setRejectMode] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
 
   useEffect(() => {
     if (!householdId) {
@@ -166,20 +169,23 @@ export default function HouseholdDetail() {
     }
   }
 
-  async function updateStatus(newStatus) {
+  async function updateStatus(newStatus, reason) {
     setActionLoading(true);
     setActionMsg("");
     try {
-      const res = await api.patch(`/api/household/${householdId}/status`, { status: newStatus });
+      const res = await api.patch(`/api/household/${householdId}/status`, {
+        status: newStatus,
+        rejection_reason: reason || undefined,
+      });
       if (res.data.ok) {
-        setHousehold((prev) => ({ ...prev, status: newStatus }));
+        setHousehold((prev) => ({ ...prev, status: newStatus, rejection_reason: reason || null }));
+        setRejectMode(false);
         setActionMsg(
           newStatus === "VERIFIED"
             ? "✅ Household successfully verified!"
-            : "❌ Household has been rejected."
+            : "❌ Household rejected with reason recorded."
         );
-        // Navigate back after short delay
-        setTimeout(() => navigate("/gn-households"), 1500);
+        setTimeout(() => navigate("/gn-households"), 1800);
       } else {
         setActionMsg("⚠️ " + (res.data.error || "Failed to update status"));
       }
@@ -417,46 +423,88 @@ export default function HouseholdDetail() {
 
         {/* Bottom actions */}
         {!loading && !error && household && (
-          <footer className="hd-actions">
-            <div className="hd-actions-left">
-              <IconInfo />
-              <span>Review all details before finalizing decision.</span>
-              {actionMsg && <span className="hd-action-msg">{actionMsg}</span>}
-            </div>
-
-            <div className="hd-actions-right">
-              {household.status === "PENDING" ? (
-                <>
+          <footer className="hd-actions-wrap">
+            {/* Rejection reason textarea — shown when GN clicks "Reject" */}
+            {rejectMode && (
+              <div className="hd-reject-panel">
+                <label className="hd-reject-label">
+                  ⚠️ Rejection Reason <span style={{ color: "#DC2626" }}>*</span>
+                </label>
+                <textarea
+                  className="hd-reject-textarea"
+                  placeholder="Enter the reason for rejecting this application. The citizen will see this message."
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                  rows={3}
+                />
+                <div className="hd-reject-actions">
                   <button
-                    className="hd-btn outline red"
-                    onClick={() => updateStatus("REJECTED")}
+                    className="hd-btn outline"
+                    onClick={() => { setRejectMode(false); setRejectionReason(""); }}
                     disabled={actionLoading}
                   >
-                    <IconReject />
-                    <span>Reject Application</span>
+                    Cancel
                   </button>
-
                   <button
-                    className="hd-btn solid green"
-                    onClick={() => updateStatus("VERIFIED")}
+                    className="hd-btn solid red"
+                    onClick={() => {
+                      if (!rejectionReason.trim()) {
+                        setActionMsg("⚠️ Please enter a rejection reason.");
+                        return;
+                      }
+                      updateStatus("REJECTED", rejectionReason.trim());
+                    }}
                     disabled={actionLoading}
                   >
-                    {actionLoading ? (
-                      <span>Processing…</span>
-                    ) : (
-                      <>
-                        <IconCheck />
-                        <span>APPROVE</span>
-                      </>
-                    )}
+                    {actionLoading ? "Processing…" : "Confirm Reject"}
                   </button>
-                </>
-              ) : (
-                <div className={`hd-status-done hd-status-${household.status.toLowerCase()}`}>
-                  {statusLabel(household.status)}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            <footer className="hd-actions">
+              <div className="hd-actions-left">
+                <IconInfo />
+                <span>Review all details before finalizing decision.</span>
+                {actionMsg && <span className="hd-action-msg">{actionMsg}</span>}
+              </div>
+
+              <div className="hd-actions-right">
+                {household.status === "PENDING" ? (
+                  <>
+                    {!rejectMode && (
+                      <button
+                        className="hd-btn outline red"
+                        onClick={() => { setRejectMode(true); setActionMsg(""); }}
+                        disabled={actionLoading}
+                      >
+                        <IconReject />
+                        <span>Reject Application</span>
+                      </button>
+                    )}
+
+                    <button
+                      className="hd-btn solid green"
+                      onClick={() => updateStatus("VERIFIED")}
+                      disabled={actionLoading || rejectMode}
+                    >
+                      {actionLoading ? (
+                        <span>Processing…</span>
+                      ) : (
+                        <>
+                          <IconCheck />
+                          <span>APPROVE</span>
+                        </>
+                      )}
+                    </button>
+                  </>
+                ) : (
+                  <div className={`hd-status-done hd-status-${household.status.toLowerCase()}`}>
+                    {statusLabel(household.status)}
+                  </div>
+                )}
+              </div>
+            </footer>
           </footer>
         )}
       </section>
