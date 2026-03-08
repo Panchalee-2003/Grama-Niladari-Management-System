@@ -20,25 +20,18 @@ router.get("/profile", requireAuth, requireRole("GN"), async (req, res) => {
 // GET /api/gn/stats — returns live dashboard counts
 router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
     try {
-        const [totalHH, pendingHH, verifiedHH, rejectedHH, totalComplaints, openComplaints] =
-            await Promise.all([
-                pool.query("SELECT COUNT(*) FROM household"),
-                pool.query("SELECT COUNT(*) FROM household WHERE status = 'PENDING'"),
-                pool.query("SELECT COUNT(*) FROM household WHERE status = 'VERIFIED'"),
-                pool.query("SELECT COUNT(*) FROM household WHERE status = 'REJECTED'"),
-                pool.query("SELECT COUNT(*) FROM complaint"),
-                pool.query("SELECT COUNT(*) FROM complaint WHERE status != 'RESOLVED'"),
-            ]);
+        const [totalHH, totalComplaints] = await Promise.all([
+            pool.query("SELECT COUNT(*) FROM household"),
+            pool.query("SELECT COUNT(*) FROM complaint"),
+        ]);
 
         return res.json({
             ok: true,
             stats: {
                 total_households: parseInt(totalHH.rows[0].count),
-                pending_households: parseInt(pendingHH.rows[0].count),
-                verified_households: parseInt(verifiedHH.rows[0].count),
-                rejected_households: parseInt(rejectedHH.rows[0].count),
-                total_complaints: parseInt(totalComplaints.rows[0].count),
-                open_complaints: parseInt(openComplaints.rows[0].count),
+                certificates_this_month: 0,   // certificate table not yet created
+                complaints_received: parseInt(totalComplaints.rows[0].count),
+                active_notices: 0,   // notice table not yet created
             },
         });
     } catch (err) {

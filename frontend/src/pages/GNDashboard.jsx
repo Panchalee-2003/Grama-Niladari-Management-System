@@ -229,18 +229,18 @@ export default function GNDashboard() {
               loading={loading}
             />
             <StatCard
-              title={<>Pending<br />Verifications</>}
-              value={stats?.pending_households ?? 0}
+              title={<>Certificates Issued<br />This Month</>}
+              value={stats?.certificates_this_month ?? 0}
               loading={loading}
             />
             <StatCard
-              title={<>Verified<br />Households</>}
-              value={stats?.verified_households ?? 0}
+              title={<>Complaints<br />Received</>}
+              value={stats?.complaints_received ?? 0}
               loading={loading}
             />
             <StatCard
-              title="Open Complaints"
-              value={stats?.open_complaints ?? 0}
+              title="Active Notices"
+              value={stats?.active_notices ?? 0}
               loading={loading}
             />
           </div>
