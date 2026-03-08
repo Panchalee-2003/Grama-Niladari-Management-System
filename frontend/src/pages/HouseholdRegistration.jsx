@@ -323,6 +323,29 @@ export default function HouseholdRegistration() {
     e.preventDefault();
     setSubmitError("");
 
+    // ── Role guard: decode JWT to ensure the logged-in user is a CITIZEN ──
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setSubmitError("You are not logged in. Please log in as a citizen to submit.");
+        return;
+      }
+      // JWT is three base64url segments; the middle one is the payload
+      const payloadBase64 = token.split(".")[1];
+      const payload = JSON.parse(atob(payloadBase64.replace(/-/g, "+").replace(/_/g, "/")));
+      if (payload?.role !== "CITIZEN") {
+        setSubmitError(
+          "You are currently logged in as a " +
+          (payload?.role || "non-citizen") +
+          " account. Please log out and log in as a citizen to submit this form."
+        );
+        return;
+      }
+    } catch {
+      setSubmitError("Session error. Please log out and log back in as a citizen.");
+      return;
+    }
+
     // Basic required-field guard
     if (!house.holder_name.trim() || !house.address.trim()) {
       setSubmitError("Please fill in Householder Name and Address.");
@@ -398,10 +421,14 @@ export default function HouseholdRegistration() {
       setHouseholdId(newHouseholdId);
       setSubmitted(true);
     } catch (err) {
-      const msg =
+      let msg =
         err?.response?.data?.error ||
         err?.message ||
         "Something went wrong. Please try again.";
+      // Translate raw server "Forbidden" into a helpful message
+      if (msg === "Forbidden" || msg === "Cannot resubmit this application") {
+        msg = "Access denied. Please make sure you are logged in as a citizen and the application is in REJECTED status.";
+      }
       setSubmitError(msg);
     } finally {
       setSubmitting(false);
