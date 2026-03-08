@@ -198,13 +198,17 @@ router.patch("/:id/status", requireAuth, requireRole("GN"), async (req, res) => 
       return res.status(400).json({ ok: false, error: "A rejection reason is required" });
     }
 
+    // Compute rejection_reason in JS to avoid PostgreSQL type-inference
+    // issues that arise from reusing $1 inside a CASE expression.
+    const reasonValue = status === "REJECTED" ? (rejection_reason?.trim() || null) : null;
+
     const result = await pool.query(
       `UPDATE household
        SET status=$1,
-           rejection_reason = CASE WHEN $1='REJECTED' THEN $2 ELSE NULL END
+           rejection_reason=$2
        WHERE household_id=$3
        RETURNING household_id, status, rejection_reason`,
-      [status, rejection_reason?.trim() || null, id]
+      [status, reasonValue, id]
     );
 
     if (result.rows.length === 0) {
