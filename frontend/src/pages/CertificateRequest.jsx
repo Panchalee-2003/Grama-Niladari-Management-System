@@ -40,7 +40,7 @@ export default function CertificateRequest() {
   /* Form state */
   const [certType, setCertType] = useState("");
   const [purpose, setPurpose] = useState("");
-  const [contactNumber, setContact] = useState("");
+  const [nicNumber, setNicNumber] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
@@ -71,9 +71,9 @@ export default function CertificateRequest() {
 
     setSubmitting(true);
     try {
-      await api.post("/api/certificate", { cert_type: certType, purpose, contact_number: contactNumber });
+      await api.post("/api/certificate", { cert_type: certType, purpose, nic_number: nicNumber });
       setSubmitSuccess("✅ Your request has been submitted successfully!");
-      setCertType(""); setPurpose(""); setContact("");
+      setCertType(""); setPurpose(""); setNicNumber("");
       loadRequests();
     } catch (ex) {
       setSubmitError(ex.response?.data?.error || "Failed to submit request.");
@@ -129,8 +129,8 @@ export default function CertificateRequest() {
               </div>
 
               <div className="gn-field">
-                <label className="cr-label">Contact Number</label>
-                <input className="gn-input" type="tel" placeholder="07X-XXXXXXX" value={contactNumber} onChange={e => setContact(e.target.value)} maxLength={15} />
+                <label className="cr-label">NIC Number</label>
+                <input className="gn-input" type="text" placeholder="e.g. 200012345678 or 991234567V" value={nicNumber} onChange={e => setNicNumber(e.target.value)} maxLength={12} />
               </div>
 
               <div className="gn-field">

@@ -185,8 +185,11 @@ export default function GNCertificates() {
 
             <div className="gnc-modal-section">
               <div className="gnc-modal-row"><span>Citizen:</span><strong>{modal.citizen_name}</strong></div>
-              <div className="gnc-modal-row"><span>NIC:</span><strong>{modal.nic_number || "—"}</strong></div>
-              <div className="gnc-modal-row"><span>Phone:</span><strong>{modal.phone_number || modal.contact_number || "—"}</strong></div>
+              <div className="gnc-modal-row"><span>NIC (Profile):</span><strong>{modal.nic_number || "—"}</strong></div>
+              {modal.submitted_nic && modal.submitted_nic !== modal.nic_number && (
+                <div className="gnc-modal-row"><span>NIC (Submitted):</span><strong>{modal.submitted_nic}</strong></div>
+              )}
+              <div className="gnc-modal-row"><span>Phone:</span><strong>{modal.phone_number || "—"}</strong></div>
               <div className="gnc-modal-row"><span>Certificate Type:</span><strong>{modal.cert_type}</strong></div>
               <div className="gnc-modal-row"><span>Date Requested:</span><strong>{formatDate(modal.created_at)}</strong></div>
             </div>

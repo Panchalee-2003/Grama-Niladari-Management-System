@@ -263,9 +263,14 @@
 }
 
 .gnc-modal-row span {
-  color: #888;
+  color: #111;
   width: 130px;
   flex-shrink: 0;
+  font-weight: 600;
+}
+
+.gnc-modal-row strong {
+  color: #111;
 }
 
 .gnc-modal-desc {
@@ -276,9 +281,13 @@
   margin-bottom: 18px;
 }
 
+.gnc-modal-desc strong {
+  color: #111;
+}
+
 .gnc-modal-desc p {
   margin: 6px 0 0;
-  color: #333;
+  color: #111;
   line-height: 1.6;
 }
 
@@ -293,6 +302,7 @@
 .gnc-modal-label {
   font-size: 14px;
   font-weight: 700;
+  color: #111;
 }
 
 .gnc-modal-select {

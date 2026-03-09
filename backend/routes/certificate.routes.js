@@ -19,7 +19,7 @@ const CERT_TYPES = [
 router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
-        const { cert_type, purpose, contact_number } = req.body;
+        const { cert_type, purpose, nic_number } = req.body;
 
         if (!cert_type || !CERT_TYPES.includes(cert_type))
             return res.status(400).json({ ok: false, error: "Invalid certificate type" });
@@ -34,10 +34,10 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
         const { citizen_id } = citizenRow.rows[0];
 
         const result = await pool.query(
-            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, contact_number, status, created_at, updated_at)
+            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, nic_number, status, created_at, updated_at)
        VALUES ($1,$2,$3,$4,'PENDING',NOW(),NOW())
        RETURNING request_id, cert_type, purpose, status, created_at`,
-            [citizen_id, cert_type, purpose?.trim() || null, contact_number?.trim() || null]
+            [citizen_id, cert_type, purpose?.trim() || null, nic_number?.trim() || null]
         );
 
         return res.status(201).json({ ok: true, request: result.rows[0] });
@@ -54,7 +54,7 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
         const result = await pool.query(
-            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.contact_number,
+            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
               cr.status, cr.gn_note, cr.created_at, cr.updated_at
        FROM certificate_request cr
        JOIN citizen c ON c.citizen_id = cr.citizen_id
@@ -76,7 +76,7 @@ router.get("/all", requireAuth, requireRole("GN"), async (req, res) => {
     try {
         const { status } = req.query;
         let q = `
-      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.contact_number,
+      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number AS submitted_nic,
              cr.status, cr.gn_note, cr.created_at, cr.updated_at,
              c.full_name AS citizen_name, c.nic_number, c.phone_number
       FROM certificate_request cr
