@@ -45,6 +45,12 @@ export default function CertificateRequest() {
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
 
+  /* Citizen profile + family members */
+  const [myNic, setMyNic] = useState("");
+  const [myName, setMyName] = useState("");
+  const [members, setMembers] = useState([]);
+  const [selectedFor, setSelectedFor] = useState("self");
+
   /* Request history */
   const [requests, setRequests] = useState([]);
   const [listLoading, setListLoading] = useState(true);
@@ -62,18 +68,48 @@ export default function CertificateRequest() {
     }
   };
 
-  useEffect(() => { loadRequests(); }, []);
+  /* Load citizen profile NIC + family members on mount */
+  useEffect(() => {
+    loadRequests();
+    // Load citizen NIC from household registration profile
+    api.get("/api/citizen/me/profile").then(r => {
+      if (r.data.ok && r.data.profile) {
+        const nic = r.data.profile.nic || "";
+        const name = r.data.profile.full_name || "Myself";
+        setMyNic(nic);
+        setMyName(name);
+        setNicNumber(nic);
+      }
+    }).catch(() => {});
+    // Load family members for dropdown
+    api.get("/api/certificate/my-members").then(r => {
+      if (r.data.ok) setMembers(r.data.members);
+    }).catch(() => {});
+  }, []);
+
+  /* When "Request for" selection changes, auto-fill NIC */
+  const handleSelectFor = (e) => {
+    const val = e.target.value;
+    setSelectedFor(val);
+    if (val === "self") {
+      setNicNumber(myNic);
+    } else {
+      const member = members.find(m => String(m.member_id) === val);
+      if (member) setNicNumber(member.nic_number || "");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError(""); setSubmitSuccess("");
     if (!certType) { setSubmitError("Please select a certificate type."); return; }
+    if (!nicNumber.trim()) { setSubmitError("Please enter your NIC number."); return; }
 
     setSubmitting(true);
     try {
       await api.post("/api/certificate", { cert_type: certType, purpose, nic_number: nicNumber });
       setSubmitSuccess("✅ Your request has been submitted successfully!");
-      setCertType(""); setPurpose(""); setNicNumber("");
+      setCertType(""); setPurpose(""); setSelectedFor("self"); setNicNumber(myNic);
       loadRequests();
     } catch (ex) {
       setSubmitError(ex.response?.data?.error || "Failed to submit request.");
@@ -129,8 +165,30 @@ export default function CertificateRequest() {
               </div>
 
               <div className="gn-field">
-                <label className="cr-label">NIC Number</label>
-                <input className="gn-input" type="text" placeholder="e.g. 200012345678 or 991234567V" value={nicNumber} onChange={e => setNicNumber(e.target.value)} maxLength={12} />
+                <label className="cr-label">Requesting For <span className="cr-req">*</span></label>
+                <select className="gn-input gn-select" value={selectedFor} onChange={handleSelectFor}>
+                  <option value="self">{myName || "Myself"}</option>
+                  {members.map(m => (
+                    <option key={m.member_id} value={String(m.member_id)}>
+                      {m.full_name} ({m.relationship_to_head})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="gn-field">
+                <label className="cr-label">NIC Number <span className="cr-req">*</span></label>
+                <input
+                  className="gn-input"
+                  type="text"
+                  placeholder="e.g. 200012345678 or 991234567V"
+                  value={nicNumber}
+                  onChange={e => setNicNumber(e.target.value)}
+                  maxLength={12}
+                />
+                <span style={{ fontSize: "0.78rem", color: "#888", marginTop: "4px", display: "block" }}>
+                  Auto-filled from household registration. Edit if needed.
+                </span>
               </div>
 
               <div className="gn-field">
