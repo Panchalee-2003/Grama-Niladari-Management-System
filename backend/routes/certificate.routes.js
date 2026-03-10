@@ -14,18 +14,43 @@ const CERT_TYPES = [
 ];
 
 // ─────────────────────────────────────────
+// CITIZEN: Get my family members (for dropdown)
+// ─────────────────────────────────────────
+router.get("/my-members", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const result = await pool.query(
+            `SELECT fm.member_id, fm.full_name, fm.nic_number, fm.relationship_to_head
+       FROM family_member fm
+       JOIN household h ON h.household_id = fm.household_id
+       JOIN citizen c ON c.citizen_id = h.citizen_id
+       WHERE c.user_id = $1
+       ORDER BY fm.member_id ASC`,
+            [userId]
+        );
+        return res.json({ ok: true, members: result.rows });
+    } catch (err) {
+        console.error("My Members Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
 // CITIZEN: Submit a certificate request
 // ─────────────────────────────────────────
 router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
-        const { cert_type, purpose, nic_number } = req.body;
+        const { cert_type, purpose, family_member_id } = req.body;
 
         if (!cert_type || !CERT_TYPES.includes(cert_type))
             return res.status(400).json({ ok: false, error: "Invalid certificate type" });
 
+        if (!family_member_id)
+            return res.status(400).json({ ok: false, error: "Please select a family member" });
+
         const citizenRow = await pool.query(
-            "SELECT citizen_id, full_name, nic_number, phone_number FROM citizen WHERE user_id=$1 LIMIT 1",
+            "SELECT citizen_id FROM citizen WHERE user_id=$1 LIMIT 1",
             [userId]
         );
         if (!citizenRow.rows.length)
@@ -33,11 +58,21 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
 
         const { citizen_id } = citizenRow.rows[0];
 
+        // Verify the family member belongs to this citizen's household
+        const memberCheck = await pool.query(
+            `SELECT fm.member_id FROM family_member fm
+       JOIN household h ON h.household_id = fm.household_id
+       WHERE fm.member_id = $1 AND h.citizen_id = $2 LIMIT 1`,
+            [family_member_id, citizen_id]
+        );
+        if (!memberCheck.rows.length)
+            return res.status(403).json({ ok: false, error: "Invalid family member" });
+
         const result = await pool.query(
-            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, nic_number, status, created_at, updated_at)
+            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, family_member_id, status, created_at, updated_at)
        VALUES ($1,$2,$3,$4,'PENDING',NOW(),NOW())
        RETURNING request_id, cert_type, purpose, status, created_at`,
-            [citizen_id, cert_type, purpose?.trim() || null, nic_number?.trim() || null]
+            [citizen_id, cert_type, purpose?.trim() || null, family_member_id]
         );
 
         return res.status(201).json({ ok: true, request: result.rows[0] });
@@ -54,10 +89,13 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
         const result = await pool.query(
-            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
-              cr.status, cr.gn_note, cr.created_at, cr.updated_at
+            `SELECT cr.request_id, cr.cert_type, cr.purpose,
+              cr.status, cr.gn_note, cr.created_at, cr.updated_at,
+              fm.full_name AS member_name, fm.nic_number AS member_nic,
+              fm.relationship_to_head
        FROM certificate_request cr
        JOIN citizen c ON c.citizen_id = cr.citizen_id
+       LEFT JOIN family_member fm ON fm.member_id = cr.family_member_id
        WHERE c.user_id = $1
        ORDER BY cr.created_at DESC`,
             [userId]
@@ -76,11 +114,14 @@ router.get("/all", requireAuth, requireRole("GN"), async (req, res) => {
     try {
         const { status } = req.query;
         let q = `
-      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number AS submitted_nic,
+      SELECT cr.request_id, cr.cert_type, cr.purpose,
              cr.status, cr.gn_note, cr.created_at, cr.updated_at,
-             c.full_name AS citizen_name, c.nic_number, c.phone_number
+             c.full_name AS citizen_name, c.nic_number AS citizen_nic,
+             fm.member_id, fm.full_name AS member_name,
+             fm.nic_number AS member_nic, fm.relationship_to_head
       FROM certificate_request cr
       JOIN citizen c ON c.citizen_id = cr.citizen_id
+      LEFT JOIN family_member fm ON fm.member_id = cr.family_member_id
     `;
         const params = [];
         if (status && status !== "ALL") {
