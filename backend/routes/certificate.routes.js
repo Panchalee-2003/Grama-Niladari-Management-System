@@ -41,38 +41,44 @@ router.get("/my-members", requireAuth, requireRole("CITIZEN"), async (req, res) 
 router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
-        const { cert_type, purpose, family_member_id } = req.body;
+        const { cert_type, purpose, nic_number } = req.body;
 
         if (!cert_type || !CERT_TYPES.includes(cert_type))
             return res.status(400).json({ ok: false, error: "Invalid certificate type" });
 
-        if (!family_member_id)
-            return res.status(400).json({ ok: false, error: "Please select a family member" });
+        if (!nic_number)
+            return res.status(400).json({ ok: false, error: "Please enter your NIC number or your family member's NIC number" });
 
         const citizenRow = await pool.query(
-            "SELECT citizen_id FROM citizen WHERE user_id=$1 LIMIT 1",
+            "SELECT citizen_id, nic_number FROM citizen WHERE user_id=$1 LIMIT 1",
             [userId]
         );
         if (!citizenRow.rows.length)
             return res.status(400).json({ ok: false, error: "Citizen profile not found" });
 
-        const { citizen_id } = citizenRow.rows[0];
+        const citizen = citizenRow.rows[0];
+        const citizen_id = citizen.citizen_id;
+        
+        let family_member_id = null;
 
-        // Verify the family member belongs to this citizen's household
-        const memberCheck = await pool.query(
-            `SELECT fm.member_id FROM family_member fm
-       JOIN household h ON h.household_id = fm.household_id
-       WHERE fm.member_id = $1 AND h.citizen_id = $2 LIMIT 1`,
-            [family_member_id, citizen_id]
-        );
-        if (!memberCheck.rows.length)
-            return res.status(403).json({ ok: false, error: "Invalid family member" });
+        if (citizen.nic_number !== nic_number) {
+            const memberCheck = await pool.query(
+                `SELECT fm.member_id FROM family_member fm
+                 JOIN household h ON h.household_id = fm.household_id
+                 WHERE fm.nic_number = $1 AND h.citizen_id = $2 LIMIT 1`,
+                [nic_number, citizen_id]
+            );
+            if (!memberCheck.rows.length)
+                return res.status(400).json({ ok: false, error: "No citizen or family member found with the provided NIC number in your household" });
+            
+            family_member_id = memberCheck.rows[0].member_id;
+        }
 
         const result = await pool.query(
-            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, family_member_id, status, created_at, updated_at)
-       VALUES ($1,$2,$3,$4,'PENDING',NOW(),NOW())
+            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, family_member_id, nic_number, status, created_at, updated_at)
+       VALUES ($1,$2,$3,$4,$5,'PENDING',NOW(),NOW())
        RETURNING request_id, cert_type, purpose, status, created_at`,
-            [citizen_id, cert_type, purpose?.trim() || null, family_member_id]
+            [citizen_id, cert_type, purpose?.trim() || null, family_member_id, nic_number]
         );
 
         return res.status(201).json({ ok: true, request: result.rows[0] });
@@ -89,7 +95,7 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
         const result = await pool.query(
-            `SELECT cr.request_id, cr.cert_type, cr.purpose,
+            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
               cr.status, cr.gn_note, cr.created_at, cr.updated_at,
               fm.full_name AS member_name, fm.nic_number AS member_nic,
               fm.relationship_to_head
@@ -114,7 +120,7 @@ router.get("/all", requireAuth, requireRole("GN"), async (req, res) => {
     try {
         const { status } = req.query;
         let q = `
-      SELECT cr.request_id, cr.cert_type, cr.purpose,
+      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
              cr.status, cr.gn_note, cr.created_at, cr.updated_at,
              c.full_name AS citizen_name, c.nic_number AS citizen_nic,
              fm.member_id, fm.full_name AS member_name,
