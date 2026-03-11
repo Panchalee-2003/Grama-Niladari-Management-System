@@ -273,6 +273,39 @@ function AllowancesAids() {
     setFilters(prev => ({ ...prev, [name]: value }));
   };
 
+  const downloadCSV = () => {
+    if (results.length === 0) {
+      alert("No data to download");
+      return;
+    }
+
+    // Define CSV headers
+    const headers = ["Member_ID", "Name", "NIC_Number"];
+    
+    // Map data to CSV rows
+    const rows = results.map(r => [
+      r.id,
+      `"${r.name}"`, // Quote strings to handle commas in names
+      r.nic
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    // Create a Blob and trigger download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `eligible_citizens_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="aa-page">
       {/* Sidebar */}
@@ -460,7 +493,7 @@ function AllowancesAids() {
                     <IconFile />
                   </button>
 
-                  <button className="aa-csvBtn" type="button">
+                  <button className="aa-csvBtn" type="button" onClick={downloadCSV} disabled={results.length === 0}>
                     <span className="aa-csvIcon"><IconDownload /></span>
                     Download CSV
                   </button>
