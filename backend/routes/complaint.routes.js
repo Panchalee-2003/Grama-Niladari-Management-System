@@ -51,16 +51,27 @@ router.post(
                 return res.status(400).json({ ok: false, error: "Subject is required" });
             }
 
-            // Get citizen_id
+            // Get citizen_id and their household_id
             const citizenRow = await pool.query(
-                "SELECT citizen_id FROM citizen WHERE user_id=$1 LIMIT 1",
+                `SELECT c.citizen_id, h.household_id 
+                 FROM citizen c 
+                 LEFT JOIN household h ON c.citizen_id = h.citizen_id 
+                 WHERE c.user_id=$1 LIMIT 1`,
                 [userId]
             );
+            
             if (citizenRow.rows.length === 0) {
                 if (req.file) fs.unlink(req.file.path, () => { });
                 return res.status(400).json({ ok: false, error: "Citizen profile not found" });
             }
+            
             const citizenId = citizenRow.rows[0].citizen_id;
+            const householdId = citizenRow.rows[0].household_id;
+
+            if (!householdId) {
+                if (req.file) fs.unlink(req.file.path, () => { });
+                return res.status(400).json({ ok: false, error: "You must register a household before submitting a complaint" });
+            }
 
             // Store relative path  e.g.  complaints/1234567-9876543.pdf
             const attachmentPath = req.file
@@ -68,10 +79,10 @@ router.post(
                 : null;
 
             const result = await pool.query(
-                `INSERT INTO complaint (citizen_id, subject, description, attachment_path, status, created_at)
-       VALUES ($1, $2, $3, $4, 'PENDING', NOW())
+                `INSERT INTO complaint (citizen_id, household_id, subject, description, attachment_path, status, created_at)
+       VALUES ($1, $2, $3, $4, $5, 'PENDING', NOW())
        RETURNING complaint_id, subject, status, created_at, attachment_path`,
-                [citizenId, subject.trim(), description?.trim() || null, attachmentPath]
+                [citizenId, householdId, subject.trim(), description?.trim() || null, attachmentPath]
             );
 
             return res.status(201).json({ ok: true, complaint: result.rows[0] });
