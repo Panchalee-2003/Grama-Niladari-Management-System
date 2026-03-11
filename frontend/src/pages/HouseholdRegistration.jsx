@@ -381,6 +381,9 @@ export default function HouseholdRegistration() {
         });
         if (!hhRes.data.ok) throw new Error(hhRes.data.error || "Failed to re-submit");
         newHouseholdId = hhRes.data.household_id;
+
+        // ♻️ RE-SUBMIT: Update the aids
+        await api.post(`/api/household/${newHouseholdId}/aids`, { aids: aidEntries });
       } else {
         // 1️⃣ NEW: Create the household
         const hhRes = await api.post("/api/household", {
@@ -415,6 +418,11 @@ export default function HouseholdRegistration() {
             special_needs: m.special_needs || null,
           });
         }
+      }
+
+      // 3️⃣ NEW: Save Aid entries for new household
+      if (!resubmitHouseholdId) {
+        await api.post(`/api/household/${newHouseholdId}/aids`, { aids: aidEntries });
       }
 
       // Show success state

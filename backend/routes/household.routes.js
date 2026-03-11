@@ -172,11 +172,67 @@ router.get("/:id/detail", requireAuth, requireRole("GN"), async (req, res) => {
       [id]
     );
 
+    const aidsResult = await pool.query(
+      `SELECT aid_id, receiver_name, aid_type
+       FROM household_aid
+       WHERE household_id = $1
+       ORDER BY aid_id ASC`,
+      [id]
+    );
+
     return res.json({
       ok: true,
       household: hhResult.rows[0],
       members: membersResult.rows,
+      aids: aidsResult.rows,
     });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// ✅ Save household aids - Citizen only
+router.post("/:id/aids", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const { aids } = req.body; // array of { aid_type, receivers: [] }
+
+    // Verify the household belongs to this citizen
+    const own = await pool.query(
+      `SELECT h.household_id
+       FROM household h
+       JOIN citizen c ON c.citizen_id = h.citizen_id
+       WHERE h.household_id=$1 AND c.user_id=$2 LIMIT 1`,
+      [id, userId]
+    );
+
+    if (own.rows.length === 0) {
+      return res.status(403).json({ ok: false, error: "You cannot add aids to this household" });
+    }
+
+    // First delete any existing aids for resubmission cases
+    await pool.query("DELETE FROM household_aid WHERE household_id = $1", [id]);
+
+    if (!aids || !Array.isArray(aids)) {
+      return res.json({ ok: true, message: "No aids to insert" });
+    }
+
+    // Insert all new aid entries
+    for (const entry of aids) {
+      if (!entry.aid_type || !entry.receivers || entry.receivers.length === 0) continue;
+      
+      for (const receiver of entry.receivers) {
+        await pool.query(
+          `INSERT INTO household_aid (household_id, receiver_name, aid_type)
+           VALUES ($1, $2, $3)`,
+          [id, receiver, entry.aid_type]
+        );
+      }
+    }
+
+    return res.status(201).json({ ok: true, message: "Aids saved successfully" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ ok: false, error: err.message });

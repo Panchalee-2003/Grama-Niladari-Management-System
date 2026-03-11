@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import api from "../api/api.js";
 import "../styles/allowancesAids.css";
 
 function IconHome() {
@@ -224,6 +226,53 @@ const mockRows = [
 ];
 
 function AllowancesAids() {
+  const [filters, setFilters] = useState({
+    age_group: "",
+    income_range: "",
+    employment_status: "",
+    household_size: "",
+    aid_type: "",
+    special_needs: ""
+  });
+  
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const fetchResults = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      // Build query string
+      const params = new URLSearchParams();
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.append(key, value);
+      });
+
+      const res = await api.get(`/api/gn/allowances/filter?${params.toString()}`);
+      if (res.data.ok) {
+        setResults(res.data.results);
+      } else {
+        throw new Error(res.data.error || "Failed to fetch results");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Error fetching filtered data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch all when first mounted
+    fetchResults();
+  }, []);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="aa-page">
       {/* Sidebar */}
@@ -302,9 +351,9 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Age Group</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Age  Group
+                <select className="aa-select" name="age_group" value={filters.age_group} onChange={handleFilterChange}>
+                  <option value="">
+                    All Ages
                   </option>
                   <option>18 - 25</option>
                   <option>26 - 40</option>
@@ -315,33 +364,35 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Income Level</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Income  Level
+                <select className="aa-select" name="income_range" value={filters.income_range} onChange={handleFilterChange}>
+                  <option value="">
+                    All Incomes
                   </option>
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
+                  <option>&lt; 25,000</option>
+                  <option>25,000 - 50,000</option>
+                  <option>50,000 - 100,000</option>
+                  <option>&gt; 100,000</option>
                 </select>
               </div>
 
               <div className="aa-field">
                 <div className="aa-label">By Employment Type</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Employment  Type
+                <select className="aa-select" name="employment_status" value={filters.employment_status} onChange={handleFilterChange}>
+                  <option value="">
+                    All Employment Types
                   </option>
                   <option>Employed</option>
-                  <option>Self-employed</option>
                   <option>Unemployed</option>
+                  <option>Student</option>
+                  <option>Retired</option>
                 </select>
               </div>
 
               <div className="aa-field">
                 <div className="aa-label">By Household Size</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Household  Size
+                <select className="aa-select" name="household_size" value={filters.household_size} onChange={handleFilterChange}>
+                  <option value="">
+                    Any Size
                   </option>
                   <option>1 - 2</option>
                   <option>3 - 4</option>
@@ -351,30 +402,47 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Aid Type</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Household  Size
+                <select className="aa-select" name="aid_type" value={filters.aid_type} onChange={handleFilterChange}>
+                  <option value="">
+                    Any Aid Type
                   </option>
-                  <option>Food</option>
-                  <option>Medical</option>
-                  <option>Education</option>
+                  <option>Samurdhi</option>
+                  <option>Comfort Allowance</option>
+                  <option>Elder</option>
+                  <option>Public Assistance</option>
+                  <option>Disability</option>
+                  <option>Sickness Assistance</option>
+                  <option>Other</option>
                 </select>
               </div>
 
               <div className="aa-field">
                 <div className="aa-label">People with special needs</div>
-                <select className="aa-select" defaultValue="">
-                  <option value="" disabled>
-                    Select  Status
+                <select className="aa-select" name="special_needs" value={filters.special_needs} onChange={handleFilterChange}>
+                  <option value="">
+                    Any
                   </option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="Yes">Yes</option>
+                  <option value="None">No</option>
                 </select>
               </div>
 
               <div className="aa-applyRow">
-                <button className="aa-applyBtn" type="button">
-                  Apply Filters
+                <button className="aa-applyBtn" type="button" onClick={fetchResults} disabled={loading}>
+                  {loading ? "Searching..." : "Apply Filters"}
+                </button>
+                <button className="aa-applyBtn" type="button" style={{marginLeft: '10px', backgroundColor: '#e2e8f0', color: '#1e293b'}} onClick={() => {
+                  setFilters({
+                    age_group: "",
+                    income_range: "",
+                    employment_status: "",
+                    household_size: "",
+                    aid_type: "",
+                    special_needs: ""
+                  });
+                  setTimeout(() => document.querySelector(".aa-applyBtn").click(), 0);
+                }} disabled={loading}>
+                  Clear
                 </button>
               </div>
             </div>
@@ -382,7 +450,7 @@ function AllowancesAids() {
             {/* Eligible citizens */}
             <div className="aa-right">
               <div className="aa-rightHeader">
-                <div className="aa-rightTitle">Eligible citizens</div>
+                <div className="aa-rightTitle">Eligible citizens ({results.length})</div>
 
                 <div className="aa-actions">
                   <button className="aa-iconBtn" type="button" aria-label="download">
@@ -400,19 +468,26 @@ function AllowancesAids() {
               </div>
 
               <div className="aa-card">
+                {error && <div style={{color: 'red', marginBottom: '10px'}}>{error}</div>}
                 <div className="aa-tableHead">
                   <div className="aa-th">Member_ID</div>
                   <div className="aa-th">Name</div>
                   <div className="aa-th">NIC<br />NO</div>
                 </div>
 
-                {mockRows.map((r) => (
-                  <div className="aa-row" key={r.id}>
-                    <div className="aa-td aa-id">{r.id}</div>
-                    <div className="aa-td aa-name">{r.name}</div>
-                    <div className="aa-td aa-nic">{r.nic}</div>
-                  </div>
-                ))}
+                {loading && results.length === 0 ? (
+                  <div className="aa-row"><div className="aa-td" style={{gridColumn: '1 / -1', textAlign: 'center'}}>Loading data...</div></div>
+                ) : results.length === 0 ? (
+                  <div className="aa-row"><div className="aa-td" style={{gridColumn: '1 / -1', textAlign: 'center'}}>No citizens found matching the criteria.</div></div>
+                ) : (
+                  results.map((r) => (
+                    <div className="aa-row" key={r.id}>
+                      <div className="aa-td aa-id">{r.id}</div>
+                      <div className="aa-td aa-name">{r.name}</div>
+                      <div className="aa-td aa-nic">{r.nic}</div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
