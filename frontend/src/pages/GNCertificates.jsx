@@ -146,7 +146,8 @@ export default function GNCertificates() {
                 <thead>
                   <tr>
                     <th>Request ID</th>
-                    <th>Citizen Name</th>
+                    <th>Requested By</th>
+                    <th>NIC Owner</th>
                     <th>NIC</th>
                     <th>Certificate Type</th>
                     <th>Status</th>
@@ -159,6 +160,11 @@ export default function GNCertificates() {
                     <tr key={r.request_id}>
                       <td className="gnc-id">#{r.request_id}</td>
                       <td className="gnc-name">{r.citizen_name}</td>
+                      <td className="gnc-name">
+                        {r.member_name
+                          ? <>{r.member_name} <span style={{fontSize:"0.75rem",color:"#888"}}>({r.relationship_to_head})</span></>
+                          : r.citizen_name}
+                      </td>
                       <td className="gnc-nic">{r.nic_number || "—"}</td>
                       <td className="gnc-type">{r.cert_type}</td>
                       <td><span className={pillClass(r.status)}>{r.status.charAt(0) + r.status.slice(1).toLowerCase()}</span></td>
@@ -184,12 +190,16 @@ export default function GNCertificates() {
             <h2 className="gnc-modal-title">Certificate Request #{modal.request_id}</h2>
 
             <div className="gnc-modal-section">
-              <div className="gnc-modal-row"><span>Citizen:</span><strong>{modal.citizen_name}</strong></div>
-              <div className="gnc-modal-row"><span>NIC (Profile):</span><strong>{modal.nic_number || "—"}</strong></div>
-              {modal.submitted_nic && modal.submitted_nic !== modal.nic_number && (
-                <div className="gnc-modal-row"><span>NIC (Submitted):</span><strong>{modal.submitted_nic}</strong></div>
-              )}
-              <div className="gnc-modal-row"><span>Phone:</span><strong>{modal.phone_number || "—"}</strong></div>
+              <div className="gnc-modal-row"><span>Requested By:</span><strong>{modal.citizen_name}</strong></div>
+              <div className="gnc-modal-row">
+                <span>NIC Owner:</span>
+                <strong>
+                  {modal.member_name
+                    ? <>{modal.member_name} <span style={{fontWeight:"normal",color:"#888",fontSize:"0.85rem"}}>({modal.relationship_to_head})</span></>
+                    : modal.citizen_name}
+                </strong>
+              </div>
+              <div className="gnc-modal-row"><span>NIC Number:</span><strong>{modal.nic_number || "—"}</strong></div>
               <div className="gnc-modal-row"><span>Certificate Type:</span><strong>{modal.cert_type}</strong></div>
               <div className="gnc-modal-row"><span>Date Requested:</span><strong>{formatDate(modal.created_at)}</strong></div>
             </div>
