@@ -5,13 +5,13 @@ import emblem from "../assets/emblem.png";
 import api from "../api/api";
 
 const CERT_TYPES = [
-  "Residence Certificate",
+  "Residence and character Certificate",
   "Income Certificate",
-  "Character Certificate",
-  "Birth Certificate",
-  "Death Certificate",
-  "Housing Loan Approval",
-  "Other",
+  "Registration of delayed births",
+  "Request for financial assistance from the President's fund for medical treatment",
+  "Housing Loan Approval ",
+  "Application for obtaining housing loan funds",
+  "Notification of the death of a pensioner",
 ];
 
 function statusBadge(s) {
