@@ -77,7 +77,8 @@ html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: #F8FAF9; /* soft cool off-white */
+  overflow-y: auto;
 }
 
 /* TOP BAR */
@@ -86,8 +87,12 @@ html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
-  border-bottom: 1px solid #e6e6e6;
+  padding: 0 48px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .gn-top-left{
@@ -101,40 +106,60 @@ html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
   align-items: center;
   gap: 10px;
   width: 520px;
+  background: #F0F5F2;
+  border-radius: 8px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.gn-search:focus-within {
+  background: #fff;
+  border-color: #0C7A3B;
+  box-shadow: 0 0 0 3px rgba(12, 122, 59, 0.1);
 }
 
 .gn-search-input{
   flex: 1;
-  height: 28px;
+  height: 40px;
   border: none;
   outline: none;
-  background: #EAF5ED;
-  border-radius: 2px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
 }
 
 .gn-search-ico{
-  color: #111;
+  color: #666;
   display: flex;
   align-items: center;
 }
 
 .gn-profile-circle{
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: #0C7A3B;
+  background: #EAF5ED;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.gn-profile-circle:hover {
+  transform: scale(1.05);
 }
 
 .gn-profile-circle svg{
   display: block;
+  width: 20px;
+  height: 20px;
 }
 
 /* CONTENT */
 .gn-content{
-  padding: 34px 48px;
+  padding: 40px 48px;
+  max-width: 1440px;
 }
 
 .gn-welcome{
@@ -145,40 +170,80 @@ html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
 }
 
 .gn-section-title{
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: #111;
-  margin-top: 18px;
-  margin-bottom: 14px;
+  margin-top: 32px;
+  margin-bottom: 20px;
 }
 
 /* SUMMARY CARDS */
 .gn-summary{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 34px;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
 .gn-summary-card{
-  background: #EAF5ED;
-  border-radius: 10px;
-  padding: 18px 18px;
-  min-height: 110px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 130px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  border: 1px solid #eef2f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.gn-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+.gn-summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: #0C7A3B;
+  opacity: 0.8;
+}
+
+.gn-s-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .gn-s-title{
-  font-size: 16px;
-  font-weight: 700;
-  color: #111;
-  line-height: 1.25;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  line-height: 1.4;
+}
+
+.gn-s-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #EAF5ED;
+  color: #0C7A3B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .gn-s-number{
-  font-size: 26px;
-  font-weight: 900;
-  margin-top: 10px;
+  font-size: 34px;
+  font-weight: 800;
   color: #111;
+  margin-top: 16px;
 }
 
 /* ACTION SHORTCUTS */
@@ -186,88 +251,99 @@ html, body { width: 100%; height: 100%; font-family: Inter, Arial, sans-serif; }
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 34px;
+  margin-bottom: 40px;
 }
 
 .gn-action-btn{
-  background: #0B5F2E;
-  border: none;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 700;
+  background: #fff;
+  border: 1px solid #d9e9dc;
+  color: #0B5F2E;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
 }
+
+.gn-action-btn:hover {
+  background: #0B5F2E;
+  color: #fff;
+  border-color: #0B5F2E;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(11, 95, 46, 0.15);
+}
+
+/* Make icons transition colors */
+.gn-action-btn svg {
+  transition: color 0.2s ease;
+}
+
 /* ANALYTICS */
 .gn-analytics{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 24px;
 }
 
 /* Chart card */
 .gn-chart{
-  border: 1px solid #d9e9dc;
-  border-radius: 10px;
-  padding: 16px 18px;
-  height: 200px;
   background: #fff;
-
-  /* ✅ lock everything inside */
-  overflow: hidden;
-
-  /* ✅ Figma-like layout */
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  row-gap: 12px;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 240px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  border: 1px solid #eef2f0;
+  display: flex;
+  flex-direction: column;
 }
 
 .gn-chart-title{
-  margin-bottom: 8px;  /* tighter */
-  font-size: 16px;
-  font-weight: 800;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 700;
   color: #111;
 }
 
-/* Bars area stays INSIDE the card */
-.gn-bars{
-  min-height: 0;                 /* ✅ important for grid overflow */
+/* For complaints overview rows */
+.gn-analytics-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 12px;
-  overflow: hidden;              /* ✅ never show outside */
+  align-items: center;
+  padding: 16px 20px;
+  background: #fdfdfd;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 12px;
+  transition: background 0.2s;
 }
 
-/* bars */
-.gn-bar{
-  width: 18px;
-  height: 110px;   
-  max-height: 100%;              /* keep your figma height */
-  background: #EAF5ED;
-  border: 1px solid #d9e9dc;
-  border-radius: 3px;
+.gn-analytics-row:hover {
+  background: #f8faf9;
 }
 
-/* months row ALWAYS inside card */
-.gn-months{
+.gn-analytics-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
   display: flex;
-  justify-content: space-between;
-  padding: 0 12px;
-  color: #0C7A3B;
+  align-items: center;
+  gap: 12px;
+}
+
+.gn-analytics-label-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.gn-analytics-val {
+  font-size: 18px;
   font-weight: 700;
-  font-size: 13px;
-  line-height: 1;
-  margin-top: 4px; 
-}
-
-/* --- HARD FIX: prevent analytics overflow --- */
-.gn-chart { 
-    min-height: 0; }
-
-.gn-bars{
-  min-height: 0 !important;   /* ✅ important for flex overflow */
-  overflow: hidden !important;
 }
 
 

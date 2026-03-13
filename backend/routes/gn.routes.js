@@ -20,9 +20,10 @@ router.get("/profile", requireAuth, requireRole("GN"), async (req, res) => {
 // GET /api/gn/stats — returns live dashboard counts
 router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
     try {
-        const [totalHH, totalComplaints] = await Promise.all([
+        const [totalHH, totalComplaints, totalNotices] = await Promise.all([
             pool.query("SELECT COUNT(*) FROM household"),
             pool.query("SELECT COUNT(*) FROM complaint"),
+            pool.query("SELECT COUNT(*) FROM notice"),
         ]);
 
         return res.json({
@@ -31,7 +32,7 @@ router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
                 total_households: parseInt(totalHH.rows[0].count),
                 certificates_this_month: 0,   // certificate table not yet created
                 complaints_received: parseInt(totalComplaints.rows[0].count),
-                active_notices: 0,   // notice table not yet created
+                active_notices: parseInt(totalNotices.rows[0].count),
             },
         });
     } catch (err) {
@@ -100,7 +101,7 @@ router.get("/allowances/filter", requireAuth, requireRole("GN"), async (req, res
         let filteredMembers = result.rows;
 
         // Process derived attributes dynamically (age and household size)
-        
+
         // 1. Filter by household_size
         if (household_size) {
             filteredMembers = filteredMembers.filter(m => {
@@ -118,7 +119,7 @@ router.get("/allowances/filter", requireAuth, requireRole("GN"), async (req, res
             if (!dobString) return 0;
             const dob = new Date(dobString);
             const diff_ms = Date.now() - dob.getTime();
-            const age_dt = new Date(diff_ms); 
+            const age_dt = new Date(diff_ms);
             return Math.abs(age_dt.getUTCFullYear() - 1970);
         };
 
