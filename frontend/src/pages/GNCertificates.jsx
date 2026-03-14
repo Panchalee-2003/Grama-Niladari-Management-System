@@ -5,6 +5,7 @@ import "../styles/gnCertificates.css";
 import "../styles/householdVerify.css";
 import api from "../api/api";
 import GNProfileDropdown from "../components/GNProfileDropdown";
+import CertificateFormModal from "../components/CertificateFormModal";
 
 /* --- Icons --- */
 function IconHome() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" strokeWidth="2" /></svg>; }
@@ -28,7 +29,8 @@ export default function GNCertificates() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("ALL");
-  const [modal, setModal] = useState(null);   // selected request
+  const [modal, setModal] = useState(null);   // selected request for status review
+  const [formModal, setFormModal] = useState(null); // selected request for cert form
   const [noteText, setNoteText] = useState("");
   const [newStatus, setNewStatus] = useState("");
   const [saving, setSaving] = useState(false);
@@ -233,9 +235,9 @@ export default function GNCertificates() {
                 <button 
                   className="gnc-save-btn" 
                   style={{ background: "#2f6b45" }}
-                  onClick={() => alert("Certificate generation logic would go here.")}
+                  onClick={() => setFormModal(modal)}
                 >
-                  Generate Certificate
+                  Fill &amp; Generate Certificate
                 </button>
                 <button className="gnc-save-btn" onClick={handleSave} disabled={saving}>
                    {saving ? "Saving…" : "Save Changes"}
@@ -245,6 +247,14 @@ export default function GNCertificates() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* CERTIFICATE FORM MODAL */}
+      {formModal && (
+        <CertificateFormModal
+          request={formModal}
+          onClose={() => setFormModal(null)}
+        />
       )}
     </div>
   );

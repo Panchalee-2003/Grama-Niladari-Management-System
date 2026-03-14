@@ -33,6 +33,7 @@ import GNSettings from "./pages/GNSettings";
 
 import AdminStaffDashboard from "./pages/AdminStaffDashboard.jsx";
 import AdminVerifyCertificates from "./pages/AdminVerifyCertificates.jsx";
+import CertificateVerify from "./pages/CertificateVerify";
 
 
 
@@ -43,6 +44,9 @@ export default function App() {
       <Routes>
         {/* default */}
         <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* Public certificate verification (no auth) */}
+        <Route path="/verify/:certId" element={<CertificateVerify />} />
 
         {/* auth */}
         <Route path="/login" element={<Login />} />
