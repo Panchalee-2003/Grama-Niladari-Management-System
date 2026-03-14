@@ -4,6 +4,7 @@ import "../styles/householdRegistration.css";
 import api from "../api/api";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
+import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
 
 // --- Icons ---
 function IconHome() {
@@ -490,7 +491,7 @@ export default function HouseholdRegistration() {
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="cd-about-btn">About Us</Link>
           <NotificationDropdown />
-          <div className="cd-profile-circle" aria-label="profile"><IconUser /></div>
+          <CitizenProfileDropdown />
         </div>
       </header>
       <nav className="cd-nav">
@@ -543,9 +544,7 @@ export default function HouseholdRegistration() {
           <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <Link to="/about" className="cd-about-btn">About Us</Link>
             <NotificationDropdown />
-            <div className="cd-profile-circle" aria-label="profile">
-              <IconUser />
-            </div>
+            <CitizenProfileDropdown />
           </div>
         </header>
 
@@ -577,9 +576,7 @@ export default function HouseholdRegistration() {
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="cd-about-btn">About Us</Link>
           <NotificationDropdown />
-          <div className="cd-profile-circle" aria-label="profile">
-            <IconUser />
-          </div>
+          <CitizenProfileDropdown />
         </div>
       </header>
 

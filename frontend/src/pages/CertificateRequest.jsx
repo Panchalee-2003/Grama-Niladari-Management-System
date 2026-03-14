@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/certificateRequest.css";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
+import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
 import api from "../api/api";
 
 const CERT_TYPES = [
@@ -133,7 +134,7 @@ export default function CertificateRequest() {
         <div className="gn-header-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="gn-about-btn">About Us</Link>
           <NotificationDropdown />
-          <div className="gn-profile-btn" role="button" tabIndex={0} aria-label="Profile"><ProfileIcon /></div>
+          <CitizenProfileDropdown />
         </div>
       </header>
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/notices.css";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
+import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
 import api from "../api/api";
 
 function IconHome() {
@@ -55,7 +56,7 @@ export default function Notices() {
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="cd-about-btn">About Us</Link>
           <NotificationDropdown />
-          <div className="cd-profile-circle" aria-label="profile"><IconUser /></div>
+          <CitizenProfileDropdown />
         </div>
       </header>
 

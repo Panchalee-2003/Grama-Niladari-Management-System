@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/citizenDashboard.css";
-import { clearAuth } from "../auth/auth";
-
+import "../styles/citizenDashboard.css";
 import hero from "../assets/paddy.jpg";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
+import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
 
 /* Icons */
 function IconHome() {
@@ -98,56 +98,8 @@ function IconMedal() {
     </svg>
   );
 }
-function IconProfileSmall() {
-  return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-        stroke="#fff"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 20a8 8 0 0 1 16 0"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function IconLogout() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16 17l5-5-5-5"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M21 12H9"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export default function CitizenDashboard() {
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    clearAuth();
-    navigate("/login");
-  };
 
   return (
     <div className="cd-page">
@@ -164,12 +116,7 @@ export default function CitizenDashboard() {
         <div className="cd-top-actions">
           <Link to="/about" className="cd-about">About Us</Link>
           <NotificationDropdown />
-          <button className="cd-profile" aria-label="Profile">
-            <IconProfileSmall />
-          </button>
-          <button className="cd-logout" onClick={handleLogout} aria-label="Logout" title="Logout">
-            <IconLogout />
-          </button>
+          <CitizenProfileDropdown />
         </div>
       </header>
 
