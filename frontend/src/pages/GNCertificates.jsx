@@ -230,11 +230,13 @@ export default function GNCertificates() {
               />
 
               <div className="gnc-modal-btns">
-                <input 
-                  className="gnc-modal-input" 
-                  style={{ flex: 1, padding: "8px 12px", border: "1px solid #ccc", borderRadius: "8px" }}
-                  placeholder="Generate certificate..." 
-                />
+                <button 
+                  className="gnc-save-btn" 
+                  style={{ background: "#2f6b45" }}
+                  onClick={() => alert("Certificate generation logic would go here.")}
+                >
+                  Generate Certificate
+                </button>
                 <button className="gnc-save-btn" onClick={handleSave} disabled={saving}>
                    {saving ? "Saving…" : "Save Changes"}
                 </button>
