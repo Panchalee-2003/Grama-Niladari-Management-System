@@ -230,8 +230,13 @@ export default function GNCertificates() {
               />
 
               <div className="gnc-modal-btns">
+                <input 
+                  className="gnc-modal-input" 
+                  style={{ flex: 1, padding: "8px 12px", border: "1px solid #ccc", borderRadius: "8px" }}
+                  placeholder="Generate certificate..." 
+                />
                 <button className="gnc-save-btn" onClick={handleSave} disabled={saving}>
-                  {saving ? "Saving…" : "Save Changes"}
+                   {saving ? "Saving…" : "Save Changes"}
                 </button>
                 <button className="gnc-cancel-btn" onClick={closeModal}>Cancel</button>
               </div>

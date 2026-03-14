@@ -27,6 +27,8 @@ import GNCertificates from "./pages/GNCertificates";
 import ComplaintManagement from "./pages/ComplaintManagement.jsx";
 import PostNotice from "./pages/PostNotice";
 import AllowancesAids from "./pages/AllowancesAids";
+import GNSettings from "./pages/GNSettings";
+
 
 
 import AdminStaffDashboard from "./pages/AdminStaffDashboard.jsx";
@@ -174,6 +176,15 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/gn/settings"
+          element={
+            <ProtectedRoute roles={["GN"]}>
+              <GNSettings />
+            </ProtectedRoute>
+          }
+        />
+
 
         {/* Admin */}
         <Route
