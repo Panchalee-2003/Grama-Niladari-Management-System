@@ -1,0 +1,54 @@
+[
+  {
+    "column_name": "request_id",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "citizen_id",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "cert_type",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "purpose",
+    "data_type": "text"
+  },
+  {
+    "column_name": "status",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "gn_note",
+    "data_type": "text"
+  },
+  {
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone"
+  },
+  {
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone"
+  },
+  {
+    "column_name": "family_member_id",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "nic_number",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "certificate_data",
+    "data_type": "jsonb"
+  },
+  {
+    "column_name": "certificate_id",
+    "data_type": "uuid"
+  },
+  {
+    "column_name": "issued_at",
+    "data_type": "timestamp with time zone"
+  }
+]

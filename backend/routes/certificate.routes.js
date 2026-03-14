@@ -158,14 +158,14 @@ router.get("/verify/:cert_uuid", async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// GN: List all requests (filter by status)
+// GN & ADMIN: List all requests (filter by status)
 // ─────────────────────────────────────────
-router.get("/all", requireAuth, requireRole("GN"), async (req, res) => {
+router.get("/all", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => {
     try {
         const { status } = req.query;
         let q = `
       SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
-             cr.status, cr.gn_note, cr.created_at, cr.updated_at,
+             cr.status, cr.admin_status, cr.gn_note, cr.created_at, cr.updated_at,
              cr.certificate_id, cr.issued_at,
              c.full_name AS citizen_name, c.nic_number AS citizen_nic,
              fm.member_id, fm.full_name AS member_name,
@@ -243,9 +243,9 @@ router.patch("/:id/data", requireAuth, requireRole("GN"), async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// GN: Get saved certificate form data
+// GN & ADMIN: Get saved certificate form data
 // ─────────────────────────────────────────
-router.get("/:id/data", requireAuth, requireRole("GN"), async (req, res) => {
+router.get("/:id/data", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query(
@@ -269,9 +269,9 @@ router.get("/:id/data", requireAuth, requireRole("GN"), async (req, res) => {
 });
 
 // ─────────────────────────────────────────
-// GN: Generate & download certificate PDF
+// GN & ADMIN: Generate & download certificate PDF
 // ─────────────────────────────────────────
-router.get("/:id/pdf", requireAuth, requireRole("GN"), async (req, res) => {
+router.get("/:id/pdf", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -651,5 +651,79 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         field("Grama Niladhari", data.gn_name);
     }
 }
+
+// ─────────────────────────────────────────
+// ADMIN: Fetch stats for admin dashboard
+// ─────────────────────────────────────────
+router.get("/admin/stats", requireAuth, requireRole("ADMIN"), async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                COUNT(*) as total_requests,
+                SUM(CASE WHEN admin_status = 'PENDING' THEN 1 ELSE 0 END) as pending_verifications,
+                SUM(CASE WHEN admin_status = 'VERIFIED' AND date_trunc('month', updated_at) = date_trunc('month', CURRENT_DATE) THEN 1 ELSE 0 END) as approved_this_month,
+                SUM(CASE WHEN admin_status = 'REJECTED' AND date_trunc('month', updated_at) = date_trunc('month', CURRENT_DATE) THEN 1 ELSE 0 END) as rejected_this_month,
+                EXTRACT(WEEK FROM created_at) as week_no,
+                COUNT(*) as weekly_count
+            FROM certificate_request
+            GROUP BY week_no
+            ORDER BY week_no DESC
+            LIMIT 4;
+        `);
+        // Calculate global aggregates (ignoring week_no grouping) using a separate query
+        const aggResult = await pool.query(`
+            SELECT 
+                SUM(CASE WHEN admin_status = 'PENDING' THEN 1 ELSE 0 END) as pending_verifications,
+                SUM(CASE WHEN admin_status = 'VERIFIED' AND date_trunc('month', updated_at) = date_trunc('month', CURRENT_DATE) THEN 1 ELSE 0 END) as approved_this_month,
+                SUM(CASE WHEN admin_status = 'REJECTED' AND date_trunc('month', updated_at) = date_trunc('month', CURRENT_DATE) THEN 1 ELSE 0 END) as rejected_this_month,
+                COUNT(*) as total_requests
+            FROM certificate_request;
+        `);
+        
+        const overall = aggResult.rows[0];
+        
+        return res.json({
+            ok: true,
+            stats: {
+                pending_verifications: parseInt(overall.pending_verifications || 0),
+                approved_this_month: parseInt(overall.approved_this_month || 0),
+                rejected_this_month: parseInt(overall.rejected_this_month || 0),
+                total_requests: parseInt(overall.total_requests || 0),
+                weekly: result.rows.map(r => ({ week: r.week_no, count: parseInt(r.weekly_count) }))
+            }
+        });
+    } catch (err) {
+        console.error("Admin Stats Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
+// ADMIN: Update admin_status
+// ─────────────────────────────────────────
+router.patch("/:id/admin-status", requireAuth, requireRole("ADMIN"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { admin_status } = req.body;
+        const allowed = ["PENDING", "VERIFIED", "REJECTED"];
+        if (!allowed.includes(admin_status))
+            return res.status(400).json({ ok: false, error: "Invalid admin status" });
+
+        const result = await pool.query(
+            `UPDATE certificate_request
+             SET admin_status=$1, updated_at=NOW()
+             WHERE request_id=$2
+             RETURNING request_id, admin_status, updated_at`,
+            [admin_status, id]
+        );
+        if (!result.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found" });
+
+        return res.json({ ok: true, request: result.rows[0] });
+    } catch (err) {
+        console.error("Update Admin Status Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
 
 module.exports = router;

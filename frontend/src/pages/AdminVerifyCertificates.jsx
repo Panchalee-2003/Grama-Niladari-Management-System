@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminVerifyCertificates.css";
 import { clearAuth } from "../auth/auth";
-
+import api from "../api/api";
 /* ========= ICONS (SVG) ========= */
 function IconDashboard() {
     return (
@@ -124,69 +125,123 @@ function IconChevronDown() {
 
 export default function AdminVerifyCertificates() {
     const navigate = useNavigate();
+    const [certificates, setCertificates] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filterType, setFilterType] = useState("All Types");
+    const [filterStatus, setFilterStatus] = useState("All Statuses");
+    const [filterDateRange, setFilterDateRange] = useState("All Time");
+
+    const CERT_TYPES = [
+        "All Types",
+        "Residence and character Certificate",
+        "Income Certificate",
+        "Registration of delayed births",
+        "Request for financial assistance from the President's fund for medical treatment",
+        "Housing Loan Approval",
+        "Application for obtaining housing loan funds",
+        "Notification of the death of a pensioner",
+    ];
+    
+    const STATUS_OPTIONS = ["All Statuses", "PENDING", "VERIFIED", "REJECTED"];
+    const DATE_RANGES = ["All Time", "Today", "This Week", "This Month"];
 
     const handleLogout = () => {
         clearAuth();
         navigate("/login");
     };
 
-    // Sample certificate data
-    const certificates = [
-        {
-            id: "CERT-2023-001",
-            citizenName: "Aaliyah Sharma",
-            certificateType: "Birth Certificate",
-            gnVerified: "Yes",
-            submissionDate: "2023-08-15",
-            status: "Pending",
-        },
-        {
-            id: "CERT-2023-002",
-            citizenName: "Ethan Patel",
-            certificateType: "Marriage Certificate",
-            gnVerified: "No",
-            submissionDate: "2023-08-16",
-            status: "Pending",
-        },
-        {
-            id: "CERT-2023-003",
-            citizenName: "Olivia Singh",
-            certificateType: "Death Certificate",
-            gnVerified: "Yes",
-            submissionDate: "2023-08-17",
-            status: "Verified",
-        },
-        {
-            id: "CERT-2023-004",
-            citizenName: "Noah Varma",
-            certificateType: "Birth Certificate",
-            gnVerified: "Yes",
-            submissionDate: "2023-08-18",
-            status: "Rejected",
-        },
-        {
-            id: "CERT-2023-005",
-            citizenName: "Isabella Kapoor",
-            certificateType: "Marriage Certificate",
-            gnVerified: "No",
-            submissionDate: "2023-08-19",
-            status: "Pending",
-        },
-        {
-            id: "CERT-2023-006",
-            citizenName: "Liam Kumar",
-            certificateType: "Death Certificate",
-            gnVerified: "Yes",
-            submissionDate: "2023-08-20",
-            status: "Verified",
-        },
-    ];
+    useEffect(() => {
+        const fetchCertificates = async () => {
+            try {
+                const res = await api.get("/api/certificate/all");
+                if (res.data.ok) {
+                    setCertificates(res.data.requests);
+                }
+            } catch (err) {
+                console.error("Failed to fetch certificates", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCertificates();
+    }, []);
+
+    const handleStatusUpdate = async (id, newStatus) => {
+        try {
+            const res = await api.patch(`/api/certificate/${id}/admin-status`, { admin_status: newStatus });
+            if (res.data.ok) {
+                setCertificates(prev => prev.map(cert => 
+                    cert.request_id === id ? { ...cert, admin_status: newStatus } : cert
+                ));
+            }
+        } catch (err) {
+            alert(err.response?.data?.error || "Error updating status");
+        }
+    };
+
+    const handleDownload = async (id) => {
+        try {
+            const res = await api.get(`/api/certificate/${id}/pdf`, { responseType: 'blob' });
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('link');
+            link.href = url;
+            link.setAttribute('download', `certificate_${id}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        } catch (err) {
+            alert("Error downloading certificate.");
+        }
+    };
 
     const getStatusClass = (status) => {
-        if (status === "Verified") return "avc-status-verified";
-        if (status === "Rejected") return "avc-status-rejected";
+        if (status === "VERIFIED") return "avc-status-verified";
+        if (status === "REJECTED") return "avc-status-rejected";
         return "avc-status-pending";
     };
+
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "—";
+        return new Date(dateStr).toLocaleDateString("en-GB");
+    };
+
+    const filteredCertificates = certificates.filter(cert => {
+        // Search
+        const searchStr = searchQuery.toLowerCase();
+        const applicantName = cert.member_name || cert.citizen_name || "";
+        const matchesSearch = 
+            String(cert.request_id).toLowerCase().includes(searchStr) ||
+            applicantName.toLowerCase().includes(searchStr) ||
+            (cert.nic_number?.toLowerCase() || "").includes(searchStr);
+
+        // Type
+        const matchesType = filterType === "All Types" || cert.cert_type === filterType;
+
+        // Status
+        const adminStatus = cert.admin_status || "PENDING";
+        const matchesStatus = filterStatus === "All Statuses" || adminStatus === filterStatus;
+
+        // Date
+        let matchesDate = true;
+        if (filterDateRange !== "All Time" && cert.created_at) {
+            const certDate = new Date(cert.created_at);
+            const now = new Date();
+            if (filterDateRange === "Today") {
+                matchesDate = certDate.toDateString() === now.toDateString();
+            } else if (filterDateRange === "This Week") {
+                // Ensure we don't mutate `now` unnecessarily.
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(now.getDate() - 7);
+                matchesDate = certDate >= oneWeekAgo;
+            } else if (filterDateRange === "This Month") {
+                matchesDate = certDate.getMonth() === now.getMonth() && certDate.getFullYear() === now.getFullYear();
+            }
+        }
+
+        return matchesSearch && matchesType && matchesStatus && matchesDate;
+    });
 
     return (
         <div className="avc-page">
@@ -243,6 +298,8 @@ export default function AdminVerifyCertificates() {
                             type="text"
                             className="avc-search-bar"
                             placeholder="Search by Certificate ID or Citizen Name"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <div className="avc-search-icon">
                             <IconSearch />
@@ -261,16 +318,37 @@ export default function AdminVerifyCertificates() {
                     {/* FILTERS */}
                     <div className="avc-filters">
                         <div className="avc-filter">
-                            <span>Certificate Type</span>
-                            <IconChevronDown />
+                            <select 
+                                value={filterType} 
+                                onChange={(e) => setFilterType(e.target.value)}
+                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
+                            >
+                                {CERT_TYPES.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="avc-filter">
-                            <span>Status</span>
-                            <IconChevronDown />
+                            <select 
+                                value={filterStatus} 
+                                onChange={(e) => setFilterStatus(e.target.value)}
+                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
+                            >
+                                {STATUS_OPTIONS.map(status => (
+                                    <option key={status} value={status}>{status}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="avc-filter">
-                            <span>Date Range</span>
-                            <IconChevronDown />
+                            <select 
+                                value={filterDateRange} 
+                                onChange={(e) => setFilterDateRange(e.target.value)}
+                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
+                            >
+                                {DATE_RANGES.map(range => (
+                                    <option key={range} value={range}>{range}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
@@ -289,23 +367,40 @@ export default function AdminVerifyCertificates() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {certificates.map((cert) => (
-                                    <tr key={cert.id}>
-                                        <td className="avc-cert-id">{cert.id}</td>
-                                        <td className="avc-citizen-name">{cert.citizenName}</td>
-                                        <td className="avc-cert-type">{cert.certificateType}</td>
-                                        <td className="avc-gn-verified">{cert.gnVerified}</td>
-                                        <td className="avc-date">{cert.submissionDate}</td>
+                                {loading && (
+                                    <tr>
+                                        <td colSpan="7" style={{ textAlign: "center", padding: "20px" }}>Loading...</td>
+                                    </tr>
+                                )}
+                                {!loading && filteredCertificates.length === 0 && (
+                                    <tr>
+                                        <td colSpan="7" style={{ textAlign: "center", padding: "20px" }}>No certificates found.</td>
+                                    </tr>
+                                )}
+                                {!loading && filteredCertificates.map((cert) => (
+                                    <tr key={cert.request_id}>
+                                        <td className="avc-cert-id">{cert.request_id}</td>
+                                        <td className="avc-citizen-name">{cert.member_name || cert.citizen_name}</td>
+                                        <td className="avc-cert-type">{cert.cert_type}</td>
+                                        <td className="avc-gn-verified">
+                                            <span style={{color: cert.status === 'APPROVED' ? '#155724' : cert.status === 'REJECTED' ? '#721c24' : '#856404'}}>{cert.status || "PENDING"}</span>
+                                        </td>
+                                        <td className="avc-date">{formatDate(cert.created_at)}</td>
                                         <td>
-                                            <span className={`avc-status ${getStatusClass(cert.status)}`}>
-                                                {cert.status}
+                                            <span className={`avc-status ${getStatusClass(cert.admin_status || 'PENDING')}`}>
+                                                {cert.admin_status || "PENDING"}
                                             </span>
                                         </td>
                                         <td className="avc-actions">
-                                            <button className="avc-action-btn">View</button>
-                                            <button className="avc-action-btn">Verify</button>
-                                            <button className="avc-action-btn">Reject</button>
-                                            <button className="avc-action-btn">Download</button>
+                                            {(cert.admin_status === "PENDING" || !cert.admin_status) && (
+                                                <>
+                                                    <button className="avc-action-btn" onClick={() => handleStatusUpdate(cert.request_id, "VERIFIED")}>Verify</button>
+                                                    <button className="avc-action-btn" onClick={() => handleStatusUpdate(cert.request_id, "REJECTED")}>Reject</button>
+                                                </>
+                                            )}
+                                            {(cert.admin_status === "VERIFIED" && cert.status === "APPROVED") && (
+                                                <button className="avc-action-btn" onClick={() => handleDownload(cert.request_id)}>Download</button>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}

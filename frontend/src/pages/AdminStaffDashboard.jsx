@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminStaffDashboard.css";
 import { clearAuth } from "../auth/auth";
-
+import api from "../api/api";
 /* ========= ICONS (SVG) ========= */
 function IconDashboard() {
   return (
@@ -110,6 +111,30 @@ function IconLogout() {
 
 export default function AdminStaffDashboard() {
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+    pending_verifications: 0,
+    approved_this_month: 0,
+    rejected_this_month: 0,
+    total_requests: 0,
+    weekly: []
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await api.get("/api/certificate/admin/stats");
+        if (res.data.ok) {
+          setStats(res.data.stats);
+        }
+      } catch (err) {
+        console.error("Failed to load admin stats", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
 
   const handleLogout = () => {
     clearAuth();
@@ -173,22 +198,22 @@ export default function AdminStaffDashboard() {
           <div className="asd-cards">
             <div className="asd-card">
               <div className="asd-card-title">Certificates Pending Verification</div>
-              <div className="asd-card-value">23</div>
+              <div className="asd-card-value">{loading ? "..." : stats.pending_verifications}</div>
             </div>
 
             <div className="asd-card">
               <div className="asd-card-title">Certificates Approved (This Month)</div>
-              <div className="asd-card-value">150</div>
+              <div className="asd-card-value">{loading ? "..." : stats.approved_this_month}</div>
             </div>
 
             <div className="asd-card">
               <div className="asd-card-title">Certificates Rejected (This Month)</div>
-              <div className="asd-card-value">12</div>
+              <div className="asd-card-value">{loading ? "..." : stats.rejected_this_month}</div>
             </div>
 
             <div className="asd-card">
-              <div className="asd-card-title">Recent Verification Requests</div>
-              <div className="asd-card-value">45</div>
+              <div className="asd-card-title">Total Verification Requests</div>
+              <div className="asd-card-value">{loading ? "..." : stats.total_requests}</div>
             </div>
           </div>
 
@@ -199,25 +224,46 @@ export default function AdminStaffDashboard() {
             <div className="asd-weekly-box">
               <div className="asd-weekly-left">
                 <div className="asd-weekly-sub">Verifications Processed</div>
-                <div className="asd-weekly-num">120</div>
-                <div className="asd-weekly-growth">
-                  This Month <span>+15%</span>
-                </div>
+                <div className="asd-weekly-num">{loading ? "..." : stats.total_requests}</div>
               </div>
 
               <div className="asd-chart">
-                <div className="asd-bars">
-                  <div className="asd-bar" />
-                  <div className="asd-bar" />
-                  <div className="asd-bar" />
-                  <div className="asd-bar" />
+                <div className="asd-bars" style={{ display: 'flex', alignItems: 'flex-end', gap: '10px' }}>
+                  {stats.weekly && stats.weekly.length > 0 ? (
+                    [...stats.weekly].reverse().map((w, i) => {
+                      const heightPercent = stats.total_requests ? Math.max((w.count / stats.total_requests) * 100, 5) : 5;
+                      return (
+                        <div
+                          key={i}
+                          className="asd-bar"
+                          style={{ height: `${heightPercent}%`, width: '40px', background: '#bfddc6', borderRadius: '4px' }}
+                          title={`${w.count} requests`}
+                        />
+                      );
+                    })
+                  ) : (
+                    <>
+                       <div className="asd-bar" style={{height: '30%'}} />
+                       <div className="asd-bar" style={{height: '50%'}} />
+                       <div className="asd-bar" style={{height: '80%'}} />
+                       <div className="asd-bar" style={{height: '40%'}} />
+                    </>
+                  )}
                 </div>
 
-                <div className="asd-bar-labels">
-                  <div>Week 1</div>
-                  <div>Week 2</div>
-                  <div>Week 3</div>
-                  <div>Week 4</div>
+                <div className="asd-bar-labels" style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
+                  {stats.weekly && stats.weekly.length > 0 ? (
+                    [...stats.weekly].reverse().map((w, i) => (
+                      <div key={i} style={{ width: '40px', textAlign: 'center', fontSize: '12px' }}>W{w.week}</div>
+                    ))
+                  ) : (
+                    <>
+                      <div>Week 1</div>
+                      <div>Week 2</div>
+                      <div>Week 3</div>
+                      <div>Week 4</div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
