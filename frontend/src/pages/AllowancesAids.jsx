@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/api.js";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import "../styles/allowancesAids.css";
 
 function IconHome() {
@@ -308,25 +306,33 @@ function AllowancesAids() {
     document.body.removeChild(link);
   };
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
     if (results.length === 0) {
       alert("No data to download");
       return;
     }
 
-    const doc = new jsPDF();
-    doc.text("Eligible Citizens Report", 14, 15);
-    
-    const headers = [["Member_ID", "Name", "NIC_Number"]];
-    const data = results.map(r => [r.id, r.name, r.nic]);
+    try {
+      const params = new URLSearchParams();
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.append(key, value);
+      });
 
-    doc.autoTable({
-      startY: 20,
-      head: headers,
-      body: data,
-    });
+      const res = await api.get(`/api/gn/allowances/download-pdf?${params.toString()}`, {
+        responseType: "blob" // Specify blob to handle binary PDF data
+      });
 
-    doc.save(`eligible_citizens_${new Date().toISOString().split('T')[0]}.pdf`);
+      const url = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `eligible_citizens_${new Date().toISOString().split('T')[0]}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to download PDF.");
+    }
   };
 
 
