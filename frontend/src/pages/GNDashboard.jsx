@@ -88,14 +88,6 @@ function IconLogout() {
   );
 }
 
-// NEW ICONS added for actions/stats
-function IconChartBar() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
 function IconPlus() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -282,8 +274,8 @@ export default function GNDashboard() {
             <button className="gn-action-btn" onClick={() => navigate("/gn-notices")}>
               <IconPlus /> Post Notice
             </button>
-            <button className="gn-action-btn">
-              <IconChartBar /> Generate Reports
+            <button className="gn-action-btn" onClick={() => navigate("/gn-allowances")}>
+              <IconCoin /> Allowances and Aids
             </button>
           </div>
 
