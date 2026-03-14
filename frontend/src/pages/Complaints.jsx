@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/complaints.css";
 import emblem from "../assets/emblem.png";
+import NotificationDropdown from "../components/NotificationDropdown";
 import api from "../api/api";
 
 /* --- Icons --- */
@@ -119,8 +120,9 @@ export default function Complaints() {
             <div className="cd-subtitle">Ministry of Home Affairs</div>
           </div>
         </div>
-        <div className="cd-top-right">
+        <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="cd-about-btn">About Us</Link>
+          <NotificationDropdown />
           <div className="cd-profile-circle" aria-label="profile"><IconUser /></div>
         </div>
       </header>

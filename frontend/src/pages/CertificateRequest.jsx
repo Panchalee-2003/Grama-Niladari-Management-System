@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/certificateRequest.css";
 import emblem from "../assets/emblem.png";
+import NotificationDropdown from "../components/NotificationDropdown";
 import api from "../api/api";
 
 const CERT_TYPES = [
@@ -129,8 +130,9 @@ export default function CertificateRequest() {
             <div className="gn-subtitle">Ministry of Home Affairs</div>
           </div>
         </div>
-        <div className="gn-header-right">
+        <div className="gn-header-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/about" className="gn-about-btn">About Us</Link>
+          <NotificationDropdown />
           <div className="gn-profile-btn" role="button" tabIndex={0} aria-label="Profile"><ProfileIcon /></div>
         </div>
       </header>

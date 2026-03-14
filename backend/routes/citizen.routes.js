@@ -55,4 +55,56 @@ router.get("/me/profile", requireAuth, requireRole("CITIZEN"), async (req, res) 
   }
 });
 
+router.get("/me/notifications", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const citizenRes = await pool.query("SELECT citizen_id FROM citizen WHERE user_id=$1 LIMIT 1", [userId]);
+    if (citizenRes.rows.length === 0) return res.json({ ok: true, notifications: [] });
+    
+    const citizenId = citizenRes.rows[0].citizen_id;
+    
+    let notifications = [];
+
+    // 1. Household status messages
+    const hhRes = await pool.query(
+      "SELECT household_id, status, rejection_reason, created_at FROM household WHERE citizen_id=$1 AND status != 'PENDING'",
+      [citizenId]
+    );
+    hhRes.rows.forEach(hh => {
+      notifications.push({
+        id: `hh-${hh.household_id}`,
+        title: `Household Registration ${hh.status}`,
+        message: hh.status === 'VERIFIED' 
+          ? "Your household registration has been verified and approved."
+          : `Your application was rejected. ${hh.rejection_reason ? 'Reason: ' + hh.rejection_reason : ''}`,
+        date: hh.created_at,
+        isSuccess: hh.status === 'VERIFIED'
+      });
+    });
+
+    // 2. Certificate status messages
+    const certRes = await pool.query(
+      "SELECT request_id, cert_type, status, gn_note, updated_at FROM certificate_request WHERE citizen_id=$1 AND status != 'PENDING'",
+      [citizenId]
+    );
+    certRes.rows.forEach(c => {
+      notifications.push({
+        id: `cr-${c.request_id}`,
+        title: `Certificate Request ${c.status}`,
+        message: `Your request for ${c.cert_type} has been ${c.status.toLowerCase()}. ${c.gn_note ? 'GN Note: ' + c.gn_note : ''}`,
+        date: c.updated_at,
+        isSuccess: c.status === 'APPROVED'
+      });
+    });
+
+    // Sort by date descending
+    notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    return res.json({ ok: true, notifications });
+  } catch (err) {
+    console.error("Fetch notifications error:", err);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 module.exports = router;

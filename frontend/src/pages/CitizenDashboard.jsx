@@ -4,6 +4,7 @@ import { clearAuth } from "../auth/auth";
 
 import hero from "../assets/paddy.jpg";
 import emblem from "../assets/emblem.png";
+import NotificationDropdown from "../components/NotificationDropdown";
 
 /* Icons */
 function IconHome() {
@@ -162,6 +163,7 @@ export default function CitizenDashboard() {
 
         <div className="cd-top-actions">
           <Link to="/about" className="cd-about">About Us</Link>
+          <NotificationDropdown />
           <button className="cd-profile" aria-label="Profile">
             <IconProfileSmall />
           </button>
