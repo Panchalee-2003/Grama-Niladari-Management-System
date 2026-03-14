@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/api.js";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import "../styles/allowancesAids.css";
 
 function IconHome() {
@@ -306,6 +308,28 @@ function AllowancesAids() {
     document.body.removeChild(link);
   };
 
+  const downloadPDF = () => {
+    if (results.length === 0) {
+      alert("No data to download");
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.text("Eligible Citizens Report", 14, 15);
+    
+    const headers = [["Member_ID", "Name", "NIC_Number"]];
+    const data = results.map(r => [r.id, r.name, r.nic]);
+
+    doc.autoTable({
+      startY: 20,
+      head: headers,
+      body: data,
+    });
+
+    doc.save(`eligible_citizens_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
+
   return (
     <div className="aa-page">
       {/* Sidebar */}
@@ -496,6 +520,10 @@ function AllowancesAids() {
                   <button className="aa-csvBtn" type="button" onClick={downloadCSV} disabled={results.length === 0}>
                     <span className="aa-csvIcon"><IconDownload /></span>
                     Download CSV
+                  </button>
+                  <button className="aa-csvBtn" type="button" onClick={downloadPDF} disabled={results.length === 0} style={{ marginLeft: "10px", backgroundColor: "#ef4444", color: "white", border: "none" }}>
+                    <span className="aa-csvIcon"><IconFile /></span>
+                    Download PDF
                   </button>
                 </div>
               </div>
