@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/householdVerify.css";
 import api from "../api/api";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 /* ========== ICONS (same style) ========== */
 function IconDashboard() {
@@ -280,9 +281,7 @@ export default function HouseholdVerify() {
             <div className="hv-top-search-ico" aria-label="search">
               <IconSearch />
             </div>
-            <div className="hv-profile" aria-label="profile">
-              <IconUserCircle />
-            </div>
+            <GNProfileDropdown />
           </div>
         </header>
 

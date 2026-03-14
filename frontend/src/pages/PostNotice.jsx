@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/postNotice.css";
 import "../styles/householdVerify.css";
 import api from "../api/api";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 /* ---------- Icons (SVG) ---------- */
 function IconDashboard() {
@@ -151,7 +152,7 @@ export default function PostNotice() {
             <input className="hv-top-search-input" placeholder="Search…" readOnly />
           </div>
           <div className="hv-top-icons">
-            <div className="hv-profile" aria-label="profile"><IconProfile /></div>
+            <GNProfileDropdown />
           </div>
         </header>
 

@@ -4,6 +4,7 @@ import "../styles/gnDashboard.css";
 import "../styles/gnCertificates.css";
 import "../styles/householdVerify.css";
 import api from "../api/api";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 /* --- Icons --- */
 function IconHome() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" strokeWidth="2" /></svg>; }
@@ -115,7 +116,7 @@ export default function GNCertificates() {
             <input className="hv-top-search-input" placeholder="Search…" readOnly />
           </div>
           <div className="hv-top-icons">
-            <div className="hv-profile" aria-label="profile"><IconProfile /></div>
+            <GNProfileDropdown />
           </div>
         </header>
 

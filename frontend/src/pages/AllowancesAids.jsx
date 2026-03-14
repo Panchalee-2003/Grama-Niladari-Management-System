@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/api.js";
 import "../styles/allowancesAids.css";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 function IconHome() {
   return (
@@ -392,9 +393,7 @@ function AllowancesAids() {
             </div>
           </div>
           <div className="aa-topRight">
-            <div className="aa-profileCircle">
-              <IconProfile />
-            </div>
+            <GNProfileDropdown />
           </div>
         </div>
 

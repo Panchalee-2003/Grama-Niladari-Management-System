@@ -298,4 +298,24 @@ router.get("/allowances/download-pdf", requireAuth, requireRole("GN"), async (re
     }
 });
 
+// Endpoint to get GN's basic profile info
+router.get("/me/profile", requireAuth, requireRole("GN"), async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const result = await pool.query(
+      `SELECT user_id, email, role, status FROM user_table WHERE user_id=$1 LIMIT 1`,
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ ok: false, error: "GN Profile not found" });
+    }
+
+    return res.json({ ok: true, profile: result.rows[0] });
+  } catch (err) {
+    console.error("GN Profile fetch error:", err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 module.exports = router;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/complaintManagement.css";
 import "../styles/householdVerify.css";
 import api from "../api/api";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 // --- Icons ---
 function IconDash() {
@@ -164,7 +165,7 @@ export default function ComplaintManagement() {
           </div>
           <div className="hv-top-icons">
             <div className="hv-top-search-ico" aria-label="search"><IconProfile /></div>
-            <div className="hv-profile" aria-label="profile"><IconProfile /></div>
+            <GNProfileDropdown />
           </div>
         </header>
 

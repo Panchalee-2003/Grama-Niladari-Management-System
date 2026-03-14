@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/gnDashboard.css";
 import { clearAuth } from "../auth/auth";
 import api from "../api/api";
+import GNProfileDropdown from "../components/GNProfileDropdown";
 
 /* --- Icons (inline SVG) --- */
 function IconHome() {
@@ -218,9 +219,7 @@ export default function GNDashboard() {
           </div>
 
           <div className="gn-top-right">
-            <div className="gn-profile-circle">
-              <IconProfile />
-            </div>
+            <GNProfileDropdown />
           </div>
         </div>
 
