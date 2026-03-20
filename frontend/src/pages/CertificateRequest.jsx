@@ -15,6 +15,15 @@ const CERT_TYPES = [
   "Notification of the death of a pensioner",
 ];
 
+const CERT_PDF_MAP = {
+  "Residence and character Certificate": "/certificates/residence_and_character.pdf",
+  "Income Certificate": "/certificates/income_certificate.pdf",
+  "Registration of delayed births": "/certificates/delayed_births.pdf",
+  "Request for financial assistance from the President's fund for medical treatment": "/certificates/medical_assistance.pdf",
+  "Application for obtaining housing loan funds": "/certificates/housing_loan.pdf",
+  "Notification of the death of a pensioner": "/certificates/death_of_pensioner.pdf",
+};
+
 const STATUS_MAP = {
   PENDING:             { label: "Pending Review",   cls: "cr-badge cr-badge-pending" },
   SUBMITTED:           { label: "Submitted",         cls: "cr-badge cr-badge-pending" },
@@ -229,10 +238,22 @@ export default function CertificateRequest() {
             <div className="gn-right-col">
               <div className="cr-info-box">
                 <h3>📄 Supported Certificate Types</h3>
-                <ul>
-                  {CERT_TYPES.map(t => <li key={t}>{t}</li>)}
+                <ul style={{ paddingLeft: "1.2rem", marginTop: "10px" }}>
+                  {CERT_TYPES.map(t => (
+                    <li key={t} style={{ marginBottom: "10px", lineHeight: "1.4" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px" }}>
+                        <span>{t}</span>
+                        {CERT_PDF_MAP[t] && (
+                          <a href={CERT_PDF_MAP[t]} download target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", padding: "3px 8px", backgroundColor: "rgba(39, 174, 96, 0.1)", color: "#1e8449", border: "1px solid rgba(39, 174, 96, 0.2)", borderRadius: "6px", textDecoration: "none", fontWeight: "600", whiteSpace: "nowrap", transition: "all 0.2s" }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Blank Form
+                          </a>
+                        )}
+                      </div>
+                    </li>
+                  ))}
                 </ul>
-                <p className="cr-info-note">Your personal details (name, NIC, address) will be automatically filled from your registered profile.</p>
+                <p className="cr-info-note" style={{ marginTop: "14px" }}>Your personal details (name, NIC, address) will be automatically filled from your registered profile.</p>
               </div>
             </div>
           </form>
