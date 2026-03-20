@@ -165,6 +165,11 @@ export default function GNDashboard() {
             <span>Dashboard</span>
           </Link>
 
+          <Link to="/gn-availability" className="gn-item">
+            <span className="gn-ico"><IconBell /></span>
+            <span>Availability</span>
+          </Link>
+
           <Link to="/gn-households" className="gn-item">
             <span className="gn-ico"><IconPeople /></span>
             <span>Households</span>

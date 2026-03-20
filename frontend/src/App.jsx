@@ -35,9 +35,8 @@ import AdminStaffDashboard from "./pages/AdminStaffDashboard.jsx";
 import AdminVerifyCertificates from "./pages/AdminVerifyCertificates.jsx";
 import CertificateVerify from "./pages/CertificateVerify";
 
-
-
-
+import GNAvailability from "./pages/GNAvailability";
+import CitizenAvailability from "./pages/CitizenAvailability";
 export default function App() {
   return (
     <BrowserRouter>
@@ -122,6 +121,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/availability"
+          element={
+            <ProtectedRoute roles={["CITIZEN"]}>
+              <CitizenAvailability />
+            </ProtectedRoute>
+          }
+        />
 
         {/* GN */}
         <Route
@@ -185,6 +192,14 @@ export default function App() {
           element={
             <ProtectedRoute roles={["GN"]}>
               <GNSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gn-availability"
+          element={
+            <ProtectedRoute roles={["GN"]}>
+              <GNAvailability />
             </ProtectedRoute>
           }
         />

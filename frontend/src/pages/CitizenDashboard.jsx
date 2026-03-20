@@ -146,6 +146,10 @@ export default function CitizenDashboard() {
           <IconBell />
           <span>Notices</span>
         </Link>
+        <Link className="cd-nav-item" to="/availability">
+          <span style={{ fontSize: '1.2rem', padding: '0 5px' }}>📅</span>
+          <span>GN Schedule</span>
+        </Link>
       </nav>
 
       <div className="cd-main">
