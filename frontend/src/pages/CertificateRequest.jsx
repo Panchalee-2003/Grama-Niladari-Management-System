@@ -13,6 +13,7 @@ const CERT_TYPES = [
   "Request for financial assistance from the President's fund for medical treatment",
   "Application for obtaining housing loan funds",
   "Notification of the death of a pensioner",
+  "Registration of voluntary organizations",
 ];
 
 const CERT_PDF_MAP = {
@@ -22,6 +23,7 @@ const CERT_PDF_MAP = {
   "Request for financial assistance from the President's fund for medical treatment": "/certificates/medical_assistance.pdf",
   "Application for obtaining housing loan funds": "/certificates/housing_loan.pdf",
   "Notification of the death of a pensioner": "/certificates/death_of_pensioner.pdf",
+  "Registration of voluntary organizations": "/certificates/voluntary_organizations.pdf",
 };
 
 const STATUS_MAP = {

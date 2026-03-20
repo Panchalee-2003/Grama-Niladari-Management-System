@@ -244,6 +244,7 @@ const FORM_LABELS = {
   "Request for financial assistance from the President's fund for medical treatment": "Request for Medical Financial Assistance",
   "Application for obtaining housing loan funds": "Application for Obtaining Housing Loan/Funds",
   "Notification of the death of a pensioner": "Notification of the Death of a Pensioner",
+  "Registration of voluntary organizations": "Registration of Voluntary Organizations",
 };
 
 // ─── Main Modal ──────────────────────────────────────────────────

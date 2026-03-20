@@ -20,6 +20,7 @@ const CERT_TYPES = [
     "Request for financial assistance from the President's fund for medical treatment",
     "Application for obtaining housing loan funds",
     "Notification of the death of a pensioner",
+    "Registration of voluntary organizations",
 ];
 
 // ─────────────────────────────────────────

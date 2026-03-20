@@ -13,7 +13,8 @@ const files = [
     { name: "delayed_births.pdf", title: "Registration of delayed births" },
     { name: "medical_assistance.pdf", title: "Request for financial assistance from the President's fund for medical treatment" },
     { name: "housing_loan.pdf", title: "Application for obtaining housing loan funds" },
-    { name: "death_of_pensioner.pdf", title: "Notification of the death of a pensioner" }
+    { name: "death_of_pensioner.pdf", title: "Notification of the death of a pensioner" },
+    { name: "voluntary_organizations.pdf", title: "Registration of voluntary organizations" }
 ];
 
 files.forEach(f => {

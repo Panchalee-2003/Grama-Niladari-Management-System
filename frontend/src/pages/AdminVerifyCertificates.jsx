@@ -141,6 +141,7 @@ export default function AdminVerifyCertificates() {
         "Request for financial assistance from the President's fund for medical treatment",
         "Application for obtaining housing loan funds",
         "Notification of the death of a pensioner",
+        "Registration of voluntary organizations",
     ];
     
     const STATUS_OPTIONS = ["All Statuses", "PENDING", "VERIFIED", "REJECTED"];
