@@ -123,6 +123,36 @@ function IncomeForm({ data, onChange }) {
   );
 }
 
+function HousingLoanForm({ data, onChange }) {
+  return (
+    <>
+      <SectionTitle>Section 1: Applicant Information</SectionTitle>
+      <TextField label="01. Name of Applicant" name="name" value={data.name} onChange={onChange} required />
+      <TextField label="02. Address" name="address" value={data.address} onChange={onChange} />
+      <TextField label="03. Monthly Family Income (Rs.)" name="monthly_income" value={data.monthly_income} onChange={onChange} />
+      <SelectField label="04. Whether a Samurdhi Beneficiary" name="samurdhi_beneficiary" value={data.samurdhi_beneficiary} onChange={onChange} options={["No", "Yes"]} />
+
+      <SectionTitle>Section 2: Property Details</SectionTitle>
+      <TextField label="Description of Property (Land/Property)" name="property_description" value={data.property_description} onChange={onChange} />
+      <TextField label="Owner's Name" name="owner_name" value={data.owner_name} onChange={onChange} />
+      <TextField label="Extent of Land" name="extent_of_land" value={data.extent_of_land} onChange={onChange} />
+      <TextField label="Deed Number and Date" name="deed_number_date" value={data.deed_number_date} onChange={onChange} />
+
+      <SectionTitle>Section 3: Applicant's Declaration</SectionTitle>
+      <TextField label="Loan/Grant Amount Requested (Rs.)" name="loan_amount" value={data.loan_amount} onChange={onChange} />
+
+      <SectionTitle>Section 4: Grama Niladhari Recommendation</SectionTitle>
+      <TextField label="Grama Niladhari Name & Division" name="gn_name" value={data.gn_name} onChange={onChange} />
+
+      <SectionTitle>Section 5: Housing Officer Recommendation</SectionTitle>
+      <TextField label="Housing Officer Name & Division" name="housing_officer" value={data.housing_officer} onChange={onChange} />
+
+      <SectionTitle>Section 6: Approval of Divisional Secretary</SectionTitle>
+      <TextField label="Divisional Secretary Name & Division" name="div_secretary" value={data.div_secretary} onChange={onChange} />
+    </>
+  );
+}
+
 function BirthCertForm({ data, onChange }) {
   return (
     <>
@@ -212,6 +242,7 @@ const FORM_LABELS = {
   "Income Certificate": "Issuance of Income Certificate",
   "Registration of delayed births": "Registration of Delayed Births – GN Report",
   "Request for financial assistance from the President's fund for medical treatment": "Request for Medical Financial Assistance",
+  "Application for obtaining housing loan funds": "Application for Obtaining Housing Loan/Funds",
   "Notification of the death of a pensioner": "Notification of the Death of a Pensioner",
 };
 
@@ -309,6 +340,8 @@ export default function CertificateFormModal({ request, onClose }) {
       return <ResidenceCharacterForm data={formData} onChange={handleChange} />;
     if (type === "Income Certificate")
       return <IncomeForm data={formData} onChange={handleChange} />;
+    if (type === "Application for obtaining housing loan funds")
+      return <HousingLoanForm data={formData} onChange={handleChange} />;
     if (type === "Registration of delayed births")
       return <BirthCertForm data={formData} onChange={handleChange} />;
     if (type === "Notification of the death of a pensioner")
