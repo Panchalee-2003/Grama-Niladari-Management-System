@@ -9,8 +9,6 @@ const { sendVisitNotification, sendRejectionNotification, sendApprovalNotificati
 
 // Certificate types that require DS (Divisional Secretary) approval
 const DS_APPROVAL_TYPES = [
-    "Housing Loan Approval",
-    "Application for obtaining housing loan funds",
     "Request for financial assistance from the President's fund for medical treatment",
 ];
 
@@ -19,8 +17,6 @@ const CERT_TYPES = [
     "Income Certificate",
     "Registration of delayed births",
     "Request for financial assistance from the President's fund for medical treatment",
-    "Housing Loan Approval",
-    "Application for obtaining housing loan funds",
     "Notification of the death of a pensioner",
 ];
 
@@ -746,58 +742,6 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         field("Receipt Number", data.receipt_number);
         field("Income Certificate Number", data.cert_number);
 
-    } else if (certType === "Housing Loan Approval" || certType === "Application for obtaining housing loan funds") {
-        // ── Application for Obtaining Housing Loan/Funds ──
-        doc.fontSize(14).font("Helvetica-Bold")
-            .text("Application for Obtaining Housing Loan/Funds", { align: "center" });
-        doc.moveDown(0.3);
-        drawLine();
-
-        sectionHeader("Section 1: Applicant Information");
-        doc.fontSize(9).font("Helvetica").text("Form Type: Application   |   For Office Use Only").moveDown(0.3);
-        field("01. Name of Applicant", data.name || cert.applicant_name);
-        field("02. Address", data.address);
-        field("03. Monthly Family Income (Rs.)", data.monthly_income);
-        field("04. Whether a Samurdhi Beneficiary", data.samurdhi_beneficiary);
-        drawLine();
-
-        sectionHeader("Section 2: Property Details Related to Housing Assistance");
-        field("Description of Property (Land/Property)", data.property_description);
-        field("Owner's Name", data.owner_name);
-        field("Extent of Land", data.extent_of_land);
-        field("Deed Number and Date", data.deed_number_date);
-        drawLine();
-
-        sectionHeader("Section 3: Applicant's Declaration");
-        doc.fontSize(10).font("Helvetica")
-            .text(`I hereby declare that the information provided above is correct and request a loan/grant amount of Rs. ${data.loan_amount || "______________"} for the aforementioned property.`);
-        doc.moveDown(0.5);
-        field("Signature of Applicant", "______________");
-        field("Date", issuedDate);
-        drawLine();
-
-        sectionHeader("Section 4: Grama Niladhari Recommendation");
-        doc.fontSize(10).font("Helvetica")
-            .text(`I certify that the information provided above by the applicant ${cert.applicant_name || "______________"} is correct and recommend/do not recommend that the housing loan/assistance is suitable/unsuitable.`);
-        doc.moveDown(0.5);
-        field("Grama Niladhari – Division Name", data.gn_name);
-        field("Date", issuedDate);
-        drawLine();
-
-        sectionHeader("Section 5: Housing Officer Recommendation");
-        doc.fontSize(10).font("Helvetica")
-            .text(`I have conducted a field inspection regarding the housing loan/assistance submitted by the applicant ${cert.applicant_name || "______________"} and recommend that providing the housing loan/assistance is suitable.`);
-        doc.moveDown(0.5);
-        field("Housing Officer – Divisional Secretariat Division", data.housing_officer);
-        field("Date", issuedDate);
-        drawLine();
-
-        sectionHeader("Section 6: Approval of Divisional Secretary");
-        doc.fontSize(10).font("Helvetica")
-            .text("I hereby approve the issuance of the housing loan/assistance amount requested by the above applicant.");
-        doc.moveDown(0.5);
-        field("Divisional Secretary – Divisional Secretariat Division", data.div_secretary);
-        field("Date", issuedDate);
 
     } else if (certType === "Registration of delayed births") {
         // ── Registration of Delayed Births – Grama Niladhari Report ──

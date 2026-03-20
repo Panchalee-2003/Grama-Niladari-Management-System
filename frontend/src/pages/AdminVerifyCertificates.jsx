@@ -139,8 +139,6 @@ export default function AdminVerifyCertificates() {
         "Income Certificate",
         "Registration of delayed births",
         "Request for financial assistance from the President's fund for medical treatment",
-        "Housing Loan Approval",
-        "Application for obtaining housing loan funds",
         "Notification of the death of a pensioner",
     ];
     
