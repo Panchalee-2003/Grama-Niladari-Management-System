@@ -5,6 +5,14 @@ const { requireAuth, requireRole } = require("../middleware/auth.middleware");
 const PDFDocument = require("pdfkit");
 const QRCode = require("qrcode");
 const crypto = require("crypto");
+const { sendVisitNotification, sendRejectionNotification, sendApprovalNotification } = require("../services/email.service");
+
+// Certificate types that require DS (Divisional Secretary) approval
+const DS_APPROVAL_TYPES = [
+    "Housing Loan Approval",
+    "Application for obtaining housing loan funds",
+    "Request for financial assistance from the President's fund for medical treatment",
+];
 
 const CERT_TYPES = [
     "Residence and character Certificate",
@@ -99,8 +107,9 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
         const userId = req.user.id;
         const result = await pool.query(
             `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
-              cr.status, cr.gn_note, cr.created_at, cr.updated_at,
+              cr.status, cr.gn_note, cr.gn_remarks, cr.created_at, cr.updated_at,
               cr.certificate_id, cr.issued_at,
+              cr.appointment_date, cr.required_documents_list, cr.rejection_reason,
               fm.full_name AS member_name, fm.nic_number AS member_nic,
               fm.relationship_to_head
        FROM certificate_request cr
@@ -165,7 +174,9 @@ router.get("/all", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => 
         const { status } = req.query;
         let q = `
       SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
-             cr.status, cr.admin_status, cr.gn_note, cr.created_at, cr.updated_at,
+             cr.status, cr.admin_status, cr.gn_note, cr.gn_remarks,
+             cr.appointment_date, cr.required_documents_list, cr.rejection_reason,
+             cr.created_at, cr.updated_at,
              cr.certificate_id, cr.issued_at,
              c.full_name AS citizen_name, c.nic_number AS citizen_nic,
              fm.member_id, fm.full_name AS member_name,
@@ -190,13 +201,13 @@ router.get("/all", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => 
 });
 
 // ─────────────────────────────────────────
-// GN: Approve / Reject a request
+// GN: Legacy status update (kept for backward compat)
 // ─────────────────────────────────────────
 router.patch("/:id/status", requireAuth, requireRole("GN"), async (req, res) => {
     try {
         const { id } = req.params;
         const { status, gn_note } = req.body;
-        const allowed = ["PENDING", "APPROVED", "REJECTED"];
+        const allowed = ["PENDING", "SUBMITTED", "UNDER_REVIEW_GN", "PENDING_DS_APPROVAL", "APPROVED", "ISSUED", "VISIT_REQUIRED", "REJECTED"];
         if (!allowed.includes(status))
             return res.status(400).json({ ok: false, error: "Invalid status" });
 
@@ -214,6 +225,259 @@ router.patch("/:id/status", requireAuth, requireRole("GN"), async (req, res) => 
     } catch (err) {
         console.error("Update Cert Status Error:", err);
         return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
+// GN: Unified action endpoint (approve / visit / reject)
+// ─────────────────────────────────────────
+router.patch("/:id/gn-action", requireAuth, requireRole("GN"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { action, gn_remarks, appointment_date, required_documents_list, rejection_reason } = req.body;
+
+        if (!action || !["approve", "visit", "reject"].includes(action))
+            return res.status(400).json({ ok: false, error: "Invalid action. Must be approve, visit, or reject." });
+
+        // Fetch current request + citizen contact info
+        const reqRow = await pool.query(
+            `SELECT cr.request_id, cr.cert_type, cr.status, cr.certificate_id,
+                    c.full_name AS citizen_name, u.email AS citizen_email,
+                    COALESCE(fm.full_name, c.full_name) AS applicant_name
+             FROM certificate_request cr
+             JOIN citizen c ON c.citizen_id = cr.citizen_id
+             JOIN user_table u ON u.user_id = c.user_id
+             LEFT JOIN family_member fm ON fm.member_id = cr.family_member_id
+             WHERE cr.request_id = $1`,
+            [id]
+        );
+        if (!reqRow.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found" });
+
+        const certReq = reqRow.rows[0];
+        let newStatus, updateFields, updateParams;
+
+        if (action === "approve") {
+            // Route to DS if high-authority cert, else directly APPROVED
+            newStatus = DS_APPROVAL_TYPES.includes(certReq.cert_type)
+                ? "PENDING_DS_APPROVAL"
+                : "APPROVED";
+
+            let certId = certReq.certificate_id;
+            let issuedAt = null;
+            if (newStatus === "APPROVED" && !certId) {
+                certId = crypto.randomUUID();
+                issuedAt = new Date();
+            }
+
+            const result = await pool.query(
+                `UPDATE certificate_request
+                 SET status=$1, gn_remarks=$2, certificate_id=COALESCE($3, certificate_id),
+                     issued_at=COALESCE($4, issued_at), updated_at=NOW()
+                 WHERE request_id=$5
+                 RETURNING *`,
+                [newStatus, gn_remarks?.trim() || null, certId, issuedAt, id]
+            );
+
+            // Notify citizen if approved
+            if (newStatus === "APPROVED") {
+                sendApprovalNotification(certReq.citizen_email, certReq.citizen_name, certReq.cert_type).catch(() => {});
+            }
+
+            return res.json({ ok: true, request: result.rows[0], newStatus });
+
+        } else if (action === "visit") {
+            if (!appointment_date)
+                return res.status(400).json({ ok: false, error: "Appointment date is required for visit action." });
+
+            const result = await pool.query(
+                `UPDATE certificate_request
+                 SET status='VISIT_REQUIRED', gn_remarks=$1, appointment_date=$2,
+                     required_documents_list=$3, updated_at=NOW()
+                 WHERE request_id=$4
+                 RETURNING *`,
+                [gn_remarks?.trim() || null, appointment_date, required_documents_list?.trim() || null, id]
+            );
+
+            // Notify citizen about visit
+            sendVisitNotification(
+                certReq.citizen_email,
+                certReq.citizen_name,
+                appointment_date,
+                required_documents_list
+            ).catch(() => {});
+
+            return res.json({ ok: true, request: result.rows[0], newStatus: "VISIT_REQUIRED" });
+
+        } else if (action === "reject") {
+            if (!rejection_reason?.trim())
+                return res.status(400).json({ ok: false, error: "Rejection reason is required." });
+
+            const result = await pool.query(
+                `UPDATE certificate_request
+                 SET status='REJECTED', gn_remarks=$1, rejection_reason=$2, updated_at=NOW()
+                 WHERE request_id=$3
+                 RETURNING *`,
+                [gn_remarks?.trim() || null, rejection_reason.trim(), id]
+            );
+
+            // Notify citizen about rejection
+            sendRejectionNotification(
+                certReq.citizen_email,
+                certReq.citizen_name,
+                certReq.cert_type,
+                rejection_reason
+            ).catch(() => {});
+
+            return res.json({ ok: true, request: result.rows[0], newStatus: "REJECTED" });
+        }
+    } catch (err) {
+        console.error("GN Action Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
+// ADMIN (DS): Approve or reject a PENDING_DS_APPROVAL request
+// ─────────────────────────────────────────
+router.patch("/:id/ds-action", requireAuth, requireRole("ADMIN"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { action, ds_remarks, ds_signature_blob } = req.body;
+
+        if (!action || !["approve", "reject"].includes(action))
+            return res.status(400).json({ ok: false, error: "Invalid action. Must be approve or reject." });
+
+        // Fetch citizen info for notifications
+        const reqRow = await pool.query(
+            `SELECT cr.cert_type, c.full_name AS citizen_name, u.email AS citizen_email
+             FROM certificate_request cr
+             JOIN citizen c ON c.citizen_id = cr.citizen_id
+             JOIN user_table u ON u.user_id = c.user_id
+             WHERE cr.request_id = $1`,
+            [id]
+        );
+        if (!reqRow.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found" });
+        const certReq = reqRow.rows[0];
+
+        let result;
+        if (action === "approve") {
+            const newCertId = crypto.randomUUID();
+            result = await pool.query(
+                `UPDATE certificate_request
+                 SET status='APPROVED', gn_remarks=COALESCE($1, gn_remarks),
+                     ds_signature_blob=$2, certificate_id=COALESCE(certificate_id, $3),
+                     issued_at=COALESCE(issued_at, NOW()), updated_at=NOW()
+                 WHERE request_id=$4
+                 RETURNING *`,
+                [ds_remarks?.trim() || null, ds_signature_blob?.trim() || null, newCertId, id]
+            );
+            sendApprovalNotification(certReq.citizen_email, certReq.citizen_name, certReq.cert_type).catch(() => {});
+        } else {
+            if (!ds_remarks?.trim())
+                return res.status(400).json({ ok: false, error: "DS rejection reason is required." });
+            result = await pool.query(
+                `UPDATE certificate_request
+                 SET status='REJECTED', rejection_reason=$1, updated_at=NOW()
+                 WHERE request_id=$2
+                 RETURNING *`,
+                [ds_remarks.trim(), id]
+            );
+            sendRejectionNotification(certReq.citizen_email, certReq.citizen_name, certReq.cert_type, ds_remarks).catch(() => {});
+        }
+
+        if (!result.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found" });
+
+        return res.json({ ok: true, request: result.rows[0] });
+    } catch (err) {
+        console.error("DS Action Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
+// CITIZEN: Download their own approved certificate
+// ─────────────────────────────────────────
+router.get("/:id/citizen-pdf", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+
+        // Fetch request and verify ownership + approval
+        const result = await pool.query(
+            `SELECT cr.*, COALESCE(fm.full_name, c.full_name) AS applicant_name,
+                    c.full_name AS citizen_name, c.nic_number AS citizen_nic
+             FROM certificate_request cr
+             JOIN citizen c ON c.citizen_id = cr.citizen_id
+             LEFT JOIN family_member fm ON fm.member_id = cr.family_member_id
+             WHERE cr.request_id=$1 AND c.user_id=$2`,
+            [id, userId]
+        );
+        if (!result.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found or access denied" });
+
+        const cert = result.rows[0];
+        if (!["APPROVED", "ISSUED"].includes(cert.status))
+            return res.status(403).json({ ok: false, error: "Certificate is not approved yet" });
+
+        const data = cert.certificate_data || {};
+        const certIdStr = cert.certificate_id;
+
+        if (!certIdStr)
+            return res.status(500).json({ ok: false, error: "Certificate ID not generated yet" });
+
+        const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+        const verifyUrl = `${frontendUrl}/verify/${certIdStr}`;
+        const qrBuffer = await QRCode.toBuffer(verifyUrl, { width: 100, margin: 1 });
+
+        const doc = new PDFDocument({ margin: 50, size: "A4" });
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader(
+            "Content-Disposition",
+            `attachment; filename="certificate_${id}.pdf"`
+        );
+        doc.pipe(res);
+
+        const drawLine = () => {
+            doc.moveTo(50, doc.y).lineTo(545, doc.y).stroke().moveDown(0.5);
+        };
+        const sectionHeader = (title) => {
+            doc.fontSize(11).font("Helvetica-Bold").text(title).moveDown(0.3);
+        };
+        const field = (label, value, indent = 0) => {
+            doc
+                .fontSize(10)
+                .font("Helvetica")
+                .text(`${label}: ${value || "_________________"}`, { indent });
+        };
+
+        doc.image(qrBuffer, 445, 45, { width: 80 });
+        doc
+            .fontSize(7)
+            .font("Helvetica")
+            .text(`Certificate ID:`, 430, 130, { width: 120 })
+            .text(certIdStr.substring(0, 18), 430, 140, { width: 120 })
+            .text(certIdStr.substring(18), 430, 150, { width: 120 });
+
+        renderCertificate(doc, cert.cert_type, cert, data, drawLine, sectionHeader, field);
+
+        doc
+            .moveDown(2)
+            .fontSize(8)
+            .font("Helvetica")
+            .fillColor("#666666")
+            .text(
+                `Scan the QR code to verify this certificate online. Certificate ID: ${certIdStr}`,
+                50, doc.page.height - 70, { width: 400, align: "center" }
+            );
+
+        doc.end();
+    } catch (err) {
+        console.error("Citizen PDF Error:", err);
+        if (!res.headersSent)
+            return res.status(500).json({ ok: false, error: err.message });
     }
 });
 

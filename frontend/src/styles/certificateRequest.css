@@ -466,3 +466,97 @@
   background: #f8d7da;
   color: #721c24;
 }
+
+/* New workflow status badges */
+.cr-badge-review { background: #cce5ff; color: #004085; }
+.cr-badge-ds     { background: #e8d5f5; color: #5a1f8c; }
+.cr-badge-visit  { background: #fde9d0; color: #7c4200; }
+
+/* ── Table wrapper ── */
+.cr-table-wrap {
+  border: 1px solid #dde6e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* ── Actions cell ── */
+.cr-td-actions {
+  min-width: 220px;
+  vertical-align: top;
+}
+
+/* ── Download Button ── */
+.cr-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #27ae60, #1a7f4f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.35);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.cr-download-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1a8a4a, #155d3a);
+  box-shadow: 0 4px 14px rgba(39, 174, 96, 0.45);
+  transform: translateY(-1px);
+}
+
+.cr-download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ── Visit Info Panel ── */
+.cr-visit-panel {
+  background: #fff8ec;
+  border: 1px solid #f6a623;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.cr-visit-title {
+  font-weight: 700;
+  color: #c97d00;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.cr-visit-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #444;
+}
+
+.cr-visit-row span:first-child {
+  font-weight: 600;
+  min-width: 40px;
+  flex-shrink: 0;
+}
+
+.cr-visit-docs {
+  align-items: flex-start;
+  margin-top: 4px;
+}
+
+/* ── Rejection Panel ── */
+.cr-rejection-panel {
+  background: #fdf2f2;
+  border: 1px solid #e74c3c;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #721c24;
+  line-height: 1.6;
+}

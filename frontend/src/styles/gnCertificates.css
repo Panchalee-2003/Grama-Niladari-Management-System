@@ -1,9 +1,6 @@
-/* Page padding similar to Figma spacing */
-.gnc-page {
-  padding: 34px 48px;
-}
+/* ── Page ── */
+.gnc-page { padding: 34px 48px; }
 
-/* Title */
 .gnc-title {
   font-size: 34px;
   font-weight: 800;
@@ -11,7 +8,7 @@
   margin-bottom: 18px;
 }
 
-/* Table container */
+/* ── Table ── */
 .gnc-table-wrap {
   width: 100%;
   border: 1px solid #e6e6e6;
@@ -20,7 +17,6 @@
   background: #fff;
 }
 
-/* Table */
 .gnc-table {
   width: 100%;
   border-collapse: collapse;
@@ -38,97 +34,44 @@
 }
 
 .gnc-table tbody td {
-  padding: 16px 16px;
+  padding: 14px 16px;
   border-bottom: 1px solid #ededed;
   vertical-align: middle;
   font-size: 13px;
   color: #111;
 }
 
-.gnc-table tbody tr:last-child td {
-  border-bottom: none;
-}
+.gnc-table tbody tr:last-child td { border-bottom: none; }
 
-/* Columns */
-.gnc-id {
-  color: #111;
-  font-weight: 500;
-  width: 130px;
-}
+.gnc-id    { color: #111; font-weight: 500; width: 80px; }
+.gnc-name  { color: #2d6a4f; font-weight: 600; }
+.gnc-type  { color: #2d6a4f; font-weight: 600; }
+.gnc-date  { color: #5f7f6e; font-weight: 500; }
+.gnc-nic   { color: #888; font-size: 12px; }
 
-.gnc-name {
-  color: #5f7f6e;
-  font-weight: 600;
-}
-
-.gnc-type {
-  color: #5f7f6e;
-  font-weight: 600;
-}
-
-.gnc-type-line {
-  display: block;
-  line-height: 1.25;
-}
-
-.gnc-date {
-  color: #5f7f6e;
-  font-weight: 600;
-}
-
-/* Status pill */
+/* ── Status Pills ── */
 .gnc-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 18px;
-  border-radius: 7px;
-  background: #eef2ef;
-  /* pending background */
-  color: #111;
-  font-weight: 600;
-  font-size: 12px;
-  min-width: 92px;
-}
-
-.gnc-pill-approved {
-  background: #eef2ef;
-  color: #111;
-}
-
-.gnc-pill-rejected {
-  background: #eef2ef;
-  color: #111;
-}
-
-/* Actions column */
-.gnc-actions-head {
-  text-align: left;
-}
-
-.gnc-actions {
-  color: #5f7f6e;
+  padding: 5px 14px;
+  border-radius: 50px;
   font-weight: 700;
-  line-height: 1.35;
+  font-size: 11px;
+  white-space: nowrap;
 }
 
-.gnc-action {
-  color: #5f7f6e;
-  font-weight: 700;
-  display: inline;
-}
+.gnc-pill-pending        { background: #fff3cd; color: #856404; }
+.gnc-pill-review         { background: #cce5ff; color: #004085; }
+.gnc-pill-ds             { background: #e8d5f5; color: #5a1f8c; }
+.gnc-pill-visit          { background: #fde9d0; color: #7c4200; }
+.gnc-pill-approved       { background: #d4edda; color: #155724; }
+.gnc-pill-rejected       { background: #f8d7da; color: #721c24; }
 
-.gnc-sep {
-  padding: 0 6px;
-  color: #5f7f6e;
-}
-
-/* ── New elements ───────────────────────────────────────── */
-
-/* Tab filters */
+/* ── Tab Filters ── */
 .gnc-tabs {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 18px;
   flex-wrap: wrap;
 }
@@ -138,57 +81,21 @@
   border: 1px solid #c8ddd0;
   color: #333;
   border-radius: 8px;
-  padding: 7px 18px;
-  font-size: 14px;
+  padding: 7px 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.15s;
 }
 
-.gnc-tab-btn:hover {
-  background: #d6ece0;
-}
+.gnc-tab-btn:hover  { background: #d6ece0; }
+.gnc-tab-active     { background: #0C7A3B; color: #fff; border-color: #0C7A3B; }
 
-.gnc-tab-active {
-  background: #0C7A3B;
-  color: #fff;
-  border-color: #0C7A3B;
-}
+/* ── States ── */
+.gnc-state     { padding: 24px 0; font-size: 15px; color: #666; }
+.gnc-state-err { color: #dc3545; }
 
-/* State messages */
-.gnc-state {
-  padding: 24px 0;
-  font-size: 15px;
-  color: #666;
-}
-
-.gnc-state-err {
-  color: #dc3545;
-}
-
-/* Extra columns */
-.gnc-nic {
-  color: #888;
-  font-size: 12px;
-}
-
-/* Status pill colours */
-.gnc-pill {
-  background: #fff3cd;
-  color: #856404;
-}
-
-/* PENDING */
-.gnc-pill-approved {
-  background: #d4edda;
-  color: #155724;
-}
-
-.gnc-pill-rejected {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-/* Review button */
+/* ── Review Button ── */
 .gnc-action-btn {
   background: none;
   border: 1px solid #0C7A3B;
@@ -199,16 +106,15 @@
   font-weight: 700;
   cursor: pointer;
 }
+.gnc-action-btn:hover { background: #e8f5ee; }
 
-.gnc-action-btn:hover {
-  background: #e8f5ee;
-}
-
-/* ─────────── MODAL ─────────── */
+/* ══════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════ */
 .gnc-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,40 +123,56 @@
 
 .gnc-modal {
   background: #fff;
-  border-radius: 12px;
-  width: 540px;
-  max-width: 95vw;
+  border-radius: 14px;
+  width: 600px;
+  max-width: 96vw;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 30px 34px;
+  padding: 32px 36px;
   position: relative;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
 }
+
+.gnc-modal-wide { width: 660px; }
 
 .gnc-modal-close {
   position: absolute;
-  top: 14px;
-  right: 18px;
+  top: 16px;
+  right: 20px;
   background: none;
   border: none;
   font-size: 18px;
   cursor: pointer;
   color: #666;
 }
-
-.gnc-modal-close:hover {
-  color: #000;
-}
+.gnc-modal-close:hover { color: #000; }
 
 .gnc-modal-title {
   font-size: 20px;
   font-weight: 800;
   color: #111;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
 }
 
-.gnc-modal-section {
+/* ── Read-Only Citizen Card ── */
+.gnc-modal-readonly-card {
+  background: #f8fdf9;
+  border: 1px solid #c8ddd0;
+  border-radius: 10px;
+  padding: 18px 20px;
   margin-bottom: 18px;
+}
+
+.gnc-readonly-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0C7A3B;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.gnc-modal-grid {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -259,98 +181,197 @@
 .gnc-modal-row {
   display: flex;
   gap: 12px;
-  font-size: 14px;
+  font-size: 13.5px;
+  align-items: flex-start;
 }
-
 .gnc-modal-row span {
-  color: #111;
-  width: 130px;
+  color: #555;
+  width: 140px;
   flex-shrink: 0;
   font-weight: 600;
 }
-
-.gnc-modal-row strong {
-  color: #111;
-}
+.gnc-modal-row strong { color: #111; }
 
 .gnc-modal-desc {
-  background: #f5f5f5;
+  background: #f0f4f2;
   border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 14px;
-  margin-bottom: 18px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  margin-top: 10px;
 }
+.gnc-modal-desc strong { color: #111; }
+.gnc-modal-desc p { margin: 6px 0 0; color: #333; line-height: 1.6; }
 
-.gnc-modal-desc strong {
-  color: #111;
-}
-
-.gnc-modal-desc p {
-  margin: 6px 0 0;
-  color: #111;
-  line-height: 1.6;
-}
-
-.gnc-modal-form {
+/* ── GN Admin Section ── */
+.gnc-modal-admin-section {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  border-top: 1px solid #e0e9e4;
-  padding-top: 18px;
+  gap: 8px;
+}
+
+.gnc-admin-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4a4a9e;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
 .gnc-modal-label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  color: #111;
+  color: #333;
 }
 
-.gnc-modal-select {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 14px;
-  background: #f8f9fa;
-}
+.gnc-req { color: #dc3545; margin-left: 2px; }
 
 .gnc-modal-textarea {
-  border: 1px solid #ccc;
+  border: 1px solid #d0d0d0;
   border-radius: 8px;
   padding: 10px 14px;
-  font-size: 14px;
+  font-size: 13.5px;
   resize: vertical;
   outline: none;
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gnc-modal-textarea:focus { border-color: #0C7A3B; }
+
+.gnc-modal-input {
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 13.5px;
+  outline: none;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.gnc-modal-input:focus { border-color: #f6a623; }
+
+.gnc-cert-fill-btn {
+  background: #1a7f4f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.gnc-cert-fill-btn:hover { background: #155d3a; }
+
+/* ── Action Section ── */
+.gnc-action-section {
+  border-top: 2px solid #e8f5ee;
+  padding-top: 18px;
 }
 
-.gnc-modal-textarea:focus {
-  border-color: #0C7A3B;
+.gnc-action-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e07000;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-.gnc-modal-btns {
+.gnc-action-btns-row {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
-.gnc-save-btn {
-  background: #0C7A3B;
-  color: #fff;
+.gnc-action-choice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.18s;
+}
+
+.gnc-approve-btn { border-color: #27ae60; color: #27ae60; }
+.gnc-approve-btn:hover, .gnc-approve-btn.gnc-action-active { background: #27ae60; color: #fff; }
+
+.gnc-visit-btn { border-color: #f6a623; color: #c97d00; }
+.gnc-visit-btn:hover, .gnc-visit-btn.gnc-action-active { background: #f6a623; color: #fff; }
+
+.gnc-reject-btn { border-color: #e74c3c; color: #e74c3c; }
+.gnc-reject-btn:hover, .gnc-reject-btn.gnc-action-active { background: #e74c3c; color: #fff; }
+
+/* ── Conditional Fields ── */
+.gnc-conditional-fields {
+  background: #fafafa;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: gnc-slide-in 0.2s ease;
+}
+
+@keyframes gnc-slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Feedback Messages ── */
+.gnc-action-error {
+  background: #fdf2f2;
+  border-left: 4px solid #e74c3c;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: #c0392b;
+  margin-bottom: 10px;
+}
+
+.gnc-action-success {
+  background: #eafaf1;
+  border-left: 4px solid #27ae60;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: #1a7f4f;
+  margin-bottom: 10px;
+}
+
+/* ── Submit Action Buttons ── */
+.gnc-modal-btns { display: flex; gap: 10px; margin-top: 8px; }
+
+.gnc-submit-action-btn {
   border: none;
   border-radius: 8px;
   padding: 10px 22px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  color: #fff;
 }
+.gnc-submit-action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.gnc-save-btn:hover {
-  background: #0a6532;
-}
+.gnc-submit-approve { background: #27ae60; }
+.gnc-submit-approve:hover:not(:disabled) { background: #1a8a4a; }
 
-.gnc-save-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+.gnc-submit-visit { background: #f6a623; }
+.gnc-submit-visit:hover:not(:disabled) { background: #d48a10; }
+
+.gnc-submit-reject { background: #e74c3c; }
+.gnc-submit-reject:hover:not(:disabled) { background: #c0392b; }
 
 .gnc-cancel-btn {
   background: none;
@@ -361,7 +382,24 @@
   font-size: 14px;
   cursor: pointer;
 }
+.gnc-cancel-btn:hover { background: #f5f5f5; }
 
-.gnc-cancel-btn:hover {
-  background: #f5f5f5;
+/* ── Status-Specific Info ── */
+.gnc-no-action-note {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #444;
+  border: 1px solid #e0e0e0;
+  margin-top: 16px;
+}
+
+.gnc-rejection-display {
+  margin-top: 8px;
+  background: #fdf2f2;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  color: #721c24;
 }

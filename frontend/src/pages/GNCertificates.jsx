@@ -14,14 +14,31 @@ function IconDoc() { return <svg width="22" height="22" viewBox="0 0 24 24" fill
 function IconFlag() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 3v18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><path d="M6 4h10l-2 4 2 4H6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>; }
 function IconBell() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="currentColor" strokeWidth="2" /><path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>; }
 function IconCoin() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="7" rx="8" ry="3" stroke="currentColor" strokeWidth="2" /><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" stroke="currentColor" strokeWidth="2" /><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" strokeWidth="2" /></svg>; }
-function IconProfile() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#fff" strokeWidth="2" /><path d="M4 20a8 8 0 0 1 16 0" stroke="#fff" strokeWidth="2" strokeLinecap="round" /></svg>; }
 function IconSettings() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" strokeWidth="2" /><path d="M19.4 15a7.7 7.7 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.4 7.4 0 0 0-1.7-1L15 6h-6l-.5 2.4a7.4 7.4 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 0 2l-2 1.2 2 3.4 2.3-.6a7.4 7.4 0 0 0 1.7 1L9 22h6l.5-2.4a7.4 7.4 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2a7.7 7.7 0 0 0-.1-1Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>; }
 
-const TABS = ["ALL", "PENDING", "APPROVED", "REJECTED"];
+// All workflow statuses
+const TABS = ["ALL", "PENDING", "UNDER_REVIEW_GN", "PENDING_DS_APPROVAL", "VISIT_REQUIRED", "APPROVED", "REJECTED"];
+
+const STATUS_LABELS = {
+  PENDING: "Pending",
+  SUBMITTED: "Submitted",
+  UNDER_REVIEW_GN: "Under Review",
+  PENDING_DS_APPROVAL: "Awaiting DS",
+  VISIT_REQUIRED: "Visit Required",
+  APPROVED: "Approved",
+  ISSUED: "Issued",
+  REJECTED: "Rejected",
+};
 
 function formatDate(ts) {
   if (!ts) return "—";
   return new Date(ts).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "2-digit" });
+}
+
+function formatDateInput(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  return d.toISOString().split("T")[0];
 }
 
 export default function GNCertificates() {
@@ -29,11 +46,20 @@ export default function GNCertificates() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("ALL");
-  const [modal, setModal] = useState(null);   // selected request for status review
-  const [formModal, setFormModal] = useState(null); // selected request for cert form
-  const [noteText, setNoteText] = useState("");
-  const [newStatus, setNewStatus] = useState("");
+
+  // Review modal state
+  const [modal, setModal] = useState(null);
+  const [formModal, setFormModal] = useState(null);
+
+  // GN action state inside modal
+  const [gnRemarks, setGnRemarks] = useState("");
+  const [activeAction, setActiveAction] = useState(""); // "approve" | "visit" | "reject"
+  const [appointmentDate, setAppointmentDate] = useState("");
+  const [requiredDocs, setRequiredDocs] = useState("");
+  const [rejectionReason, setRejectionReason] = useState("");
   const [saving, setSaving] = useState(false);
+  const [actionError, setActionError] = useState("");
+  const [actionSuccess, setActionSuccess] = useState("");
 
   const loadRequests = useCallback(async (status) => {
     setLoading(true); setError("");
@@ -52,39 +78,95 @@ export default function GNCertificates() {
 
   const openModal = (req) => {
     setModal(req);
-    setNewStatus(req.status);
-    setNoteText(req.gn_note || "");
+    setGnRemarks(req.gn_remarks || req.gn_note || "");
+    setActiveAction("");
+    setAppointmentDate(req.appointment_date ? formatDateInput(req.appointment_date) : "");
+    setRequiredDocs(req.required_documents_list || "");
+    setRejectionReason(req.rejection_reason || "");
+    setActionError("");
+    setActionSuccess("");
   };
-  const closeModal = () => setModal(null);
+  const closeModal = () => {
+    setModal(null);
+    setActiveAction("");
+    setActionError("");
+    setActionSuccess("");
+  };
 
-  const handleSave = async () => {
-    if (!modal) return;
+  const handleActionSelect = (action) => {
+    setActiveAction(prev => prev === action ? "" : action);
+    setActionError("");
+    setActionSuccess("");
+  };
+
+  const handleSubmitAction = async () => {
+    if (!modal || !activeAction) return;
+    setActionError(""); setActionSuccess("");
+
+    // Frontend validation
+    if (activeAction === "visit" && !appointmentDate) {
+      setActionError("Please select an appointment date."); return;
+    }
+    if (activeAction === "reject" && !rejectionReason.trim()) {
+      setActionError("Rejection reason is required."); return;
+    }
+
     setSaving(true);
     try {
-      const r = await api.patch(`/api/certificate/${modal.request_id}/status`, {
-        status: newStatus,
-        gn_note: noteText,
-      });
+      const payload = {
+        action: activeAction,
+        gn_remarks: gnRemarks,
+        ...(activeAction === "visit" && {
+          appointment_date: appointmentDate,
+          required_documents_list: requiredDocs,
+        }),
+        ...(activeAction === "reject" && {
+          rejection_reason: rejectionReason,
+        }),
+      };
+      const r = await api.patch(`/api/certificate/${modal.request_id}/gn-action`, payload);
       if (r.data.ok) {
+        const newStatus = r.data.newStatus;
+        const successMsg = {
+          approve: newStatus === "PENDING_DS_APPROVAL"
+            ? "✅ Forwarded to Divisional Secretary for approval."
+            : "✅ Certificate approved. Citizen has been notified.",
+          visit: "📅 Visit appointment set. Citizen has been notified.",
+          reject: "❌ Request rejected. Citizen has been notified.",
+        }[activeAction];
+
+        setActionSuccess(successMsg);
         setRequests(prev => prev.map(req =>
           req.request_id === modal.request_id
-            ? { ...req, status: newStatus, gn_note: noteText }
+            ? { ...req, status: newStatus, gn_remarks: gnRemarks }
             : req
         ));
-        setModal(prev => ({ ...prev, status: newStatus, gn_note: noteText }));
+        setModal(prev => ({ ...prev, status: newStatus, gn_remarks: gnRemarks }));
+        setActiveAction("");
       }
     } catch (ex) {
-      alert(ex.response?.data?.error || "Failed to update status.");
+      setActionError(ex.response?.data?.error || "Action failed. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
   const pillClass = (s) => {
-    if (s === "APPROVED") return "gnc-pill gnc-pill-approved";
-    if (s === "REJECTED") return "gnc-pill gnc-pill-rejected";
-    return "gnc-pill"; // PENDING
+    const map = {
+      PENDING: "gnc-pill gnc-pill-pending",
+      SUBMITTED: "gnc-pill gnc-pill-pending",
+      UNDER_REVIEW_GN: "gnc-pill gnc-pill-review",
+      PENDING_DS_APPROVAL: "gnc-pill gnc-pill-ds",
+      VISIT_REQUIRED: "gnc-pill gnc-pill-visit",
+      APPROVED: "gnc-pill gnc-pill-approved",
+      ISSUED: "gnc-pill gnc-pill-approved",
+      REJECTED: "gnc-pill gnc-pill-rejected",
+    };
+    return map[s] || "gnc-pill";
   };
+
+  const canTakeAction = (status) =>
+    ["PENDING", "SUBMITTED", "UNDER_REVIEW_GN", "VISIT_REQUIRED"].includes(status);
 
   return (
     <div className="gn-wrap">
@@ -111,7 +193,6 @@ export default function GNCertificates() {
 
       {/* MAIN */}
       <main className="gn-main">
-        {/* TOP BAR */}
         <header className="hv-topbar">
           <div className="hv-top-title">GN Digital System</div>
           <div className="hv-top-search">
@@ -134,7 +215,7 @@ export default function GNCertificates() {
                 className={`gnc-tab-btn ${activeTab === t ? "gnc-tab-active" : ""}`}
                 onClick={() => setActiveTab(t)}
               >
-                {t.charAt(0) + t.slice(1).toLowerCase()}
+                {STATUS_LABELS[t] || (t.charAt(0) + t.slice(1).toLowerCase())}
               </button>
             ))}
           </div>
@@ -170,7 +251,7 @@ export default function GNCertificates() {
                       </td>
                       <td className="gnc-nic">{r.nic_number || "—"}</td>
                       <td className="gnc-type">{r.cert_type}</td>
-                      <td><span className={pillClass(r.status)}>{r.status.charAt(0) + r.status.slice(1).toLowerCase()}</span></td>
+                      <td><span className={pillClass(r.status)}>{STATUS_LABELS[r.status] || r.status}</span></td>
                       <td className="gnc-date">{formatDate(r.created_at)}</td>
                       <td className="gnc-actions">
                         <button className="gnc-action-btn" onClick={() => openModal(r)}>Review</button>
@@ -184,67 +265,176 @@ export default function GNCertificates() {
         </div>
       </main>
 
-      {/* MODAL */}
+      {/* REVIEW MODAL */}
       {modal && (
         <div className="gnc-modal-overlay" onClick={closeModal}>
-          <div className="gnc-modal" onClick={e => e.stopPropagation()}>
+          <div className="gnc-modal gnc-modal-wide" onClick={e => e.stopPropagation()}>
             <button className="gnc-modal-close" onClick={closeModal}>✕</button>
 
             <h2 className="gnc-modal-title">Certificate Request #{modal.request_id}</h2>
 
-            <div className="gnc-modal-section">
-              <div className="gnc-modal-row"><span>Requested By:</span><strong>{modal.citizen_name}</strong></div>
-              <div className="gnc-modal-row">
-                <span>NIC Owner:</span>
-                <strong>
-                  {modal.member_name
-                    ? <>{modal.member_name} <span style={{fontWeight:"normal",color:"#888",fontSize:"0.85rem"}}>({modal.relationship_to_head})</span></>
-                    : modal.citizen_name}
-                </strong>
+            {/* ── Citizen Info (Read-Only) ── */}
+            <div className="gnc-modal-readonly-card">
+              <div className="gnc-readonly-label">📋 Citizen Information (Read-Only)</div>
+              <div className="gnc-modal-grid">
+                <div className="gnc-modal-row"><span>Requested By:</span><strong>{modal.citizen_name}</strong></div>
+                <div className="gnc-modal-row">
+                  <span>NIC Owner:</span>
+                  <strong>
+                    {modal.member_name
+                      ? <>{modal.member_name} <span style={{fontWeight:"normal",color:"#888",fontSize:"0.85rem"}}>({modal.relationship_to_head})</span></>
+                      : modal.citizen_name}
+                  </strong>
+                </div>
+                <div className="gnc-modal-row"><span>NIC Number:</span><strong>{modal.nic_number || "—"}</strong></div>
+                <div className="gnc-modal-row"><span>Certificate Type:</span><strong>{modal.cert_type}</strong></div>
+                <div className="gnc-modal-row"><span>Date Requested:</span><strong>{formatDate(modal.created_at)}</strong></div>
+                <div className="gnc-modal-row"><span>Current Status:</span><strong><span className={pillClass(modal.status)}>{STATUS_LABELS[modal.status] || modal.status}</span></strong></div>
               </div>
-              <div className="gnc-modal-row"><span>NIC Number:</span><strong>{modal.nic_number || "—"}</strong></div>
-              <div className="gnc-modal-row"><span>Certificate Type:</span><strong>{modal.cert_type}</strong></div>
-              <div className="gnc-modal-row"><span>Date Requested:</span><strong>{formatDate(modal.created_at)}</strong></div>
+              {modal.purpose && (
+                <div className="gnc-modal-desc">
+                  <strong>Purpose / Notes from Citizen:</strong>
+                  <p>{modal.purpose}</p>
+                </div>
+              )}
             </div>
 
-            {modal.purpose && (
-              <div className="gnc-modal-desc">
-                <strong>Purpose / Notes from Citizen:</strong>
-                <p>{modal.purpose}</p>
+            {/* ── GN Administrative Fields ── */}
+            <div className="gnc-modal-admin-section">
+              <div className="gnc-admin-label">✏️ GN Officer Fields (Editable)</div>
+
+              <label className="gnc-modal-label">GN Remarks</label>
+              <textarea
+                className="gnc-modal-textarea"
+                rows={2}
+                placeholder="Internal remarks or notes about this request…"
+                value={gnRemarks}
+                onChange={e => setGnRemarks(e.target.value)}
+              />
+
+              {/* Fill Certificate Form button */}
+              <button
+                className="gnc-cert-fill-btn"
+                onClick={() => setFormModal(modal)}
+              >
+                📝 Fill &amp; Generate Certificate
+              </button>
+            </div>
+
+            {/* ── Action Buttons ── */}
+            {canTakeAction(modal.status) ? (
+              <div className="gnc-action-section">
+                <div className="gnc-action-label">⚡ Choose Action</div>
+                <div className="gnc-action-btns-row">
+                  <button
+                    className={`gnc-action-choice gnc-approve-btn ${activeAction === "approve" ? "gnc-action-active" : ""}`}
+                    onClick={() => handleActionSelect("approve")}
+                  >
+                    ✅ Approve
+                  </button>
+                  <button
+                    className={`gnc-action-choice gnc-visit-btn ${activeAction === "visit" ? "gnc-action-active" : ""}`}
+                    onClick={() => handleActionSelect("visit")}
+                  >
+                    📅 Request Visit
+                  </button>
+                  <button
+                    className={`gnc-action-choice gnc-reject-btn ${activeAction === "reject" ? "gnc-action-active" : ""}`}
+                    onClick={() => handleActionSelect("reject")}
+                  >
+                    ❌ Reject
+                  </button>
+                </div>
+
+                {/* Conditional: Visit fields */}
+                {activeAction === "visit" && (
+                  <div className="gnc-conditional-fields">
+                    <label className="gnc-modal-label">Appointment Date <span className="gnc-req">*</span></label>
+                    <input
+                      type="date"
+                      className="gnc-modal-input"
+                      value={appointmentDate}
+                      min={new Date().toISOString().split("T")[0]}
+                      onChange={e => setAppointmentDate(e.target.value)}
+                    />
+                    <label className="gnc-modal-label" style={{marginTop:"12px"}}>Required Documents / Instructions</label>
+                    <textarea
+                      className="gnc-modal-textarea"
+                      rows={3}
+                      placeholder="List documents the citizen must bring (e.g. Original NIC, utility bill, birth certificate)…"
+                      value={requiredDocs}
+                      onChange={e => setRequiredDocs(e.target.value)}
+                    />
+                  </div>
+                )}
+
+                {/* Conditional: Reject reason */}
+                {activeAction === "reject" && (
+                  <div className="gnc-conditional-fields">
+                    <label className="gnc-modal-label">Rejection Reason <span className="gnc-req">*</span></label>
+                    <textarea
+                      className="gnc-modal-textarea"
+                      rows={3}
+                      placeholder="Provide a clear reason for rejection that will be shown to the citizen…"
+                      value={rejectionReason}
+                      onChange={e => setRejectionReason(e.target.value)}
+                    />
+                  </div>
+                )}
+
+                {/* Feedback messages */}
+                {actionError && <div className="gnc-action-error">{actionError}</div>}
+                {actionSuccess && <div className="gnc-action-success">{actionSuccess}</div>}
+
+                {/* Submit action button */}
+                {activeAction && (
+                  <div className="gnc-modal-btns">
+                    <button
+                      className={`gnc-submit-action-btn ${activeAction === "reject" ? "gnc-submit-reject" : activeAction === "visit" ? "gnc-submit-visit" : "gnc-submit-approve"}`}
+                      onClick={handleSubmitAction}
+                      disabled={saving}
+                    >
+                      {saving ? "Processing…" : {
+                        approve: "✅ Confirm Approval",
+                        visit: "📅 Schedule Visit & Notify",
+                        reject: "❌ Confirm Rejection",
+                      }[activeAction]}
+                    </button>
+                    <button className="gnc-cancel-btn" onClick={() => { setActiveAction(""); setActionError(""); }}>
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="gnc-no-action-note">
+                {modal.status === "PENDING_DS_APPROVAL" && (
+                  <span>⏳ This request is awaiting Divisional Secretary approval.</span>
+                )}
+                {(modal.status === "APPROVED" || modal.status === "ISSUED") && (
+                  <span>✅ This certificate has been approved and is available to the citizen.</span>
+                )}
+                {modal.status === "REJECTED" && (
+                  <div>
+                    <span>❌ This request was rejected.</span>
+                    {modal.rejection_reason && (
+                      <div className="gnc-rejection-display">
+                        <strong>Reason:</strong> {modal.rejection_reason}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {!actionSuccess && <div className="gnc-modal-btns" style={{marginTop:"12px"}}>
+                  <button className="gnc-cancel-btn" onClick={closeModal}>Close</button>
+                </div>}
               </div>
             )}
 
-            <div className="gnc-modal-form">
-              <label className="gnc-modal-label">Update Status</label>
-              <select className="gnc-modal-select" value={newStatus} onChange={e => setNewStatus(e.target.value)}>
-                <option value="PENDING">Pending</option>
-                <option value="APPROVED">Approved</option>
-                <option value="REJECTED">Rejected</option>
-              </select>
-
-              <label className="gnc-modal-label">GN Officer Note (optional)</label>
-              <textarea
-                className="gnc-modal-textarea"
-                rows={3}
-                placeholder="Add a note for the citizen (e.g. reason for rejection, instructions to collect)…"
-                value={noteText}
-                onChange={e => setNoteText(e.target.value)}
-              />
-
-              <div className="gnc-modal-btns">
-                <button 
-                  className="gnc-save-btn" 
-                  style={{ background: "#2f6b45" }}
-                  onClick={() => setFormModal(modal)}
-                >
-                  Fill &amp; Generate Certificate
-                </button>
-                <button className="gnc-save-btn" onClick={handleSave} disabled={saving}>
-                   {saving ? "Saving…" : "Save Changes"}
-                </button>
-                <button className="gnc-cancel-btn" onClick={closeModal}>Cancel</button>
+            {actionSuccess && (
+              <div className="gnc-modal-btns" style={{marginTop:"8px"}}>
+                <button className="gnc-cancel-btn" onClick={closeModal}>Close</button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
