@@ -124,9 +124,9 @@ export default function CitizenAvailability() {
         <Link className="cd-nav-item" to="/availability" style={{borderBottom: "3px solid #0C7A3B"}}><span style={{fontWeight:"bold"}}>GN Schedule</span></Link>
       </nav>
 
-      <div className="cd-main" style={{padding: "20px 40px"}}>
-        <h2>Grama Niladhari Schedule</h2>
-        <p>Check the GN's availability before visiting the office to avoid inconvenience.</p>
+      <div className="cd-main" style={{padding: "20px 40px", color: "#1f1f1f"}}>
+        <h2 style={{color: "#1f1f1f"}}>Grama Niladhari Schedule</h2>
+        <p style={{color: "#333"}}>Check the GN's availability before visiting the office to avoid inconvenience.</p>
         
         <div style={{display: 'flex', gap: '20px'}}>
           <div style={{flex: 2, background: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)'}}>
