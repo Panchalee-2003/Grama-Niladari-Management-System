@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminVerifyCertificates.css";
 import { clearAuth } from "../auth/auth";
 import api from "../api/api";
+import emblem from "../assets/emblem.png";
+
 /* ========= ICONS (SVG) ========= */
 function IconDashboard() {
     return (
@@ -247,9 +249,12 @@ export default function AdminVerifyCertificates() {
         <div className="avc-page">
             {/* LEFT SIDEBAR */}
             <aside className="avc-sidebar">
-                <div className="avc-brand">
-                    <div className="avc-brand-title">Maspanna Division</div>
-                    <div className="avc-brand-sub">Grama Niladhari</div>
+                  <div className="avc-brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+                      <img src={emblem} alt="Sri Lanka Emblem" style={{ width: '60px', height: 'auto' }} />
+                      <div>
+                          <div className="avc-brand-title">Divisional Secretariat</div>
+                          <div className="avc-brand-sub" style={{ fontSize: '18px' }}>Uva Paranagama</div>
+                      </div>
                 </div>
 
                 <div className="avc-nav">
@@ -291,7 +296,7 @@ export default function AdminVerifyCertificates() {
             <section className="avc-content">
                 {/* TOP BAR */}
                 <header className="avc-topbar">
-                    <div className="avc-topbar-title">GN Digital System</div>
+                    <div className="avc-topbar-title">Divisional Secretariat Digital System</div>
 
                     <div className="avc-search-wrap">
                         <input

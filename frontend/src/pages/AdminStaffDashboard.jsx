@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/adminStaffDashboard.css";
 import { clearAuth } from "../auth/auth";
 import api from "../api/api";
+import emblem from "../assets/emblem.png";
+
 /* ========= ICONS (SVG) ========= */
 function IconDashboard() {
   return (
@@ -145,9 +147,12 @@ export default function AdminStaffDashboard() {
     <div className="asd-page">
       {/* LEFT SIDEBAR */}
       <aside className="asd-sidebar">
-        <div className="asd-brand">
-          <div className="asd-brand-title">Maspanna Division</div>
-          <div className="asd-brand-sub">Grama Niladhari</div>
+        <div className="asd-brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
+          <img src={emblem} alt="Sri Lanka Emblem" style={{ width: '60px', height: 'auto' }} />
+          <div>
+            <div className="asd-brand-title">Divisional Secretariat</div>
+            <div className="asd-brand-sub" style={{ fontSize: '18px' }}>Uva Paranagama</div>
+          </div>
         </div>
 
         <div className="asd-nav">
@@ -178,7 +183,7 @@ export default function AdminStaffDashboard() {
       <section className="asd-content">
         {/* TOP BAR */}
         <header className="asd-topbar">
-          <div className="asd-topbar-title">GN Digital System</div>
+          <div className="asd-topbar-title">Divisional Secretariat Digital System</div>
 
           <div className="asd-search-wrap">
             <div className="asd-search-bar" />
