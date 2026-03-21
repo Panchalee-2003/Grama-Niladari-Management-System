@@ -115,9 +115,16 @@ export default function AdminStaffDashboard() {
                   <div className="ds-card-body">
                     <button 
                       className="ds-open-btn" 
-                      onClick={() => navigate('/admin-verify-certificates')}
+                      onClick={() => {
+                        if (div.name === "Maspanna") {
+                          navigate('/admin-verify-certificates');
+                        } else {
+                          alert("Information for this division is not added yet.");
+                        }
+                      }}
+                      style={div.name !== "Maspanna" ? { backgroundColor: '#a5d6a7', cursor: 'not-allowed' } : {}}
                     >
-                      Open Division
+                      {div.name === "Maspanna" ? "Open Division" : "Data Not Added Yet"}
                     </button>
                   </div>
                 </div>
