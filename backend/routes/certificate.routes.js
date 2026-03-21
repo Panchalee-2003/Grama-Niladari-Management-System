@@ -51,7 +51,7 @@ router.get("/my-members", requireAuth, requireRole("CITIZEN"), async (req, res) 
 router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
-        const { cert_type, purpose, nic_number } = req.body;
+        const { cert_type, purpose, nic_number, request_data } = req.body;
 
         if (!cert_type || !CERT_TYPES.includes(cert_type))
             return res.status(400).json({ ok: false, error: "Invalid certificate type" });
@@ -85,10 +85,10 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
         }
 
         const result = await pool.query(
-            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, family_member_id, nic_number, status, created_at, updated_at)
-       VALUES ($1,$2,$3,$4,$5,'PENDING',NOW(),NOW())
+            `INSERT INTO certificate_request (citizen_id, cert_type, purpose, family_member_id, nic_number, certificate_data, status, created_at, updated_at)
+       VALUES ($1,$2,$3,$4,$5,$6,'PENDING',NOW(),NOW())
        RETURNING request_id, cert_type, purpose, status, created_at`,
-            [citizen_id, cert_type, purpose?.trim() || null, family_member_id, nic_number]
+            [citizen_id, cert_type, purpose?.trim() || null, family_member_id, nic_number, JSON.stringify(request_data || {})]
         );
 
         return res.status(201).json({ ok: true, request: result.rows[0] });

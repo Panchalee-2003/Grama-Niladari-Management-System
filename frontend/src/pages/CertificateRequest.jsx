@@ -53,11 +53,184 @@ function IconDoc()       { return <svg className="gn-nav-icon" viewBox="0 0 24 2
 function IconComplaint() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M8 8h8M8 12h6" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 function IconBell()      { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 
+/* Dynamic Fields Component */
+function DynamicFields({ certType, requestData, setRequestData }) {
+  const handleInput = (field, value) => {
+    setRequestData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  if (!certType || certType === "Residence and character Certificate") return null;
+
+  return (
+    <div className="cr-dynamic-fields" style={{ marginTop: "15px", padding: "15px", backgroundColor: "#f9fbfd", border: "1px solid #e1e8f0", borderRadius: "8px" }}>
+      <h3 style={{ fontSize: "1rem", marginBottom: "15px", color: "#2b2b2b" }}>Additional Details Required</h3>
+      
+      {certType === "Application for obtaining housing loan funds" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Applicant Name (Full Name)</label>
+            <input className="gn-input" type="text" value={requestData.applicant_name || ""} onChange={e => handleInput("applicant_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Full Residential Address</label>
+            <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Monthly Family Income (Rs.)</label>
+            <input className="gn-input" type="number" value={requestData.monthly_income || ""} onChange={e => handleInput("monthly_income", e.target.value)} />
+          </div>
+          <div className="gn-field gn-radio-group" style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
+            <label className="cr-label" style={{ marginBottom: 0 }}>Samurdhi Beneficiary:</label>
+            <label><input type="radio" checked={requestData.samurdhi_beneficiary === "Yes"} onChange={() => handleInput("samurdhi_beneficiary", "Yes")} /> Yes</label>
+            <label><input type="radio" checked={requestData.samurdhi_beneficiary === "No"} onChange={() => handleInput("samurdhi_beneficiary", "No")} /> No</label>
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Property Details (Land Size, Deed Number, and Date)</label>
+            <textarea className="gn-textarea" placeholder="E.g., 10 Perches, Deed 1234, 2020-01-01" value={requestData.property_details || ""} onChange={e => handleInput("property_details", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Requested Amount (Rs.)</label>
+            <input className="gn-input" type="number" value={requestData.requested_amount || ""} onChange={e => handleInput("requested_amount", e.target.value)} />
+          </div>
+        </>
+      )}
+
+      {certType === "Notification of the death of a pensioner" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Pensioner Name (Full Name)</label>
+            <input className="gn-input" type="text" value={requestData.pensioner_name || ""} onChange={e => handleInput("pensioner_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Address</label>
+            <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Date of Death</label>
+            <input className="gn-input" type="date" value={requestData.date_of_death || ""} onChange={e => handleInput("date_of_death", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Pension Number</label>
+            <input className="gn-input" type="text" value={requestData.pension_number || ""} onChange={e => handleInput("pension_number", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Dependents (Name, Relationship, Age)</label>
+            <textarea className="gn-textarea" placeholder="E.g., John Doe - Son - 25&#10;Jane Doe - Daughter - 22" value={requestData.dependents || ""} onChange={e => handleInput("dependents", e.target.value)} rows={3} />
+          </div>
+        </>
+      )}
+
+      {certType === "Income Certificate" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Applicant Name & NIC</label>
+            <input className="gn-input" type="text" value={requestData.applicant_name_nic || ""} onChange={e => handleInput("applicant_name_nic", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Address & Household Number</label>
+            <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Source of Income (Business/Job Details)</label>
+            <input className="gn-input" type="text" value={requestData.income_source || ""} onChange={e => handleInput("income_source", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Duration of Business/Service</label>
+            <input className="gn-input" type="text" value={requestData.duration_of_service || ""} onChange={e => handleInput("duration_of_service", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Monthly/Annual Income Amount (Rs.)</label>
+            <input className="gn-input" type="text" value={requestData.income_amount || ""} onChange={e => handleInput("income_amount", e.target.value)} />
+          </div>
+        </>
+      )}
+
+      {certType === "Registration of delayed births" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Child's Full Name</label>
+            <input className="gn-input" type="text" value={requestData.child_name || ""} onChange={e => handleInput("child_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Date & Place of Birth</label>
+            <input className="gn-input" type="text" value={requestData.dob_and_place || ""} onChange={e => handleInput("dob_and_place", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Father’s Details (Name and Status)</label>
+            <textarea className="gn-textarea" value={requestData.father_details || ""} onChange={e => handleInput("father_details", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Mother’s Details (Name and Status)</label>
+            <textarea className="gn-textarea" value={requestData.mother_details || ""} onChange={e => handleInput("mother_details", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field" style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
+            <label className="cr-label" style={{ marginBottom: 0 }}>Proof of Identity:</label>
+            <label><input type="checkbox" onChange={(e) => handleInput("proof_nic", e.target.checked)} /> NIC</label>
+            <label><input type="checkbox" onChange={(e) => handleInput("proof_passport", e.target.checked)} /> Passport</label>
+            <label><input type="checkbox" onChange={(e) => handleInput("proof_driving_license", e.target.checked)} /> Driving License</label>
+          </div>
+        </>
+      )}
+
+      {certType === "Registration of voluntary organizations" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Organization Name & Address</label>
+            <input className="gn-input" type="text" value={requestData.org_name_address || ""} onChange={e => handleInput("org_name_address", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Subject/Objective of Organization</label>
+            <textarea className="gn-textarea" value={requestData.org_objective || ""} onChange={e => handleInput("org_objective", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Date of Commencement</label>
+            <input className="gn-input" type="date" value={requestData.commencement_date || ""} onChange={e => handleInput("commencement_date", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Office Bearers (Name, Address, Phone)</label>
+            <textarea className="gn-textarea" placeholder="E.g., President: ..., Secretary: ..., Treasurer: ..." value={requestData.office_bearers || ""} onChange={e => handleInput("office_bearers", e.target.value)} rows={3} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Bank Account Details (Account Number and Branch)</label>
+            <input className="gn-input" type="text" value={requestData.bank_details || ""} onChange={e => handleInput("bank_details", e.target.value)} />
+          </div>
+        </>
+      )}
+
+      {certType === "Request for financial assistance from the President's fund for medical treatment" && (
+        <>
+          <div className="gn-field">
+            <label className="cr-label">Patient Name & NIC</label>
+            <input className="gn-input" type="text" value={requestData.patient_details || ""} onChange={e => handleInput("patient_details", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Family Monthly Income Table (Name, Job, Income)</label>
+            <textarea className="gn-textarea" placeholder="E.g., John - Driver - Rs 30000" value={requestData.family_incomes || ""} onChange={e => handleInput("family_incomes", e.target.value)} rows={3} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Property/Asset Details (List of assets and value)</label>
+            <textarea className="gn-textarea" placeholder="E.g., Vehicle: ABC-1234 - Rs 1M" value={requestData.property_details || ""} onChange={e => handleInput("property_details", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Bank Deposit Details (Bank Name, Branch, and Current Balance)</label>
+            <textarea className="gn-textarea" placeholder="BOC Colombo - Rs 50000" value={requestData.bank_details || ""} onChange={e => handleInput("bank_details", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Cost Estimate (How the treatment cost was calculated)</label>
+            <textarea className="gn-textarea" value={requestData.cost_estimate || ""} onChange={e => handleInput("cost_estimate", e.target.value)} rows={2} />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function CertificateRequest() {
   /* Form state */
   const [certType, setCertType]       = useState("");
   const [purpose, setPurpose]         = useState("");
   const [nicNumber, setNicNumber]     = useState("");
+  const [requestData, setRequestData] = useState({});
   const [submitting, setSubmitting]   = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
@@ -72,7 +245,7 @@ export default function CertificateRequest() {
   const [requests, setRequests]       = useState([]);
   const [listLoading, setListLoading] = useState(true);
   const [listError, setListError]     = useState("");
-  const [downloading, setDownloading] = useState(null); // request_id of downloading cert
+  const [downloading, setDownloading] = useState(null);
 
   const loadRequests = async () => {
     setListLoading(true);
@@ -111,6 +284,11 @@ export default function CertificateRequest() {
     }
   };
 
+  const handleCertTypeChange = (e) => {
+    setCertType(e.target.value);
+    setRequestData({}); // Reset dynamic fields when cert type changes
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError(""); setSubmitSuccess("");
@@ -118,9 +296,14 @@ export default function CertificateRequest() {
     if (!nicNumber.trim()) { setSubmitError("Please enter your NIC number."); return; }
     setSubmitting(true);
     try {
-      await api.post("/api/certificate", { cert_type: certType, purpose, nic_number: nicNumber });
+      await api.post("/api/certificate", { 
+        cert_type: certType, 
+        purpose, 
+        nic_number: nicNumber,
+        request_data: requestData
+      });
       setSubmitSuccess("✅ Your request has been submitted successfully!");
-      setCertType(""); setPurpose(""); setSelectedFor("self"); setNicNumber(myNic);
+      setCertType(""); setPurpose(""); setRequestData({}); setSelectedFor("self"); setNicNumber(myNic);
       loadRequests();
     } catch (ex) {
       setSubmitError(ex.response?.data?.error || "Failed to submit request.");
@@ -191,7 +374,7 @@ export default function CertificateRequest() {
             <div className="gn-left-col">
               <div className="gn-field">
                 <label className="cr-label">Certificate Type <span className="cr-req">*</span></label>
-                <select className="gn-input gn-select" value={certType} onChange={e => setCertType(e.target.value)}>
+                <select className="gn-input gn-select" value={certType} onChange={handleCertTypeChange}>
                   <option value="">Select Certificate Type</option>
                   {CERT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
@@ -226,10 +409,12 @@ export default function CertificateRequest() {
 
               <div className="gn-field">
                 <label className="cr-label">Purpose / Additional Information</label>
-                <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={5} />
+                <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />
               </div>
 
-              <div className="gn-submit-row">
+              <DynamicFields certType={certType} requestData={requestData} setRequestData={setRequestData} />
+
+              <div className="gn-submit-row" style={{ marginTop: "20px" }}>
                 <button className="gn-submit-btn" type="submit" disabled={submitting}>
                   {submitting ? "Submitting…" : "Submit Request"}
                 </button>
