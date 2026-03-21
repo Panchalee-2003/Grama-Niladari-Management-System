@@ -157,7 +157,7 @@ export default function Login() {
         <select className="select" value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="CITIZEN">Citizen</option>
           <option value="GN">GN Officer</option>
-          <option value="ADMIN">Administrative Staff</option>
+          <option value="ADMIN">Divisional Secretariat</option>
         </select>
 
         <label className="label">Email Address</label>

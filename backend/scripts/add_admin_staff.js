@@ -23,7 +23,7 @@ async function addAdminStaff() {
                 [password_hash, role, email]
             );
 
-            console.log("✅ Administrative Staff account updated successfully!");
+            console.log("✅ Divisional Secretariat account updated successfully!");
             console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             console.log("User ID:", result.rows[0].user_id);
             console.log("Email:", result.rows[0].email);
@@ -43,7 +43,7 @@ async function addAdminStaff() {
                 [email, password_hash, role]
             );
 
-            console.log("✅ Administrative Staff account created successfully!");
+            console.log("✅ Divisional Secretariat account created successfully!");
             console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             console.log("User ID:", result.rows[0].user_id);
             console.log("Email:", result.rows[0].email);
@@ -56,11 +56,11 @@ async function addAdminStaff() {
         console.log("\n🔐 Login credentials:");
         console.log(`   Email: ${email}`);
         console.log(`   Password: ${password}`);
-        console.log(`   Role: Administrative Staff`);
+        console.log(`   Role: Divisional Secretariat`);
 
         process.exit(0);
     } catch (err) {
-        console.error("❌ Error creating Administrative Staff:", err.message);
+        console.error("❌ Error creating Divisional Secretariat:", err.message);
         console.error("Details:", err);
         process.exit(1);
     }

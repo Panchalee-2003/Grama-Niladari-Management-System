@@ -8,7 +8,7 @@ async function testAdminLogin() {
     const password = "Admin@123";
 
     try {
-        console.log("🔐 Testing Administrative Staff login...\n");
+        console.log("🔐 Testing Divisional Secretariat login...\n");
 
         // Step 1: Get user from database
         const result = await db.query(
@@ -66,11 +66,11 @@ async function testAdminLogin() {
             }
         });
 
-        console.log("\n✅ The Administrative Staff login works!");
+        console.log("\n✅ The Divisional Secretariat login works!");
         console.log("   Login credentials:");
         console.log(`   Email: ${email}`);
         console.log(`   Password: ${password}`);
-        console.log(`   Role: Administrative Staff`);
+        console.log(`   Role: Divisional Secretariat`);
         console.log(`   Redirect: /admin-dashboard`);
 
         process.exit(0);
