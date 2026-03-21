@@ -10,7 +10,9 @@ const { sendVisitNotification, sendRejectionNotification, sendApprovalNotificati
 // Certificate types that require DS (Divisional Secretary) approval
 const DS_APPROVAL_TYPES = [
     "Application for obtaining housing loan funds",
-    "Request for financial assistance from the President's fund for medical treatment",
+    "Income Certificate",
+    "Registration of delayed births",
+    "Registration of voluntary organizations",
 ];
 
 const CERT_TYPES = [
@@ -105,7 +107,7 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;
         const result = await pool.query(
-            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
+            `SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number, cr.certificate_data,
               cr.status, cr.gn_note, cr.gn_remarks, cr.created_at, cr.updated_at,
               cr.certificate_id, cr.issued_at,
               cr.appointment_date, cr.required_documents_list, cr.rejection_reason,
@@ -172,7 +174,7 @@ router.get("/all", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => 
     try {
         const { status } = req.query;
         let q = `
-      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number,
+      SELECT cr.request_id, cr.cert_type, cr.purpose, cr.nic_number, cr.certificate_data,
              cr.status, cr.admin_status, cr.gn_note, cr.gn_remarks,
              cr.appointment_date, cr.required_documents_list, cr.rejection_reason,
              cr.created_at, cr.updated_at,
@@ -257,6 +259,10 @@ router.patch("/:id/gn-action", requireAuth, requireRole("GN"), async (req, res) 
         let newStatus, updateFields, updateParams;
 
         if (action === "approve") {
+            if (certReq.cert_type === "Residence and character Certificate") {
+                return res.status(400).json({ ok: false, error: "This certificate cannot be generated automatically. A physical visit is required to initiate the physical issuance process." });
+            }
+
             // Route to DS if high-authority cert, else directly APPROVED
             newStatus = DS_APPROVAL_TYPES.includes(certReq.cert_type)
                 ? "PENDING_DS_APPROVAL"
@@ -636,6 +642,17 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
 
     doc.fillColor("#000000");
 
+    const drawDigitalSignature = (name, role, date) => {
+        doc.moveDown(1);
+        const startY = doc.y;
+        doc.rect(50, startY, 240, 50).stroke("#cccccc");
+        doc.fontSize(8).fillColor("#666666").text("Digital Signature", 55, startY + 5);
+        doc.fontSize(12).font("Helvetica-Oblique").fillColor("#000080").text(name || role, 55, startY + 15);
+        doc.fontSize(8).font("Helvetica").fillColor("#666666").text(`${role} - Authenticated via GN System\nDate: ${date}`, 55, startY + 30);
+        doc.fillColor("#000000");
+        doc.y = startY + 60;
+    };
+
     if (certType === "Residence and character Certificate") {
         // ── Certificate on Residence and Character ──
         doc.fontSize(14).font("Helvetica-Bold")
@@ -728,9 +745,7 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
             .text("20. I recommend / do not recommend the issuance of an income certificate.");
         doc.fontSize(10).font("Helvetica").moveDown(0.3)
             .text("I certify that the above information is correct. I am forwarding herewith the documents submitted to me by the applicant.");
-        doc.moveDown(0.5);
-        field("Grama Niladhari – Division Name", data.gn_name);
-        doc.moveDown(0.5);
+        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
         drawLine();
 
         sectionHeader("Section 4: For Office Use Only");
@@ -741,7 +756,7 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         field("Subject Clerk", data.subject_clerk);
         field("Date", issuedDate);
         doc.fontSize(10).font("Helvetica").text("I approve the issuance of the income certificate.");
-        field("Divisional Secretary – Division Date", issuedDate);
+        drawDigitalSignature(data.div_secretary || "Divisional Secretary", "Divisional Secretary", issuedDate);
         field("Receipt Number", data.receipt_number);
         field("Income Certificate Number", data.cert_number);
 
@@ -778,25 +793,19 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         sectionHeader("Section 4: Grama Niladhari Recommendation");
         doc.fontSize(10).font("Helvetica")
             .text(`I certify that the information provided above by the applicant ${cert.applicant_name || "______________"} is correct and recommend/do not recommend that the housing loan/assistance is suitable/unsuitable.`);
-        doc.moveDown(0.5);
-        field("Grama Niladhari – Division Name", data.gn_name);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
         drawLine();
 
         sectionHeader("Section 5: Housing Officer Recommendation");
         doc.fontSize(10).font("Helvetica")
             .text(`I have conducted a field inspection regarding the housing loan/assistance submitted by the applicant ${cert.applicant_name || "______________"} and recommend that providing the housing loan/assistance is suitable.`);
-        doc.moveDown(0.5);
-        field("Housing Officer – Divisional Secretariat Division", data.housing_officer);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.housing_officer || "Housing Officer", "Housing Officer", issuedDate);
         drawLine();
 
         sectionHeader("Section 6: Approval of Divisional Secretary");
         doc.fontSize(10).font("Helvetica")
             .text("I hereby approve the issuance of the housing loan/assistance amount requested by the above applicant.");
-        doc.moveDown(0.5);
-        field("Divisional Secretary – Divisional Secretariat Division", data.div_secretary);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.div_secretary || "Divisional Secretary", "Divisional Secretary", issuedDate);
 
     } else if (certType === "Registration of delayed births") {
         // ── Registration of Delayed Births – Grama Niladhari Report ──
@@ -831,14 +840,11 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
 
         sectionHeader("3. Certification and Approval");
         doc.fontSize(10).font("Helvetica").text("I certify that the above details are true and correct.");
-        doc.moveDown(0.5);
-        field("Grama Niladhari – Division Name", data.gn_name);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
         doc.moveDown(1);
         drawLine();
         sectionHeader("Countersigned by:");
-        field("Divisional Secretary – Divisional Secretariat Division", data.div_secretary);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.div_secretary || "Divisional Secretary", "Divisional Secretary", issuedDate);
 
     } else if (certType === "Notification of the death of a pensioner") {
         // ── Notification of the Death of a Pensioner ──
@@ -894,9 +900,7 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         sectionHeader("3. Certification");
         doc.fontSize(10).font("Helvetica")
             .text("I certify that the information provided above is correct.");
-        doc.moveDown(0.5);
-        field("Grama Niladhari – Division Name", data.gn_name);
-        field("Date", issuedDate);
+        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
 
     } else {
         // ── Generic / Other ──
@@ -911,7 +915,7 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         field("Notes", data.notes);
         doc.moveDown(1);
         drawLine();
-        field("Grama Niladhari", data.gn_name);
+        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
     }
 }
 

@@ -297,6 +297,21 @@ export default function GNCertificates() {
                   <p>{modal.purpose}</p>
                 </div>
               )}
+              {modal.certificate_data && typeof modal.certificate_data === 'object' && Object.keys(modal.certificate_data).length > 0 && (
+                <div className="gnc-modal-desc" style={{ marginTop: '15px' }}>
+                  <strong>Specific Certificate Details:</strong>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
+                    {Object.entries(modal.certificate_data).map(([key, value]) => (
+                      <div key={key} style={{ backgroundColor: '#f4f6f8', padding: '8px', border: '1px solid #e1e8f0', borderRadius: '4px' }}>
+                        <span style={{ fontWeight: '600', textTransform: 'capitalize', color: '#555', fontSize: '0.9rem' }}>
+                          {key.replace(/_/g, ' ')}:
+                        </span>
+                        <div style={{ whiteSpace: 'pre-wrap', marginTop: '4px', color: '#111', fontSize: '0.95rem' }}>{value || '—'}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* ── GN Administrative Fields ── */}
@@ -312,7 +327,6 @@ export default function GNCertificates() {
                 onChange={e => setGnRemarks(e.target.value)}
               />
 
-
             </div>
 
             {/* ── Action Buttons ── */}
@@ -320,12 +334,14 @@ export default function GNCertificates() {
               <div className="gnc-action-section">
                 <div className="gnc-action-label">⚡ Choose Action</div>
                 <div className="gnc-action-btns-row">
-                  <button
-                    className={`gnc-action-choice gnc-approve-btn ${activeAction === "approve" ? "gnc-action-active" : ""}`}
-                    onClick={() => handleActionSelect("approve")}
-                  >
-                    ✅ Approve
-                  </button>
+                  {modal.cert_type !== 'Residence and character Certificate' && (
+                    <button
+                      className={`gnc-action-choice gnc-approve-btn ${activeAction === "approve" ? "gnc-action-active" : ""}`}
+                      onClick={() => handleActionSelect("approve")}
+                    >
+                      ✅ Approve
+                    </button>
+                  )}
                   <button
                     className={`gnc-action-choice gnc-visit-btn ${activeAction === "visit" ? "gnc-action-active" : ""}`}
                     onClick={() => handleActionSelect("visit")}
