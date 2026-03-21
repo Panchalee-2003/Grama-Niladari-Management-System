@@ -4,6 +4,7 @@ import api from "../api/api";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
 import emblem from "../assets/emblem.png";
+import Footer from "../components/Footer";
 import "../styles/citizenDashboard.css";
 import "../styles/availability.css";
 
@@ -125,21 +126,21 @@ export default function CitizenAvailability() {
       </nav>
 
       <div className="cd-main" style={{padding: "20px 40px", color: "#1f1f1f"}}>
-        <h2 style={{color: "#1f1f1f"}}>Grama Niladhari Schedule</h2>
-        <p style={{color: "#333"}}>Check the GN's availability before visiting the office to avoid inconvenience.</p>
+        <h2 style={{color: "#1f1f1f", marginBottom: "15px"}}>Grama Niladhari Schedule</h2>
+        <p style={{color: "#333", marginBottom: "30px"}}>Check the GN's availability before visiting the office to avoid inconvenience.</p>
         
-        <div style={{display: 'flex', gap: '20px'}}>
-          <div style={{flex: 2, background: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)'}}>
+        <div style={{display: 'flex', gap: '20px', alignItems: 'flex-start'}}>
+          <div className="cal-small" style={{flex: 1.4, background: 'white', padding: '20px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)'}}>
             <div className="cal-header">
-              <button className="cal-btn" onClick={prevMonth}>&lt; Prev</button>
+              <button className="cal-btn" onClick={prevMonth}>&lt;</button>
               <h2 className="cal-title">{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h2>
-              <button className="cal-btn" onClick={nextMonth}>Next &gt;</button>
+              <button className="cal-btn" onClick={nextMonth}>&gt;</button>
             </div>
 
             <div className="cal-legend">
               <span className="cal-legend-item"><span className="cal-dot dot-avail"></span> Available</span>
-              <span className="cal-legend-item"><span className="cal-dot dot-field"></span> Field Visit</span>
-              <span className="cal-legend-item"><span className="cal-dot dot-unavail"></span> Unavailable</span>
+              <span className="cal-legend-item"><span className="cal-dot dot-field"></span> Field</span>
+              <span className="cal-legend-item"><span className="cal-dot dot-unavail"></span> Off</span>
             </div>
 
             <div className="cal-grid">
@@ -154,22 +155,35 @@ export default function CitizenAvailability() {
             </div>
           </div>
 
-          <div style={{flex: 1}}>
+          <div style={{flex: 1, position: 'sticky', top: '20px'}}>
             {selectedDateDetails ? (
-              <div style={{background: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)'}}>
-                <h3 style={{marginTop: 0}}>Date Details: {selectedDateDetails.date}</h3>
-                <p><strong>Status:</strong> {selectedDateDetails.status}</p>
-                {selectedDateDetails.start && <p><strong>Time:</strong> {selectedDateDetails.start.substring(0,5)} to {selectedDateDetails.end?.substring(0,5)}</p>}
-                <p><strong>Notes / Location:</strong><br/>{selectedDateDetails.note}</p>
+              <div style={{background: 'white', padding: '24px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', borderTop: '4px solid #0C7A3B'}}>
+                <h3 style={{marginTop: 0, marginBottom: '20px', color: '#111', borderBottom: '1px solid #eee', paddingBottom: '10px'}}>Date Details: {selectedDateDetails.date}</h3>
+                <div style={{marginBottom: '15px'}}>
+                   <label style={{fontSize: '0.75rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', display: 'block', marginBottom: '4px'}}>Status</label>
+                   <span style={{fontSize: '1.1rem', fontWeight: 600, color: '#0C7A3B'}}>{selectedDateDetails.status}</span>
+                </div>
+                {selectedDateDetails.start && (
+                  <div style={{marginBottom: '15px'}}>
+                    <label style={{fontSize: '0.75rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', display: 'block', marginBottom: '4px'}}>Hours</label>
+                    <span style={{fontSize: '1rem', color: '#444'}}>{selectedDateDetails.start.substring(0,5)} to {selectedDateDetails.end?.substring(0,5)}</span>
+                  </div>
+                )}
+                <div>
+                  <label style={{fontSize: '0.75rem', fontWeight: 700, color: '#888', textTransform: 'uppercase', display: 'block', marginBottom: '4px'}}>Notes / Location</label>
+                  <p style={{fontSize: '0.95rem', color: '#555', lineHeight: 1.5, margin: 0}}>{selectedDateDetails.note || "No additional details provided."}</p>
+                </div>
               </div>
             ) : (
-              <div style={{background: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', color: '#666'}}>
-                Click on any date in the calendar to see detailed schedule information including field visit locations and specific active hours.
+              <div style={{background: 'rgba(255,255,255,0.7)', padding: '30px', borderRadius: '12px', border: '2px dashed #ccc', textAlign: 'center', color: '#777'}}>
+                <div style={{fontSize: '2rem', marginBottom: '10px'}}>📆</div>
+                <p>Click on any date in the calendar to see the Grama Niladhari's full schedule for that day.</p>
               </div>
             )}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -181,3 +181,27 @@ input::-webkit-calendar-picker-indicator:hover {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Compact version for citizen view */
+.cal-small .cal-day {
+  min-height: 70px;
+  padding: 4px;
+}
+.cal-small .cal-day-num {
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+.cal-small .cal-day-label {
+  font-size: 0.65rem;
+  padding: 1px 4px;
+}
+.cal-small .cal-day-time {
+  font-size: 0.6rem;
+}
+.cal-small .cal-grid {
+  gap: 8px;
+}
+.cal-small .cal-title {
+  font-size: 1.2rem;
+}
+
+
