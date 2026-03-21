@@ -27,14 +27,14 @@ const CERT_PDF_MAP = {
 };
 
 const STATUS_MAP = {
-  PENDING:             { label: "Pending Review",   cls: "cr-badge cr-badge-pending" },
-  SUBMITTED:           { label: "Submitted",         cls: "cr-badge cr-badge-pending" },
-  UNDER_REVIEW_GN:     { label: "Under Review",      cls: "cr-badge cr-badge-review" },
-  PENDING_DS_APPROVAL: { label: "Awaiting DS",       cls: "cr-badge cr-badge-ds" },
-  VISIT_REQUIRED:      { label: "Visit Required",    cls: "cr-badge cr-badge-visit" },
-  APPROVED:            { label: "Approved",          cls: "cr-badge cr-badge-approved" },
-  ISSUED:              { label: "Issued",            cls: "cr-badge cr-badge-approved" },
-  REJECTED:            { label: "Rejected",          cls: "cr-badge cr-badge-rejected" },
+  PENDING: { label: "Pending Review", cls: "cr-badge cr-badge-pending" },
+  SUBMITTED: { label: "Submitted", cls: "cr-badge cr-badge-pending" },
+  UNDER_REVIEW_GN: { label: "Under Review", cls: "cr-badge cr-badge-review" },
+  PENDING_DS_APPROVAL: { label: "Awaiting DS", cls: "cr-badge cr-badge-ds" },
+  VISIT_REQUIRED: { label: "Visit Required", cls: "cr-badge cr-badge-visit" },
+  APPROVED: { label: "Approved", cls: "cr-badge cr-badge-approved" },
+  ISSUED: { label: "Issued", cls: "cr-badge cr-badge-approved" },
+  REJECTED: { label: "Rejected", cls: "cr-badge cr-badge-rejected" },
 };
 
 function statusBadge(s) {
@@ -47,11 +47,11 @@ function formatDate(ts) {
 }
 
 /* --- Icons --- */
-function IconHome()      { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /></svg>; }
-function IconUser()      { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#2b2b2b" strokeWidth="2" /><path d="M4 21a8 8 0 0 1 16 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
-function IconDoc()       { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M14 3v4h4" stroke="#2b2b2b" strokeWidth="2" /></svg>; }
+function IconHome() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /></svg>; }
+function IconUser() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#2b2b2b" strokeWidth="2" /><path d="M4 21a8 8 0 0 1 16 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function IconDoc() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M14 3v4h4" stroke="#2b2b2b" strokeWidth="2" /></svg>; }
 function IconComplaint() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M8 8h8M8 12h6" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
-function IconBell()      { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function IconBell() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 
 /* Dynamic Fields Component */
 function DynamicFields({ certType, requestData, setRequestData }) {
@@ -64,7 +64,7 @@ function DynamicFields({ certType, requestData, setRequestData }) {
   return (
     <div className="cr-dynamic-fields" style={{ marginTop: "15px", padding: "15px", backgroundColor: "#f9fbfd", border: "1px solid #e1e8f0", borderRadius: "8px" }}>
       <h3 style={{ fontSize: "1rem", marginBottom: "15px", color: "#2b2b2b" }}>Additional Details Required</h3>
-      
+
       {certType === "Application for obtaining housing loan funds" && (
         <>
           <div className="gn-field">
@@ -115,7 +115,7 @@ function DynamicFields({ certType, requestData, setRequestData }) {
           </div>
           <div className="gn-field">
             <label className="cr-label">Dependents (Name, Relationship, Age)</label>
-            <textarea className="gn-textarea" placeholder="E.g., John Doe - Son - 25&#10;Jane Doe - Daughter - 22" value={requestData.dependents || ""} onChange={e => handleInput("dependents", e.target.value)} rows={3} />
+            <textarea className="gn-textarea" placeholder="E.g., Kamal Perera - Son - 25&#10; Kasuni Perera - Daughter - 22" value={requestData.dependents || ""} onChange={e => handleInput("dependents", e.target.value)} rows={3} />
           </div>
         </>
       )}
@@ -205,7 +205,7 @@ function DynamicFields({ certType, requestData, setRequestData }) {
           </div>
           <div className="gn-field">
             <label className="cr-label">Family Monthly Income Table (Name, Job, Income)</label>
-            <textarea className="gn-textarea" placeholder="E.g., John - Driver - Rs 30000" value={requestData.family_incomes || ""} onChange={e => handleInput("family_incomes", e.target.value)} rows={3} />
+            <textarea className="gn-textarea" placeholder="E.g., Kamal - Driver - Rs 30000" value={requestData.family_incomes || ""} onChange={e => handleInput("family_incomes", e.target.value)} rows={3} />
           </div>
           <div className="gn-field">
             <label className="cr-label">Property/Asset Details (List of assets and value)</label>
@@ -227,24 +227,24 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 
 export default function CertificateRequest() {
   /* Form state */
-  const [certType, setCertType]       = useState("");
-  const [purpose, setPurpose]         = useState("");
-  const [nicNumber, setNicNumber]     = useState("");
+  const [certType, setCertType] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [nicNumber, setNicNumber] = useState("");
   const [requestData, setRequestData] = useState({});
-  const [submitting, setSubmitting]   = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
 
   /* Citizen profile + family members */
-  const [myNic, setMyNic]           = useState("");
-  const [myName, setMyName]         = useState("");
-  const [members, setMembers]       = useState([]);
+  const [myNic, setMyNic] = useState("");
+  const [myName, setMyName] = useState("");
+  const [members, setMembers] = useState([]);
   const [selectedFor, setSelectedFor] = useState("self");
 
   /* Request history */
-  const [requests, setRequests]       = useState([]);
+  const [requests, setRequests] = useState([]);
   const [listLoading, setListLoading] = useState(true);
-  const [listError, setListError]     = useState("");
+  const [listError, setListError] = useState("");
   const [downloading, setDownloading] = useState(null);
 
   const loadRequests = async () => {
@@ -263,14 +263,14 @@ export default function CertificateRequest() {
     loadRequests();
     api.get("/api/citizen/me/profile").then(r => {
       if (r.data.ok && r.data.profile) {
-        const nic  = r.data.profile.nic || "";
+        const nic = r.data.profile.nic || "";
         const name = r.data.profile.full_name || "Myself";
         setMyNic(nic); setMyName(name); setNicNumber(nic);
       }
-    }).catch(() => {});
+    }).catch(() => { });
     api.get("/api/certificate/my-members").then(r => {
       if (r.data.ok) setMembers(r.data.members);
-    }).catch(() => {});
+    }).catch(() => { });
   }, []);
 
   const handleSelectFor = (e) => {
@@ -292,13 +292,13 @@ export default function CertificateRequest() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError(""); setSubmitSuccess("");
-    if (!certType)        { setSubmitError("Please select a certificate type."); return; }
+    if (!certType) { setSubmitError("Please select a certificate type."); return; }
     if (!nicNumber.trim()) { setSubmitError("Please enter your NIC number."); return; }
     setSubmitting(true);
     try {
-      await api.post("/api/certificate", { 
-        cert_type: certType, 
-        purpose, 
+      await api.post("/api/certificate", {
+        cert_type: certType,
+        purpose,
         nic_number: nicNumber,
         request_data: requestData
       });
@@ -353,11 +353,11 @@ export default function CertificateRequest() {
 
       {/* Nav */}
       <nav className="gn-nav">
-        <Link to="/citizen"      className="gn-nav-item"><IconHome /><span>Home</span></Link>
-        <Link to="/household"    className="gn-nav-item"><IconUser /><span>Household</span></Link>
+        <Link to="/citizen" className="gn-nav-item"><IconHome /><span>Home</span></Link>
+        <Link to="/household" className="gn-nav-item"><IconUser /><span>Household</span></Link>
         <Link to="/certificates" className="gn-nav-item gn-nav-active"><IconDoc /><span>Certificates</span></Link>
-        <Link to="/complaints"   className="gn-nav-item"><IconComplaint /><span>Complaints</span></Link>
-        <Link to="/notices"      className="gn-nav-item"><IconBell /><span>Notices</span></Link>
+        <Link to="/complaints" className="gn-nav-item"><IconComplaint /><span>Complaints</span></Link>
+        <Link to="/notices" className="gn-nav-item"><IconBell /><span>Notices</span></Link>
       </nav>
 
       {/* Content */}
@@ -367,7 +367,7 @@ export default function CertificateRequest() {
           <p className="gn-form-sub">Submit a request for official certificates issued by the Grama Niladhari office.</p>
 
           {submitSuccess && <div className="cr-alert cr-alert-ok">{submitSuccess}</div>}
-          {submitError   && <div className="cr-alert cr-alert-err">{submitError}</div>}
+          {submitError && <div className="cr-alert cr-alert-err">{submitError}</div>}
 
           <form className="gn-form-grid" onSubmit={handleSubmit}>
             {/* Left column */}
@@ -432,7 +432,7 @@ export default function CertificateRequest() {
                         <span>{t}</span>
                         {CERT_PDF_MAP[t] && (
                           <a href={CERT_PDF_MAP[t]} download target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", padding: "3px 8px", backgroundColor: "rgba(39, 174, 96, 0.1)", color: "#1e8449", border: "1px solid rgba(39, 174, 96, 0.2)", borderRadius: "6px", textDecoration: "none", fontWeight: "600", whiteSpace: "nowrap", transition: "all 0.2s" }}>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                             Blank Form (Download here)
                           </a>
                         )}
@@ -450,7 +450,7 @@ export default function CertificateRequest() {
         <div className="cr-history">
           <h2 className="cr-history-title">My Certificate Requests</h2>
           {listLoading && <div className="cr-state">Loading…</div>}
-          {listError   && <div className="cr-state cr-state-err">{listError}</div>}
+          {listError && <div className="cr-state cr-state-err">{listError}</div>}
           {!listLoading && requests.length === 0 && <div className="cr-state">You have not submitted any requests yet.</div>}
 
           {!listLoading && requests.length > 0 && (
@@ -470,7 +470,7 @@ export default function CertificateRequest() {
                   {requests.map((r) => {
                     const badge = statusBadge(r.status);
                     const isApproved = r.status === "APPROVED" || r.status === "ISSUED";
-                    const isVisit    = r.status === "VISIT_REQUIRED";
+                    const isVisit = r.status === "VISIT_REQUIRED";
                     const isRejected = r.status === "REJECTED";
                     return (
                       <tr key={r.request_id}>
