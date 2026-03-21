@@ -6,6 +6,18 @@ import api from "../api/api";
 import emblem from "../assets/emblem.png";
 
 /* ========= ICONS (SVG) ========= */
+function IconHome() {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ cursor: 'pointer' }}>
+        <path
+          d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z"
+          stroke="#0b0b0b"
+          strokeWidth="2"
+        />
+      </svg>
+    );
+  }
+
 function IconDashboard() {
     return (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -247,56 +259,16 @@ export default function AdminVerifyCertificates() {
 
     return (
         <div className="avc-page">
-            {/* LEFT SIDEBAR */}
-            <aside className="avc-sidebar">
-                  <div className="avc-brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-                      <img src={emblem} alt="Sri Lanka Emblem" style={{ width: '60px', height: 'auto' }} />
-                      <div>
-                          <div className="avc-brand-title">Divisional Secretariat</div>
-                          <div className="avc-brand-sub" style={{ fontSize: '18px' }}>Uva Paranagama</div>
+              {/* CONTENT */}
+              <section className="avc-content">
+                  {/* TOP BAR */}
+                  <header className="avc-topbar">
+                      <div className="avc-top-left" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                          <div onClick={() => navigate('/admin-dashboard')} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} title="Back to Dashboard">
+                              <IconHome />
+                          </div>
+                          <div className="avc-topbar-title">Divisional Secretariat Digital System</div>
                       </div>
-                </div>
-
-                <div className="avc-nav">
-                    <Link to="/admin-dashboard" className="avc-nav-item">
-                        <IconDashboard />
-                        <span>Dashboard</span>
-                    </Link>
-
-                    <Link to="/admin-verify-certificates" className="avc-nav-item avc-nav-active">
-                        <IconDoc />
-                        <span>Verify Certificates</span>
-                    </Link>
-                </div>
-
-                <div className="avc-settings">
-                    <Link to="#" className="avc-settings-link">
-                        <IconSettings />
-                        <span>Settings</span>
-                    </Link>
-                    <button
-                        onClick={handleLogout}
-                        className="avc-settings-link"
-                        style={{
-                            width: "100%",
-                            border: "none",
-                            background: "transparent",
-                            cursor: "pointer",
-                            textAlign: "left",
-                            padding: "0",
-                        }}
-                    >
-                        <IconLogout />
-                        <span>Logout</span>
-                    </button>
-                </div>
-            </aside>
-
-            {/* RIGHT CONTENT */}
-            <section className="avc-content">
-                {/* TOP BAR */}
-                <header className="avc-topbar">
-                    <div className="avc-topbar-title">Divisional Secretariat Digital System</div>
 
                     <div className="avc-search-wrap">
                         <input
@@ -417,3 +389,4 @@ export default function AdminVerifyCertificates() {
         </div>
     );
 }
+

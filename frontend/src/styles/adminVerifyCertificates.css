@@ -93,8 +93,8 @@
 /* ====== TOP BAR ====== */
 .avc-topbar {
     height: 86px;
-    display: grid;
-    grid-template-columns: 260px 1fr 80px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0 34px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -103,7 +103,6 @@
 .avc-topbar-title {
     font-size: 18px;
     font-weight: 800;
-    justify-self: start;
 }
 
 .avc-search-wrap {
