@@ -98,6 +98,17 @@ function IconMedal() {
     </svg>
   );
 }
+function IconCalendar() {
+  return (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#000000" strokeWidth="2" />
+      <line x1="16" y1="2" x2="16" y2="6" stroke="#000000" strokeWidth="2" />
+      <line x1="8" y1="2" x2="8" y2="6" stroke="#000000" strokeWidth="2" />
+      <line x1="3" y1="10" x2="21" y2="10" stroke="#000000" strokeWidth="2" />
+    </svg>
+  );
+}
+
 export default function CitizenDashboard() {
   const navigate = useNavigate();
 
@@ -147,7 +158,7 @@ export default function CitizenDashboard() {
           <span>Notices</span>
         </Link>
         <Link className="cd-nav-item" to="/availability">
-          <span style={{ fontSize: '1.2rem', padding: '0 5px' }}>📅</span>
+          <IconCalendar />
           <span>GN Schedule</span>
         </Link>
       </nav>
