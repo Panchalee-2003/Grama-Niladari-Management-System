@@ -874,7 +874,20 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         doc.font("Helvetica").fontSize(9);
         doc.moveDown(2);
 
-        const dependents = data.dependents || [];
+        let dependents = [];
+        if (typeof data.dependents === "string") {
+            dependents = data.dependents.split('\n').filter(line => line.trim() !== '').map(line => {
+                const parts = line.split('-').map(s => s.trim());
+                return {
+                    name: parts[0] || "",
+                    relationship: parts[1] || "",
+                    age: parts[2] || ""
+                };
+            });
+        } else if (Array.isArray(data.dependents)) {
+            dependents = data.dependents;
+        }
+
         if (dependents.length === 0) {
             // Draw empty rows
             for (let i = 0; i < 3; i++) {
@@ -912,10 +925,21 @@ function renderCertificate(doc, certType, cert, data, drawLine, sectionHeader, f
         field("NIC Number", cert.nic_number);
         field("Purpose", cert.purpose);
         field("Date", issuedDate);
-        field("Notes", data.notes);
+        doc.moveDown(0.5);
+        if (data && typeof data === 'object') {
+            Object.entries(data).forEach(([key, val]) => {
+                const excluded = ["gn_name", "div_secretary", "housing_officer", "notes"];
+                if (!excluded.includes(key)) {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    doc.fontSize(10).font("Helvetica-Bold").text(`${label}:`);
+                    doc.fontSize(10).font("Helvetica").text(`${val || "—"}`, { indent: 15 }).moveDown(0.3);
+                }
+            });
+        }
+        if (data && data.notes) field("Notes", data.notes);
         doc.moveDown(1);
         drawLine();
-        drawDigitalSignature(data.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
+        drawDigitalSignature(data?.gn_name || "Grama Niladhari", "Grama Niladhari", issuedDate);
     }
 }
 
