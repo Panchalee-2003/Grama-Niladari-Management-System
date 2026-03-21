@@ -21,18 +21,37 @@ router.get("/profile", requireAuth, requireRole("GN"), async (req, res) => {
 // GET /api/gn/stats — returns live dashboard counts
 router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
     try {
-        const [totalHH, totalComplaints, totalNotices] = await Promise.all([
-            pool.query("SELECT COUNT(*) FROM household"),
-            pool.query("SELECT COUNT(*) FROM complaint"),
+        const [hhStats, compStats, totalNotices] = await Promise.all([
+            pool.query(`
+                SELECT 
+                    COUNT(*) as total,
+                    COALESCE(SUM(CASE WHEN status = 'PENDING' THEN 1 ELSE 0 END), 0) as pending,
+                    COALESCE(SUM(CASE WHEN status = 'VERIFIED' THEN 1 ELSE 0 END), 0) as verified,
+                    COALESCE(SUM(CASE WHEN status = 'REJECTED' THEN 1 ELSE 0 END), 0) as rejected
+                FROM household
+            `),
+            pool.query(`
+                SELECT 
+                    COUNT(*) as total,
+                    COALESCE(SUM(CASE WHEN status IN ('PENDING', 'PROCESSING') THEN 1 ELSE 0 END), 0) as open_complaints
+                FROM complaint
+            `),
             pool.query("SELECT COUNT(*) FROM notice"),
         ]);
 
         return res.json({
             ok: true,
             stats: {
-                total_households: parseInt(totalHH.rows[0].count),
+                total_households: parseInt(hhStats.rows[0].total),
+                pending_households: parseInt(hhStats.rows[0].pending),
+                verified_households: parseInt(hhStats.rows[0].verified),
+                rejected_households: parseInt(hhStats.rows[0].rejected),
+                
+                total_complaints: parseInt(compStats.rows[0].total),
+                open_complaints: parseInt(compStats.rows[0].open_complaints),
+                complaints_received: parseInt(compStats.rows[0].total),
+                
                 certificates_this_month: 0,   // certificate table not yet created
-                complaints_received: parseInt(totalComplaints.rows[0].count),
                 active_notices: parseInt(totalNotices.rows[0].count),
             },
         });

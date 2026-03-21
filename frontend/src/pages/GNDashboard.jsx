@@ -120,29 +120,49 @@ export default function GNDashboard() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchData() {
+    let isMounted = true;
+
+    async function fetchProfile() {
       try {
-        const [profileRes, statsRes] = await Promise.all([
-          api.get("/api/gn/profile"),
-          api.get("/api/gn/stats"),
-        ]);
-
-        if (profileRes.data.ok && profileRes.data.profile) {
-          setGnName(profileRes.data.profile.name);
-        }
-
-        if (statsRes.data.ok) {
-          setStats(statsRes.data.stats);
+        const res = await api.get("/api/gn/profile");
+        if (isMounted && res.data.ok && res.data.profile) {
+          setGnName(res.data.profile.name);
         }
       } catch (err) {
-        console.error("GN Dashboard fetch error:", err);
-        setError("Failed to load dashboard data.");
-      } finally {
-        setLoading(false);
+        console.error("Profile fetch error:", err);
       }
     }
 
-    fetchData();
+    async function fetchStats() {
+      try {
+        const res = await api.get("/api/gn/stats");
+        if (isMounted && res.data.ok) {
+          setStats(res.data.stats);
+          setError(""); // Clear error if fetch succeeds
+        }
+      } catch (err) {
+        console.error("Stats fetch error:", err);
+        if (isMounted && !stats) {
+          setError("Failed to load dashboard data.");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    // Initial fetch
+    fetchProfile();
+    fetchStats();
+
+    // Poll every 5 seconds for real-time stats updates
+    const intervalId = setInterval(fetchStats, 5000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
   }, []);
 
   const handleLogout = () => {
