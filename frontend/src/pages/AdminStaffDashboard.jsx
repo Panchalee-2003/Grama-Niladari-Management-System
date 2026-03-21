@@ -143,15 +143,28 @@ export default function AdminStaffDashboard() {
     navigate("/login");
   };
 
+  const gnDivisions = [
+    "Maspanna", "Wethalawa", "Kindigoda", "Kohilegama", "Ellanda", "Yalagamuwa", "Ritikumbura", "Wewegama",
+    "Dimbulana", "Hathkinda", "Gampaha", "Ilukwela", "Kirklees", "Bambarapana", "Malwaththegama",
+    "Medipokuna", "Pitiyakumbura", "Thuppitiya", "Panagoda", "Kirawanagama", "Pannalawela", "Lunuwaththa",
+    "Unapana", "Rahupola", "Beraliyapola", "Sapugolla", "Ethkandawaka", "Alagolla", "Paranagama",
+    "Thawalampola", "Hangunnawa", "Idamegama", "Mudanawa", "Ranhawadigama", "Kodakumbura", "Woldimar",
+    "Uduhawara", "Malapolagama", "Welamedagama", "Korandekumbura", "Kumarapattiya", "Busdulla", "Balagala",
+    "Kurundugolla", "Pallewela", "Perawella", "Medawela", "Galahagama", "Karagahaulapatha", "Medagodagama",
+    "Thelhawadigama", "Umaela", "Ambagasdowa", "Dangamuwa", "Rathamba", "Daragala", "Ketagoda",
+    "Pannalagama", "Metiwalalanda", "Hangiliella", "Ulugala", "Yahalaarawa", "Kendagolla",
+    "Kotawera Udagama", "Kotawera Pahalagama", "Downside", "Udaperuwa", "Weliulla"
+  ];
+
   return (
     <div className="asd-page">
       {/* LEFT SIDEBAR */}
       <aside className="asd-sidebar">
-        <div className="asd-brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}>
-          <img src={emblem} alt="Sri Lanka Emblem" style={{ width: '60px', height: 'auto' }} />
+        <div className="asd-brand" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '15px' }}>
+          <img src={emblem} alt="Sri Lanka Emblem" style={{ width: '50px', height: 'auto' }} />
           <div>
             <div className="asd-brand-title">Divisional Secretariat</div>
-            <div className="asd-brand-sub" style={{ fontSize: '18px' }}>Uva Paranagama</div>
+            <div className="asd-brand-sub" style={{ fontSize: '16px' }}>Uva Paranagama</div>
           </div>
         </div>
 
@@ -199,6 +212,40 @@ export default function AdminStaffDashboard() {
 
         {/* MAIN */}
         <main className="asd-main">
+
+          {/* GN DIVISIONS LIST */}
+          <div style={{ marginBottom: '40px', width: '100%', overflow: 'hidden' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px', color: '#111' }}>Grama Niladhari Divisions - Uva Paranagama</h2>
+            <div style={{ 
+                display: 'flex', 
+                overflowX: 'auto', 
+                gap: '15px', 
+                paddingBottom: '15px'
+            }}>
+                {gnDivisions.map(div => (
+                    <div key={div} style={{
+                        minWidth: '140px',
+                        background: div === 'Maspanna' ? '#0C7A3B' : '#f4f6f8',
+                        color: div === 'Maspanna' ? '#fff' : '#111',
+                        padding: '15px',
+                        borderRadius: '10px',
+                        textAlign: 'center',
+                        fontWeight: '600',
+                        fontSize: '14px',
+                        border: '1px solid #ddd',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                        flexShrink: 0
+                    }}>
+                        {div}
+                    </div>
+                ))}
+            </div>
+          </div>
+
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px', color: '#111' }}>Maspanna Division Details</h2>
+
           {/* CARDS */}
           <div className="asd-cards">
             <div className="asd-card">
