@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate</title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; }
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .cert-id-box {
+            font-size: 14px;
+        }
+        .cert-id-number {
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+            margin-top: 5px;
+        }
+        .qr-code img {
+            width: 100px;
+            height: 100px;
+        }
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-transform: capitalize;
+            color: #111;
+        }
+        .grid-details {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            row-gap: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .grid-label {
+            font-weight: bold;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            padding-right: 15px;
+        }
+        .grid-value {
+            color: #000;
+            white-space: pre-wrap;
+        }
+        .dependents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            margin-bottom: 40px;
+        }
+        .dependents-table th, .dependents-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .dependents-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+        .signatures {
+            margin-top: 70px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            text-align: center;
+            width: 300px;
+        }
+        .ds-signature-box {
+            text-align: center;
+            width: 300px;
+        }
+        .signature-img {
+            max-width: 200px;
+            max-height: 80px;
+            margin-bottom: 10px;
+        }
+        .caption {
+            font-size: 12px;
+            color: #555;
+            border-top: 1px dashed #aaa;
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+        .notes-section {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #fefefe;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="cert-id-box">
+            <div style="color: #666;">Certificate ID</div>
+            <div class="cert-id-number"><%= certificate_id %></div>
+            <div style="margin-top: 10px; color: #555; font-size: 13px;">Issued on: <strong><%= issued_at %></strong></div>
+        </div>
+        <div class="qr-code">
+            <img src="<%= qr_code_data_uri %>" alt="QR Code">
+        </div>
+    </div>
+
+    <div class="title"><%= cert_type %></div>
+
+    <div class="grid-details">
+        <div class="grid-label"><span>Applicant Name</span><span>:</span></div>
+        <div class="grid-value"><%= applicant_name %></div>
+
+        <div class="grid-label"><span>NIC Number</span><span>:</span></div>
+        <div class="grid-value"><%= nic_number %></div>
+
+        <div class="grid-label"><span>Purpose</span><span>:</span></div>
+        <div class="grid-value"><%= purpose || '—' %></div>
+
+        <% if (dynamic_data && typeof dynamic_data === 'object') {
+            Object.entries(dynamic_data).forEach(([key, val]) => { 
+                const excluded = ["gn_name", "div_secretary", "housing_officer", "notes", "dependents"];
+                if (!excluded.includes(key) && val) {
+                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        %>
+            <div class="grid-label"><span><%= label %></span><span>:</span></div>
+            <div class="grid-value"><%= val %></div>
+        <%      } 
+            });
+           } 
+        %>
+    </div>
+
+    <% if (dynamic_data && dynamic_data.dependents && Array.isArray(dynamic_data.dependents) && dynamic_data.dependents.length > 0) { %>
+        <h4 style="margin-top: 40px; margin-bottom: 15px; font-size: 16px;">Information Regarding Dependents</h4>
+        <table class="dependents-table">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">No.</th>
+                    <th>Name</th>
+                    <th>Relationship</th>
+                    <th style="width: 80px;">Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% dynamic_data.dependents.forEach((dep, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= dep.name || '—' %></td>
+                    <td><%= dep.relationship || '—' %></td>
+                    <td><%= dep.age || '—' %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <% if (dynamic_data && dynamic_data.notes) { %>
+        <div class="notes-section">
+            <h4 style="margin-top: 0; margin-bottom: 10px;">Notes</h4>
+            <div style="font-size: 14px; white-space: pre-wrap;"><%= dynamic_data.notes %></div>
+        </div>
+    <% } %>
+
+    <div class="signatures">
+        <div class="ds-signature-box">
+            <% if (ds_signature_img) { %>
+                <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+            <% } else { %>
+                <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting DS Signature</div>
+            <% } %>
+            <div class="caption">
+                <strong>Divisional Secretary</strong><br>
+                Digitally Signed & Stamp Verified
+            </div>
+        </div>
+
+        <div class="signature-box">
+            <% if (gn_signature_img) { %>
+                <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+            <% } else { %>
+                <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting GN Signature</div>
+            <% } %>
+            <div class="caption">
+                <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                Digitally Signed
+            </div>
+        </div>
+    </div>
+</body>
+</html>
