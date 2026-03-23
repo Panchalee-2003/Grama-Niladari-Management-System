@@ -301,14 +301,44 @@ export default function GNCertificates() {
                 <div className="gnc-modal-desc" style={{ marginTop: '15px' }}>
                   <strong>Specific Certificate Details:</strong>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                    {Object.entries(modal.certificate_data).map(([key, value]) => (
-                      <div key={key} style={{ backgroundColor: '#f4f6f8', padding: '8px', border: '1px solid #e1e8f0', borderRadius: '4px' }}>
-                        <span style={{ fontWeight: '600', textTransform: 'capitalize', color: '#555', fontSize: '0.9rem' }}>
-                          {key.replace(/_/g, ' ')}:
-                        </span>
-                        <div style={{ whiteSpace: 'pre-wrap', marginTop: '4px', color: '#111', fontSize: '0.95rem' }}>{value || '—'}</div>
-                      </div>
-                    ))}
+                    {Object.entries(modal.certificate_data).map(([key, value]) => {
+                      let displayValue;
+                      if (Array.isArray(value)) {
+                        // Render dependents / arrays as a mini table or readable list
+                        displayValue = value.length === 0 ? '—' : (
+                          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '4px', fontSize: '0.88rem' }}>
+                            <thead>
+                              <tr style={{ backgroundColor: '#e8edf3' }}>
+                                {Object.keys(value[0] || {}).map(col => (
+                                  <th key={col} style={{ border: '1px solid #cdd5e0', padding: '4px 8px', textAlign: 'left', textTransform: 'capitalize' }}>{col}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {value.map((row, i) => (
+                                <tr key={i}>
+                                  {Object.values(row).map((cell, j) => (
+                                    <td key={j} style={{ border: '1px solid #cdd5e0', padding: '4px 8px' }}>{cell || '—'}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        );
+                      } else if (value && typeof value === 'object') {
+                        displayValue = JSON.stringify(value, null, 2);
+                      } else {
+                        displayValue = value || '—';
+                      }
+                      return (
+                        <div key={key} style={{ backgroundColor: '#f4f6f8', padding: '8px', border: '1px solid #e1e8f0', borderRadius: '4px' }}>
+                          <span style={{ fontWeight: '600', textTransform: 'capitalize', color: '#555', fontSize: '0.9rem' }}>
+                            {key.replace(/_/g, ' ')}:
+                          </span>
+                          <div style={{ whiteSpace: 'pre-wrap', marginTop: '4px', color: '#111', fontSize: '0.95rem' }}>{displayValue}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

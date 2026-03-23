@@ -53,6 +53,104 @@ function IconDoc() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fil
 function IconComplaint() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M8 8h8M8 12h6" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 function IconBell() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 
+/* Dependents Table Component for Death of Pensioner */
+function DependentsTable({ requestData, setRequestData }) {
+  const dependents = Array.isArray(requestData.dependents) ? requestData.dependents : [];
+
+  const handleRowChange = (index, field, value) => {
+    const updated = dependents.map((dep, i) =>
+      i === index ? { ...dep, [field]: value } : dep
+    );
+    setRequestData(prev => ({ ...prev, dependents: updated }));
+  };
+
+  const addRow = () => {
+    setRequestData(prev => ({
+      ...prev,
+      dependents: [...(Array.isArray(prev.dependents) ? prev.dependents : []), { name: "", relationship: "", age: "" }]
+    }));
+  };
+
+  const removeRow = (index) => {
+    const updated = dependents.filter((_, i) => i !== index);
+    setRequestData(prev => ({ ...prev, dependents: updated }));
+  };
+
+  return (
+    <div style={{ width: "100%" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f1f5f9" }}>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Name</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Relationship</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151", width: "80px" }}>Age</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", width: "40px" }}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {dependents.length === 0 && (
+            <tr>
+              <td colSpan={4} style={{ border: "1px solid #e2e8f0", padding: "10px", textAlign: "center", color: "#9ca3af", fontStyle: "italic" }}>
+                No dependents added yet.
+              </td>
+            </tr>
+          )}
+          {dependents.map((dep, i) => (
+            <tr key={i}>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                <input
+                  className="gn-input"
+                  style={{ margin: 0, width: "100%", boxSizing: "border-box" }}
+                  type="text"
+                  placeholder="Full name"
+                  value={dep.name || ""}
+                  onChange={e => handleRowChange(i, "name", e.target.value)}
+                />
+              </td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                <input
+                  className="gn-input"
+                  style={{ margin: 0, width: "100%", boxSizing: "border-box" }}
+                  type="text"
+                  placeholder="e.g. Son, Spouse"
+                  value={dep.relationship || ""}
+                  onChange={e => handleRowChange(i, "relationship", e.target.value)}
+                />
+              </td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                <input
+                  className="gn-input"
+                  style={{ margin: 0, width: "100%", boxSizing: "border-box" }}
+                  type="number"
+                  min="0"
+                  placeholder="Age"
+                  value={dep.age || ""}
+                  onChange={e => handleRowChange(i, "age", e.target.value)}
+                />
+              </td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px", textAlign: "center" }}>
+                <button
+                  type="button"
+                  onClick={() => removeRow(i)}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: "1.1rem", lineHeight: 1, padding: "2px 6px" }}
+                  title="Remove"
+                >✕</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button
+        type="button"
+        onClick={addRow}
+        style={{ marginTop: "8px", padding: "6px 14px", fontSize: "0.82rem", backgroundColor: "#e8f4e8", color: "#166534", border: "1px solid #bbf7d0", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}
+      >
+        + Add Dependent
+      </button>
+    </div>
+  );
+}
+
 /* Dynamic Fields Component */
 function DynamicFields({ certType, requestData, setRequestData }) {
   const handleInput = (field, value) => {
@@ -106,16 +204,24 @@ function DynamicFields({ certType, requestData, setRequestData }) {
             <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Date of Death</label>
-            <input className="gn-input" type="date" value={requestData.date_of_death || ""} onChange={e => handleInput("date_of_death", e.target.value)} />
+            <label className="cr-label">Date of Retirement</label>
+            <input className="gn-input" type="date" value={requestData.date_of_retirement || ""} onChange={e => handleInput("date_of_retirement", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Pensioner's NIC Number</label>
+            <input className="gn-input" type="text" placeholder="e.g. 200012345678 or 991234567V" value={requestData.pensioner_nic || ""} onChange={e => handleInput("pensioner_nic", e.target.value)} />
           </div>
           <div className="gn-field">
             <label className="cr-label">Pension Number</label>
             <input className="gn-input" type="text" value={requestData.pension_number || ""} onChange={e => handleInput("pension_number", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Dependents (Name, Relationship, Age)</label>
-            <textarea className="gn-textarea" placeholder="E.g., Kamal Perera - Son - 25&#10; Kasuni Perera - Daughter - 22" value={requestData.dependents || ""} onChange={e => handleInput("dependents", e.target.value)} rows={3} />
+            <label className="cr-label">Date of Death</label>
+            <input className="gn-input" type="date" value={requestData.date_of_death || ""} onChange={e => handleInput("date_of_death", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Dependents</label>
+            <DependentsTable requestData={requestData} setRequestData={setRequestData} />
           </div>
         </>
       )}

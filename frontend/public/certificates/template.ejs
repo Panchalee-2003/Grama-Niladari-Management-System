@@ -85,7 +85,7 @@
         .signatures {
             margin-top: 70px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
         }
         .signature-box {
             text-align: center;
@@ -94,6 +94,11 @@
         .ds-signature-box {
             text-align: center;
             width: 300px;
+        }
+        .signatures-both {
+            margin-top: 70px;
+            display: flex;
+            justify-content: space-between;
         }
         .signature-img {
             max-width: 200px;
@@ -129,85 +134,166 @@
 
     <div class="title"><%= cert_type %></div>
 
-    <div class="grid-details">
-        <div class="grid-label"><span>Applicant Name</span><span>:</span></div>
-        <div class="grid-value"><%= applicant_name %></div>
-
-        <div class="grid-label"><span>NIC Number</span><span>:</span></div>
-        <div class="grid-value"><%= nic_number %></div>
-
-        <div class="grid-label"><span>Purpose</span><span>:</span></div>
-        <div class="grid-value"><%= purpose || '—' %></div>
-
-        <% if (dynamic_data && typeof dynamic_data === 'object') {
-            Object.entries(dynamic_data).forEach(([key, val]) => { 
-                const excluded = ["gn_name", "div_secretary", "housing_officer", "notes", "dependents"];
-                if (!excluded.includes(key) && val) {
-                    const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    <% if (cert_type === "Notification of the death of a pensioner") { %>
+        <%
+            const pensionerName    = (dynamic_data && dynamic_data.pensioner_name)    ? dynamic_data.pensioner_name    : (applicant_name || '—');
+            const pensionerAddress = (dynamic_data && dynamic_data.address)            ? dynamic_data.address            : '—';
+            const dateRetirement   = (dynamic_data && dynamic_data.date_of_retirement) ? dynamic_data.date_of_retirement : '—';
+            const pensionerNic     = (dynamic_data && dynamic_data.pensioner_nic)      ? dynamic_data.pensioner_nic      : (nic_number || '—');
+            const pensionNumber    = (dynamic_data && dynamic_data.pension_number)     ? dynamic_data.pension_number     : '—';
+            const dateDeath        = (dynamic_data && dynamic_data.date_of_death)      ? dynamic_data.date_of_death      : '—';
         %>
-            <div class="grid-label"><span><%= label %></span><span>:</span></div>
-            <div class="grid-value"><%= val %></div>
-        <%      } 
-            });
-           } 
-        %>
-    </div>
+        <div class="grid-details">
+            <div class="grid-label"><span>Name of the Pensioner</span><span>:</span></div>
+            <div class="grid-value"><%= pensionerName %></div>
 
-    <% if (dynamic_data && dynamic_data.dependents && Array.isArray(dynamic_data.dependents) && dynamic_data.dependents.length > 0) { %>
-        <h4 style="margin-top: 40px; margin-bottom: 15px; font-size: 16px;">Information Regarding Dependents</h4>
-        <table class="dependents-table">
-            <thead>
-                <tr>
-                    <th style="width: 50px;">No.</th>
-                    <th>Name</th>
-                    <th>Relationship</th>
-                    <th style="width: 80px;">Age</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% dynamic_data.dependents.forEach((dep, index) => { %>
-                <tr>
-                    <td><%= index + 1 %></td>
-                    <td><%= dep.name || '—' %></td>
-                    <td><%= dep.relationship || '—' %></td>
-                    <td><%= dep.age || '—' %></td>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    <% } %>
+            <div class="grid-label"><span>Address</span><span>:</span></div>
+            <div class="grid-value"><%= pensionerAddress %></div>
 
-    <% if (dynamic_data && dynamic_data.notes) { %>
-        <div class="notes-section">
-            <h4 style="margin-top: 0; margin-bottom: 10px;">Notes</h4>
-            <div style="font-size: 14px; white-space: pre-wrap;"><%= dynamic_data.notes %></div>
+            <div class="grid-label"><span>Date of Retirement</span><span>:</span></div>
+            <div class="grid-value"><%= dateRetirement %></div>
+
+            <div class="grid-label"><span>NIC Number</span><span>:</span></div>
+            <div class="grid-value"><%= pensionerNic %></div>
+
+            <div class="grid-label"><span>Pension Number</span><span>:</span></div>
+            <div class="grid-value"><%= pensionNumber %></div>
+
+            <div class="grid-label"><span>Date of Death</span><span>:</span></div>
+            <div class="grid-value"><%= dateDeath %></div>
         </div>
-    <% } %>
 
-    <div class="signatures">
-        <div class="ds-signature-box">
-            <% if (ds_signature_img) { %>
-                <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
-            <% } else { %>
-                <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting DS Signature</div>
-            <% } %>
-            <div class="caption">
-                <strong>Divisional Secretary</strong><br>
-                Digitally Signed & Stamp Verified
+        <% if (dynamic_data && dynamic_data.dependents && Array.isArray(dynamic_data.dependents) && dynamic_data.dependents.length > 0) { %>
+            <h4 style="margin-top: 40px; margin-bottom: 15px; font-size: 16px;">Information Regarding Dependents</h4>
+            <table class="dependents-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">No.</th>
+                        <th>Name</th>
+                        <th>Relationship</th>
+                        <th style="width: 80px;">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dynamic_data.dependents.forEach((dep, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= dep.name || '—' %></td>
+                        <td><%= dep.relationship || '—' %></td>
+                        <td><%= dep.age || '—' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+
+        <% if (dynamic_data && dynamic_data.notes) { %>
+            <div class="notes-section">
+                <h4 style="margin-top: 0; margin-bottom: 10px;">Notes</h4>
+                <div style="font-size: 14px; white-space: pre-wrap;"><%= dynamic_data.notes %></div>
+            </div>
+        <% } %>
+
+        <%/* GN signature only – no DS block for this cert type */%>
+        <div class="signatures">
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Grama Niladhari</div>
+                <% } %>
+                <div style="font-size: 12px; color: #555; margin-top: 5px;">(Digitally Signed)</div>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                    Digitally Signed
+                </div>
             </div>
         </div>
 
-        <div class="signature-box">
-            <% if (gn_signature_img) { %>
-                <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
-            <% } else { %>
-                <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting GN Signature</div>
-            <% } %>
-            <div class="caption">
-                <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
-                Digitally Signed
+    <% } else { %>
+
+        <%/* ── Generic layout for all other certificate types ── */%>
+        <div class="grid-details">
+            <div class="grid-label"><span>Applicant Name</span><span>:</span></div>
+            <div class="grid-value"><%= applicant_name %></div>
+
+            <div class="grid-label"><span>NIC Number</span><span>:</span></div>
+            <div class="grid-value"><%= nic_number %></div>
+
+            <div class="grid-label"><span>Purpose</span><span>:</span></div>
+            <div class="grid-value"><%= purpose || '—' %></div>
+
+            <% if (dynamic_data && typeof dynamic_data === 'object') {
+                Object.entries(dynamic_data).forEach(([key, val]) => {
+                    const excluded = ["gn_name", "div_secretary", "housing_officer", "notes", "dependents"];
+                    if (!excluded.includes(key) && val) {
+                        const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            %>
+                <div class="grid-label"><span><%= label %></span><span>:</span></div>
+                <div class="grid-value"><%= val %></div>
+            <%      }
+                });
+               }
+            %>
+        </div>
+
+        <% if (dynamic_data && dynamic_data.dependents && Array.isArray(dynamic_data.dependents) && dynamic_data.dependents.length > 0) { %>
+            <h4 style="margin-top: 40px; margin-bottom: 15px; font-size: 16px;">Information Regarding Dependents</h4>
+            <table class="dependents-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">No.</th>
+                        <th>Name</th>
+                        <th>Relationship</th>
+                        <th style="width: 80px;">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dynamic_data.dependents.forEach((dep, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= dep.name || '—' %></td>
+                        <td><%= dep.relationship || '—' %></td>
+                        <td><%= dep.age || '—' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+
+        <% if (dynamic_data && dynamic_data.notes) { %>
+            <div class="notes-section">
+                <h4 style="margin-top: 0; margin-bottom: 10px;">Notes</h4>
+                <div style="font-size: 14px; white-space: pre-wrap;"><%= dynamic_data.notes %></div>
+            </div>
+        <% } %>
+
+        <div class="signatures-both">
+            <div class="ds-signature-box">
+                <% if (ds_signature_img) { %>
+                    <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting DS Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Divisional Secretary</strong><br>
+                    Digitally Signed &amp; Stamp Verified
+                </div>
+            </div>
+
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting GN Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                    Digitally Signed
+                </div>
             </div>
         </div>
-    </div>
+
+    <% } %>
 </body>
 </html>
