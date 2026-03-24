@@ -151,6 +151,151 @@ function DependentsTable({ requestData, setRequestData }) {
   );
 }
 
+/* Family Income Table Component */
+function FamilyIncomeTable({ requestData, setRequestData }) {
+  const incomes = Array.isArray(requestData.family_incomes_list) ? requestData.family_incomes_list : [];
+  const handleRowChange = (index, field, value) => {
+    const updated = incomes.map((inc, i) => i === index ? { ...inc, [field]: value } : inc);
+    setRequestData(prev => ({ ...prev, family_incomes_list: updated }));
+  };
+  const addRow = () => setRequestData(prev => ({ ...prev, family_incomes_list: [...incomes, { name: "", relationship: "", civil_status: "", occupation: "", income: "", tax_payer: "No" }] }));
+  const removeRow = (index) => setRequestData(prev => ({ ...prev, family_incomes_list: incomes.filter((_, i) => i !== index) }));
+
+  return (
+    <div style={{ width: "100%", marginBottom: "15px" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f1f5f9" }}>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Name</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Relationship</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Civil Status</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Occupation</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Income (Rs.)</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Tax Payer?</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", width: "40px" }}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {incomes.length === 0 && (
+            <tr><td colSpan={7} style={{ border: "1px solid #e2e8f0", padding: "10px", textAlign: "center", color: "#9ca3af", fontStyle: "italic" }}>No family income added.</td></tr>
+          )}
+          {incomes.map((inc, i) => (
+            <tr key={i}>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={inc.name || ""} onChange={e => handleRowChange(i, "name", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={inc.relationship || ""} onChange={e => handleRowChange(i, "relationship", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                <select className="gn-input gn-select" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} value={inc.civil_status || ""} onChange={e => handleRowChange(i, "civil_status", e.target.value)}>
+                  <option value="">Select</option><option value="Married">Married</option><option value="Unmarried">Unmarried</option>
+                </select>
+              </td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={inc.occupation || ""} onChange={e => handleRowChange(i, "occupation", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="number" min="0" value={inc.income || ""} onChange={e => handleRowChange(i, "income", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                <select className="gn-input gn-select" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} value={inc.tax_payer || "No"} onChange={e => handleRowChange(i, "tax_payer", e.target.value)}>
+                  <option value="Yes">Yes</option><option value="No">No</option>
+                </select>
+              </td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px", textAlign: "center" }}><button type="button" onClick={() => removeRow(i)} style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: "1.1rem" }}>✕</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button type="button" onClick={addRow} style={{ marginTop: "8px", padding: "6px 14px", fontSize: "0.82rem", backgroundColor: "#e8f4e8", color: "#166534", border: "1px solid #bbf7d0", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}>+ Add Income</button>
+    </div>
+  );
+}
+
+/* Property Asset Table Component */
+function PropertyAssetTable({ requestData, setRequestData }) {
+  const assets = Array.isArray(requestData.assets_list) ? requestData.assets_list : [];
+  const handleRowChange = (index, field, value) => {
+    const updated = assets.map((a, i) => i === index ? { ...a, [field]: value } : a);
+    setRequestData(prev => ({ ...prev, assets_list: updated }));
+  };
+  const addRow = () => setRequestData(prev => ({ ...prev, assets_list: [...assets, { owner_name: "", relationship: "", description: "", market_value: "" }] }));
+  const removeRow = (index) => setRequestData(prev => ({ ...prev, assets_list: assets.filter((_, i) => i !== index) }));
+
+  return (
+    <div style={{ width: "100%", marginBottom: "15px" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f1f5f9" }}>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Name of Owner</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Relationship</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Description (e.g., Land)</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Estimated Value (Rs.)</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", width: "40px" }}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {assets.length === 0 && (
+            <tr><td colSpan={5} style={{ border: "1px solid #e2e8f0", padding: "10px", textAlign: "center", color: "#9ca3af", fontStyle: "italic" }}>No assets added.</td></tr>
+          )}
+          {assets.map((ast, i) => (
+            <tr key={i}>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={ast.owner_name || ""} onChange={e => handleRowChange(i, "owner_name", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={ast.relationship || ""} onChange={e => handleRowChange(i, "relationship", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={ast.description || ""} onChange={e => handleRowChange(i, "description", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="number" min="0" value={ast.market_value || ""} onChange={e => handleRowChange(i, "market_value", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px", textAlign: "center" }}><button type="button" onClick={() => removeRow(i)} style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: "1.1rem" }}>✕</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button type="button" onClick={addRow} style={{ marginTop: "8px", padding: "6px 14px", fontSize: "0.82rem", backgroundColor: "#e8f4e8", color: "#166534", border: "1px solid #bbf7d0", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}>+ Add Asset</button>
+    </div>
+  );
+}
+
+/* Bank Deposits Table Component */
+function BankDepositsTable({ requestData, setRequestData }) {
+  const banks = Array.isArray(requestData.bank_deposits_list) ? requestData.bank_deposits_list : [];
+  const handleRowChange = (index, field, value) => {
+    const updated = banks.map((b, i) => i === index ? { ...b, [field]: value } : b);
+    setRequestData(prev => ({ ...prev, bank_deposits_list: updated }));
+  };
+  const addRow = () => setRequestData(prev => ({ ...prev, bank_deposits_list: [...banks, { owner_name: "", relationship: "", bank_name: "", branch: "", account_number: "", current_balance: "" }] }));
+  const removeRow = (index) => setRequestData(prev => ({ ...prev, bank_deposits_list: banks.filter((_, i) => i !== index) }));
+
+  return (
+    <div style={{ width: "100%", marginBottom: "15px" }}>
+      <p style={{ fontSize: "0.85rem", color: "#b45309", fontWeight: "600", marginBottom: "10px", backgroundColor: "#fef3c7", padding: "8px 12px", borderRadius: "6px", border: "1px solid #fde68a" }}>
+        Note: Please state the balance available in the account as of the date of completing this application.
+      </p>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f1f5f9" }}>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Owner's Name</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Relationship</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Bank Name</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Branch</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Account No</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Balance (Rs.)</th>
+            <th style={{ border: "1px solid #e2e8f0", padding: "8px", width: "40px" }}></th>
+          </tr>
+        </thead>
+        <tbody>
+          {banks.length === 0 && (
+            <tr><td colSpan={7} style={{ border: "1px solid #e2e8f0", padding: "10px", textAlign: "center", color: "#9ca3af", fontStyle: "italic" }}>No bank accounts added.</td></tr>
+          )}
+          {banks.map((b, i) => (
+            <tr key={i}>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={b.owner_name || ""} onChange={e => handleRowChange(i, "owner_name", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={b.relationship || ""} onChange={e => handleRowChange(i, "relationship", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={b.bank_name || ""} onChange={e => handleRowChange(i, "bank_name", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={b.branch || ""} onChange={e => handleRowChange(i, "branch", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="text" value={b.account_number || ""} onChange={e => handleRowChange(i, "account_number", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}><input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="number" min="0" value={b.current_balance || ""} onChange={e => handleRowChange(i, "current_balance", e.target.value)} /></td>
+              <td style={{ border: "1px solid #e2e8f0", padding: "4px", textAlign: "center" }}><button type="button" onClick={() => removeRow(i)} style={{ background: "none", border: "none", cursor: "pointer", color: "#ef4444", fontSize: "1.1rem" }}>✕</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button type="button" onClick={addRow} style={{ marginTop: "8px", padding: "6px 14px", fontSize: "0.82rem", backgroundColor: "#e8f4e8", color: "#166534", border: "1px solid #bbf7d0", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}>+ Add Bank Account</button>
+    </div>
+  );
+}
+
 /* Dynamic Fields Component */
 function DynamicFields({ certType, requestData, setRequestData }) {
   const handleInput = (field, value) => {
@@ -305,25 +450,68 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 
       {certType === "Request for financial assistance from the President's fund for medical treatment" && (
         <>
+          <h4 style={{ margin: "20px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 01: Patient Information</h4>
           <div className="gn-field">
-            <label className="cr-label">Patient Name & NIC</label>
-            <input className="gn-input" type="text" value={requestData.patient_details || ""} onChange={e => handleInput("patient_details", e.target.value)} />
+            <label className="cr-label">Patient Full Name</label>
+            <input className="gn-input" type="text" value={requestData.patient_name || ""} onChange={e => handleInput("patient_name", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Family Monthly Income Table (Name, Job, Income)</label>
-            <textarea className="gn-textarea" placeholder="E.g., Kamal - Driver - Rs 30000" value={requestData.family_incomes || ""} onChange={e => handleInput("family_incomes", e.target.value)} rows={3} />
+            <label className="cr-label">National Identity Card (NIC) Number</label>
+            <input className="gn-input" type="text" value={requestData.patient_nic || ""} onChange={e => handleInput("patient_nic", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Property/Asset Details (List of assets and value)</label>
-            <textarea className="gn-textarea" placeholder="E.g., Vehicle: ABC-1234 - Rs 1M" value={requestData.property_details || ""} onChange={e => handleInput("property_details", e.target.value)} rows={2} />
+            <label className="cr-label">Residential Address (Include House No, Street, GN Division)</label>
+            <textarea className="gn-textarea" value={requestData.patient_address || ""} onChange={e => handleInput("patient_address", e.target.value)} rows={2} />
           </div>
-          <div className="gn-field">
-            <label className="cr-label">Bank Deposit Details (Bank Name, Branch, and Current Balance)</label>
-            <textarea className="gn-textarea" placeholder="BOC Colombo - Rs 50000" value={requestData.bank_details || ""} onChange={e => handleInput("bank_details", e.target.value)} rows={2} />
+
+          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 02: Monthly Family Income</h4>
+          <FamilyIncomeTable requestData={requestData} setRequestData={setRequestData} />
+
+          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 03: Property and Asset Details</h4>
+          <PropertyAssetTable requestData={requestData} setRequestData={setRequestData} />
+
+          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 04: Bank Deposits and Savings</h4>
+          <BankDepositsTable requestData={requestData} setRequestData={setRequestData} />
+
+          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 05: Treatment Cost Estimation</h4>
+          <p style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "10px" }}>Enter the amount received or expected from the following sources (Rs.):</p>
+          <div className="gn-field" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", alignItems: "end" }}>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Personal Resources/Assets</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_personal || ""} onChange={e => handleInput("cost_personal", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Employees' Trust Fund (ETF)</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_etf || ""} onChange={e => handleInput("cost_etf", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>National Insurance Trust Fund (NITF)</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_nitf || ""} onChange={e => handleInput("cost_nitf", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Workplace Medical Assistance</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_workplace || ""} onChange={e => handleInput("cost_workplace", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Insurance/Welfare Schemes</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_insurance || ""} onChange={e => handleInput("cost_insurance", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Non-Governmental Orgs (NGOs)</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_ngos || ""} onChange={e => handleInput("cost_ngos", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Donations</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_donations || ""} onChange={e => handleInput("cost_donations", e.target.value)} />
+            </div>
+            <div>
+              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Loans Obtained</label>
+              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_loans || ""} onChange={e => handleInput("cost_loans", e.target.value)} />
+            </div>
           </div>
-          <div className="gn-field">
-            <label className="cr-label">Cost Estimate (How the treatment cost was calculated)</label>
-            <textarea className="gn-textarea" value={requestData.cost_estimate || ""} onChange={e => handleInput("cost_estimate", e.target.value)} rows={2} />
+          <div className="gn-field" style={{ marginTop: "15px" }}>
+            <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Assistance (Specify source and amount)</label>
+            <textarea className="gn-textarea" style={{ fontSize: "0.85rem" }} value={requestData.cost_other_details || ""} onChange={e => handleInput("cost_other_details", e.target.value)} rows={2} />
           </div>
         </>
       )}
