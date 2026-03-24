@@ -39,7 +39,16 @@ async function generatePDFWithPuppeteer(cert, data, qrCodeDataUri) {
     }
     const modifiedData = { ...data, dependents };
 
-    const gn_sig = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9ImN1cnNpdmUiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMwMDAwODAiPkdyYW1hIE5pbGFkaGFyaTwvdGV4dD48L3N2Zz4=";
+    const sigPath = path.join(__dirname, "../../frontend/public/signature.png");
+    let gn_sig = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiPjx0ZXh0IHg9IjEwIiB5PSI0MCIgZm9udC1mYW1pbHk9ImN1cnNpdmUiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMwMDAwODAiPkdyYW1hIE5pbGFkaGFyaTwvdGV4dD48L3N2Zz4=";
+    try {
+        if (fs.existsSync(sigPath)) {
+            const sigBuffer = fs.readFileSync(sigPath);
+            gn_sig = \`data:image/png;base64,\${sigBuffer.toString('base64')}\`;
+        }
+    } catch (e) {
+        console.error("Error loading signature:", e);
+    }
     const ds_sig = cert.status === "APPROVED" && [
         "Application for obtaining housing loan funds",
         "Income Certificate",
