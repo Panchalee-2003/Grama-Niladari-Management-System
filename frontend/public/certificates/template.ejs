@@ -209,6 +209,188 @@
             </div>
         </div>
 
+    <% } else if (cert_type === "Request for financial assistance from the President's fund for medical treatment") { %>
+        <%
+            const { 
+                patient_name, patient_nic, patient_address, patient_house_no, patient_village, patient_gn_division, patient_marital_status,
+                family_incomes_list, assets_list, bank_deposits_list,
+                cost_personal, cost_etf, cost_nitf, cost_workplace, cost_insurance, cost_ngos, cost_donations, cost_loans, cost_other_details,
+                prev_assistance, prev_amount, prev_date, prev_illness, prev_file_number,
+                gn_recommendation, gn_reason
+            } = dynamic_data || {};
+        %>
+
+        <h3 style="font-size: 15px; margin-top: 10px; border-bottom: 1px solid #000; padding-bottom: 5px;">01. Patient's Information</h3>
+        <div class="grid-details">
+            <div class="grid-label"><span>01.1 Full Name</span><span>:</span></div>
+            <div class="grid-value"><%= patient_name || '—' %></div>
+            <div class="grid-label"><span>01.2 NIC Number</span><span>:</span></div>
+            <div class="grid-value"><%= patient_nic || '—' %></div>
+            <div class="grid-label"><span>01.3 Residential Address</span><span>:</span></div>
+            <div class="grid-value"><%= patient_address || '—' %></div>
+            <div class="grid-label"><span>01.4 House Number</span><span>:</span></div>
+            <div class="grid-value"><%= patient_house_no || '—' %></div>
+            <div class="grid-label"><span>01.5 Village/Street</span><span>:</span></div>
+            <div class="grid-value"><%= patient_village || '—' %></div>
+            <div class="grid-label"><span>01.6 GN Division</span><span>:</span></div>
+            <div class="grid-value"><%= patient_gn_division || '—' %></div>
+            <div class="grid-label"><span>01.7 Marital Status</span><span>:</span></div>
+            <div class="grid-value"><%= patient_marital_status || '—' %></div>
+        </div>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">02. Monthly Income Details of the Patient's Family Members</h3>
+        <% if (family_incomes_list && family_incomes_list.length > 0) { %>
+            <table class="dependents-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">No</th>
+                        <th>Name</th>
+                        <th>Relationship</th>
+                        <th>Marital Status</th>
+                        <th>Occupation / Business</th>
+                        <th>Monthly Income (Rs.)</th>
+                        <th>Tax Payer?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% family_incomes_list.forEach((inc, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= inc.name || '—' %></td>
+                        <td><%= inc.relationship || '—' %></td>
+                        <td><%= inc.civil_status || '—' %></td>
+                        <td><%= inc.occupation || '—' %></td>
+                        <td><%= inc.income || '—' %></td>
+                        <td><%= inc.tax_payer || '—' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p style="font-size: 14px; color: #555;">No family income details provided.</p>
+        <% } %>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">03. Movable / Immovable Assets and Market Value</h3>
+        <% if (assets_list && assets_list.length > 0) { %>
+            <table class="dependents-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">No</th>
+                        <th>Owner's Name</th>
+                        <th>Relationship</th>
+                        <th>Type of Asset</th>
+                        <th>Market Value (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% assets_list.forEach((ast, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= ast.owner_name || '—' %></td>
+                        <td><%= ast.relationship || '—' %></td>
+                        <td><%= ast.description || '—' %></td>
+                        <td><%= ast.market_value || '—' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p style="font-size: 14px; color: #555;">No asset details provided.</p>
+        <% } %>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">04. Fixed/Current Bank Account Deposits</h3>
+        <% if (bank_deposits_list && bank_deposits_list.length > 0) { %>
+            <table class="dependents-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;">No</th>
+                        <th>Owner's Name</th>
+                        <th>Relationship</th>
+                        <th>Bank Name</th>
+                        <th>Branch</th>
+                        <th>Account Number</th>
+                        <th>Balance (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bank_deposits_list.forEach((bank, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= bank.owner_name || '—' %></td>
+                        <td><%= bank.relationship || '—' %></td>
+                        <td><%= bank.bank_name || '—' %></td>
+                        <td><%= bank.branch || '—' %></td>
+                        <td><%= bank.account_number || '—' %></td>
+                        <td><%= bank.current_balance || '—' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p style="font-size: 14px; color: #555;">No bank account details provided.</p>
+        <% } %>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">05. Sources of Funds Raised for Treatment Expenses</h3>
+        <table class="dependents-table">
+            <thead>
+                <tr>
+                    <th style="width: 30px;">No</th>
+                    <th>Source of Funds/Assistance</th>
+                    <th>Amount (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Personal Resources / Assets</td><td><%= cost_personal || '—' %></td></tr>
+                <tr><td>2</td><td>Employees' Trust Fund (ETF)</td><td><%= cost_etf || '—' %></td></tr>
+                <tr><td>3</td><td>National Insurance Trust Fund (NITF)</td><td><%= cost_nitf || '—' %></td></tr>
+                <tr><td>4</td><td>Workplace Medical Assistance Scheme</td><td><%= cost_workplace || '—' %></td></tr>
+                <tr><td>5</td><td>Insurance or Welfare Schemes</td><td><%= cost_insurance || '—' %></td></tr>
+                <tr><td>6</td><td>Non-Governmental Organizations (NGOs)</td><td><%= cost_ngos || '—' %></td></tr>
+                <tr><td>7</td><td>Other Donations</td><td><%= cost_donations || '—' %></td></tr>
+                <tr><td>8</td><td>Loans obtained</td><td><%= cost_loans || '—' %></td></tr>
+                <tr><td>9</td><td>Others</td><td><%= cost_other_details || '—' %></td></tr>
+            </tbody>
+        </table>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">06. Previous Assistance from the President’s Fund</h3>
+        <div class="grid-details">
+            <div class="grid-label"><span>Received assistance before?</span><span>:</span></div>
+            <div class="grid-value"><%= prev_assistance || 'No' %></div>
+            <% if (prev_assistance === 'Yes') { %>
+                <div class="grid-label"><span>Amount received (Rs.)</span><span>:</span></div>
+                <div class="grid-value"><%= prev_amount || '—' %></div>
+                <div class="grid-label"><span>Date</span><span>:</span></div>
+                <div class="grid-value"><%= prev_date || '—' %></div>
+                <div class="grid-label"><span>Illness / Treatment</span><span>:</span></div>
+                <div class="grid-value"><%= prev_illness || '—' %></div>
+                <div class="grid-label"><span>File Number</span><span>:</span></div>
+                <div class="grid-value"><%= prev_file_number || '—' %></div>
+            <% } %>
+        </div>
+
+        <h3 style="font-size: 15px; margin-top: 20px; border-bottom: 1px solid #000; padding-bottom: 5px;">07. Recommendation (Grama Niladhari)</h3>
+        <div class="grid-details">
+            <div class="grid-label"><span>Recommendation Status</span><span>:</span></div>
+            <div class="grid-value"><%= gn_recommendation || 'Recommended' %></div>
+            <div class="grid-label"><span>Reason (if any)</span><span>:</span></div>
+            <div class="grid-value"><%= gn_reason || '—' %></div>
+        </div>
+
+        <%/* GN signature only – no DS block for this cert type */%>
+        <div class="signatures">
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Grama Niladhari</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                    Digitally Signed
+                </div>
+            </div>
+        </div>
+
     <% } else { %>
 
         <%/* ── Generic layout for all other certificate types ── */%>

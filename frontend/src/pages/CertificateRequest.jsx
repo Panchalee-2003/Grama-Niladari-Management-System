@@ -450,69 +450,125 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 
       {certType === "Request for financial assistance from the President's fund for medical treatment" && (
         <>
-          <h4 style={{ margin: "20px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 01: Patient Information</h4>
-          <div className="gn-field">
-            <label className="cr-label">Patient Full Name</label>
-            <input className="gn-input" type="text" value={requestData.patient_name || ""} onChange={e => handleInput("patient_name", e.target.value)} />
-          </div>
-          <div className="gn-field">
-            <label className="cr-label">National Identity Card (NIC) Number</label>
-            <input className="gn-input" type="text" value={requestData.patient_nic || ""} onChange={e => handleInput("patient_nic", e.target.value)} />
-          </div>
-          <div className="gn-field">
-            <label className="cr-label">Residential Address (Include House No, Street, GN Division)</label>
-            <textarea className="gn-textarea" value={requestData.patient_address || ""} onChange={e => handleInput("patient_address", e.target.value)} rows={2} />
+          {/* ── Section 01: Patient Information ── */}
+          <h4 style={{ margin: "20px 0 12px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>01. Patient's Information</h4>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.1 Full Name</label>
+              <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.patient_name || ""} onChange={e => handleInput("patient_name", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.2 NIC Number</label>
+              <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.patient_nic || ""} onChange={e => handleInput("patient_nic", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0, gridColumn: "1 / -1" }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.3 Residential Address</label>
+              <textarea className="gn-textarea" style={{ margin: 0 }} value={requestData.patient_address || ""} onChange={e => handleInput("patient_address", e.target.value)} rows={2} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.4 House Number</label>
+              <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.patient_house_no || ""} onChange={e => handleInput("patient_house_no", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.5 Village / Street</label>
+              <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.patient_village || ""} onChange={e => handleInput("patient_village", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.6 Grama Niladhari Division</label>
+              <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.patient_gn_division || ""} onChange={e => handleInput("patient_gn_division", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label" style={{ fontSize: "0.84rem" }}>01.7 Marital Status</label>
+              <select className="gn-input gn-select" style={{ margin: 0 }} value={requestData.patient_marital_status || ""} onChange={e => handleInput("patient_marital_status", e.target.value)}>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Widowed">Widowed</option>
+                <option value="Divorced">Divorced</option>
+              </select>
+            </div>
           </div>
 
-          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 02: Monthly Family Income</h4>
+          {/* ── Section 02: Family Income ── */}
+          <h4 style={{ margin: "30px 0 10px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>02. Monthly Income Details of the Patient's Family Members</h4>
           <FamilyIncomeTable requestData={requestData} setRequestData={setRequestData} />
 
-          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 03: Property and Asset Details</h4>
+          {/* ── Section 03: Assets ── */}
+          <h4 style={{ margin: "30px 0 10px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>03. Movable / Immovable Assets and Market Value</h4>
           <PropertyAssetTable requestData={requestData} setRequestData={setRequestData} />
 
-          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 04: Bank Deposits and Savings</h4>
+          {/* ── Section 04: Bank Deposits ── */}
+          <h4 style={{ margin: "30px 0 10px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>04. Fixed / Current Bank Account Deposits</h4>
           <BankDepositsTable requestData={requestData} setRequestData={setRequestData} />
 
-          <h4 style={{ margin: "30px 0 10px", color: "#475569", borderBottom: "1px solid #cbd5e1", paddingBottom: "5px" }}>Section 05: Treatment Cost Estimation</h4>
-          <p style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "10px" }}>Enter the amount received or expected from the following sources (Rs.):</p>
-          <div className="gn-field" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", alignItems: "end" }}>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Personal Resources/Assets</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_personal || ""} onChange={e => handleInput("cost_personal", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Employees' Trust Fund (ETF)</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_etf || ""} onChange={e => handleInput("cost_etf", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>National Insurance Trust Fund (NITF)</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_nitf || ""} onChange={e => handleInput("cost_nitf", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Workplace Medical Assistance</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_workplace || ""} onChange={e => handleInput("cost_workplace", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Insurance/Welfare Schemes</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_insurance || ""} onChange={e => handleInput("cost_insurance", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Non-Governmental Orgs (NGOs)</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_ngos || ""} onChange={e => handleInput("cost_ngos", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Donations</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_donations || ""} onChange={e => handleInput("cost_donations", e.target.value)} />
-            </div>
-            <div>
-              <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Loans Obtained</label>
-              <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.cost_loans || ""} onChange={e => handleInput("cost_loans", e.target.value)} />
-            </div>
-          </div>
-          <div className="gn-field" style={{ marginTop: "15px" }}>
-            <label className="cr-label" style={{ fontSize: "0.85rem", fontWeight: "normal", marginBottom: "4px" }}>Other Assistance (Specify source and amount)</label>
+          {/* ── Section 05: Cost Sources ── */}
+          <h4 style={{ margin: "30px 0 10px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>05. Sources of Funds Raised for Treatment Expenses</h4>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem", marginBottom: "10px" }}>
+            <thead>
+              <tr style={{ backgroundColor: "#f1f5f9" }}>
+                <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "center", width: "40px", fontWeight: 600, color: "#374151" }}>No.</th>
+                <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151" }}>Source of Funds / Assistance</th>
+                <th style={{ border: "1px solid #e2e8f0", padding: "8px", textAlign: "left", fontWeight: 600, color: "#374151", width: "170px" }}>Amount (Rs.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { key: "cost_personal", label: "Personal Resources / Assets" },
+                { key: "cost_etf", label: "Employees' Trust Fund (ETF)" },
+                { key: "cost_nitf", label: "National Insurance Trust Fund (NITF)" },
+                { key: "cost_workplace", label: "Workplace Medical Assistance Scheme" },
+                { key: "cost_insurance", label: "Insurance or Welfare Schemes" },
+                { key: "cost_ngos", label: "Non-Governmental Organizations (NGOs)" },
+                { key: "cost_donations", label: "Other Donations" },
+                { key: "cost_loans", label: "Loans" },
+                { key: "cost_others", label: "Others (Please specify the source clearly)" },
+              ].map((row, idx) => (
+                <tr key={row.key}>
+                  <td style={{ border: "1px solid #e2e8f0", padding: "6px", textAlign: "center", color: "#64748b" }}>{idx + 1}</td>
+                  <td style={{ border: "1px solid #e2e8f0", padding: "6px" }}>{row.label}</td>
+                  <td style={{ border: "1px solid #e2e8f0", padding: "4px" }}>
+                    <input className="gn-input" style={{ margin: 0, width: "100%", boxSizing: "border-box" }} type="number" min="0" placeholder="0.00" value={requestData[row.key] || ""} onChange={e => handleInput(row.key, e.target.value)} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="gn-field">
+            <label className="cr-label" style={{ fontSize: "0.84rem", marginBottom: "4px" }}>Others — Please specify source and amount clearly</label>
             <textarea className="gn-textarea" style={{ fontSize: "0.85rem" }} value={requestData.cost_other_details || ""} onChange={e => handleInput("cost_other_details", e.target.value)} rows={2} />
           </div>
+
+          {/* ── Section 06: Previous Assistance ── */}
+          <h4 style={{ margin: "30px 0 10px", color: "#334155", borderBottom: "2px solid #cbd5e1", paddingBottom: "6px", fontSize: "0.95rem", fontWeight: 700 }}>06. Previous Assistance from the President's Fund</h4>
+          <div style={{ display: "flex", gap: "15px", alignItems: "center", marginBottom: "12px" }}>
+            <label className="cr-label" style={{ marginBottom: 0, whiteSpace: "nowrap" }}>Have you received assistance before?</label>
+            <label style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+              <input type="radio" checked={requestData.prev_assistance === "Yes"} onChange={() => handleInput("prev_assistance", "Yes")} /> Yes
+            </label>
+            <label style={{ display: "flex", alignItems: "center", gap: "5px", cursor: "pointer" }}>
+              <input type="radio" checked={!requestData.prev_assistance || requestData.prev_assistance === "No"} onChange={() => handleInput("prev_assistance", "No")} /> No
+            </label>
+          </div>
+          {requestData.prev_assistance === "Yes" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", padding: "12px 14px", backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "6px", marginBottom: "12px" }}>
+              <div className="gn-field" style={{ margin: 0 }}>
+                <label className="cr-label" style={{ fontSize: "0.84rem" }}>Amount Received (Rs.)</label>
+                <input className="gn-input" style={{ margin: 0 }} type="number" min="0" value={requestData.prev_amount || ""} onChange={e => handleInput("prev_amount", e.target.value)} />
+              </div>
+              <div className="gn-field" style={{ margin: 0 }}>
+                <label className="cr-label" style={{ fontSize: "0.84rem" }}>Date</label>
+                <input className="gn-input" style={{ margin: 0 }} type="date" value={requestData.prev_date || ""} onChange={e => handleInput("prev_date", e.target.value)} />
+              </div>
+              <div className="gn-field" style={{ margin: 0 }}>
+                <label className="cr-label" style={{ fontSize: "0.84rem" }}>Illness / Treatment</label>
+                <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.prev_illness || ""} onChange={e => handleInput("prev_illness", e.target.value)} />
+              </div>
+              <div className="gn-field" style={{ margin: 0 }}>
+                <label className="cr-label" style={{ fontSize: "0.84rem" }}>File Number</label>
+                <input className="gn-input" style={{ margin: 0 }} type="text" value={requestData.prev_file_number || ""} onChange={e => handleInput("prev_file_number", e.target.value)} />
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
@@ -540,6 +596,7 @@ export default function CertificateRequest() {
   const [listLoading, setListLoading] = useState(true);
   const [listError, setListError] = useState("");
   const [downloading, setDownloading] = useState(null);
+  const [downloadError, setDownloadError] = useState("");
 
   const loadRequests = async () => {
     setListLoading(true);
@@ -608,6 +665,7 @@ export default function CertificateRequest() {
 
   const handleDownload = async (requestId) => {
     setDownloading(requestId);
+    setDownloadError("");
     try {
       const response = await api.get(`/api/certificate/${requestId}/citizen-pdf`, {
         responseType: "blob",
@@ -620,8 +678,22 @@ export default function CertificateRequest() {
       link.click();
       link.remove();
       window.URL.revokeObjectURL(url);
-    } catch {
-      alert("Failed to download certificate. Please try again.");
+    } catch (ex) {
+      // When responseType is "blob", error bodies come as Blobs — read them as text
+      let errorMsg = "Failed to generate the certificate PDF. Please try again.";
+      try {
+        const errBlob = ex.response?.data;
+        if (errBlob instanceof Blob) {
+          const text = await errBlob.text();
+          const json = JSON.parse(text);
+          if (json?.error) errorMsg = json.error;
+        } else if (ex.response?.data?.error) {
+          errorMsg = ex.response.data.error;
+        } else if (ex.message) {
+          errorMsg = ex.message;
+        }
+      } catch (_) { /* ignore secondary parse errors */ }
+      setDownloadError(`Download failed for request #${requestId}: ${errorMsg}`);
     } finally {
       setDownloading(null);
     }
@@ -662,6 +734,15 @@ export default function CertificateRequest() {
 
           {submitSuccess && <div className="cr-alert cr-alert-ok">{submitSuccess}</div>}
           {submitError && <div className="cr-alert cr-alert-err">{submitError}</div>}
+          {downloadError && (
+            <div className="cr-alert cr-alert-err" style={{ marginTop: "10px" }}>
+              ⚠️ {downloadError}
+              <button
+                onClick={() => setDownloadError("")}
+                style={{ marginLeft: "12px", background: "none", border: "none", cursor: "pointer", color: "#991b1b", fontWeight: 700, fontSize: "1rem" }}
+              >✕</button>
+            </div>
+          )}
 
           <form className="gn-form-grid" onSubmit={handleSubmit}>
             {/* Left column */}
