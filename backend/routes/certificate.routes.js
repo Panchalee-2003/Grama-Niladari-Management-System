@@ -361,7 +361,7 @@ router.patch("/:id/ds-action", requireAuth, requireRole("ADMIN"), async (req, re
             const newCertId = crypto.randomUUID();
             result = await pool.query(
                 `UPDATE certificate_request
-                 SET status='APPROVED', gn_remarks=COALESCE($1, gn_remarks),
+                 SET status='APPROVED', admin_status='VERIFIED', gn_remarks=COALESCE($1, gn_remarks),
                      ds_signature_blob=$2, certificate_id=COALESCE(certificate_id, $3),
                      issued_at=COALESCE(issued_at, NOW()), updated_at=NOW()
                  WHERE request_id=$4
@@ -374,7 +374,7 @@ router.patch("/:id/ds-action", requireAuth, requireRole("ADMIN"), async (req, re
                 return res.status(400).json({ ok: false, error: "DS rejection reason is required." });
             result = await pool.query(
                 `UPDATE certificate_request
-                 SET status='REJECTED', rejection_reason=$1, updated_at=NOW()
+                 SET status='REJECTED', admin_status='REJECTED', rejection_reason=$1, updated_at=NOW()
                  WHERE request_id=$2
                  RETURNING *`,
                 [ds_remarks.trim(), id]
@@ -388,6 +388,30 @@ router.patch("/:id/ds-action", requireAuth, requireRole("ADMIN"), async (req, re
         return res.json({ ok: true, request: result.rows[0] });
     } catch (err) {
         console.error("DS Action Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
+// ADMIN: Update admin_status (Verify / Reject)
+// ─────────────────────────────────────────
+router.patch("/:id/admin-status", requireAuth, requireRole("ADMIN"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { admin_status } = req.body;
+        if (!admin_status || !["VERIFIED", "REJECTED"].includes(admin_status))
+            return res.status(400).json({ ok: false, error: "Invalid admin_status value." });
+
+        const result = await pool.query(
+            `UPDATE certificate_request SET admin_status=$1, updated_at=NOW() WHERE request_id=$2 RETURNING *`,
+            [admin_status, id]
+        );
+        if (!result.rows.length)
+            return res.status(404).json({ ok: false, error: "Request not found" });
+
+        return res.json({ ok: true, request: result.rows[0] });
+    } catch (err) {
+        console.error("Admin Status Update Error:", err);
         return res.status(500).json({ ok: false, error: err.message });
     }
 });
