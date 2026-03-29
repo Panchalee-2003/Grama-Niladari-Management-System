@@ -132,9 +132,131 @@
         </div>
     </div>
 
-    <div class="title"><%= cert_type %></div>
+    <% if (!["Income Certificate", "Registration of delayed births", "Registration of voluntary organizations"].includes(cert_type)) { %>
+        <div class="title"><%= cert_type %></div>
+    <% } %>
 
-    <% if (cert_type === "Notification of the death of a pensioner") { %>
+    <% if (cert_type === "Income Certificate") { %>
+        <%
+            const ic_address   = (dynamic_data && dynamic_data.residential_address) || '—';
+            const ic_house     = (dynamic_data && dynamic_data.house_number) || '—';
+            const ic_village   = (dynamic_data && dynamic_data.village_street) || '—';
+            const ic_gn_div    = (dynamic_data && dynamic_data.gn_division) || '—';
+            const ic_samurdhi  = (dynamic_data && dynamic_data.samurdhi_relief) || '—';
+            const ic_purpose   = (dynamic_data && dynamic_data.income_cert_purpose) || '—';
+            const ic_source    = (dynamic_data && dynamic_data.income_source) || '—';
+            const ic_src_reg   = (dynamic_data && dynamic_data.income_source_registration) || '—';
+            const ic_src_addr  = (dynamic_data && dynamic_data.income_source_address) || '—';
+            const ic_period    = (dynamic_data && dynamic_data.business_period) || '—';
+            const ic_continue  = (dynamic_data && dynamic_data.will_continue) || '—';
+            const ic_objection = (dynamic_data && dynamic_data.owner_objection) || '—';
+            const ic_tax       = (dynamic_data && dynamic_data.pays_tax) || '—';
+            const ic_prev_cert = (dynamic_data && dynamic_data.prev_income_cert) || '—';
+            const ic_prev_inc  = (dynamic_data && dynamic_data.prev_stated_income) || '—';
+            const ic_remarks   = (dynamic_data && dynamic_data.other_remarks) || '—';
+            const ic_rec_inc   = (dynamic_data && dynamic_data.recommended_income) || '—';
+        %>
+
+        <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:2px; text-decoration:underline;">
+            Issuance of Income Certificate - Grama Niladhari Report
+        </div>
+        <div style="text-align:center; font-size:11px; font-style:italic; color:#555; margin-bottom:10px;">
+            (Note: This document cannot be used as an Income Certificate)
+        </div>
+
+        <div class="grid-details" style="row-gap:5px; font-size:13px; margin-bottom:10px;">
+            <div class="grid-label"><span>Applicant's Name</span><span>:</span></div>
+            <div class="grid-value"><%= applicant_name %></div>
+
+            <div class="grid-label"><span>NIC Number</span><span>:</span></div>
+            <div class="grid-value"><%= nic_number %></div>
+
+            <div class="grid-label"><span>Residential Address</span><span>:</span></div>
+            <div class="grid-value"><%= ic_address %></div>
+
+            <div class="grid-label"><span>House No. / Village</span><span>:</span></div>
+            <div class="grid-value"><%= ic_house %> &nbsp;/&nbsp; <%= ic_village %></div>
+
+            <div class="grid-label"><span>GN Division</span><span>:</span></div>
+            <div class="grid-value"><%= ic_gn_div %></div>
+
+            <div class="grid-label"><span>Samurdhi / Other Relief</span><span>:</span></div>
+            <div class="grid-value"><%= ic_samurdhi %></div>
+
+            <div class="grid-label"><span>Purpose of Income Certificate</span><span>:</span></div>
+            <div class="grid-value"><%= ic_purpose %></div>
+
+            <div class="grid-label"><span>Source of Income</span><span>:</span></div>
+            <div class="grid-value"><%= ic_source %></div>
+
+            <div class="grid-label"><span>Registration of Income Source</span><span>:</span></div>
+            <div class="grid-value"><%= ic_src_reg %></div>
+
+            <div class="grid-label"><span>Address of Income Source</span><span>:</span></div>
+            <div class="grid-value"><%= ic_src_addr %></div>
+
+            <div class="grid-label"><span>Period Engaged in Business</span><span>:</span></div>
+            <div class="grid-value"><%= ic_period %></div>
+
+            <div class="grid-label"><span>Will business continue in future?</span><span>:</span></div>
+            <div class="grid-value"><%= ic_continue %></div>
+
+            <div class="grid-label"><span>Objection from owner?</span><span>:</span></div>
+            <div class="grid-value"><%= ic_objection %></div>
+
+            <div class="grid-label"><span>Applicant pays tax?</span><span>:</span></div>
+            <div class="grid-value"><%= ic_tax %></div>
+
+            <div class="grid-label"><span>Income cert in last 6 months?</span><span>:</span></div>
+            <div class="grid-value"><%= ic_prev_cert %><% if (ic_prev_cert === 'Yes') { %> &nbsp;—&nbsp; Stated income: <%= ic_prev_inc %><% } %></div>
+
+            <div class="grid-label"><span>Other Remarks</span><span>:</span></div>
+            <div class="grid-value"><%= ic_remarks %></div>
+        </div>
+
+        <div style="border:1px solid #aaa; border-radius:4px; padding:6px 10px; margin-top:5px;">
+            <strong style="text-decoration:underline; font-size:13px;">Recommendation</strong>
+            <div class="grid-details" style="row-gap:4px; font-size:13px; margin-top:6px;">
+                <div class="grid-label"><span>Recommended Monthly / Annual Income (Rs.)</span><span>:</span></div>
+                <div class="grid-value"><%= ic_rec_inc %></div>
+            </div>
+            <p style="font-size:12px; margin-top:6px; margin-bottom:0;">
+                I recommend / do not recommend the issuance of an Income Certificate.
+            </p>
+            <p style="font-size:12px; margin-top:4px; margin-bottom:0;">
+                I certify that the above information is accurate and I hereby attach the documents submitted by the applicant.
+            </p>
+        </div>
+
+        <div style="border:1px solid #333; border-radius:4px; padding:6px 10px; margin-top:8px; background:#f8f9fa;">
+            <strong style="font-size:13px; text-decoration:underline;">For Office Use Only</strong>
+            <p style="font-size:12px; margin-top:4px; margin-bottom:0;">
+                Divisional Secretary / Asst. Divisional Secretary / Administrative Officer, Submitted for approval to issue the Income Certificate.
+            </p>
+        </div>
+
+        <div class="signatures-both" style="margin-top:20px;">
+            <div class="ds-signature-box">
+                <% if (ds_signature_img) { %>
+                    <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+                <% } %>
+                <div class="caption">
+                    <strong>Divisional Secretary</strong><br>Digitally Signed &amp; Stamp Verified
+                </div>
+            </div>
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height:80px; line-height:80px; font-style:italic; color:#999;">Awaiting GN Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>Digitally Signed
+                </div>
+            </div>
+        </div>
+
+    <% } else if (cert_type === "Notification of the death of a pensioner") { %>
         <%
             const pensionerName    = (dynamic_data && dynamic_data.pensioner_name)    ? dynamic_data.pensioner_name    : (applicant_name || '—');
             const pensionerAddress = (dynamic_data && dynamic_data.address)            ? dynamic_data.address            : '—';

@@ -373,25 +373,80 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 
       {certType === "Income Certificate" && (
         <>
-          <div className="gn-field">
-            <label className="cr-label">Applicant Name & NIC</label>
-            <input className="gn-input" type="text" value={requestData.applicant_name_nic || ""} onChange={e => handleInput("applicant_name_nic", e.target.value)} />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">House Number</label>
+              <input className="gn-input" type="text" value={requestData.house_number || ""} onChange={e => handleInput("house_number", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">Village / Street</label>
+              <input className="gn-input" type="text" value={requestData.village_street || ""} onChange={e => handleInput("village_street", e.target.value)} />
+            </div>
           </div>
           <div className="gn-field">
-            <label className="cr-label">Address & Household Number</label>
-            <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
+            <label className="cr-label">Residential Address</label>
+            <input className="gn-input" type="text" value={requestData.residential_address || ""} onChange={e => handleInput("residential_address", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Source of Income (Business/Job Details)</label>
+            <label className="cr-label">Grama Niladhari Division</label>
+            <input className="gn-input" type="text" value={requestData.gn_division || ""} onChange={e => handleInput("gn_division", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Samurdhi or Other Relief Received</label>
+            <input className="gn-input" type="text" value={requestData.samurdhi_relief || ""} onChange={e => handleInput("samurdhi_relief", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Purpose of Income Certificate</label>
+            <input className="gn-input" type="text" value={requestData.income_cert_purpose || ""} onChange={e => handleInput("income_cert_purpose", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Source of Income</label>
             <input className="gn-input" type="text" value={requestData.income_source || ""} onChange={e => handleInput("income_source", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Duration of Business/Service</label>
-            <input className="gn-input" type="text" value={requestData.duration_of_service || ""} onChange={e => handleInput("duration_of_service", e.target.value)} />
+            <label className="cr-label">Registration of Income Source</label>
+            <input className="gn-input" type="text" value={requestData.income_source_registration || ""} onChange={e => handleInput("income_source_registration", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Monthly/Annual Income Amount (Rs.)</label>
-            <input className="gn-input" type="text" value={requestData.income_amount || ""} onChange={e => handleInput("income_amount", e.target.value)} />
+            <label className="cr-label">Address of Income Source / Business</label>
+            <input className="gn-input" type="text" value={requestData.income_source_address || ""} onChange={e => handleInput("income_source_address", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Period Engaged in Business / Income Source</label>
+            <input className="gn-input" type="text" value={requestData.business_period || ""} onChange={e => handleInput("business_period", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Will the business/income source continue in the future?</label>
+            <input className="gn-input" type="text" placeholder="Yes / No / Details" value={requestData.will_continue || ""} onChange={e => handleInput("will_continue", e.target.value)} />
+          </div>
+          <div className="gn-field" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+            <label className="cr-label" style={{ marginBottom: 0 }}>Objection from owner to issue certificate?</label>
+            <label><input type="radio" checked={requestData.owner_objection === "Yes"} onChange={() => handleInput("owner_objection", "Yes")} /> Yes</label>
+            <label><input type="radio" checked={requestData.owner_objection === "No"} onChange={() => handleInput("owner_objection", "No")} /> No</label>
+          </div>
+          <div className="gn-field" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+            <label className="cr-label" style={{ marginBottom: 0 }}>Does the applicant pay tax for the stated income?</label>
+            <label><input type="radio" checked={requestData.pays_tax === "Yes"} onChange={() => handleInput("pays_tax", "Yes")} /> Yes</label>
+            <label><input type="radio" checked={requestData.pays_tax === "No"} onChange={() => handleInput("pays_tax", "No")} /> No</label>
+          </div>
+          <div className="gn-field" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+            <label className="cr-label" style={{ marginBottom: 0 }}>Income certificate obtained in last 6 months?</label>
+            <label><input type="radio" checked={requestData.prev_income_cert === "Yes"} onChange={() => handleInput("prev_income_cert", "Yes")} /> Yes</label>
+            <label><input type="radio" checked={requestData.prev_income_cert === "No"} onChange={() => handleInput("prev_income_cert", "No")} /> No</label>
+          </div>
+          {requestData.prev_income_cert === "Yes" && (
+            <div className="gn-field">
+              <label className="cr-label">If yes, what was the stated income?</label>
+              <input className="gn-input" type="text" value={requestData.prev_stated_income || ""} onChange={e => handleInput("prev_stated_income", e.target.value)} />
+            </div>
+          )}
+          <div className="gn-field">
+            <label className="cr-label">Other Remarks</label>
+            <textarea className="gn-textarea" value={requestData.other_remarks || ""} onChange={e => handleInput("other_remarks", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Recommended Monthly / Annual Income (Rs.)</label>
+            <input className="gn-input" type="text" value={requestData.recommended_income || ""} onChange={e => handleInput("recommended_income", e.target.value)} />
           </div>
         </>
       )}
