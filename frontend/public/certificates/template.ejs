@@ -132,7 +132,7 @@
         </div>
     </div>
 
-    <% if (!["Income Certificate", "Registration of delayed births", "Registration of voluntary organizations"].includes(cert_type)) { %>
+    <% if (!["Income Certificate", "Registration of delayed births", "Registration of voluntary organizations", "Application for obtaining housing loan funds"].includes(cert_type)) { %>
         <div class="title"><%= cert_type %></div>
     <% } %>
 
@@ -232,6 +232,98 @@
             <strong style="font-size:13px; text-decoration:underline;">For Office Use Only</strong>
             <p style="font-size:12px; margin-top:4px; margin-bottom:0;">
                 Divisional Secretary / Asst. Divisional Secretary / Administrative Officer, Submitted for approval to issue the Income Certificate.
+            </p>
+        </div>
+
+        <div class="signatures-both" style="margin-top:20px;">
+            <div class="ds-signature-box">
+                <% if (ds_signature_img) { %>
+                    <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+                <% } %>
+                <div class="caption">
+                    <strong>Divisional Secretary</strong><br>Digitally Signed &amp; Stamp Verified
+                </div>
+            </div>
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height:80px; line-height:80px; font-style:italic; color:#999;">Awaiting GN Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>Digitally Signed
+                </div>
+            </div>
+        </div>
+
+    <% } else if (cert_type === "Application for obtaining housing loan funds") { %>
+        <%
+            const hl_address    = (dynamic_data && dynamic_data.address) || '—';
+            const hl_income     = (dynamic_data && dynamic_data.monthly_income) || '—';
+            const hl_samurdhi   = (dynamic_data && dynamic_data.samurdhi_beneficiary) || '—';
+            const hl_owner      = (dynamic_data && dynamic_data.owner_name) || '—';
+            const hl_extent     = (dynamic_data && dynamic_data.land_extent) || '—';
+            const hl_deed       = (dynamic_data && dynamic_data.deed_number_date) || '—';
+            const hl_amount     = (dynamic_data && dynamic_data.requested_amount) || '—';
+        %>
+
+        <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:2px; text-decoration:underline;">
+            Application for Housing Loan / Grant Assistance
+        </div>
+        <div style="text-align:center; font-size:11px; font-style:italic; color:#555; margin-bottom:12px;">
+            (For Office Use Only)
+        </div>
+
+        <div class="grid-details" style="row-gap:6px; font-size:13px; margin-bottom:10px;">
+            <div class="grid-label"><span>Applicant's Name</span><span>:</span></div>
+            <div class="grid-value"><%= applicant_name %></div>
+
+            <div class="grid-label"><span>Address</span><span>:</span></div>
+            <div class="grid-value"><%= hl_address %></div>
+
+            <div class="grid-label"><span>Monthly Family Income (Rs.)</span><span>:</span></div>
+            <div class="grid-value"><%= hl_income %></div>
+
+            <div class="grid-label"><span>Samurdhi Beneficiary</span><span>:</span></div>
+            <div class="grid-value"><%= hl_samurdhi %></div>
+        </div>
+
+        <div style="margin: 10px 0 6px; font-size:13px; font-weight:bold; text-decoration:underline;">
+            Property Details (Land/Property for Assistance):
+        </div>
+        <div class="grid-details" style="row-gap:6px; font-size:13px; margin-bottom:12px; padding-left:10px;">
+            <div class="grid-label"><span>Owner's Name</span><span>:</span></div>
+            <div class="grid-value"><%= hl_owner %></div>
+
+            <div class="grid-label"><span>Land Extent</span><span>:</span></div>
+            <div class="grid-value"><%= hl_extent %></div>
+
+            <div class="grid-label"><span>Deed Number and Date</span><span>:</span></div>
+            <div class="grid-value"><%= hl_deed %></div>
+        </div>
+
+        <div style="font-size:13px; line-height:1.6; margin-bottom:12px; text-align:justify;">
+            I hereby declare that the information provided above is accurate and request a loan/grant of Rs. <strong><%= hl_amount %></strong> for the aforementioned property.
+        </div>
+
+        <div style="border:1px solid #aaa; border-radius:4px; padding:8px 12px; margin-top:8px;">
+            <strong style="font-size:13px; text-decoration:underline;">Grama Niladhari's Recommendation</strong>
+            <p style="font-size:12px; margin:6px 0 0;">
+                I certify that the information provided by Mr./Mrs./Ms. <strong><%= applicant_name %></strong> is correct and I recommend / do not recommend the issuance of this housing loan/grant.
+            </p>
+        </div>
+
+        <div style="border:1px solid #aaa; border-radius:4px; padding:8px 12px; margin-top:8px;">
+            <strong style="font-size:13px; text-decoration:underline;">Housing Officer's Recommendation</strong>
+            <p style="font-size:12px; margin:6px 0 0;">
+                I have conducted a field inspection regarding the housing loan/grant application submitted by <strong><%= applicant_name %></strong> and hereby recommend that the assistance be granted.
+            </p>
+        </div>
+
+        <div style="border:1px solid #333; border-radius:4px; padding:8px 12px; margin-top:8px; background:#f8f9fa;">
+            <strong style="font-size:13px; text-decoration:underline;">Approval by Divisional Secretary</strong>
+            <p style="font-size:12px; margin:6px 0 0;">
+                I hereby approve the housing loan/grant amount requested by the above applicant.
             </p>
         </div>
 

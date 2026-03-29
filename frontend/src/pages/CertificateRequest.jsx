@@ -311,28 +311,33 @@ function DynamicFields({ certType, requestData, setRequestData }) {
       {certType === "Application for obtaining housing loan funds" && (
         <>
           <div className="gn-field">
-            <label className="cr-label">Applicant Name (Full Name)</label>
-            <input className="gn-input" type="text" value={requestData.applicant_name || ""} onChange={e => handleInput("applicant_name", e.target.value)} />
-          </div>
-          <div className="gn-field">
-            <label className="cr-label">Full Residential Address</label>
+            <label className="cr-label">Address</label>
             <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
           </div>
           <div className="gn-field">
             <label className="cr-label">Monthly Family Income (Rs.)</label>
             <input className="gn-input" type="number" value={requestData.monthly_income || ""} onChange={e => handleInput("monthly_income", e.target.value)} />
           </div>
-          <div className="gn-field gn-radio-group" style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
+          <div className="gn-field" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
             <label className="cr-label" style={{ marginBottom: 0 }}>Samurdhi Beneficiary:</label>
             <label><input type="radio" checked={requestData.samurdhi_beneficiary === "Yes"} onChange={() => handleInput("samurdhi_beneficiary", "Yes")} /> Yes</label>
             <label><input type="radio" checked={requestData.samurdhi_beneficiary === "No"} onChange={() => handleInput("samurdhi_beneficiary", "No")} /> No</label>
           </div>
+          <h5 style={{ margin: "15px 0 8px", fontSize: "0.88rem", color: "#334155" }}>Property Details (Land/Property for Assistance)</h5>
           <div className="gn-field">
-            <label className="cr-label">Property Details (Land Size, Deed Number, and Date)</label>
-            <textarea className="gn-textarea" placeholder="E.g., 10 Perches, Deed 1234, 2020-01-01" value={requestData.property_details || ""} onChange={e => handleInput("property_details", e.target.value)} rows={2} />
+            <label className="cr-label">Owner's Name</label>
+            <input className="gn-input" type="text" value={requestData.owner_name || ""} onChange={e => handleInput("owner_name", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Requested Amount (Rs.)</label>
+            <label className="cr-label">Land Extent</label>
+            <input className="gn-input" type="text" placeholder="e.g., 10 Perches" value={requestData.land_extent || ""} onChange={e => handleInput("land_extent", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Deed Number and Date</label>
+            <input className="gn-input" type="text" placeholder="e.g., Deed No. 1234, 2020-01-15" value={requestData.deed_number_date || ""} onChange={e => handleInput("deed_number_date", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Requested Loan / Grant Amount (Rs.)</label>
             <input className="gn-input" type="number" value={requestData.requested_amount || ""} onChange={e => handleInput("requested_amount", e.target.value)} />
           </div>
         </>
