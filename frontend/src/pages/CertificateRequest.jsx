@@ -434,10 +434,6 @@ function DynamicFields({ certType, requestData, setRequestData }) {
             <label className="cr-label">Mother’s Name</label>
             <input className="gn-input" type="text" value={requestData.mother_name || ""} onChange={e => handleInput("mother_name", e.target.value)} />
           </div>
-          <div className="gn-field">
-            <label className="cr-label">Recording Place</label>
-            <input className="gn-input" type="text" value={requestData.recording_place || ""} onChange={e => handleInput("recording_place", e.target.value)} />
-          </div>
         </>
       )}
 
