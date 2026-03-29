@@ -439,25 +439,67 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 
       {certType === "Registration of voluntary organizations" && (
         <>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px", marginBottom: "15px" }}>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">Province</label>
+              <input className="gn-input" type="text" value={requestData.province || ""} onChange={e => handleInput("province", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">District</label>
+              <input className="gn-input" type="text" value={requestData.district || ""} onChange={e => handleInput("district", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">D.S. Division</label>
+              <input className="gn-input" type="text" value={requestData.ds_division || ""} onChange={e => handleInput("ds_division", e.target.value)} />
+            </div>
+          </div>
+
           <div className="gn-field">
-            <label className="cr-label">Organization Name & Address</label>
-            <input className="gn-input" type="text" value={requestData.org_name_address || ""} onChange={e => handleInput("org_name_address", e.target.value)} />
+            <label className="cr-label">Name of the Organization</label>
+            <input className="gn-input" type="text" value={requestData.org_name || ""} onChange={e => handleInput("org_name", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Subject/Objective of Organization</label>
-            <textarea className="gn-textarea" value={requestData.org_objective || ""} onChange={e => handleInput("org_objective", e.target.value)} rows={2} />
+            <label className="cr-label">Address</label>
+            <textarea className="gn-textarea" value={requestData.org_address || ""} onChange={e => handleInput("org_address", e.target.value)} rows={2} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Subject/Nature of Organization</label>
+            <input className="gn-input" type="text" value={requestData.org_nature || ""} onChange={e => handleInput("org_nature", e.target.value)} />
           </div>
           <div className="gn-field">
             <label className="cr-label">Date of Commencement</label>
             <input className="gn-input" type="date" value={requestData.commencement_date || ""} onChange={e => handleInput("commencement_date", e.target.value)} />
           </div>
-          <div className="gn-field">
-            <label className="cr-label">Office Bearers (Name, Address, Phone)</label>
-            <textarea className="gn-textarea" placeholder="E.g., President: ..., Secretary: ..., Treasurer: ..." value={requestData.office_bearers || ""} onChange={e => handleInput("office_bearers", e.target.value)} rows={3} />
+
+          <h5 style={{ margin: "20px 0 10px", fontSize: "0.9rem" }}>Key Officials</h5>
+          <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 1fr 150px", gap: "10px", marginBottom: "5px", fontWeight: "bold", fontSize: "0.8rem", color: "#64748b" }}>
+             <div>Role</div><div>Name</div><div>Address</div><div>Phone</div>
           </div>
-          <div className="gn-field">
-            <label className="cr-label">Bank Account Details (Account Number and Branch)</label>
-            <input className="gn-input" type="text" value={requestData.bank_details || ""} onChange={e => handleInput("bank_details", e.target.value)} />
+          {["President", "Secretary", "Treasurer"].map(role => {
+             const keyPrefix = role.toLowerCase();
+             return (
+               <div key={role} style={{ display: "grid", gridTemplateColumns: "80px 1fr 1fr 150px", gap: "10px", marginBottom: "10px", alignItems: "center" }}>
+                 <div style={{ fontSize: "0.85rem", fontWeight: "bold" }}>{role}</div>
+                 <input className="gn-input" style={{ margin: 0 }} type="text" placeholder="Name" value={requestData[`${keyPrefix}_name`] || ""} onChange={e => handleInput(`${keyPrefix}_name`, e.target.value)} />
+                 <input className="gn-input" style={{ margin: 0 }} type="text" placeholder="Address" value={requestData[`${keyPrefix}_address`] || ""} onChange={e => handleInput(`${keyPrefix}_address`, e.target.value)} />
+                 <input className="gn-input" style={{ margin: 0 }} type="text" placeholder="Phone" value={requestData[`${keyPrefix}_phone`] || ""} onChange={e => handleInput(`${keyPrefix}_phone`, e.target.value)} />
+               </div>
+             )
+          })}
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "15px" }}>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">Bank Account Number</label>
+              <input className="gn-input" type="text" value={requestData.bank_account_number || ""} onChange={e => handleInput("bank_account_number", e.target.value)} />
+            </div>
+            <div className="gn-field" style={{ margin: 0 }}>
+              <label className="cr-label">Branch</label>
+              <input className="gn-input" type="text" value={requestData.bank_branch || ""} onChange={e => handleInput("bank_branch", e.target.value)} />
+            </div>
+          </div>
+          <div className="gn-field" style={{ marginTop: "15px" }}>
+            <label className="cr-label">Programs Conducted During the Last Six Months</label>
+            <textarea className="gn-textarea" value={requestData.programs_conducted || ""} onChange={e => handleInput("programs_conducted", e.target.value)} rows={3} />
           </div>
         </>
       )}
@@ -796,7 +838,7 @@ export default function CertificateRequest() {
                 </span>
               </div>
 
-              {certType !== "Registration of delayed births" && (
+              {certType !== "Registration of delayed births" && certType !== "Registration of voluntary organizations" && (
                 <div className="gn-field">
                   <label className="cr-label">Purpose / Additional Information</label>
                   <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />

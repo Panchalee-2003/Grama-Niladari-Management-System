@@ -467,6 +467,132 @@
             </div>
         </div>
 
+    <% } else if (cert_type === "Registration of voluntary organizations") { %>
+        <%
+            const province = (dynamic_data && dynamic_data.province) || '—';
+            const district = (dynamic_data && dynamic_data.district) || '—';
+            const ds_division = (dynamic_data && dynamic_data.ds_division) || '—';
+            const org_name = (dynamic_data && dynamic_data.org_name) || '—';
+            const org_address = (dynamic_data && dynamic_data.org_address) || '—';
+            const org_nature = (dynamic_data && dynamic_data.org_nature) || '—';
+            const commencement_date = (dynamic_data && dynamic_data.commencement_date) || '—';
+
+            const p_name = (dynamic_data && dynamic_data.president_name) || '—';
+            const p_addr = (dynamic_data && dynamic_data.president_address) || '—';
+            const p_phone = (dynamic_data && dynamic_data.president_phone) || '—';
+
+            const s_name = (dynamic_data && dynamic_data.secretary_name) || '—';
+            const s_addr = (dynamic_data && dynamic_data.secretary_address) || '—';
+            const s_phone = (dynamic_data && dynamic_data.secretary_phone) || '—';
+
+            const t_name = (dynamic_data && dynamic_data.treasurer_name) || '—';
+            const t_addr = (dynamic_data && dynamic_data.treasurer_address) || '—';
+            const t_phone = (dynamic_data && dynamic_data.treasurer_phone) || '—';
+
+            const bank_acc = (dynamic_data && dynamic_data.bank_account_number) || '—';
+            const bank_branch = (dynamic_data && dynamic_data.bank_branch) || '—';
+            const programs = (dynamic_data && dynamic_data.programs_conducted) || '—';
+        %>
+
+        <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; text-decoration: underline;">
+            Registration of Voluntary Organization
+        </div>
+
+        <div class="grid-details" style="row-gap: 8px;">
+            <div class="grid-label"><span>Province</span><span>:</span></div>
+            <div class="grid-value"><%= province %></div>
+            <div class="grid-label"><span>District</span><span>:</span></div>
+            <div class="grid-value"><%= district %></div>
+            <div class="grid-label"><span>D.S. Division</span><span>:</span></div>
+            <div class="grid-value"><%= ds_division %></div>
+            
+            <div class="grid-label"><span>Name of the Organization</span><span>:</span></div>
+            <div class="grid-value"><%= org_name %></div>
+            <div class="grid-label"><span>Address</span><span>:</span></div>
+            <div class="grid-value"><%= org_address %></div>
+            <div class="grid-label"><span>Subject / Nature</span><span>:</span></div>
+            <div class="grid-value"><%= org_nature %></div>
+            <div class="grid-label"><span>Date of Commencement</span><span>:</span></div>
+            <div class="grid-value"><%= commencement_date %></div>
+        </div>
+
+        <h4 style="margin-top: 15px; margin-bottom: 5px; text-decoration: underline; font-size: 15px;">Key Officials:</h4>
+        <table class="dependents-table" style="margin-top: 5px; margin-bottom: 15px;">
+            <thead>
+                <tr>
+                    <th>Designation</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>President</strong></td>
+                    <td><%= p_name %></td>
+                    <td><%= p_addr %></td>
+                    <td><%= p_phone %></td>
+                </tr>
+                <tr>
+                    <td><strong>Secretary</strong></td>
+                    <td><%= s_name %></td>
+                    <td><%= s_addr %></td>
+                    <td><%= s_phone %></td>
+                </tr>
+                <tr>
+                    <td><strong>Treasurer</strong></td>
+                    <td><%= t_name %></td>
+                    <td><%= t_addr %></td>
+                    <td><%= t_phone %></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="grid-details" style="row-gap: 8px;">
+            <div class="grid-label"><span>Bank Account Number</span><span>:</span></div>
+            <div class="grid-value"><%= bank_acc %></div>
+            <div class="grid-label"><span>Branch</span><span>:</span></div>
+            <div class="grid-value"><%= bank_branch %></div>
+        </div>
+
+        <h4 style="margin-top: 15px; margin-bottom: 5px; text-decoration: underline; font-size: 15px;">Programs Conducted During the Last Six Months:</h4>
+        <div style="font-size: 14px; white-space: pre-wrap; padding-left: 10px;"><%= programs %></div>
+
+        <div style="line-height: 1.6; font-size: 14px; margin-top: 15px; text-align: justify;">
+            <p style="margin: 0;">I hereby request to register our voluntary organization and certify that the details provided above are accurate.</p>
+        </div>
+
+        <div style="border: 2px solid #333; padding: 15px; margin-top: 25px; border-radius: 4px;">
+            <strong style="text-decoration: underline; font-size: 14px;">Official Recommendations</strong>
+            <p style="margin-top: 10px; font-size: 14px; line-height: 1.5;">
+                I recommend / do not recommend this registration as the necessary requirements have / have not been fulfilled.
+            </p>
+        </div>
+
+        <div class="signatures-both" style="margin-top: 30px;">
+            <div class="ds-signature-box">
+                <% if (ds_signature_img) { %>
+                    <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+                <% } %>
+                <div class="caption">
+                    <strong>Divisional Secretary</strong><br>
+                    Digitally Signed &amp; Stamp Verified
+                </div>
+            </div>
+
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting GN Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                    Digitally Signed
+                </div>
+            </div>
+        </div>
+
     <% } else { %>
 
         <%/* ── Generic layout for all other certificate types ── */%>
