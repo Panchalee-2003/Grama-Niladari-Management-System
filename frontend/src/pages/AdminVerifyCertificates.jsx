@@ -142,6 +142,12 @@ export default function AdminVerifyCertificates() {
     const [certificates, setCertificates] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [selectedReq, setSelectedReq] = useState(null);
+    const [showDSModal, setShowDSModal] = useState(false);
+    const [dsRemarks, setDsRemarks] = useState("");
+    const [actionLoading, setActionLoading] = useState(false);
+    const [pdfUrl, setPdfUrl] = useState(null);
+
     const [searchQuery, setSearchQuery] = useState("");
     const [filterType, setFilterType] = useState("All Types");
     const [filterStatus, setFilterStatus] = useState("All Statuses");
@@ -182,16 +188,72 @@ export default function AdminVerifyCertificates() {
         fetchCertificates();
     }, []);
 
+    const openDSModal = async (cert) => {
+        setSelectedReq(cert);
+        setDsRemarks("");
+        setPdfUrl(null);
+        setShowDSModal(true);
+
+        try {
+            const res = await api.get(`/api/certificate/${cert.request_id}/pdf`, { responseType: 'blob' });
+            const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+            setPdfUrl(url);
+        } catch (err) {
+            console.error("Failed to load PDF preview:", err);
+        }
+    };
+
+    const closeDSModal = () => {
+        setSelectedReq(null);
+        setShowDSModal(false);
+        if (pdfUrl) {
+            window.URL.revokeObjectURL(pdfUrl);
+            setPdfUrl(null);
+        }
+    };
+
+    const handleDSAction = async (action) => {
+        if (action === "reject" && !dsRemarks.trim()) {
+            alert("Please provide remarks for returning the request to the GN.");
+            return;
+        }
+
+        try {
+            setActionLoading(true);
+            const res = await api.patch(`/api/certificate/${selectedReq.request_id}/ds-action`, {
+                action,
+                ds_remarks: dsRemarks,
+            });
+
+            if (res.data.ok) {
+                alert(action === "approve" ? "Certificate Approved!" : "Returned to GN!");
+                closeDSModal();
+                const freshRes = await api.get("/api/certificate/all");
+                if (freshRes.data.ok) setCertificates(freshRes.data.requests);
+            }
+        } catch (err) {
+            console.error("Action error", err);
+            alert(err.response?.data?.error || "Error processing action.");
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
     const handleStatusUpdate = async (id, newStatus) => {
         try {
+            setActionLoading(true);
             const res = await api.patch(`/api/certificate/${id}/admin-status`, { admin_status: newStatus });
             if (res.data.ok) {
                 setCertificates(prev => prev.map(cert => 
                     cert.request_id === id ? { ...cert, admin_status: newStatus } : cert
                 ));
+                alert(`Successfully marked as ${newStatus}`);
+                closeDSModal();
             }
         } catch (err) {
             alert(err.response?.data?.error || "Error updating status");
+        } finally {
+            setActionLoading(false);
         }
     };
 
@@ -369,14 +431,13 @@ export default function AdminVerifyCertificates() {
                                             </span>
                                         </td>
                                         <td className="avc-actions">
-                                            {(cert.admin_status === "PENDING" || !cert.admin_status) && (
-                                                <>
-                                                    <button className="avc-action-btn" onClick={() => handleStatusUpdate(cert.request_id, "VERIFIED")}>Verify</button>
-                                                    <button className="avc-action-btn" onClick={() => handleStatusUpdate(cert.request_id, "REJECTED")}>Reject</button>
-                                                </>
-                                            )}
+                                            <button className="avc-action-btn" onClick={() => openDSModal(cert)} style={{ backgroundColor: "#2563eb", color: "white", padding: "6px 12px", borderRadius: "4px", textDecoration: "none" }}>
+                                                View & Decide
+                                            </button>
                                             {(cert.admin_status === "VERIFIED" && cert.status === "APPROVED") && (
-                                                <button className="avc-action-btn" onClick={() => handleDownload(cert.request_id)}>Download</button>
+                                                <button className="avc-action-btn" onClick={() => handleDownload(cert.request_id)} style={{ backgroundColor: "#155724", color: "white", padding: "6px 12px", borderRadius: "4px", textDecoration: "none", marginLeft: "10px" }}>
+                                                    Download
+                                                </button>
                                             )}
                                         </td>
                                     </tr>
@@ -386,6 +447,70 @@ export default function AdminVerifyCertificates() {
                     </div>
                 </main>
             </section>
+
+            {/* DS Modal Overlay */}
+            {showDSModal && selectedReq && (
+                <div className="avc-modal-overlay">
+                    <div className="avc-modal-content">
+                        <button className="avc-modal-close" onClick={closeDSModal}>
+                            &times;
+                        </button>
+                        <h2 className="avc-modal-title">Certificate Approval</h2>
+
+                        <div className="avc-modal-info">
+                            <div className="info-row"><strong>Request ID:</strong> {selectedReq.request_id}</div>
+                            <div className="info-row"><strong>Type:</strong> {selectedReq.cert_type}</div>
+                            <div className="info-row"><strong>Applicant:</strong> {selectedReq.member_name || selectedReq.citizen_name}</div>
+                            <div className="info-row"><strong>NIC:</strong> {selectedReq.nic_number || selectedReq.citizen_nic}</div>
+                            <div className="info-row"><strong>GN Remarks:</strong> {selectedReq.gn_remarks || selectedReq.gn_note || "None"}</div>
+                        </div>
+
+                        <div className="avc-modal-pdf">
+                            {pdfUrl ? (
+                                <iframe
+                                    title="Certificate PDF"
+                                    src={pdfUrl}
+                                    className="avc-pdf-viewer"
+                                />
+                            ) : (
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
+                                    Loading PDF preview...
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="avc-modal-actions-area">
+                            <div className="avc-textarea-wrap">
+                                <label>Remarks/Comments {actionLoading ? "" : "(Mandatory for Return/Reject)"}</label>
+                                <textarea
+                                    rows="3"
+                                    placeholder="Enter any comments or rejection reason..."
+                                    value={dsRemarks}
+                                    onChange={(e) => setDsRemarks(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="avc-btn-group">
+                                {selectedReq.status === "PENDING_DS_APPROVAL" ? (
+                                    <>
+                                        <button className="avc-btn-approve" disabled={actionLoading} onClick={() => handleDSAction("approve")}>{actionLoading ? "Processing..." : "Approve"}</button>
+                                        <button className="avc-btn-reject" disabled={actionLoading} onClick={() => handleDSAction("reject")}>{actionLoading ? "Processing..." : "Return to GN"}</button>
+                                    </>
+                                ) : (selectedReq.admin_status === "PENDING" || !selectedReq.admin_status) ? (
+                                    <>
+                                        <button className="avc-btn-approve" disabled={actionLoading} onClick={() => handleStatusUpdate(selectedReq.request_id, "VERIFIED")}>{actionLoading ? "Processing..." : "Verify"}</button>
+                                        <button className="avc-btn-reject" disabled={actionLoading} onClick={() => handleStatusUpdate(selectedReq.request_id, "REJECTED")}>{actionLoading ? "Processing..." : "Reject"}</button>
+                                    </>
+                                ) : (
+                                    <span style={{ color: "#64748b", fontWeight: 600, fontStyle: "italic", padding: "12px" }}>
+                                        No pending actions for this request.
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

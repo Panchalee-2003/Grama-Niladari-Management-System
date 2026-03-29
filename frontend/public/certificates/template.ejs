@@ -391,6 +391,82 @@
             </div>
         </div>
 
+    <% } else if (cert_type === "Registration of delayed births") { %>
+        <%
+            const personName = (dynamic_data && dynamic_data.person_name) || '—';
+            const birthPlace = (dynamic_data && dynamic_data.birth_place) || '—';
+            const fatherName = (dynamic_data && dynamic_data.father_name) || '—';
+            const motherName = (dynamic_data && dynamic_data.mother_name) || '—';
+            
+            const passportNum = (dynamic_data && dynamic_data.passport_number) || '—';
+            const dlNum = (dynamic_data && dynamic_data.driving_license_number) || '—';
+            const occ = (dynamic_data && dynamic_data.occupation) || '—';
+            const address = (dynamic_data && dynamic_data.address) || '—';
+            const age = (dynamic_data && dynamic_data.age) || '—';
+        %>
+
+        <div style="text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 12px; text-decoration: underline;">
+            Late Birth Registration - Grama Niladhari Report
+        </div>
+
+        <div class="grid-details" style="margin-bottom: 10px; row-gap: 8px;">
+            <div class="grid-label"><span>Full Name</span><span>:</span></div>
+            <div class="grid-value"><%= applicant_name %></div>
+
+            <div class="grid-label"><span>Address</span><span>:</span></div>
+            <div class="grid-value"><%= address %></div>
+
+            <div class="grid-label"><span>Occupation</span><span>:</span></div>
+            <div class="grid-value"><%= occ %></div>
+        </div>
+
+        <h4 style="margin-top: 10px; margin-bottom: 10px; text-decoration: underline; font-size: 15px;">Identification Information:</h4>
+        <div class="grid-details" style="margin-bottom: 15px; row-gap: 8px;">
+            <div class="grid-label"><span>NIC Number</span><span>:</span></div>
+            <div class="grid-value"><%= nic_number %></div>
+
+            <div class="grid-label"><span>Passport Number</span><span>:</span></div>
+            <div class="grid-value"><%= passportNum %></div>
+
+            <div class="grid-label"><span>Driving License Number</span><span>:</span></div>
+            <div class="grid-value"><%= dlNum %></div>
+
+            <div class="grid-label"><span>Age</span><span>:</span></div>
+            <div class="grid-value"><%= age %></div>
+        </div>
+
+        <div style="line-height: 1.6; font-size: 14px; margin-top: 15px; margin-bottom: 15px; text-align: justify;">
+            <p style="margin: 8px 0;">I hereby certify that I am personally acquainted with <strong style="border-bottom: 1px dotted #333; padding: 0 10px;"><%= applicant_name %></strong> who has submitted this declaration.</p>
+            <p style="margin: 8px 0;">It has been reported to me that <strong style="border-bottom: 1px dotted #333; padding: 0 10px;"><%= personName %></strong> was born at <strong style="border-bottom: 1px dotted #333; padding: 0 10px;"><%= birthPlace %></strong> Hospital / Maternity Home.</p>
+            <p style="margin: 8px 0;">I further declare that <strong style="border-bottom: 1px dotted #333; padding: 0 10px;"><%= fatherName %></strong> is the father and <strong style="border-bottom: 1px dotted #333; padding: 0 10px;"><%= motherName %></strong> is the mother of the said person.</p>
+            <p style="margin: 8px 0;">I confirm that they reside in my division as husband and wife / that the father / mother / both parents are deceased.</p>
+            <p style="margin: 8px 0;">I certify that the above information is true and correct.</p>
+        </div>
+
+        <div class="signatures-both" style="margin-top: 40px;">
+            <div class="ds-signature-box">
+                <% if (ds_signature_img) { %>
+                    <img class="signature-img" src="<%= ds_signature_img %>" alt="Divisional Secretary Signature">
+                <% } %>
+                <div class="caption">
+                    <strong>Divisional Secretary</strong><br>
+                    Digitally Signed &amp; Stamp Verified
+                </div>
+            </div>
+
+            <div class="signature-box">
+                <% if (gn_signature_img) { %>
+                    <img class="signature-img" src="<%= gn_signature_img %>" alt="Grama Niladhari Signature">
+                <% } else { %>
+                    <div style="height: 80px; line-height: 80px; font-style: italic; color: #999;">Awaiting GN Signature</div>
+                <% } %>
+                <div class="caption">
+                    <strong>Grama Niladhari (<%= (dynamic_data && dynamic_data.gn_name) ? dynamic_data.gn_name : "Maspanna Division" %>)</strong><br>
+                    Digitally Signed
+                </div>
+            </div>
+        </div>
+
     <% } else { %>
 
         <%/* ── Generic layout for all other certificate types ── */%>

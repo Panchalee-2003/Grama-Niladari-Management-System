@@ -533,6 +533,29 @@ router.get("/:id/pdf", requireAuth, requireRole("GN", "ADMIN"), async (req, res)
 // ─────────────────────────────────────────
 
 // ─────────────────────────────────────────
+// DS: Get pending DS approvals
+// ─────────────────────────────────────────
+router.get("/ds-pending", requireAuth, requireRole("ADMIN"), async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT cr.*, COALESCE(fm.full_name, c.full_name) AS applicant_name,
+                    c.full_name AS citizen_name, c.nic_number AS citizen_nic
+             FROM certificate_request cr
+             JOIN citizen c ON c.citizen_id = cr.citizen_id
+             LEFT JOIN family_member fm ON fm.member_id = cr.family_member_id
+             WHERE cr.status = 'PENDING_DS_APPROVAL'
+             AND cr.cert_type = ANY($1)
+             ORDER BY cr.updated_at ASC`,
+             [DS_APPROVAL_TYPES]
+        );
+        return res.json({ ok: true, requests: result.rows });
+    } catch (err) {
+        console.error("DS Pending Requests Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
 // GN & ADMIN: Get all certificate requests
 // ─────────────────────────────────────────
 router.get("/all", requireAuth, requireRole("GN", "ADMIN"), async (req, res) => {

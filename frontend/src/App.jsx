@@ -37,6 +37,7 @@ import CertificateVerify from "./pages/CertificateVerify";
 
 import GNAvailability from "./pages/GNAvailability";
 import CitizenAvailability from "./pages/CitizenAvailability";
+
 export default function App() {
   return (
     <BrowserRouter>

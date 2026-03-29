@@ -399,26 +399,44 @@ function DynamicFields({ certType, requestData, setRequestData }) {
       {certType === "Registration of delayed births" && (
         <>
           <div className="gn-field">
-            <label className="cr-label">Child's Full Name</label>
-            <input className="gn-input" type="text" value={requestData.child_name || ""} onChange={e => handleInput("child_name", e.target.value)} />
+            <label className="cr-label">Address</label>
+            <input className="gn-input" type="text" value={requestData.address || ""} onChange={e => handleInput("address", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Date & Place of Birth</label>
-            <input className="gn-input" type="text" value={requestData.dob_and_place || ""} onChange={e => handleInput("dob_and_place", e.target.value)} />
+            <label className="cr-label">Occupation</label>
+            <input className="gn-input" type="text" value={requestData.occupation || ""} onChange={e => handleInput("occupation", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Father’s Details (Name and Status)</label>
-            <textarea className="gn-textarea" value={requestData.father_details || ""} onChange={e => handleInput("father_details", e.target.value)} rows={2} />
+            <label className="cr-label">Passport Number</label>
+            <input className="gn-input" type="text" value={requestData.passport_number || ""} onChange={e => handleInput("passport_number", e.target.value)} />
           </div>
           <div className="gn-field">
-            <label className="cr-label">Mother’s Details (Name and Status)</label>
-            <textarea className="gn-textarea" value={requestData.mother_details || ""} onChange={e => handleInput("mother_details", e.target.value)} rows={2} />
+            <label className="cr-label">Driving License Number</label>
+            <input className="gn-input" type="text" value={requestData.driving_license_number || ""} onChange={e => handleInput("driving_license_number", e.target.value)} />
           </div>
-          <div className="gn-field" style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "10px" }}>
-            <label className="cr-label" style={{ marginBottom: 0 }}>Proof of Identity:</label>
-            <label><input type="checkbox" onChange={(e) => handleInput("proof_nic", e.target.checked)} /> NIC</label>
-            <label><input type="checkbox" onChange={(e) => handleInput("proof_passport", e.target.checked)} /> Passport</label>
-            <label><input type="checkbox" onChange={(e) => handleInput("proof_driving_license", e.target.checked)} /> Driving License</label>
+          <div className="gn-field">
+            <label className="cr-label">Age</label>
+            <input className="gn-input" type="text" value={requestData.age || ""} onChange={e => handleInput("age", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Child's Name</label>
+            <input className="gn-input" type="text" value={requestData.person_name || ""} onChange={e => handleInput("person_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Place of Birth (Hospital/Maternity Home)</label>
+            <input className="gn-input" type="text" value={requestData.birth_place || ""} onChange={e => handleInput("birth_place", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Father’s Name</label>
+            <input className="gn-input" type="text" value={requestData.father_name || ""} onChange={e => handleInput("father_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Mother’s Name</label>
+            <input className="gn-input" type="text" value={requestData.mother_name || ""} onChange={e => handleInput("mother_name", e.target.value)} />
+          </div>
+          <div className="gn-field">
+            <label className="cr-label">Recording Place</label>
+            <input className="gn-input" type="text" value={requestData.recording_place || ""} onChange={e => handleInput("recording_place", e.target.value)} />
           </div>
         </>
       )}
@@ -782,10 +800,12 @@ export default function CertificateRequest() {
                 </span>
               </div>
 
-              <div className="gn-field">
-                <label className="cr-label">Purpose / Additional Information</label>
-                <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />
-              </div>
+              {certType !== "Registration of delayed births" && (
+                <div className="gn-field">
+                  <label className="cr-label">Purpose / Additional Information</label>
+                  <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />
+                </div>
+              )}
 
               <DynamicFields certType={certType} requestData={requestData} setRequestData={setRequestData} />
 
