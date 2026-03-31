@@ -97,6 +97,26 @@ router.get("/me/notifications", requireAuth, requireRole("CITIZEN"), async (req,
       });
     });
 
+    // 3. GN Notices (recent 30 days)
+    const noticeRes = await pool.query(
+      `SELECT n.notice_id, n.title, n.description, n.created_at, g.name AS gn_name
+       FROM notice n
+       LEFT JOIN grama_niladhari g ON g.gn_id = n.gn_id
+       WHERE n.created_at >= NOW() - INTERVAL '30 days'
+       ORDER BY n.created_at DESC`
+    );
+    noticeRes.rows.forEach(n => {
+      notifications.push({
+        id: `notice-${n.notice_id}`,
+        title: n.title,
+        message: n.description
+          ? (n.description.length > 100 ? n.description.substring(0, 100) + '…' : n.description)
+          : `Posted by ${n.gn_name || 'Grama Niladhari'}`,
+        date: n.created_at,
+        type: 'notice'
+      });
+    });
+
     // Sort by date descending
     notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import api from "../api/api";
 import "../styles/NotificationDropdown.css";
 
@@ -11,6 +12,17 @@ function IconBell() {
   );
 }
 
+/* Returns icon emoji + colours based on notification type */
+function notifMeta(n) {
+  if (n.type === "notice") {
+    return { emoji: "📢", bg: "#EEF2FF", color: "#4F46E5" };
+  }
+  if (n.isSuccess) {
+    return { emoji: "✅", bg: "#E9FBF0", color: "#15803D" };
+  }
+  return { emoji: "❌", bg: "#FFF1F1", color: "#DC2626" };
+}
+
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -18,10 +30,8 @@ export default function NotificationDropdown() {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    // Fetch notifications initially
     loadNotifications();
 
-    // Handle clicks outside to close dropdown
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
@@ -36,10 +46,10 @@ export default function NotificationDropdown() {
       const res = await api.get("/api/citizen/me/notifications");
       if (res.data.ok) {
         setNotifications(res.data.notifications);
-        // By default, let's just make all fetched notifications unread until the dropdown is opened
-        // Or for simplicity, unread count could be length of notifications
-        const unreadIds = JSON.parse(localStorage.getItem('readList') || '[]');
-        const count = res.data.notifications.filter(n => !unreadIds.includes(n.id)).length;
+        const unreadIds = JSON.parse(localStorage.getItem("readList") || "[]");
+        const count = res.data.notifications.filter(
+          (n) => !unreadIds.includes(n.id)
+        ).length;
         setUnreadCount(count);
       }
     } catch (err) {
@@ -49,9 +59,8 @@ export default function NotificationDropdown() {
 
   const toggleDropdown = () => {
     if (!isOpen) {
-      // mark all as read when opened
-      const ids = notifications.map(n => n.id);
-      localStorage.setItem('readList', JSON.stringify(ids));
+      const ids = notifications.map((n) => n.id);
+      localStorage.setItem("readList", JSON.stringify(ids));
       setUnreadCount(0);
     }
     setIsOpen(!isOpen);
@@ -60,38 +69,74 @@ export default function NotificationDropdown() {
   const formatDate = (dateString) => {
     const d = new Date(dateString);
     if (isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric", hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   return (
     <div className="notif-wrapper" ref={dropdownRef}>
-      <button className="notif-bell-btn" onClick={toggleDropdown} aria-label="Notifications">
+      <button
+        className="notif-bell-btn"
+        onClick={toggleDropdown}
+        aria-label="Notifications"
+      >
         <IconBell />
-        {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
+        {unreadCount > 0 && (
+          <span className="notif-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
+        )}
       </button>
 
       {isOpen && (
         <div className="notif-dropdown">
           <div className="notif-header">
             <h3>Notifications</h3>
+            {notifications.length > 0 && (
+              <span className="notif-count">{notifications.length}</span>
+            )}
           </div>
+
           <div className="notif-body">
             {notifications.length === 0 ? (
               <div className="notif-empty">No new notifications.</div>
             ) : (
-              notifications.map((n) => (
-                <div key={n.id} className="notif-item">
-                  <div className="notif-icon" style={{ background: n.isSuccess ? '#E9FBF0' : '#FFF1F1', color: n.isSuccess ? '#15803D' : '#DC2626' }}>
-                     {n.isSuccess ? '✅' : '❌'}
+              notifications.map((n) => {
+                const { emoji, bg, color } = notifMeta(n);
+                return (
+                  <div
+                    key={n.id}
+                    className={`notif-item${n.type === "notice" ? " notif-item--notice" : ""}`}
+                  >
+                    <div
+                      className="notif-icon"
+                      style={{ background: bg, color }}
+                    >
+                      {emoji}
+                    </div>
+                    <div className="notif-content">
+                      <p className="notif-title">{n.title}</p>
+                      {n.message && (
+                        <p className="notif-desc">{n.message}</p>
+                      )}
+                      <span className="notif-date">{formatDate(n.date)}</span>
+                    </div>
+                    {n.type === "notice" && (
+                      <span className="notif-tag">Notice</span>
+                    )}
                   </div>
-                  <div className="notif-content">
-                    <p className="notif-title">{n.title}</p>
-                    <p className="notif-desc">{n.message}</p>
-                    <span className="notif-date">{formatDate(n.date)}</span>
-                  </div>
-                </div>
-              ))
+                );
+              })
             )}
+          </div>
+
+          <div className="notif-footer">
+            <Link to="/notices" className="notif-footer-link" onClick={() => setIsOpen(false)}>
+              View all notices →
+            </Link>
           </div>
         </div>
       )}
