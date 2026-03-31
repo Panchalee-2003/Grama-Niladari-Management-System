@@ -21,7 +21,7 @@ router.get("/profile", requireAuth, requireRole("GN"), async (req, res) => {
 // GET /api/gn/stats — returns live dashboard counts
 router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
     try {
-        const [hhStats, compStats, totalNotices] = await Promise.all([
+        const [hhStats, compStats, totalNotices, certStats] = await Promise.all([
             pool.query(`
                 SELECT 
                     COUNT(*) as total,
@@ -37,6 +37,12 @@ router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
                 FROM complaint
             `),
             pool.query("SELECT COUNT(*) FROM notice"),
+            pool.query(`
+                SELECT COUNT(*) as issued_this_month
+                FROM certificate_request
+                WHERE status = 'APPROVED'
+                  AND date_trunc('month', issued_at) = date_trunc('month', CURRENT_DATE)
+            `),
         ]);
 
         return res.json({
@@ -46,12 +52,12 @@ router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
                 pending_households: parseInt(hhStats.rows[0].pending),
                 verified_households: parseInt(hhStats.rows[0].verified),
                 rejected_households: parseInt(hhStats.rows[0].rejected),
-                
+
                 total_complaints: parseInt(compStats.rows[0].total),
                 open_complaints: parseInt(compStats.rows[0].open_complaints),
                 complaints_received: parseInt(compStats.rows[0].total),
-                
-                certificates_this_month: 0,   // certificate table not yet created
+
+                certificates_this_month: parseInt(certStats.rows[0].issued_this_month || 0),
                 active_notices: parseInt(totalNotices.rows[0].count),
             },
         });
