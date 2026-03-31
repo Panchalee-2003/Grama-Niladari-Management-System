@@ -140,6 +140,8 @@ export default function HouseholdDetail() {
   // Reject-with-reason
   const [rejectMode, setRejectMode] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
+  // Delete family member
+  const [deletingMemberId, setDeletingMemberId] = useState(null);
 
   useEffect(() => {
     if (!householdId) {
@@ -193,6 +195,23 @@ export default function HouseholdDetail() {
       setActionMsg("⚠️ " + (err?.response?.data?.error || "Server error"));
     } finally {
       setActionLoading(false);
+    }
+  }
+
+  async function handleDeleteMember(memberId, memberName) {
+    if (!window.confirm(`Remove "${memberName}" from this household? This action cannot be undone.`)) return;
+    setDeletingMemberId(memberId);
+    try {
+      const res = await api.delete(`/api/family/${memberId}`);
+      if (res.data.ok) {
+        setMembers((prev) => prev.filter((m) => m.member_id !== memberId));
+      } else {
+        alert(res.data.error || "Failed to delete member.");
+      }
+    } catch (err) {
+      alert(err?.response?.data?.error || "Server error. Could not delete member.");
+    } finally {
+      setDeletingMemberId(null);
     }
   }
 
@@ -374,12 +393,13 @@ export default function HouseholdDetail() {
                       <span className="hd-card-title">Family Members</span>
                     </div>
 
-                    <div className="hd-table">
+                    <div className="hd-table hd-table--with-actions">
                       <div className="hd-tr hd-th">
                         <div>NAME</div>
                         <div>NIC NUMBER</div>
                         <div>EMPLOYMENT</div>
-                        <div className="hd-ta-right">RELATIONSHIP</div>
+                        <div>RELATIONSHIP</div>
+                        <div className="hd-ta-right">ACTIONS</div>
                       </div>
 
                       {members.length === 0 && (
@@ -402,8 +422,18 @@ export default function HouseholdDetail() {
                               {m.employment_status || "—"}
                             </span>
                           </div>
-                          <div className="hd-ta-right hd-muted">
+                          <div className="hd-muted">
                             {m.relationship_to_head || "—"}
+                          </div>
+                          <div className="hd-ta-right">
+                            <button
+                              className="hd-del-btn"
+                              onClick={() => handleDeleteMember(m.member_id, m.full_name)}
+                              disabled={deletingMemberId === m.member_id}
+                              title="Remove this member"
+                            >
+                              {deletingMemberId === m.member_id ? "…" : "🗑 Remove"}
+                            </button>
                           </div>
                         </div>
                       ))}
@@ -412,6 +442,9 @@ export default function HouseholdDetail() {
                     <div className="hd-card-foot">
                       <div className="hd-foot-left">
                         Showing {members.length} family member{members.length !== 1 ? "s" : ""}
+                      </div>
+                      <div className="hd-foot-right hd-muted" style={{ fontSize: 12 }}>
+                        GN can remove individual members as needed.
                       </div>
                     </div>
                   </div>

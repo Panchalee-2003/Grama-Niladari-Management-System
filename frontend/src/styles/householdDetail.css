@@ -363,6 +363,11 @@ body,
   align-items: center;
 }
 
+/* 5-column variant when Actions column is present */
+.hd-table--with-actions .hd-tr {
+  grid-template-columns: 1.5fr 1fr 0.9fr 0.7fr 100px;
+}
+
 .hd-th {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -372,6 +377,34 @@ body,
   font-weight: 900;
   border-bottom: 1px solid #EEF2F8;
 }
+
+/* ── Remove member button ─── */
+.hd-del-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FFF1F1;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.hd-del-btn:hover:not(:disabled) {
+  background: #FEE2E2;
+  border-color: #FCA5A5;
+}
+
+.hd-del-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 .hd-namecell .hd-name {
   font-weight: 900;

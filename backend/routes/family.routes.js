@@ -69,4 +69,25 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
   }
 });
 
+// Delete a family member – GN only
+router.delete("/:memberId", requireAuth, requireRole("GN"), async (req, res) => {
+  try {
+    const { memberId } = req.params;
+
+    const check = await pool.query(
+      "SELECT member_id FROM family_member WHERE member_id=$1 LIMIT 1",
+      [memberId]
+    );
+    if (check.rows.length === 0) {
+      return res.status(404).json({ ok: false, error: "Family member not found" });
+    }
+
+    await pool.query("DELETE FROM family_member WHERE member_id=$1", [memberId]);
+    return res.json({ ok: true, message: "Family member deleted successfully" });
+  } catch (err) {
+    console.error("Delete family member error:", err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 module.exports = router;
