@@ -89,16 +89,19 @@ export default function GNAvailability() {
     fetchAvailabilities();
   }, [currentDate.getFullYear(), currentDate.getMonth()]);
 
+  const toLocalDateStr = (d) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  };
+
   const fetchAvailabilities = async () => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    
-    // Format YYYY-MM-DD
-    const startStr = firstDay.toISOString().split('T')[0];
-    const endStr = lastDay.toISOString().split('T')[0];
-    
+    const startStr = toLocalDateStr(new Date(year, month, 1));
+    const endStr = toLocalDateStr(new Date(year, month + 1, 0));
+
     try {
       const res = await api.get(`/api/availability?start_date=${startStr}&end_date=${endStr}`);
       if (res.data.ok) {
@@ -115,9 +118,12 @@ export default function GNAvailability() {
   const handleDateClick = (day) => {
     const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     setSelectedDate(dateStr);
-    
-    // Check if exists
-    const existing = availabilities.find(a => a.date.split('T')[0] === dateStr);
+
+    // DB returns DATE as 'YYYY-MM-DD'
+    const existing = availabilities.find(a => {
+      const d = typeof a.date === 'string' ? a.date.substring(0, 10) : toLocalDateStr(new Date(a.date));
+      return d === dateStr;
+    });
     if (existing) {
       setFormData({
         status: existing.status,
@@ -147,6 +153,20 @@ export default function GNAvailability() {
     }
   };
 
+  const handleClear = async () => {
+    if (!window.confirm(`Remove availability entry for ${selectedDate}?`)) return;
+    setLoading(true);
+    try {
+      await api.delete(`/api/availability/${selectedDate}`);
+      await fetchAvailabilities();
+      setModalOpen(false);
+    } catch (err) {
+      alert(`Failed to clear: ${err.response?.data?.error || err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogout = () => {
     clearAuth();
     navigate("/login");
@@ -157,21 +177,26 @@ export default function GNAvailability() {
     const month = currentDate.getMonth();
     const numDays = daysInMonth(year, month);
     const firstDay = firstDayOfMonth(year, month);
-    
+    const todayStr = toLocalDateStr(new Date());
+
     const blanks = Array.from({ length: firstDay === 0 ? 6 : firstDay - 1 }).map((_, i) => <div key={`blank-${i}`} className="cal-day cal-blank"></div>);
     const days = Array.from({ length: numDays }).map((_, i) => {
       const day = i + 1;
       const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      const record = availabilities.find(a => a.date.split('T')[0] === dateStr);
+      const record = availabilities.find(a => {
+        const d = typeof a.date === 'string' ? a.date.substring(0, 10) : toLocalDateStr(new Date(a.date));
+        return d === dateStr;
+      });
       let statusClass = "";
       if (record) {
         if (record.status === 'AVAILABLE') statusClass = 'cal-avail';
         else if (record.status === 'FIELD_VISIT') statusClass = 'cal-field';
         else if (record.status === 'UNAVAILABLE') statusClass = 'cal-unavail';
       }
+      const isToday = dateStr === todayStr;
 
       return (
-        <div key={`day-${day}`} className={`cal-day ${statusClass}`} onClick={() => handleDateClick(day)}>
+        <div key={`day-${day}`} className={`cal-day ${statusClass}${isToday ? ' cal-today' : ''}`} onClick={() => handleDateClick(day)}>
           <span className="cal-day-num">{day}</span>
           {record && <span className="cal-day-label">{record.status.replace('_', ' ')}</span>}
           {record && record.start_time && <span className="cal-day-time">{record.start_time.substring(0,5)} - {record.end_time?.substring(0,5)}</span>}
@@ -300,6 +325,9 @@ export default function GNAvailability() {
               </div>
               <div className="cal-form-actions">
                 <button type="button" className="cal-btn-cancel" onClick={() => setModalOpen(false)}>Cancel</button>
+                {availabilities.find(a => (typeof a.date === 'string' ? a.date.substring(0,10) : toLocalDateStr(new Date(a.date))) === selectedDate) && (
+                  <button type="button" className="cal-btn-cancel" style={{color:'#e74c3c', borderColor:'#e74c3c'}} onClick={handleClear} disabled={loading}>Clear</button>
+                )}
                 <button type="submit" className="cal-btn-save" disabled={loading}>{loading ? "Saving..." : "Save"}</button>
               </div>
             </form>

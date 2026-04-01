@@ -29,6 +29,11 @@
 .cal-unavail { border-top: 4px solid #e74c3c; background: #fdedec;}
 .cal-unavail .cal-day-label { background: #e74c3c; color: white;}
 
+/* Today highlight */
+.cal-today { outline: 2px solid #0C7A3B; outline-offset: -2px; }
+.cal-today .cal-day-num { color: #0C7A3B; font-weight: 800; }
+
+
 /* Modal styling */
 .cal-modal-overlay { 
   position: fixed; 
