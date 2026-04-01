@@ -9,7 +9,7 @@ router.get("/today", requireAuth, async (req, res) => {
         // Use Asia/Colombo date to match the stored DATE values
         const todayStr = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Colombo" }); // "YYYY-MM-DD"
         const result = await pool.query(
-            `SELECT * FROM gn_availability WHERE date = $1 ORDER BY availability_id ASC LIMIT 1`,
+            `SELECT availability_id, gn_user_id, date::text as date, status, start_time, end_time, note FROM gn_availability WHERE date = $1 ORDER BY availability_id ASC LIMIT 1`,
             [todayStr]
         );
         res.json({ ok: true, today: result.rows[0] || null, date: todayStr });
@@ -26,7 +26,7 @@ router.get("/", requireAuth, async (req, res) => {
         const { start_date, end_date } = req.query;
         
         // Build query - for GN role, filter by their user_id
-        let query = "SELECT * FROM gn_availability";
+        let query = "SELECT availability_id, gn_user_id, date::text as date, status, start_time, end_time, note FROM gn_availability";
         let params = [];
         let conditions = [];
 
@@ -78,7 +78,7 @@ router.post("/", requireAuth, requireRole("GN"), async (req, res) => {
                 start_time = EXCLUDED.start_time,
                 end_time = EXCLUDED.end_time,
                 note = EXCLUDED.note
-             RETURNING *`,
+             RETURNING availability_id, gn_user_id, date::text as date, status, start_time, end_time, note`,
             [gn_user_id, date, status, start_time || null, end_time || null, note || null]
         );
 
