@@ -41,7 +41,7 @@ router.get("/stats", requireAuth, requireRole("GN"), async (req, res) => {
                 SELECT COUNT(*) as issued_this_month
                 FROM certificate_request
                 WHERE status = 'APPROVED'
-                  AND date_trunc('month', issued_at) = date_trunc('month', CURRENT_DATE)
+                  AND COALESCE(issued_at, updated_at) >= NOW() - INTERVAL '30 days'
             `),
         ]);
 

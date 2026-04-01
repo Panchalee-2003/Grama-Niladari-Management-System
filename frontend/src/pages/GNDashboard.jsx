@@ -265,7 +265,7 @@ export default function GNDashboard() {
               icon={<IconPeople />}
             />
             <StatCard
-              title={<>Certificates Issued<br />This Month</>}
+              title={<>Certificates Issued<br />(Last 30 Days)</>}
               value={stats?.certificates_this_month ?? 0}
               loading={loading}
               icon={<IconDoc />}
