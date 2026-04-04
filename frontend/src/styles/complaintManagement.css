@@ -456,6 +456,11 @@
   font-size: 14px;
 }
 
+.cmp-modal-desc strong {
+  color: #000000;
+  display: block;
+}
+
 .cmp-modal-desc p {
   margin: 6px 0 0;
   color: #333;
@@ -525,6 +530,8 @@
 
 .cmp-response-input {
   border: 1px solid #ccc;
+  background: #ffffff;
+  color: #000000;
   border-radius: 8px;
   padding: 10px 14px;
   font-size: 14px;

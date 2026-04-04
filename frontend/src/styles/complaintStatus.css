@@ -184,6 +184,10 @@
   font-size: 15px;
 }
 
+.cst-detail-desc strong {
+  color: #000000;
+}
+
 .cst-detail-desc p {
   margin: 6px 0 0;
   color: #333;
