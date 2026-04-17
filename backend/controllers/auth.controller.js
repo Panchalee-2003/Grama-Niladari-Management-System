@@ -154,11 +154,13 @@ exports.requestPasswordReset = async (req, res) => {
             });
         }
 
+        const userId = userCheck.rows[0].user_id;
+
         // Check rate limiting (max 3 OTPs per hour)
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const recentOTPs = await db.query(
-            "SELECT COUNT(*) FROM password_reset_otp WHERE email = $1 AND created_at > $2",
-            [email, oneHourAgo]
+            "SELECT COUNT(*) FROM password_reset_otp WHERE user_id = $1 AND created_at > $2",
+            [userId, oneHourAgo]
         );
 
         if (parseInt(recentOTPs.rows[0].count) >= 3) {
@@ -174,9 +176,9 @@ exports.requestPasswordReset = async (req, res) => {
 
         // Store OTP in database
         await db.query(
-            `INSERT INTO password_reset_otp (email, otp_code, expires_at) 
-       VALUES ($1, $2, $3)`,
-            [email, otp, expiresAt]
+            `INSERT INTO password_reset_otp (user_id, email, otp_code, expires_at) 
+       VALUES ($1, $2, $3, $4)`,
+            [userId, email, otp, expiresAt]
         );
 
         // Print OTP to terminal
