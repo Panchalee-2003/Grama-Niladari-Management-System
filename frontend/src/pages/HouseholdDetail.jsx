@@ -133,6 +133,7 @@ export default function HouseholdDetail() {
 
   const [household, setHousehold] = useState(null);
   const [members, setMembers] = useState([]);
+  const [aids, setAids] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
@@ -161,6 +162,7 @@ export default function HouseholdDetail() {
       if (res.data.ok) {
         setHousehold(res.data.household);
         setMembers(res.data.members);
+        setAids(res.data.aids || []);
       } else {
         setError(res.data.error || "Failed to load household");
       }
@@ -376,8 +378,20 @@ export default function HouseholdDetail() {
                       </span>
                     </div>
 
+                    {aids && aids.length > 0 && (
+                      <div style={{ marginTop: 12, padding: 10, background: '#f1f5f9', borderRadius: 6, border: '1px solid #e2e8f0' }}>
+                        <div style={{ fontWeight: '600', fontSize: 13, marginBottom: 8, color: '#334155' }}>Government Aid Breakdown</div>
+                        {aids.map((aid, idx) => (
+                          <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, borderBottom: idx < aids.length - 1 ? '1px solid #e2e8f0' : 'none', padding: '6px 0', color: '#475569' }}>
+                            <span style={{ fontWeight: '500' }}>{aid.aid_type}</span>
+                            <span style={{ textAlign: 'right' }}>{aid.receiver_name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {household.notes && (
-                      <div className="hd-fin-row">
+                      <div className="hd-fin-row" style={{ marginTop: 12 }}>
                         <span className="hd-fin-label">Notes</span>
                         <span className="hd-fin-value">{household.notes}</span>
                       </div>
