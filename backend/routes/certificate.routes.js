@@ -115,6 +115,41 @@ router.post("/", requireAuth, requireRole("CITIZEN"), async (req, res) => {
 });
 
 // ─────────────────────────────────────────
+// CITIZEN: Get latest previous data for a cert type (for auto-fill)
+// ─────────────────────────────────────────
+router.get("/my/latest", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { cert_type } = req.query;
+        if (!cert_type || !CERT_TYPES.includes(cert_type)) {
+            return res.status(400).json({ ok: false, error: "Invalid certificate type" });
+        }
+        const result = await pool.query(
+            `SELECT cr.purpose, cr.nic_number, cr.certificate_data
+             FROM certificate_request cr
+             JOIN citizen c ON c.citizen_id = cr.citizen_id
+             WHERE c.user_id = $1 AND cr.cert_type = $2
+             ORDER BY cr.created_at DESC LIMIT 1`,
+            [userId, cert_type]
+        );
+        if (result.rows.length === 0) {
+            return res.json({ ok: true, found: false });
+        }
+        const row = result.rows[0];
+        return res.json({
+            ok: true,
+            found: true,
+            purpose: row.purpose || "",
+            nic_number: row.nic_number || "",
+            request_data: row.certificate_data || {},
+        });
+    } catch (err) {
+        console.error("Latest Cert Data Error:", err);
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────
 router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
     try {
         const userId = req.user.id;

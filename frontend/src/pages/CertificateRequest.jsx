@@ -701,6 +701,10 @@ export default function CertificateRequest() {
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
 
+  /* Auto-fill state */
+  const [autoFilled, setAutoFilled] = useState(false);
+  const [autoFillLoading, setAutoFillLoading] = useState(false);
+
   /* Citizen profile + family members */
   const [myNic, setMyNic] = useState("");
   const [myName, setMyName] = useState("");
@@ -751,9 +755,33 @@ export default function CertificateRequest() {
     }
   };
 
-  const handleCertTypeChange = (e) => {
-    setCertType(e.target.value);
-    setRequestData({}); // Reset dynamic fields when cert type changes
+  const handleCertTypeChange = async (e) => {
+    const newType = e.target.value;
+    setCertType(newType);
+    setRequestData({});
+    setAutoFilled(false);
+
+    if (!newType) return;
+
+    // Attempt to auto-fill from the user's most recent submission of this type
+    setAutoFillLoading(true);
+    try {
+      const res = await api.get("/api/certificate/my/latest", {
+        params: { cert_type: newType },
+      });
+      if (res.data.ok && res.data.found) {
+        if (res.data.purpose) setPurpose(res.data.purpose);
+        if (res.data.nic_number) setNicNumber(res.data.nic_number);
+        if (res.data.request_data && Object.keys(res.data.request_data).length > 0) {
+          setRequestData(res.data.request_data);
+        }
+        setAutoFilled(true);
+      }
+    } catch {
+      // Silently ignore — auto-fill is best-effort
+    } finally {
+      setAutoFillLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -771,6 +799,7 @@ export default function CertificateRequest() {
       });
       setSubmitSuccess("✅ Your request has been submitted successfully!");
       setCertType(""); setPurpose(""); setRequestData({}); setSelectedFor("self"); setNicNumber(myNic);
+      setAutoFilled(false);
       loadRequests();
     } catch (ex) {
       setSubmitError(ex.response?.data?.error || "Failed to submit request.");
@@ -863,6 +892,38 @@ export default function CertificateRequest() {
           <form className="gn-form-grid" onSubmit={handleSubmit}>
             {/* Left column */}
             <div className="gn-left-col">
+
+              {/* Auto-fill notice banner */}
+              {autoFillLoading && (
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 14px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "14px", fontSize: "0.85rem", color: "#166534" }}>
+                  <svg style={{ flexShrink: 0, animation: "spin 1s linear infinite" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round"/></svg>
+                  Checking for previous data…
+                </div>
+              )}
+
+              {autoFilled && !autoFillLoading && (
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "10px", padding: "12px 14px", background: "#f0fdf4", border: "1.5px solid #16a34a", borderLeft: "5px solid #16a34a", borderRadius: "8px", marginBottom: "14px", fontSize: "0.85rem", color: "#166534" }}>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                    <span style={{ fontSize: "1.1rem", lineHeight: 1, marginTop: "1px" }}>📋</span>
+                    <div>
+                      <strong style={{ display: "block", marginBottom: "3px", fontSize: "0.88rem" }}>Auto-filled from your previous request</strong>
+                      <span style={{ color: "#15803d" }}>All fields have been pre-populated with your last submitted data for this certificate type. You can edit any field before submitting.</span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    title="Clear auto-fill"
+                    onClick={() => {
+                      setRequestData({});
+                      setPurpose("");
+                      setNicNumber(myNic);
+                      setAutoFilled(false);
+                    }}
+                    style={{ background: "none", border: "none", cursor: "pointer", color: "#15803d", fontSize: "1.2rem", lineHeight: 1, padding: "0 2px", flexShrink: 0 }}
+                  >✕</button>
+                </div>
+              )}
+
               <div className="gn-field">
                 <label className="cr-label">Certificate Type <span className="cr-req">*</span></label>
                 <select className="gn-input gn-select" value={certType} onChange={handleCertTypeChange}>

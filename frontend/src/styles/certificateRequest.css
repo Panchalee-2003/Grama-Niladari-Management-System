@@ -559,4 +559,10 @@
   font-size: 13px;
   color: #721c24;
   line-height: 1.6;
-}
+}
+
+/* ── Auto-fill spinner animation ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
