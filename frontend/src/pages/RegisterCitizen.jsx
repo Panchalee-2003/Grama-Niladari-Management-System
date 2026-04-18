@@ -263,6 +263,7 @@ export default function RegisterCitizen() {
                 onBlur={blurNic}
                 placeholder="123456789V or 199012345678"
                 autoComplete="off"
+                maxLength="12"
               />
             </div>
             {nicError && <div className="field-error">{nicError}</div>}
@@ -307,6 +308,7 @@ export default function RegisterCitizen() {
                 onBlur={blurPhone}
                 placeholder="0771234567"
                 autoComplete="tel"
+                maxLength="10"
               />
             </div>
             {phoneError && <div className="field-error">{phoneError}</div>}

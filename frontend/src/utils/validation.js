@@ -5,7 +5,7 @@
 
 // Regex Patterns
 const PATTERNS = {
-    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    email: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
     // Password: Min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
     // Sri Lankan NIC: 9 digits + V/X or 12 digits

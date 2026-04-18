@@ -11,8 +11,25 @@ exports.register = async (req, res) => {
   // Note: We include nic_number and phone_number as per your citizen table requirements
   const { email, password, full_name, nic_number, phone_number } = req.body;
 
-  if (!email || !password || !full_name || !nic_number) {
+  if (!email || !password || !full_name || !nic_number || !phone_number) {
     return res.status(400).json({ ok: false, error: "Required fields are missing" });
+  }
+
+  // Regex Patterns for validation
+  const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+  const nicPattern = /^([0-9]{9}[VvXx]|[0-9]{12})$/;
+  const phonePattern = /^0[0-9]{9}$/;
+
+  if (!emailPattern.test(email)) {
+    return res.status(400).json({ ok: false, error: "Invalid email address format" });
+  }
+
+  if (!nicPattern.test(nic_number)) {
+    return res.status(400).json({ ok: false, error: "Invalid NIC format" });
+  }
+
+  if (!phonePattern.test(phone_number)) {
+    return res.status(400).json({ ok: false, error: "Invalid phone number format" });
   }
 
   try {
