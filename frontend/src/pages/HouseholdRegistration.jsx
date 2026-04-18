@@ -557,8 +557,8 @@ export default function HouseholdRegistration() {
           setResubmitHouseholdId(hhId);
           setExistingHousehold(null); // clear to show form
         }}
-        onUpdate={(hhData) => {
-          // Pre-fill all form fields from the approved registration
+        onUpdate={async (hhData) => {
+          // Pre-fill household basic info + financials from the status card data
           setUpdateHouseholdId(hhData.household_id);
           setHouse({
             holder_name: hhData.householder_name || "",
@@ -574,6 +574,55 @@ export default function HouseholdRegistration() {
             income_range: hhData.income_range || "",
             notes: hhData.notes || "",
           });
+
+          // Fetch family members + aids from the backend
+          try {
+            const detailRes = await api.get("/api/household/my/detail");
+            if (detailRes.data.ok) {
+              // ── Map DB members → form state ──
+              const dbMembers = detailRes.data.members;
+              if (dbMembers && dbMembers.length > 0) {
+                setMembers(
+                  dbMembers.map((m) => ({
+                    full_name: m.full_name || "",
+                    relationship: m.relationship_to_head || "",
+                    gender: m.gender || "",
+                    religion: m.religion || "",
+                    civil_status: m.civil_status || "",
+                    nic: m.nic_number || "",
+                    // DOB from DB is ISO string; trim to YYYY-MM-DD for <input type="date">
+                    dob: m.dob ? m.dob.split("T")[0] : "",
+                    education: m.education_level || "",
+                    employment: m.employment_status || "",
+                    special_needs: m.special_needs || "",
+                  }))
+                );
+                // Resize nicErrors array to match
+                setNicErrors(dbMembers.map(() => ""));
+              }
+
+              // ── Map DB aids → form state (group by aid_type) ──
+              const dbAids = detailRes.data.aids;
+              if (dbAids && dbAids.length > 0) {
+                const grouped = {};
+                for (const row of dbAids) {
+                  if (!grouped[row.aid_type]) {
+                    grouped[row.aid_type] = [];
+                  }
+                  grouped[row.aid_type].push(row.receiver_name);
+                }
+                setAidEntries(
+                  Object.entries(grouped).map(([aid_type, receivers]) => ({
+                    aid_type,
+                    receivers,
+                  }))
+                );
+              }
+            }
+          } catch {
+            // If detail fetch fails, still open the form with basic data pre-filled
+          }
+
           setExistingHousehold(null); // clear to show form
         }}
       />

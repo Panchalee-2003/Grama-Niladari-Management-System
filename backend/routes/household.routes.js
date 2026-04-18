@@ -122,6 +122,61 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
   }
 });
 
+// ✅ Get citizen's own household full detail (members + aids) – for Update Registration
+router.get("/my/detail", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Get the citizen's household (owned by them)
+    const hhResult = await pool.query(
+      `SELECT h.household_id, h.household_no, h.householder_name, h.address,
+              h.water_supply, h.electricity_connection, h.phone_number,
+              h.income_source, h.govt_aid, h.income_range, h.notes,
+              h.status, h.rejection_reason, h.created_at
+       FROM household h
+       JOIN citizen c ON c.citizen_id = h.citizen_id
+       WHERE c.user_id = $1
+       ORDER BY h.household_id DESC LIMIT 1`,
+      [userId]
+    );
+
+    if (hhResult.rows.length === 0) {
+      return res.status(404).json({ ok: false, error: "No household found" });
+    }
+
+    const household = hhResult.rows[0];
+
+    const membersResult = await pool.query(
+      `SELECT member_id, full_name, nic_number, dob, gender,
+              relationship_to_head, civil_status,
+              education_level, employment_status, religion, special_needs
+       FROM family_member
+       WHERE household_id = $1
+       ORDER BY member_id ASC`,
+      [household.household_id]
+    );
+
+    const aidsResult = await pool.query(
+      `SELECT aid_id, receiver_name, aid_type
+       FROM household_aid
+       WHERE household_id = $1
+       ORDER BY aid_id ASC`,
+      [household.household_id]
+    );
+
+    return res.json({
+      ok: true,
+      household,
+      members: membersResult.rows,
+      aids: aidsResult.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+
 // ✅ Get all households – GN only (for the verification list page)
 router.get("/all", requireAuth, requireRole("GN"), async (req, res) => {
   try {
