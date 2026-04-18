@@ -231,7 +231,6 @@ export default function GNCertificates() {
                   <tr>
                     <th>Request ID</th>
                     <th>Requested By</th>
-                    <th>NIC Owner</th>
                     <th>NIC</th>
                     <th>Certificate Type</th>
                     <th>Status</th>
@@ -243,12 +242,7 @@ export default function GNCertificates() {
                   {requests.map((r) => (
                     <tr key={r.request_id}>
                       <td className="gnc-id">#{r.request_id}</td>
-                      <td className="gnc-name">{r.citizen_name}</td>
-                      <td className="gnc-name">
-                        {r.member_name
-                          ? <>{r.member_name} <span style={{fontSize:"0.75rem",color:"#888"}}>({r.relationship_to_head})</span></>
-                          : r.citizen_name}
-                      </td>
+                      <td className="gnc-name">{r.applicant_name}</td>
                       <td className="gnc-nic">{r.nic_number || "—"}</td>
                       <td className="gnc-type">{r.cert_type}</td>
                       <td><span className={pillClass(r.status)}>{STATUS_LABELS[r.status] || r.status}</span></td>
