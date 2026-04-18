@@ -938,3 +938,89 @@ select:disabled {
 .hh-resubmit-btn:hover {
   opacity: 0.88;
 }
+
+/* ── Update Registration button/bar (shown for VERIFIED approved status) ── */
+.hh-update-reg-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #0e8f45 0%, #0C7A3B 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.18s, transform 0.15s, box-shadow 0.18s;
+  box-shadow: 0 3px 12px rgba(12, 122, 59, 0.28);
+}
+
+.hh-update-reg-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 10px 0 0 10px;
+}
+
+.hh-update-reg-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(12, 122, 59, 0.36);
+}
+
+.hh-update-reg-btn:active {
+  transform: translateY(0);
+}
+
+.hh-update-reg-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+/* ── Update mode info banner (shown at top of form) ── */
+.hh-update-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #e8f5ee;
+  border: 1.5px solid #0C7A3B;
+  border-left: 5px solid #0C7A3B;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hh-update-banner-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.hh-update-banner strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 900;
+  color: #0C7A3B;
+  margin-bottom: 4px;
+}
+
+.hh-update-banner p {
+  font-size: 13px;
+  color: #2d6b43;
+  line-height: 1.55;
+  margin: 0;
+}

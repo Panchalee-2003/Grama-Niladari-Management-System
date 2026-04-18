@@ -105,8 +105,9 @@ router.get("/my", requireAuth, requireRole("CITIZEN"), async (req, res) => {
 
     const result = await pool.query(
       `SELECT h.household_id, h.household_no, h.householder_name, h.address,
-              h.water_supply, h.electricity_connection, h.status,
-              h.rejection_reason, h.created_at
+              h.water_supply, h.electricity_connection, h.phone_number,
+              h.income_source, h.govt_aid, h.income_range, h.notes,
+              h.status, h.rejection_reason, h.created_at
        FROM household h
        JOIN citizen c ON c.citizen_id = h.citizen_id
        WHERE c.user_id=$1
@@ -272,6 +273,63 @@ router.patch("/:id/status", requireAuth, requireRole("GN"), async (req, res) => 
     }
 
     return res.json({ ok: true, household: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// ✅ Citizen updates a VERIFIED household (resets to PENDING for re-review)
+router.patch("/:id/update", requireAuth, requireRole("CITIZEN"), async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const {
+      householder_name,
+      household_no,
+      address,
+      water_supply,
+      electricity_connection,
+      phone_number,
+      income_source,
+      govt_aid,
+      income_range,
+      notes,
+    } = req.body;
+
+    if (!householder_name || !address) {
+      return res.status(400).json({ ok: false, error: "householder_name and address are required" });
+    }
+
+    // Verify the household belongs to this citizen and is VERIFIED
+    const check = await pool.query(
+      `SELECT h.household_id FROM household h
+       JOIN citizen c ON c.citizen_id = h.citizen_id
+       WHERE h.household_id=$1 AND c.user_id=$2 AND h.status='VERIFIED' LIMIT 1`,
+      [id, userId]
+    );
+
+    if (check.rows.length === 0) {
+      return res.status(403).json({ ok: false, error: "Cannot update this application" });
+    }
+
+    const result = await pool.query(
+      `UPDATE household SET
+         householder_name=$1, household_no=$2, address=$3,
+         water_supply=$4, electricity_connection=$5, phone_number=$6,
+         income_source=$7, govt_aid=$8, income_range=$9, notes=$10,
+         status='PENDING', rejection_reason=NULL
+       WHERE household_id=$11
+       RETURNING household_id`,
+      [
+        householder_name, household_no || null, address,
+        water_supply || "NO", electricity_connection || "NO", phone_number || null,
+        income_source || null, govt_aid || null, income_range || null, notes || null,
+        id,
+      ]
+    );
+
+    return res.json({ ok: true, household_id: result.rows[0].household_id });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ ok: false, error: err.message });

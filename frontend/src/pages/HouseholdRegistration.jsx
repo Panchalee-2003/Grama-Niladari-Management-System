@@ -91,7 +91,7 @@ const emptyMember = () => ({
 });
 
 // ── Status card shown when citizen has already registered ──
-function StatusCard({ household, onResubmit }) {
+function StatusCard({ household, onResubmit, onUpdate }) {
   const STATUS_CONFIG = {
     PENDING: {
       icon: (
@@ -208,6 +208,7 @@ function StatusCard({ household, onResubmit }) {
           </>
         )}
 
+
         <Link
           to="/citizen"
           className="hh-success-home-btn"
@@ -215,6 +216,17 @@ function StatusCard({ household, onResubmit }) {
         >
           Back to Home
         </Link>
+
+        {/* Update Registration button — shown only for VERIFIED */}
+        {household.status === "VERIFIED" && (
+          <button
+            className="hh-update-reg-btn"
+            onClick={() => onUpdate(household)}
+          >
+            <span className="hh-update-reg-icon">✏️</span>
+            Update Registration
+          </button>
+        )}
       </div>
     </div>
   );
@@ -232,6 +244,8 @@ export default function HouseholdRegistration() {
   const [householdId, setHouseholdId] = useState(null);
   // When re-submitting a rejected application, holds the existing household_id
   const [resubmitHouseholdId, setResubmitHouseholdId] = useState(null);
+  // When updating an approved (VERIFIED) application, holds the existing household_id
+  const [updateHouseholdId, setUpdateHouseholdId] = useState(null);
 
   // On mount — check if this citizen already has a registration
   useEffect(() => {
@@ -366,7 +380,26 @@ export default function HouseholdRegistration() {
     try {
       let newHouseholdId;
 
-      if (resubmitHouseholdId) {
+      if (updateHouseholdId) {
+        // 📝 UPDATE: Update the existing approved (VERIFIED) household
+        const hhRes = await api.patch(`/api/household/${updateHouseholdId}/update`, {
+          householder_name: house.holder_name.trim(),
+          household_no: house.house_no.trim() || null,
+          address: house.address.trim(),
+          electricity_connection: house.electricity || "No",
+          water_supply: house.water || "No",
+          phone_number: house.phone.trim() || null,
+          income_source: fin.income_source || null,
+          govt_aid: fin.govt_aid || null,
+          income_range: fin.income_range || null,
+          notes: fin.notes.trim() || null,
+        });
+        if (!hhRes.data.ok) throw new Error(hhRes.data.error || "Failed to update registration");
+        newHouseholdId = hhRes.data.household_id;
+
+        // 📝 UPDATE: Also update the aids
+        await api.post(`/api/household/${newHouseholdId}/aids`, { aids: aidEntries });
+      } else if (resubmitHouseholdId) {
         // ♻️ RE-SUBMIT: Update the existing rejected household
         const hhRes = await api.patch(`/api/household/${resubmitHouseholdId}/resubmit`, {
           householder_name: house.holder_name.trim(),
@@ -422,7 +455,7 @@ export default function HouseholdRegistration() {
       }
 
       // 3️⃣ NEW: Save Aid entries for new household
-      if (!resubmitHouseholdId) {
+      if (!resubmitHouseholdId && !updateHouseholdId) {
         await api.post(`/api/household/${newHouseholdId}/aids`, { aids: aidEntries });
       }
 
@@ -435,8 +468,8 @@ export default function HouseholdRegistration() {
         err?.message ||
         "Something went wrong. Please try again.";
       // Translate raw server "Forbidden" into a helpful message
-      if (msg === "Forbidden" || msg === "Cannot resubmit this application") {
-        msg = "Access denied. Please make sure you are logged in as a citizen and the application is in REJECTED status.";
+      if (msg === "Forbidden" || msg === "Cannot resubmit this application" || msg === "Cannot update this application") {
+        msg = "Access denied. Please make sure you are logged in as a citizen and the application is in the correct status.";
       }
       setSubmitError(msg);
     } finally {
@@ -524,6 +557,25 @@ export default function HouseholdRegistration() {
           setResubmitHouseholdId(hhId);
           setExistingHousehold(null); // clear to show form
         }}
+        onUpdate={(hhData) => {
+          // Pre-fill all form fields from the approved registration
+          setUpdateHouseholdId(hhData.household_id);
+          setHouse({
+            holder_name: hhData.householder_name || "",
+            phone: hhData.phone_number || "",
+            house_no: hhData.household_no || "",
+            address: hhData.address || "",
+            electricity: hhData.electricity_connection || "",
+            water: hhData.water_supply || "",
+          });
+          setFin({
+            income_source: hhData.income_source || "",
+            govt_aid: hhData.govt_aid || "",
+            income_range: hhData.income_range || "",
+            notes: hhData.notes || "",
+          });
+          setExistingHousehold(null); // clear to show form
+        }}
       />
     );
   }
@@ -590,7 +642,20 @@ export default function HouseholdRegistration() {
       </nav>
 
       <main className="hh-main">
-        <h1 className="hh-page-title">Household Registration</h1>
+        <h1 className="hh-page-title">
+          {updateHouseholdId ? "Update Household Registration" : "Household Registration"}
+        </h1>
+
+        {/* Update mode info banner */}
+        {updateHouseholdId && (
+          <div className="hh-update-banner">
+            <span className="hh-update-banner-icon">📋</span>
+            <div>
+              <strong>Updating Approved Registration</strong>
+              <p>Your previous details have been pre-filled. Edit the fields you wish to change and resubmit. The Grama Niladhari officer will re-review your updated registration.</p>
+            </div>
+          </div>
+        )}
 
         <form className="hh-form" onSubmit={onSubmit}>
           {/* SECTION 1 */}
@@ -1082,10 +1147,10 @@ export default function HouseholdRegistration() {
               {submitting ? (
                 <span className="hh-spinner-wrap">
                   <span className="hh-spinner" />
-                  Submitting…
+                  {updateHouseholdId ? "Updating…" : "Submitting…"}
                 </span>
               ) : (
-                "Submit"
+                updateHouseholdId ? "Update Registration" : "Submit"
               )}
             </button>
           </div>
