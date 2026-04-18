@@ -196,10 +196,12 @@ export default function RegisterCitizen() {
         nic_number: nic,
         phone_number: phone,
       });
+
+
       const loginRes = await api.post("/api/auth/login", { email, password });
       saveAuth(loginRes.data.token, loginRes.data.user);
       setOk("Account created successfully ✅");
-      nav("/citizen");
+      nav("/login");
     } catch (ex) {
       setErr(ex?.response?.data?.error || "Registration failed. Please try again.");
     }
