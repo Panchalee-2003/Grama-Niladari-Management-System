@@ -54,6 +54,7 @@ function IconUser() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fi
 function IconDoc() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M14 3v4h4" stroke="#2b2b2b" strokeWidth="2" /></svg>; }
 function IconComplaint() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M7 3h10a2 2 0 0 1 2 2v16l-4-3H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M8 8h8M8 12h6" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
 function IconBell() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#2b2b2b" strokeWidth="2" strokeLinejoin="round" /><path d="M10 19a2 2 0 0 0 4 0" stroke="#2b2b2b" strokeWidth="2" strokeLinecap="round" /></svg>; }
+function IconCalendar() { return <svg className="gn-nav-icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#2b2b2b" strokeWidth="2" /><line x1="16" y1="2" x2="16" y2="6" stroke="#2b2b2b" strokeWidth="2" /><line x1="8" y1="2" x2="8" y2="6" stroke="#2b2b2b" strokeWidth="2" /><line x1="3" y1="10" x2="21" y2="10" stroke="#2b2b2b" strokeWidth="2" /></svg>; }
 
 /* Dependents Table Component for Death of Pensioner */
 function DependentsTable({ requestData, setRequestData }) {
@@ -873,6 +874,7 @@ export default function CertificateRequest() {
         <Link to="/certificates" className="gn-nav-item gn-nav-active"><IconDoc /><span>{t('nav.certificates')}</span></Link>
         <Link to="/complaints" className="gn-nav-item"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
         <Link to="/notices" className="gn-nav-item"><IconBell /><span>{t('nav.notices')}</span></Link>
+        <Link to="/availability" className="gn-nav-item"><IconCalendar /><span>{t('nav.gnSchedule')}</span></Link>
       </nav>
 
       {/* Content */}

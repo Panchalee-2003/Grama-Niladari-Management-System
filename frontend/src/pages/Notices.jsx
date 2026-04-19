@@ -23,6 +23,16 @@ function IconComplaint() {
 function IconBell() {
   return <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="#1f1f1f" strokeWidth="2" /><path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="#1f1f1f" strokeWidth="2" strokeLinecap="round" /></svg>;
 }
+function IconCalendar() {
+  return (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="16" y1="2" x2="16" y2="6" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="8" y1="2" x2="8" y2="6" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="3" y1="10" x2="21" y2="10" stroke="#1f1f1f" strokeWidth="2" />
+    </svg>
+  );
+}
 
 const API_BASE = "http://localhost:5000";
 
@@ -66,11 +76,12 @@ export default function Notices() {
 
       {/* NAV BAR */}
       <nav className="cd-nav">
-        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home')}</span></Link>
-        <Link className="cd-nav-item" to="/household"><IconUser /><span>{t('nav.household')}</span></Link>
-        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
-        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
-        <Link className="cd-nav-item cd-active" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home') || 'Home'}</span></Link>
+        <Link className="cd-nav-item" to="/household"><IconUser /><span>{t('nav.household') || 'Household'}</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates') || 'Certificates'}</span></Link>
+        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints') || 'Complaints'}</span></Link>
+        <Link className="cd-nav-item cd-active" to="/notices"><IconBell /><span>{t('nav.notices') || 'Notices'}</span></Link>
+        <Link className="cd-nav-item" to="/availability"><IconCalendar /><span>{t('nav.gnSchedule') || 'GN Schedule'}</span></Link>
       </nav>
 
       {/* MAIN */}

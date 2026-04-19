@@ -48,6 +48,16 @@ function IconBell() {
     </svg>
   );
 }
+function IconCalendar() {
+  return (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="16" y1="2" x2="16" y2="6" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="8" y1="2" x2="8" y2="6" stroke="#1f1f1f" strokeWidth="2" />
+      <line x1="3" y1="10" x2="21" y2="10" stroke="#1f1f1f" strokeWidth="2" />
+    </svg>
+  );
+}
 
 // --- Success banner shown after submit ---
 function SuccessBanner({ householdId }) {
@@ -537,6 +547,7 @@ export default function HouseholdRegistration() {
         <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
         <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
         <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
+        <Link className="cd-nav-item" to="/availability"><IconCalendar /><span>{t('nav.gnSchedule')}</span></Link>
       </nav>
       {content}
     </div>
@@ -660,6 +671,7 @@ export default function HouseholdRegistration() {
           <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
           <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
           <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
+          <Link className="cd-nav-item" to="/availability"><IconCalendar /><span>{t('nav.gnSchedule')}</span></Link>
         </nav>
 
         <SuccessBanner householdId={householdId} />
@@ -694,6 +706,7 @@ export default function HouseholdRegistration() {
         <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
         <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
         <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
+        <Link className="cd-nav-item" to="/availability"><IconCalendar /><span>{t('nav.gnSchedule')}</span></Link>
       </nav>
 
       <main className="hh-main">
