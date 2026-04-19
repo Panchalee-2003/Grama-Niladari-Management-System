@@ -3,22 +3,22 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   padding: 4px 12px;
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #fff;
+  color: #111;
   transition: background 0.2s, border-color 0.2s;
   backdrop-filter: blur(4px);
   letter-spacing: 0.03em;
 }
 
 .lang-switcher:hover {
-  background: rgba(255, 255, 255, 0.28);
-  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.4);
 }
 
 .lang-option {
@@ -28,7 +28,7 @@
 
 .lang-active {
   opacity: 1;
-  color: #fff;
+  color: #000;
 }
 
 .lang-divider {
@@ -36,11 +36,11 @@
   font-weight: 300;
 }
 
-/* Dark-background variant (for green navbars) */
-.lang-switcher.dark-bg {
-  background: rgba(0, 0, 0, 0.15);
-  border-color: rgba(0, 0, 0, 0.25);
-  color: #1a3a1a;
+/* Light-background variant (for dark navbars) */
+.lang-switcher.light-bg {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
 }
 
 /* Sinhala font support */
