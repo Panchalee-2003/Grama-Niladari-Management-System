@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/notices.css";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import api from "../api/api";
 
 function IconHome() {
@@ -30,6 +32,7 @@ function formatDate(ts) {
 }
 
 export default function Notices() {
+  const { t } = useTranslation();
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -49,12 +52,13 @@ export default function Notices() {
         <div className="cd-top-left">
           <img className="cd-emblem" src={emblem} alt="Emblem" />
           <div className="cd-top-text">
-            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
-            <div className="cd-subtitle">Ministry of Home Affairs</div>
+            <div className="cd-title">{t('dashboard.title')}</div>
+            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link to="/about" className="cd-about-btn">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="cd-about-btn">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
@@ -62,23 +66,23 @@ export default function Notices() {
 
       {/* NAV BAR */}
       <nav className="cd-nav">
-        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
-        <Link className="cd-nav-item" to="/household"><IconUser /><span>Household</span></Link>
-        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
-        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
-        <Link className="cd-nav-item cd-active" to="/notices"><IconBell /><span>Notices</span></Link>
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home')}</span></Link>
+        <Link className="cd-nav-item" to="/household"><IconUser /><span>{t('nav.household')}</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
+        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
+        <Link className="cd-nav-item cd-active" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
       </nav>
 
       {/* MAIN */}
       <main className="nt-main">
-        <h1 className="nt-page-title">Public Notices</h1>
+        <h1 className="nt-page-title">{t('notices.title')}</h1>
         <p className="nt-page-sub">Official announcements and news from the Maspanna Grama Niladhari Division</p>
 
-        {loading && <div className="nt-state">Loading notices…</div>}
+        {loading && <div className="nt-state">{t('common.loading')}</div>}
         {error && <div className="nt-state nt-state-err">{error}</div>}
 
         {!loading && notices.length === 0 && (
-          <div className="nt-state">No notices have been posted yet.</div>
+          <div className="nt-state">{t('notices.noNotices')}</div>
         )}
 
         {!loading && notices.length > 0 && (

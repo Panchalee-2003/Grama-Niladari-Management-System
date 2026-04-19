@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/citizenDashboard.css";
 import hero from "../assets/paddy.jpg";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import Footer from "../components/Footer";
 
 /* Icons */
@@ -111,6 +113,7 @@ function IconCalendar() {
 
 export default function CitizenDashboard() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="cd-page">
@@ -119,13 +122,14 @@ export default function CitizenDashboard() {
         <div className="cd-brand">
           <img className="cd-emblem" src={emblem} alt="Sri Lanka Emblem" />
           <div className="cd-brand-text">
-            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
-            <div className="cd-subtitle">Ministry of Home Affairs</div>
+            <div className="cd-title">{t('dashboard.title')}</div>
+            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
 
         <div className="cd-top-actions">
-          <Link to="/about" className="cd-about">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="cd-about">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
@@ -135,31 +139,31 @@ export default function CitizenDashboard() {
       <nav className="cd-nav">
         <Link className="cd-nav-item" to="/citizen">
           <IconHome />
-          <span>Home</span>
+          <span>{t('nav.home')}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/household">
           <IconUser />
-          <span>Household</span>
+          <span>{t('nav.household')}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/certificates">
           <IconDoc />
-          <span>Certificates</span>
+          <span>{t('nav.certificates')}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/complaints">
           <IconComplaint />
-          <span>Complaints</span>
+          <span>{t('nav.complaints')}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/notices">
           <IconBell />
-          <span>Notices</span>
+          <span>{t('nav.notices')}</span>
         </Link>
         <Link className="cd-nav-item" to="/availability">
           <IconCalendar />
-          <span>GN Schedule</span>
+          <span>{t('nav.gnSchedule')}</span>
         </Link>
       </nav>
 
@@ -167,15 +171,12 @@ export default function CitizenDashboard() {
         {/* HERO */}
         <section className="cd-hero" style={{ backgroundImage: `url(${hero})` }}>
           <div className="cd-hero-overlay">
-            <h1>Welcome to Our Digital Service Portal</h1>
-            <p>
-              Access government services digitally. Request certificates, submit complaints,
-              and stay updated with community notices
-            </p>
+            <h1>{t('dashboard.heroTitle')}</h1>
+            <p>{t('dashboard.heroDesc')}</p>
 
             {/* Register Now -> Household */}
             <Link to="/household" className="cd-hero-btn">
-              Register Now
+              {t('dashboard.registerNow')}
             </Link>
           </div>
         </section>
@@ -188,8 +189,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-green">
                 <IconMedal />
               </div>
-              <h3>Certificate Services</h3>
-              <p>Request residence, character, and income certificates</p>
+              <h3>{t('dashboard.cardCertTitle')}</h3>
+              <p>{t('dashboard.cardCertDesc')}</p>
             </div>
           </Link>
 
@@ -199,8 +200,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-yellow">
                 <IconUser />
               </div>
-              <h3>Citizen Portal</h3>
-              <p>Manage your profile, household information</p>
+              <h3>{t('dashboard.cardCitizenTitle')}</h3>
+              <p>{t('dashboard.cardCitizenDesc')}</p>
             </div>
           </Link>
 
@@ -210,8 +211,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-blue">
                 <IconBell />
               </div>
-              <h3>Notices &amp; Updates</h3>
-              <p>Stay informed about community events, announcements, and important notices</p>
+              <h3>{t('dashboard.cardNoticesTitle')}</h3>
+              <p>{t('dashboard.cardNoticesDesc')}</p>
             </div>
           </Link>
         </section>

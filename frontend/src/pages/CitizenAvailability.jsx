@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import api from "../api/api";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import emblem from "../assets/emblem.png";
 import Footer from "../components/Footer";
 import "../styles/citizenDashboard.css";
@@ -26,6 +28,7 @@ function IconCalendar() {
 }
 
 export default function CitizenAvailability() {
+  const { t } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [availabilities, setAvailabilities] = useState([]);
   const [selectedDateDetails, setSelectedDateDetails] = useState(null);
@@ -127,31 +130,32 @@ export default function CitizenAvailability() {
         <div className="cd-brand">
           <img className="cd-emblem" src={emblem} alt="Sri Lanka Emblem" />
           <div className="cd-brand-text">
-            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
-            <div className="cd-subtitle">Ministry of Home Affairs</div>
+            <div className="cd-title">{t('dashboard.title')}</div>
+            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
         <div className="cd-top-actions">
-          <Link to="/about" className="cd-about">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="cd-about">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
       </header>
 
       <nav className="cd-nav">
-        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
-        <Link className="cd-nav-item" to="/household"><IconUser /><span>Household</span></Link>
-        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
-        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
-        <Link className="cd-nav-item" to="/notices"><IconBell /><span>Notices</span></Link>
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home')}</span></Link>
+        <Link className="cd-nav-item" to="/household"><IconUser /><span>{t('nav.household')}</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
+        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
+        <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
         <Link className="cd-nav-item" to="/availability" style={{borderBottom: "3px solid #0C7A3B"}}>
           <IconCalendar />
-          <span style={{fontWeight:"bold"}}>GN Schedule</span>
+          <span style={{fontWeight:"bold"}}>{t('nav.gnSchedule')}</span>
         </Link>
       </nav>
 
       <div className="cd-main" style={{padding: "20px 40px", color: "#1f1f1f"}}>
-        <h2 style={{color: "#1f1f1f", marginBottom: "15px"}}>Grama Niladhari Schedule</h2>
+        <h2 style={{color: "#1f1f1f", marginBottom: "15px"}}>{t('availability.title')}</h2>
         <p style={{color: "#333", marginBottom: "30px"}}>Check the GN's availability before visiting the office to avoid inconvenience.</p>
         
         <div style={{display: 'flex', gap: '20px', alignItems: 'flex-start'}}>

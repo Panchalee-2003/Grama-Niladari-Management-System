@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/complaints.css";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import api from "../api/api";
 
 /* --- Icons --- */
@@ -56,6 +58,7 @@ function IconClip() {
 
 export default function Complaints() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [attachment, setAttachment] = useState(null);
@@ -117,12 +120,13 @@ export default function Complaints() {
         <div className="cd-top-left">
           <img className="cd-emblem" src={emblem} alt="Emblem" />
           <div className="cd-top-text">
-            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
-            <div className="cd-subtitle">Ministry of Home Affairs</div>
+            <div className="cd-title">{t('dashboard.title')}</div>
+            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link to="/about" className="cd-about-btn">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="cd-about-btn">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
@@ -130,16 +134,16 @@ export default function Complaints() {
 
       {/* NAV BAR */}
       <nav className="cd-nav">
-        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
-        <Link className="cd-nav-item" to="/household"><IconUser /><span>Household</span></Link>
-        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
-        <Link className="cd-nav-item cd-active" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
-        <Link className="cd-nav-item" to="/notices"><IconBell /><span>Notices</span></Link>
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home')}</span></Link>
+        <Link className="cd-nav-item" to="/household"><IconUser /><span>{t('nav.household')}</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
+        <Link className="cd-nav-item cd-active" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
+        <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
       </nav>
 
       {/* MAIN */}
       <main className="cp-main">
-        <h1 className="cp-title">Submit a Complaint</h1>
+        <h1 className="cp-title">{t('complaints.submitNew')}</h1>
 
         {success && (
           <div className="cp-alert cp-alert-success">
@@ -156,21 +160,21 @@ export default function Complaints() {
           <div className="cp-left">
             <div className="cp-field">
               <label className="cp-label">
-                Subject <span className="cp-required">*</span>
+                {t('complaints.subject')} <span className="cp-required">*</span>
               </label>
               <input
                 className="cp-input"
-                placeholder="Enter the subject of your complaint"
+                placeholder={t('complaints.subject')}
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 maxLength={200}
               />
             </div>
             <div className="cp-field">
-              <label className="cp-label">Description</label>
+              <label className="cp-label">{t('complaints.description')}</label>
               <textarea
                 className="cp-textarea"
-                placeholder="Describe your complaint in detail."
+                placeholder={t('complaints.description')}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={6}
