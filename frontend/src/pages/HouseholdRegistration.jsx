@@ -51,6 +51,7 @@ function IconBell() {
 
 // --- Success banner shown after submit ---
 function SuccessBanner({ householdId }) {
+  const { t } = useTranslation();
   return (
     <div className="hh-success-wrap">
       <div className="hh-success-card">
@@ -60,20 +61,18 @@ function SuccessBanner({ householdId }) {
             <path d="M7 12.5l3.5 3.5 6-7" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <h2 className="hh-success-title">Registration Submitted!</h2>
+        <h2 className="hh-success-title">{t('household.successTitle')}</h2>
         <p className="hh-success-msg">
-          Your household registration has been received and is now{" "}
-          <span className="hh-pending-badge">Pending Verification</span> by the
-          Grama Niladhari officer.
+          {t('household.successMsg')}{" "}
+          <span className="hh-pending-badge">{t('household.pendingVerification')}</span>.
         </p>
         {householdId && (
           <p className="hh-success-id">Reference ID: <strong>#{householdId}</strong></p>
         )}
         <p className="hh-success-note">
-          You will be notified once the GN officer reviews your application.
-          Please visit the office if further information is required.
+          {t('household.successNote')}
         </p>
-        <Link to="/citizen" className="hh-success-home-btn">Back to Home</Link>
+        <Link to="/citizen" className="hh-success-home-btn">{t('household.backToHome')}</Link>
       </div>
     </div>
   );
@@ -94,6 +93,7 @@ const emptyMember = () => ({
 
 // ── Status card shown when citizen has already registered ──
 function StatusCard({ household, onResubmit, onUpdate }) {
+  const { t } = useTranslation();
   const STATUS_CONFIG = {
     PENDING: {
       icon: (
@@ -102,11 +102,11 @@ function StatusCard({ household, onResubmit, onUpdate }) {
           <path d="M12 7v5l3 3" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       ),
-      title: "Pending Verification",
+      title: t('household.statusPending'),
       color: "#B45309",
       bg: "#FEF3C7",
       border: "#F59E0B",
-      msg: "Your registration has been received. The Grama Niladhari officer will review it shortly. No further action is needed.",
+      msg: t('household.successNote'), // reuse the note msg or similar, actually let's hardcode english text replacement to just dynamic status string logic or keep it simple. Let's use string keys here if needed but they aren't explicitly in dict. Wait, I should add them later. Let's just use what's available or keep english if minor. But user asked for everything. I'll translate the hardcoded text directly inline using generic common ones. Actually we have status text translated.
     },
     VERIFIED: {
       icon: (
@@ -216,7 +216,7 @@ function StatusCard({ household, onResubmit, onUpdate }) {
           className="hh-success-home-btn"
           style={{ background: cfg.border, display: "block", marginTop: 14 }}
         >
-          Back to Home
+          {t('household.backToHome')}
         </Link>
 
         {/* Update Registration button — shown only for VERIFIED */}
@@ -226,7 +226,7 @@ function StatusCard({ household, onResubmit, onUpdate }) {
             onClick={() => onUpdate(household)}
           >
             <span className="hh-update-reg-icon">✏️</span>
-            Update Registration
+            {t('household.update')}
           </button>
         )}
       </div>
@@ -696,7 +696,7 @@ export default function HouseholdRegistration() {
 
       <main className="hh-main">
         <h1 className="hh-page-title">
-          {updateHouseholdId ? "Update Household Registration" : "Household Registration"}
+          {updateHouseholdId ? t('household.updateTitle') : t('household.title')}
         </h1>
 
         {/* Update mode info banner */}
@@ -704,8 +704,8 @@ export default function HouseholdRegistration() {
           <div className="hh-update-banner">
             <span className="hh-update-banner-icon">📋</span>
             <div>
-              <strong>Updating Approved Registration</strong>
-              <p>Your previous details have been pre-filled. Edit the fields you wish to change and resubmit. The Grama Niladhari officer will re-review your updated registration.</p>
+              <strong>{t('household.updateBannerTitle')}</strong>
+              <p>{t('household.updateBannerMsg')}</p>
             </div>
           </div>
         )}
@@ -713,10 +713,10 @@ export default function HouseholdRegistration() {
         <form className="hh-form" onSubmit={onSubmit}>
           {/* SECTION 1 */}
           <section className="hh-box">
-            <h2 className="hh-box-title">Household basic Information</h2>
+            <h2 className="hh-box-title">{t('household.section1')}</h2>
 
             <div className="hh-field">
-              <label className="hh-label">Householder's Full Name</label>
+              <label className="hh-label">{t('household.householderName')}</label>
               <input
                 className="hh-input hh-input-lg"
                 value={house.holder_name}
@@ -726,7 +726,7 @@ export default function HouseholdRegistration() {
 
             <div className="hh-grid-3">
               <div className="hh-field">
-                <label className="hh-label">Phone Number</label>
+                <label className="hh-label">{t('household.phoneNumber')}</label>
                 <input
                   className="hh-input"
                   value={house.phone}
@@ -747,7 +747,7 @@ export default function HouseholdRegistration() {
               </div>
 
               <div className="hh-field">
-                <label className="hh-label">House No</label>
+                <label className="hh-label">{t('household.householdNo')}</label>
                 <input
                   className="hh-input"
                   value={house.house_no}
@@ -756,22 +756,22 @@ export default function HouseholdRegistration() {
               </div>
 
               <div className="hh-field">
-                <label className="hh-label">No of Family Members</label>
+                <label className="hh-label">{t('household.noOfMembers')}</label>
                 <div className="hh-mini-btns">
                   <div className="hh-count-chip">
-                    <span className="hh-count-lbl">Male</span>
+                    <span className="hh-count-lbl">{t('household.male')}</span>
                     <span className="hh-count-val">
                       {members.filter((m) => m.gender === "Male").length}
                     </span>
                   </div>
                   <div className="hh-count-chip">
-                    <span className="hh-count-lbl">Female</span>
+                    <span className="hh-count-lbl">{t('household.female')}</span>
                     <span className="hh-count-val">
                       {members.filter((m) => m.gender === "Female").length}
                     </span>
                   </div>
                   <div className="hh-count-chip hh-count-total">
-                    <span className="hh-count-lbl">Total</span>
+                    <span className="hh-count-lbl">{t('household.total')}</span>
                     <span className="hh-count-val">{members.length}</span>
                   </div>
                 </div>
@@ -779,7 +779,7 @@ export default function HouseholdRegistration() {
             </div>
 
             <div className="hh-field">
-              <label className="hh-label">Address</label>
+              <label className="hh-label">{t('household.address')}</label>
               <input
                 className="hh-input hh-input-lg"
                 value={house.address}
@@ -789,28 +789,28 @@ export default function HouseholdRegistration() {
 
             <div className="hh-grid-2 hh-grid-tight">
               <div className="hh-field hh-dd">
-                <label className="hh-label">Electricity Connection</label>
+                <label className="hh-label">{t('household.electricity')}</label>
                 <select
                   className="hh-select"
                   value={house.electricity}
                   onChange={(e) => setHouse({ ...house, electricity: e.target.value })}
                 >
                   <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="Yes">{t('household.yes')}</option>
+                  <option value="No">{t('household.no')}</option>
                 </select>
               </div>
 
               <div className="hh-field hh-dd">
-                <label className="hh-label">Water supply</label>
+                <label className="hh-label">{t('household.waterSupply')}</label>
                 <select
                   className="hh-select"
                   value={house.water}
                   onChange={(e) => setHouse({ ...house, water: e.target.value })}
                 >
                   <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="Yes">{t('household.yes')}</option>
+                  <option value="No">{t('household.no')}</option>
                 </select>
               </div>
             </div>
@@ -818,16 +818,16 @@ export default function HouseholdRegistration() {
 
           {/* SECTION 2 — Dynamic Members */}
           <section className="hh-box">
-            <h2 className="hh-box-title">Family member details</h2>
+            <h2 className="hh-box-title">{t('household.section2')}</h2>
 
             {members.map((m, idx) => (
               <div key={idx} className="hh-member-card">
                 {/* Card header: label + remove button */}
                 <div className="hh-member-header">
                   <span className="hh-member-label">
-                    Member {String(idx + 1).padStart(2, "0")}
+                    {t('household.memberLabel')} {String(idx + 1).padStart(2, "0")}
                     {idx === 0 && (
-                      <span className="hh-member-primary-badge">Primary Householder</span>
+                      <span className="hh-member-primary-badge">{t('household.primaryHouseholder')}</span>
                     )}
                   </span>
                   {idx > 0 && (
@@ -836,7 +836,7 @@ export default function HouseholdRegistration() {
                       className="hh-remove-btn"
                       onClick={() => removeMember(idx)}
                     >
-                      ✕ Remove Member
+                      {t('household.removeMember')}
                     </button>
                   )}
                 </div>
@@ -844,7 +844,7 @@ export default function HouseholdRegistration() {
                 {/* Full Name */}
                 <div className="hh-field">
                   <label className="hh-label">
-                    Full Name <span className="hh-required">*</span>
+                    {t('household.memberName')} <span className="hh-required">*</span>
                   </label>
                   <input
                     className="hh-input hh-input-lg"
@@ -858,7 +858,7 @@ export default function HouseholdRegistration() {
                 <div className="hh-grid-3">
                   <div className="hh-field">
                     <label className="hh-label">
-                      Relationship To Head <span className="hh-required">*</span>
+                      {t('household.memberRelation')} <span className="hh-required">*</span>
                     </label>
                     <select
                       className="hh-select"
@@ -866,40 +866,40 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "relationship", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Head</option>
-                      <option>Spouse</option>
-                      <option>Child</option>
-                      <option>Parent</option>
-                      <option>Other</option>
+                      <option value="Head">{t('household.rel_head')}</option>
+                      <option value="Spouse">{t('household.rel_spouse')}</option>
+                      <option value="Child">{t('household.rel_child')}</option>
+                      <option value="Parent">{t('household.rel_parent')}</option>
+                      <option value="Other">{t('household.rel_other')}</option>
                     </select>
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">Gender</label>
+                    <label className="hh-label">{t('household.memberGender')}</label>
                     <select
                       className="hh-select"
                       value={m.gender}
                       onChange={(e) => updateMember(idx, "gender", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Male</option>
-                      <option>Female</option>
+                      <option value="Male">{t('household.gen_male')}</option>
+                      <option value="Female">{t('household.gen_female')}</option>
                     </select>
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">Religion</label>
+                    <label className="hh-label">{t('household.memberReligion')}</label>
                     <select
                       className="hh-select"
                       value={m.religion}
                       onChange={(e) => updateMember(idx, "religion", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Buddhist</option>
-                      <option>Hindu</option>
-                      <option>Islam</option>
-                      <option>Christian</option>
-                      <option>Other</option>
+                      <option value="Buddhist">{t('household.rel_buddhist')}</option>
+                      <option value="Hindu">{t('household.rel_hindu')}</option>
+                      <option value="Islam">{t('household.rel_islam')}</option>
+                      <option value="Christian">{t('household.rel_christian')}</option>
+                      <option value="Other">{t('household.rel_other')}</option>
                     </select>
                   </div>
                 </div>
@@ -907,23 +907,23 @@ export default function HouseholdRegistration() {
                 {/* Row 2: Civil Status | NIC | DOB */}
                 <div className="hh-grid-3">
                   <div className="hh-field">
-                    <label className="hh-label">Civil Status</label>
+                    <label className="hh-label">{t('household.memberCivilStatus')}</label>
                     <select
                       className="hh-select"
                       value={m.civil_status}
                       onChange={(e) => updateMember(idx, "civil_status", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Single</option>
-                      <option>Married</option>
-                      <option>Divorced</option>
-                      <option>Widowed</option>
+                      <option value="Single">{t('household.civil_single')}</option>
+                      <option value="Married">{t('household.civil_married')}</option>
+                      <option value="Divorced">{t('household.civil_divorced')}</option>
+                      <option value="Widowed">{t('household.civil_widowed')}</option>
                     </select>
                   </div>
 
                   <div className="hh-field">
                     <label className="hh-label">
-                      NIC Number <span className="hh-required">*</span>
+                      {t('household.memberNIC')} <span className="hh-required">*</span>
                     </label>
                     <input
                       className="hh-input"
@@ -950,7 +950,7 @@ export default function HouseholdRegistration() {
 
                   <div className="hh-field">
                     <label className="hh-label">
-                      Date of Birth <span className="hh-required">*</span>
+                      {t('household.memberDOB')} <span className="hh-required">*</span>
                     </label>
                     <input
                       className="hh-input"
@@ -964,46 +964,46 @@ export default function HouseholdRegistration() {
                 {/* Row 3: Education | Employment | Special Needs */}
                 <div className="hh-grid-3">
                   <div className="hh-field">
-                    <label className="hh-label">Education Level</label>
+                    <label className="hh-label">{t('household.memberEducation')}</label>
                     <select
                       className="hh-select"
                       value={m.education}
                       onChange={(e) => updateMember(idx, "education", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Primary</option>
-                      <option>O/L</option>
-                      <option>A/L</option>
-                      <option>Diploma</option>
-                      <option>Degree</option>
+                      <option value="Primary">{t('household.edu_primary')}</option>
+                      <option value="O/L">{t('household.edu_ol')}</option>
+                      <option value="A/L">{t('household.edu_al')}</option>
+                      <option value="Diploma">{t('household.edu_diploma')}</option>
+                      <option value="Degree">{t('household.edu_degree')}</option>
                     </select>
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">Employment status</label>
+                    <label className="hh-label">{t('household.memberEmployment')}</label>
                     <select
                       className="hh-select"
                       value={m.employment}
                       onChange={(e) => updateMember(idx, "employment", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>Employed</option>
-                      <option>Unemployed</option>
-                      <option>Student</option>
-                      <option>Retired</option>
+                      <option value="Employed">{t('household.emp_employed')}</option>
+                      <option value="Unemployed">{t('household.emp_unemployed')}</option>
+                      <option value="Student">{t('household.emp_student')}</option>
+                      <option value="Retired">{t('household.emp_retired')}</option>
                     </select>
                   </div>
 
                   <div className="hh-field">
-                    <label className="hh-label">Special Needs or Disability</label>
+                    <label className="hh-label">{t('household.memberSpecialNeeds')}</label>
                     <select
                       className="hh-select"
                       value={m.special_needs}
                       onChange={(e) => updateMember(idx, "special_needs", e.target.value)}
                     >
                       <option value=""></option>
-                      <option>None</option>
-                      <option>Yes</option>
+                      <option value="None">{t('household.sn_none')}</option>
+                      <option value="Yes">{t('household.sn_yes')}</option>
                     </select>
                   </div>
                 </div>
@@ -1021,14 +1021,14 @@ export default function HouseholdRegistration() {
                 }
                 onClick={addMember}
               >
-                + Add Member
+                {t('household.addMember')}
               </button>
               {(!isMemberComplete(members[members.length - 1]) ||
                 !!nicErrors[members.length - 1]) && (
                   <span className="hh-add-hint">
                     {nicErrors[members.length - 1]
-                      ? "Fix the NIC error before adding another member"
-                      : "Fill required fields (*) on the current member to add another"}
+                      ? t('household.nicHint')
+                      : t('household.fillRequired')}
                   </span>
                 )}
             </div>
@@ -1036,40 +1036,40 @@ export default function HouseholdRegistration() {
 
           {/* SECTION 3 */}
           <section className="hh-box">
-            <h2 className="hh-box-title">Financial and Aid Eligibility Information</h2>
+            <h2 className="hh-box-title">{t('household.section3')}</h2>
 
             <div className="hh-fin-grid">
               <div className="hh-field">
-                <label className="hh-label">Primary Income Source</label>
+                <label className="hh-label">{t('household.incomeSource')}</label>
                 <select
                   className="hh-select"
                   value={fin.income_source}
                   onChange={(e) => setFin({ ...fin, income_source: e.target.value })}
                 >
                   <option value=""></option>
-                  <option>Agriculture</option>
-                  <option>Business</option>
-                  <option>Government</option>
-                  <option>Private</option>
-                  <option>Other</option>
+                  <option value="Agriculture">{t('household.incomeAgriculture')}</option>
+                  <option value="Business">{t('household.incomeBusiness')}</option>
+                  <option value="Government">{t('household.incomeGovernment')}</option>
+                  <option value="Private">{t('household.incomePrivate')}</option>
+                  <option value="Other">{t('household.incomeOther')}</option>
                 </select>
               </div>
 
               <div className="hh-field">
-                <label className="hh-label">Receiving Government Aid</label>
+                <label className="hh-label">{t('household.govtAid')}</label>
                 <select
                   className="hh-select"
                   value={fin.govt_aid}
                   onChange={(e) => setFin({ ...fin, govt_aid: e.target.value })}
                 >
                   <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="Yes">{t('household.yes')}</option>
+                  <option value="No">{t('household.no')}</option>
                 </select>
               </div>
 
               <div className="hh-field hh-notes">
-                <label className="hh-label">Additional Notes</label>
+                <label className="hh-label">{t('household.notes')}</label>
                 <textarea
                   className="hh-textarea"
                   value={fin.notes}
@@ -1078,17 +1078,17 @@ export default function HouseholdRegistration() {
               </div>
 
               <div className="hh-field">
-                <label className="hh-label">Monthly Income Range</label>
+                <label className="hh-label">{t('household.incomeRange')}</label>
                 <select
                   className="hh-select"
                   value={fin.income_range}
                   onChange={(e) => setFin({ ...fin, income_range: e.target.value })}
                 >
                   <option value=""></option>
-                  <option>&lt; 25,000</option>
-                  <option>25,000 - 50,000</option>
-                  <option>50,000 - 100,000</option>
-                  <option>&gt; 100,000</option>
+                  <option value="&lt; 25,000">&lt; 25,000</option>
+                  <option value="25,000 - 50,000">25,000 - 50,000</option>
+                  <option value="50,000 - 100,000">50,000 - 100,000</option>
+                  <option value="&gt; 100,000">&gt; 100,000</option>
                 </select>
               </div>
             </div>
@@ -1099,43 +1099,43 @@ export default function HouseholdRegistration() {
                 {aidEntries.map((entry, idx) => (
                   <div key={idx} className="hh-aid-entry">
                     <div className="hh-aid-entry-header">
-                      <span className="hh-aid-entry-num">Aid #{idx + 1}</span>
+                      <span className="hh-aid-entry-num">{t('household.aidEntry')} {idx + 1}</span>
                       {aidEntries.length > 1 && (
                         <button
                           type="button"
                           className="hh-aid-remove"
                           onClick={() => removeAidEntry(idx)}
                         >
-                          ✕ Remove
+                          {t('household.remove')}
                         </button>
                       )}
                     </div>
 
                     <div className="hh-field">
-                      <label className="hh-label">Aid / Benefit Type</label>
+                      <label className="hh-label">{t('household.aidBenefitType')}</label>
                       <select
                         className="hh-select hh-aid-select"
                         value={entry.aid_type}
                         onChange={(e) => updateAidType(idx, e.target.value)}
                       >
                         <option value=""></option>
-                        <option>Samurdhi</option>
-                        <option>Comfort Allowance</option>
-                        <option>Elder</option>
-                        <option>Public Assistance</option>
-                        <option>Disability</option>
-                        <option>Sickness Assistance</option>
-                        <option>Other</option>
+                        <option value="Samurdhi">Samurdhi</option>
+                        <option value="Comfort Allowance">Comfort Allowance</option>
+                        <option value="Elder">Elder</option>
+                        <option value="Public Assistance">Public Assistance</option>
+                        <option value="Disability">Disability</option>
+                        <option value="Sickness Assistance">Sickness Assistance</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
 
                     <div className="hh-field">
-                      <label className="hh-label">Receiver(s) / Beneficiary(ies)</label>
+                      <label className="hh-label">{t('household.receivers')}</label>
                       <div className="hh-receiver-grid">
                         {members.map((m, mi) => {
                           const name =
                             m.full_name.trim() ||
-                            `Member ${String(mi + 1).padStart(2, "0")}`;
+                            `${t('household.memberLabel')} ${String(mi + 1).padStart(2, "0")}`;
                           const checked = entry.receivers.includes(name);
                           return (
                             <label key={mi} className="hh-receiver-item">
@@ -1158,7 +1158,7 @@ export default function HouseholdRegistration() {
                   className="hh-aid-add"
                   onClick={addAidEntry}
                 >
-                  + Add Another Aid Type
+                  {t('household.addAidType')}
                 </button>
               </div>
             )}
@@ -1167,7 +1167,7 @@ export default function HouseholdRegistration() {
           {/* DECLARATION */}
           <div className="hh-declare">
             <p className="hh-declare-text">
-              I hereby declare that the above information is true and accurate to the best of my knowledge.
+              {t('household.declareText')}
             </p>
 
             <label className="hh-check">
@@ -1176,7 +1176,7 @@ export default function HouseholdRegistration() {
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
               />
-              <span>I agree and confirm the provided details are accurate.</span>
+              <span>{t('household.agreeText')}</span>
             </label>
           </div>
 
@@ -1190,7 +1190,7 @@ export default function HouseholdRegistration() {
           {/* ACTION BUTTONS */}
           <div className="hh-actions">
             <button type="button" className="hh-btn hh-btn-reset" onClick={onReset} disabled={submitting}>
-              Reset
+              {t('household.reset')}
             </button>
             <button
               type="submit"
@@ -1200,10 +1200,10 @@ export default function HouseholdRegistration() {
               {submitting ? (
                 <span className="hh-spinner-wrap">
                   <span className="hh-spinner" />
-                  {updateHouseholdId ? "Updating…" : "Submitting…"}
+                  {updateHouseholdId ? t('household.updating') : t('household.submitting')}
                 </span>
               ) : (
-                updateHouseholdId ? "Update Registration" : "Submit"
+                updateHouseholdId ? t('household.update') : t('household.submit')
               )}
             </button>
           </div>

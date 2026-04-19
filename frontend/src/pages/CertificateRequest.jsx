@@ -28,19 +28,19 @@ const CERT_PDF_MAP = {
   "Registration of voluntary organizations": "/certificates/voluntary_organizations.pdf",
 };
 
-const STATUS_MAP = {
-  PENDING: { label: "Pending Review", cls: "cr-badge cr-badge-pending" },
-  SUBMITTED: { label: "Submitted", cls: "cr-badge cr-badge-pending" },
-  UNDER_REVIEW_GN: { label: "Under Review", cls: "cr-badge cr-badge-review" },
-  PENDING_DS_APPROVAL: { label: "Awaiting DS", cls: "cr-badge cr-badge-ds" },
-  VISIT_REQUIRED: { label: "Visit Required", cls: "cr-badge cr-badge-visit" },
-  APPROVED: { label: "Approved", cls: "cr-badge cr-badge-approved" },
-  ISSUED: { label: "Issued", cls: "cr-badge cr-badge-approved" },
-  REJECTED: { label: "Rejected", cls: "cr-badge cr-badge-rejected" },
-};
-
-function statusBadge(s) {
-  return STATUS_MAP[s] || { label: s, cls: "cr-badge" };
+function statusBadge(s, t) {
+  if (!t) return { label: s, cls: "cr-badge" };
+  const map = {
+    PENDING: { label: t('certificates.statusPending'), cls: "cr-badge cr-badge-pending" },
+    SUBMITTED: { label: t('certificates.statusSubmitted'), cls: "cr-badge cr-badge-pending" },
+    UNDER_REVIEW_GN: { label: t('certificates.statusReview'), cls: "cr-badge cr-badge-review" },
+    PENDING_DS_APPROVAL: { label: t('certificates.statusDS'), cls: "cr-badge cr-badge-ds" },
+    VISIT_REQUIRED: { label: t('certificates.statusVisit'), cls: "cr-badge cr-badge-visit" },
+    APPROVED: { label: t('certificates.statusApproved'), cls: "cr-badge cr-badge-approved" },
+    ISSUED: { label: t('certificates.statusIssued'), cls: "cr-badge cr-badge-approved" },
+    REJECTED: { label: t('certificates.statusRejected'), cls: "cr-badge cr-badge-rejected" },
+  };
+  return map[s] || { label: s, cls: "cr-badge" };
 }
 
 function formatDate(ts) {
@@ -878,7 +878,7 @@ export default function CertificateRequest() {
       {/* Content */}
       <main className="gn-content">
         <div className="gn-form-wrap">
-          <h2 className="gn-form-title">Certificate Request Form</h2>
+          <h2 className="gn-form-title">{t('certificates.requestNew')}</h2>
           <p className="gn-form-sub">Submit a request for official certificates issued by the Grama Niladhari office.</p>
 
           {submitSuccess && <div className="cr-alert cr-alert-ok">{submitSuccess}</div>}
@@ -901,7 +901,7 @@ export default function CertificateRequest() {
               {autoFillLoading && (
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "10px 14px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", marginBottom: "14px", fontSize: "0.85rem", color: "#166534" }}>
                   <svg style={{ flexShrink: 0, animation: "spin 1s linear infinite" }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round"/></svg>
-                  Checking for previous data…
+                  {t('certificates.autofillLoading')}
                 </div>
               )}
 
@@ -910,8 +910,7 @@ export default function CertificateRequest() {
                   <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
                     <span style={{ fontSize: "1.1rem", lineHeight: 1, marginTop: "1px" }}>📋</span>
                     <div>
-                      <strong style={{ display: "block", marginBottom: "3px", fontSize: "0.88rem" }}>Auto-filled from your previous request</strong>
-                      <span style={{ color: "#15803d" }}>All fields have been pre-populated with your last submitted data for this certificate type. You can edit any field before submitting.</span>
+                      <strong style={{ display: "block", marginBottom: "3px", fontSize: "0.88rem" }}>{t('certificates.autofillNote')}</strong>
                     </div>
                   </div>
                   <button
@@ -929,17 +928,17 @@ export default function CertificateRequest() {
               )}
 
               <div className="gn-field">
-                <label className="cr-label">Certificate Type <span className="cr-req">*</span></label>
+                <label className="cr-label">{t('certificates.certType')} <span className="cr-req">*</span></label>
                 <select className="gn-input gn-select" value={certType} onChange={handleCertTypeChange}>
-                  <option value="">Select Certificate Type</option>
+                  <option value="">{t('certificates.selectType')}</option>
                   {CERT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
 
               <div className="gn-field">
-                <label className="cr-label">Requesting For <span className="cr-req">*</span></label>
+                <label className="cr-label">{t('certificates.requestFor')} <span className="cr-req">*</span></label>
                 <select className="gn-input gn-select" value={selectedFor} onChange={handleSelectFor}>
-                  <option value="self">{myName || "Myself"}</option>
+                  <option value="self">{myName || t('certificates.myself')}</option>
                   {members.map(m => (
                     <option key={m.member_id} value={String(m.member_id)}>
                       {m.full_name} ({m.relationship_to_head})
@@ -949,7 +948,7 @@ export default function CertificateRequest() {
               </div>
 
               <div className="gn-field">
-                <label className="cr-label">NIC Number <span className="cr-req">*</span></label>
+                <label className="cr-label">{t('certificates.nicNumber')} <span className="cr-req">*</span></label>
                 <input
                   className="gn-input"
                   type="text"
@@ -965,8 +964,8 @@ export default function CertificateRequest() {
 
               {certType !== "Registration of delayed births" && certType !== "Registration of voluntary organizations" && (
                 <div className="gn-field">
-                  <label className="cr-label">Purpose / Additional Information</label>
-                  <textarea className="gn-textarea" placeholder="Describe the purpose of the certificate request…" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />
+                  <label className="cr-label">{t('certificates.purpose')}</label>
+                  <textarea className="gn-textarea" value={purpose} onChange={e => setPurpose(e.target.value)} rows={3} />
                 </div>
               )}
 
@@ -974,7 +973,7 @@ export default function CertificateRequest() {
 
               <div className="gn-submit-row" style={{ marginTop: "20px" }}>
                 <button className="gn-submit-btn" type="submit" disabled={submitting}>
-                  {submitting ? "Submitting…" : "Submit Request"}
+                  {submitting ? t('certificates.submitting') : t('certificates.submit')}
                 </button>
               </div>
             </div>
@@ -991,14 +990,13 @@ export default function CertificateRequest() {
                         {CERT_PDF_MAP[t] && (
                           <a href={CERT_PDF_MAP[t]} download target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", padding: "3px 8px", backgroundColor: "rgba(39, 174, 96, 0.1)", color: "#1e8449", border: "1px solid rgba(39, 174, 96, 0.2)", borderRadius: "6px", textDecoration: "none", fontWeight: "600", whiteSpace: "nowrap", transition: "all 0.2s" }}>
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-                            Blank Form (Download here)
+                            Download Blank
                           </a>
                         )}
                       </div>
                     </li>
                   ))}
                 </ul>
-                <p className="cr-info-note" style={{ marginTop: "14px" }}>Your personal details (name, NIC, address) will be automatically filled from your registered profile.</p>
               </div>
             </div>
           </form>
@@ -1006,10 +1004,10 @@ export default function CertificateRequest() {
 
         {/* Request History */}
         <div className="cr-history">
-          <h2 className="cr-history-title">My Certificate Requests</h2>
-          {listLoading && <div className="cr-state">Loading…</div>}
+          <h2 className="cr-history-title">{t('certificates.myHistory')}</h2>
+          {listLoading && <div className="cr-state">{t('common.loading')}</div>}
           {listError && <div className="cr-state cr-state-err">{listError}</div>}
-          {!listLoading && requests.length === 0 && <div className="cr-state">You have not submitted any requests yet.</div>}
+          {!listLoading && requests.length === 0 && <div className="cr-state">{t('certificates.noRequests')}</div>}
 
           {!listLoading && requests.length > 0 && (
             <div className="cr-table-wrap">
@@ -1019,14 +1017,14 @@ export default function CertificateRequest() {
                     <th>#</th>
                     <th>Type</th>
                     <th>Status</th>
-                    <th>GN Note</th>
-                    <th>Date</th>
+                    <th>{t('certificates.gnNote')}</th>
+                    <th>{t('certificates.requestedOn')}</th>
                     <th>Actions &amp; Details</th>
                   </tr>
                 </thead>
                 <tbody>
                   {requests.map((r) => {
-                    const badge = statusBadge(r.status);
+                    const badge = statusBadge(r.status, t);
                     const isApproved = r.status === "APPROVED" || r.status === "ISSUED";
                     const isVisit = r.status === "VISIT_REQUIRED";
                     const isRejected = r.status === "REJECTED";
@@ -1045,22 +1043,21 @@ export default function CertificateRequest() {
                               onClick={() => handleDownload(r.request_id)}
                               disabled={downloading === r.request_id}
                             >
-                              {downloading === r.request_id ? "⏳ Downloading…" : "⬇ Download Certificate"}
+                              {downloading === r.request_id ? t('certificates.downloading') : t('certificates.download')}
                             </button>
                           )}
                           {/* Visit info panel */}
                           {isVisit && (
                             <div className="cr-visit-panel">
-                              <div className="cr-visit-title">📅 Physical Visit Scheduled</div>
+                              <div className="cr-visit-title">{t('certificates.visitNote')}</div>
                               {r.appointment_date && (
                                 <div className="cr-visit-row">
-                                  <span>Date:</span>
                                   <strong>{formatDate(r.appointment_date)}</strong>
                                 </div>
                               )}
                               {r.required_documents_list && (
                                 <div className="cr-visit-row cr-visit-docs">
-                                  <span>Bring:</span>
+                                  <span>{t('certificates.visitDocs')}</span>
                                   <span>{r.required_documents_list}</span>
                                 </div>
                               )}
@@ -1069,7 +1066,7 @@ export default function CertificateRequest() {
                           {/* Rejection reason */}
                           {isRejected && r.rejection_reason && (
                             <div className="cr-rejection-panel">
-                              <strong>Reason:</strong> {r.rejection_reason}
+                              <strong>{t('certificates.rejectionReason')}</strong> {r.rejection_reason}
                             </div>
                           )}
                           {/* No special action needed for other statuses */}
