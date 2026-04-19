@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/householdRegistration.css";
 import api from "../api/api";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 // --- Icons ---
 function IconHome() {
@@ -233,6 +235,7 @@ function StatusCard({ household, onResubmit, onUpdate }) {
 }
 
 export default function HouseholdRegistration() {
+  const { t } = useTranslation();
   // ── Existing registration check (duplicate prevention) ──
   const [checkingExisting, setCheckingExisting] = useState(true);
   const [existingHousehold, setExistingHousehold] = useState(null);
@@ -517,22 +520,23 @@ export default function HouseholdRegistration() {
         <div className="cd-top-left">
           <img className="cd-emblem" src={emblem} alt="Emblem" />
           <div className="cd-top-text">
-            <div className="cd-title">Grama Niladhari Division - Maspanna</div>
-            <div className="cd-subtitle">Ministry of Home Affairs</div>
+            <div className="cd-title">{t('dashboard.title')}</div>
+            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
         <div className="cd-top-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Link to="/about" className="cd-about-btn">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="cd-about-btn">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
       </header>
       <nav className="cd-nav">
-        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>Home</span></Link>
-        <Link className="cd-nav-item cd-active" to="/household"><IconUser /><span>Household</span></Link>
-        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>Certificates</span></Link>
-        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>Complaints</span></Link>
-        <Link className="cd-nav-item" to="/notices"><IconBell /><span>Notices</span></Link>
+        <Link className="cd-nav-item" to="/citizen"><IconHome /><span>{t('nav.home')}</span></Link>
+        <Link className="cd-nav-item cd-active" to="/household"><IconUser /><span>{t('nav.household')}</span></Link>
+        <Link className="cd-nav-item" to="/certificates"><IconDoc /><span>{t('nav.certificates')}</span></Link>
+        <Link className="cd-nav-item" to="/complaints"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
+        <Link className="cd-nav-item" to="/notices"><IconBell /><span>{t('nav.notices')}</span></Link>
       </nav>
       {content}
     </div>

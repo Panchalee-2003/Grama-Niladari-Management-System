@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/certificateRequest.css";
 import emblem from "../assets/emblem.png";
 import NotificationDropdown from "../components/NotificationDropdown";
 import CitizenProfileDropdown from "../components/CitizenProfileDropdown";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import api from "../api/api";
 
 const CERT_TYPES = [
@@ -692,6 +694,7 @@ function DynamicFields({ certType, requestData, setRequestData }) {
 }
 
 export default function CertificateRequest() {
+  const { t } = useTranslation();
   /* Form state */
   const [certType, setCertType] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -851,12 +854,13 @@ export default function CertificateRequest() {
         <div className="gn-header-left">
           <img className="gn-emblem" src={emblem} alt="Emblem" />
           <div className="gn-title-wrap">
-            <div className="gn-title">Grama Niladhari Division - Maspanna</div>
-            <div className="gn-subtitle">Ministry of Home Affairs</div>
+            <div className="gn-title">{t('dashboard.title')}</div>
+            <div className="gn-subtitle">{t('dashboard.subtitle')}</div>
           </div>
         </div>
         <div className="gn-header-right" style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          <Link to="/about" className="gn-about-btn">About Us</Link>
+          <LanguageSwitcher />
+          <Link to="/about" className="gn-about-btn">{t('nav.aboutUs')}</Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
@@ -864,11 +868,11 @@ export default function CertificateRequest() {
 
       {/* Nav */}
       <nav className="gn-nav">
-        <Link to="/citizen" className="gn-nav-item"><IconHome /><span>Home</span></Link>
-        <Link to="/household" className="gn-nav-item"><IconUser /><span>Household</span></Link>
-        <Link to="/certificates" className="gn-nav-item gn-nav-active"><IconDoc /><span>Certificates</span></Link>
-        <Link to="/complaints" className="gn-nav-item"><IconComplaint /><span>Complaints</span></Link>
-        <Link to="/notices" className="gn-nav-item"><IconBell /><span>Notices</span></Link>
+        <Link to="/citizen" className="gn-nav-item"><IconHome /><span>{t('nav.home')}</span></Link>
+        <Link to="/household" className="gn-nav-item"><IconUser /><span>{t('nav.household')}</span></Link>
+        <Link to="/certificates" className="gn-nav-item gn-nav-active"><IconDoc /><span>{t('nav.certificates')}</span></Link>
+        <Link to="/complaints" className="gn-nav-item"><IconComplaint /><span>{t('nav.complaints')}</span></Link>
+        <Link to="/notices" className="gn-nav-item"><IconBell /><span>{t('nav.notices')}</span></Link>
       </nav>
 
       {/* Content */}
