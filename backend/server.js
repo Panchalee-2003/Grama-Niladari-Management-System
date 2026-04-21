@@ -41,6 +41,21 @@ app.use('/api/notice', require('./routes/notice.routes'));
 app.use('/api/certificate', require('./routes/certificate.routes'));
 app.use('/api/availability', require('./routes/availability.routes'));
 
+// Global Error Handler Middleware
+// Ensures all unhandled errors are logged with time, route, and trace
+app.use((err, req, res, next) => {
+    const timestamp = new Date().toISOString();
+    console.error(`\n[${timestamp}] ❌ UNHANDLED BACKEND ERROR`);
+    console.error(`Route: ${req.method} ${req.originalUrl}`);
+    console.error(`Trace:`, err.stack);
+    
+    res.status(500).json({
+        ok: false,
+        error: "Internal Server Error",
+        details: process.env.NODE_ENV === "development" ? err.message : undefined
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
