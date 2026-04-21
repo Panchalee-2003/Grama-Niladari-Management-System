@@ -5,7 +5,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +26,8 @@
     "pg": "^8.17.2",
     "puppeteer": "^24.40.0",
     "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0"
   }
 }
