@@ -10,21 +10,30 @@ export default function CertificateVerify() {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    if (!certId) { setState("invalid"); return; }
-    api.get(`/api/certificate/verify/${certId}`)
-      .then(r => {
+    if (!certId) {
+      setState("invalid");
+      return;
+    }
+    api
+      .get(`/api/certificate/verify/${certId}`)
+      .then((r) => {
         if (r.data.ok && r.data.valid) {
           setCertificate(r.data.certificate);
           setState("valid");
         } else {
           setState("invalid");
-          setErrorMsg(r.data.error || "Certificate is not valid or has not been approved.");
+          setErrorMsg(
+            r.data.error ||
+              "Certificate is not valid or has not been approved.",
+          );
         }
       })
-      .catch(ex => {
+      .catch((ex) => {
         if (ex.response?.status === 404) {
           setState("invalid");
-          setErrorMsg("Certificate not found. It may have been tampered with or does not exist.");
+          setErrorMsg(
+            "Certificate not found. It may have been tampered with or does not exist.",
+          );
         } else {
           setState("error");
           setErrorMsg("Unable to verify at this time. Please try again later.");
@@ -34,7 +43,11 @@ export default function CertificateVerify() {
 
   const fmtDate = (ts) => {
     if (!ts) return "—";
-    return new Date(ts).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+    return new Date(ts).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   return (
@@ -67,37 +80,61 @@ export default function CertificateVerify() {
               <Row label="Issued To" value={certificate.issued_to} />
               <Row label="Requested By" value={certificate.citizen_name} />
               <Row label="Date Issued" value={fmtDate(certificate.issued_at)} />
-              <Row label="Status" value={
-                <span style={styles.approvedPill}>APPROVED</span>
-              } />
-              <Row label="Certificate ID" value={
-                <code style={styles.code}>{certificate.certificate_id}</code>
-              } />
+              <Row
+                label="Status"
+                value={<span style={styles.approvedPill}>APPROVED</span>}
+              />
+              <Row
+                label="Certificate ID"
+                value={
+                  <code style={styles.code}>{certificate.certificate_id}</code>
+                }
+              />
             </div>
             <p style={styles.footerNote}>
-              This certificate was issued by the Grama Niladhari Digital System. The information above confirms its authenticity.
+              This certificate was issued by the Grama Niladhari Digital System.
+              The information above confirms its authenticity.
             </p>
           </>
         )}
 
         {state === "invalid" && (
           <>
-            <div style={{...styles.validBanner, background: "#fff5f5", border: "1.5px solid #f5c6cb"}}>
+            <div
+              style={{
+                ...styles.validBanner,
+                background: "#fff5f5",
+                border: "1.5px solid #f5c6cb",
+              }}
+            >
               <span style={styles.validIcon}>❌</span>
-              <span style={{...styles.validText, color: "#721c24"}}>INVALID CERTIFICATE</span>
+              <span style={{ ...styles.validText, color: "#721c24" }}>
+                INVALID CERTIFICATE
+              </span>
             </div>
-            <p style={styles.errorMsg}>{errorMsg || "This certificate could not be verified."}</p>
+            <p style={styles.errorMsg}>
+              {errorMsg || "This certificate could not be verified."}
+            </p>
             <p style={styles.footerNote}>
-              If you believe this is an error, please contact your local Grama Niladhari office with the original document.
+              If you believe this is an error, please contact your local Grama
+              Niladhari office with the original document.
             </p>
           </>
         )}
 
         {state === "error" && (
           <>
-            <div style={{...styles.validBanner, background: "#fff8e1", border: "1.5px solid #ffe082"}}>
+            <div
+              style={{
+                ...styles.validBanner,
+                background: "#fff8e1",
+                border: "1.5px solid #ffe082",
+              }}
+            >
               <span style={styles.validIcon}>⚠️</span>
-              <span style={{...styles.validText, color: "#7a5c00"}}>VERIFICATION UNAVAILABLE</span>
+              <span style={{ ...styles.validText, color: "#7a5c00" }}>
+                VERIFICATION UNAVAILABLE
+              </span>
             </div>
             <p style={styles.errorMsg}>{errorMsg}</p>
           </>
@@ -105,7 +142,11 @@ export default function CertificateVerify() {
 
         <div style={styles.certIdBox}>
           <span style={styles.certIdLabel}>Certificate ID being verified:</span>
-          <code style={{...styles.code, fontSize: "10px", wordBreak: "break-all"}}>{certId}</code>
+          <code
+            style={{ ...styles.code, fontSize: "10px", wordBreak: "break-all" }}
+          >
+            {certId}
+          </code>
         </div>
       </div>
     </div>
@@ -124,7 +165,8 @@ function Row({ label, value }) {
 const styles = {
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #0c7a3b 0%, #0a5a2c 50%, #073d1d 100%)",
+    background:
+      "linear-gradient(135deg, #0c7a3b 0%, #0a5a2c 50%, #073d1d 100%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

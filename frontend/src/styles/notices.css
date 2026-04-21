@@ -9,7 +9,7 @@ body {
 .nt-page {
   width: 100vw;
   min-height: 100vh;
-  background: #D9D9D9;
+  background: #d9d9d9;
   color: #111;
   overflow-x: hidden;
   /* prevents side scroll + fixes partial width look */
@@ -25,7 +25,7 @@ body {
 /* ------------------ TOP HEADER ------------------ */
 .cd-top {
   height: 86px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,7 +64,7 @@ body {
 }
 
 .cd-about-btn {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -82,7 +82,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +100,7 @@ body {
 /* ------------------ NAV (fixed to always fill screen) ------------------ */
 .cd-nav {
   height: 62px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -155,7 +155,7 @@ body {
 }
 
 .nt-photo {
-  background: #CFCFCF;
+  background: #cfcfcf;
   /* if you add images later, keep this as fallback */
   border: 2px solid #ffffff;
   box-sizing: border-box;
@@ -209,7 +209,7 @@ body {
 
 .nt-more {
   font-size: 22px;
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-weight: 500;
   text-decoration: none;
   /* remove underline */
@@ -235,7 +235,7 @@ body {
 
 /* ------------------ FOOTER ------------------ */
 .cd-footer {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   padding: 18px 22px 10px;
   box-sizing: border-box;
@@ -360,7 +360,7 @@ body {
 }
 
 .nt-card-author {
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-weight: 600;
 }
 
@@ -395,7 +395,7 @@ body {
 .nt-toggle-btn {
   background: none;
   border: none;
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;

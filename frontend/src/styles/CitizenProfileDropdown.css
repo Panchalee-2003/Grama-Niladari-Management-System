@@ -33,7 +33,7 @@
   width: 320px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,8 @@
   background: #fafafa;
 }
 
-.cpd-loading, .cpd-empty {
+.cpd-loading,
+.cpd-empty {
   text-align: center;
   color: #666;
   font-size: 14px;

@@ -70,7 +70,9 @@
   margin-top: 2px;
 }
 
-.cf-close:hover { color: #000; }
+.cf-close:hover {
+  color: #000;
+}
 
 /* ── Body / Form ── */
 .cf-body {
@@ -188,7 +190,9 @@
   padding: 4px 5px;
 }
 
-.cf-dep-remove:hover { background: #fff0f0; }
+.cf-dep-remove:hover {
+  background: #fff0f0;
+}
 
 .cf-dep-add {
   background: none;
@@ -202,7 +206,9 @@
   margin-top: 4px;
 }
 
-.cf-dep-add:hover { background: #f0f7f3; }
+.cf-dep-add:hover {
+  background: #f0f7f3;
+}
 
 /* ── Certificate Info (after PDF generated) ── */
 .cf-cert-info {
@@ -292,12 +298,19 @@
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
+  transition:
+    background 0.15s,
+    transform 0.1s;
   font-family: inherit;
 }
 
-.cf-btn:active { transform: scale(0.97); }
-.cf-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.cf-btn:active {
+  transform: scale(0.97);
+}
+.cf-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 .cf-btn-save {
   background: #e8f5ee;
@@ -305,14 +318,18 @@
   border: 2px solid #0c7a3b;
 }
 
-.cf-btn-save:hover:not(:disabled) { background: #d0eddc; }
+.cf-btn-save:hover:not(:disabled) {
+  background: #d0eddc;
+}
 
 .cf-btn-generate {
   background: #0c7a3b;
   color: #fff;
 }
 
-.cf-btn-generate:hover:not(:disabled) { background: #0a6532; }
+.cf-btn-generate:hover:not(:disabled) {
+  background: #0a6532;
+}
 
 .cf-btn-cancel {
   background: none;
@@ -320,4 +337,6 @@
   border: 1px solid #ddd;
 }
 
-.cf-btn-cancel:hover { background: #f5f5f5; }
+.cf-btn-cancel:hover {
+  background: #f5f5f5;
+}

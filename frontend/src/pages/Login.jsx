@@ -8,15 +8,29 @@ import { validateEmail, validateRequired } from "../utils/validation";
 function UserIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#333" strokeWidth="2" />
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="#333"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 20a8 8 0 0 1 16 0"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function LockIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M7 11V8a5 5 0 0 1 10 0v3"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
       <path d="M6 11h12v10H6V11Z" stroke="#333" strokeWidth="2" />
     </svg>
   );
@@ -114,7 +128,7 @@ export default function Login() {
         nav("/citizen");
       }
     } catch (ex) {
-      console.error('Login error:', ex);
+      console.error("Login error:", ex);
 
       // Handle different error types
       if (ex.response) {
@@ -141,12 +155,8 @@ export default function Login() {
     }
   };
 
-
   return (
-    <AuthLayout
-      titleLine1="GRAMA NILADHARI DIVISION"
-      titleLine2="MASPANNA"
-    >
+    <AuthLayout titleLine1="GRAMA NILADHARI DIVISION" titleLine2="MASPANNA">
       {err && <div className="msg-err">{err}</div>}
 
       <h2 className="sub-title">Sign In</h2>
@@ -154,7 +164,11 @@ export default function Login() {
 
       <form onSubmit={onSubmit}>
         <label className="label">Select User Role</label>
-        <select className="select" value={role} onChange={(e) => setRole(e.target.value)}>
+        <select
+          className="select"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
           <option value="CITIZEN">Citizen</option>
           <option value="GN">GN Officer</option>
           <option value="ADMIN">Divisional Secretariat</option>
@@ -162,9 +176,11 @@ export default function Login() {
 
         <label className="label">Email Address</label>
         <div className="field">
-          <span className="icon"><UserIcon /></span>
+          <span className="icon">
+            <UserIcon />
+          </span>
           <input
-            className={`input ${emailError ? 'input-error' : ''}`}
+            className={`input ${emailError ? "input-error" : ""}`}
             value={email}
             onChange={handleEmailChange}
             onBlur={handleEmailBlur}
@@ -175,9 +191,11 @@ export default function Login() {
 
         <label className="label">Password</label>
         <div className="field">
-          <span className="icon"><LockIcon /></span>
+          <span className="icon">
+            <LockIcon />
+          </span>
           <input
-            className={`input ${passwordError ? 'input-error' : ''}`}
+            className={`input ${passwordError ? "input-error" : ""}`}
             type="password"
             value={password}
             onChange={handlePasswordChange}

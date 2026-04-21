@@ -92,7 +92,9 @@ export default function CertificateSuccess() {
         </div>
 
         <div className="cd-top-right">
-          <Link to="/about" className="cd-about-btn">About Us</Link>
+          <Link to="/about" className="cd-about-btn">
+            About Us
+          </Link>
           <div className="cd-profile-circle" aria-label="profile">
             <IconUser />
           </div>
@@ -132,8 +134,8 @@ export default function CertificateSuccess() {
         <h1 className="cs-title">Request submitted successfully</h1>
 
         <p className="cs-sub">
-          Your certificate request has been successfully submitted. Please keep the following
-          request ID for your reference.
+          Your certificate request has been successfully submitted. Please keep
+          the following request ID for your reference.
         </p>
 
         <div className="cs-id">Request ID : #789345</div>
@@ -144,7 +146,9 @@ export default function CertificateSuccess() {
         <div className="cd-footer-grid">
           <div>
             <div className="cd-footer-title">Contact Information</div>
-            <div className="cd-footer-text">Grama Niladhari officer, Maspanna</div>
+            <div className="cd-footer-text">
+              Grama Niladhari officer, Maspanna
+            </div>
             <div className="cd-footer-text">Phone: 0768187908</div>
             <div className="cd-footer-text">Email: chasara88@gmail.com</div>
           </div>

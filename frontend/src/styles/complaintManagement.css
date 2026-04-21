@@ -1,12 +1,17 @@
 /* page base */
 
-
 .cmp-wrap {
   width: 100vw;
   min-height: 100vh;
   display: flex;
   background: #ffffff;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 /* =========================
@@ -14,14 +19,14 @@
 ========================= */
 .cmp-side {
   width: 340px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   padding: 26px 22px;
   display: flex;
   flex-direction: column;
 }
 
 .cmp-brand {
-  color: #0B1B12;
+  color: #0b1b12;
   margin-bottom: 22px;
 }
 
@@ -52,7 +57,7 @@
   padding: 12px 14px;
   border-radius: 10px;
   text-decoration: none;
-  color: #0B1B12;
+  color: #0b1b12;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.07);
 }
@@ -62,7 +67,7 @@
 }
 
 .cmp-active {
-  background: #BFF3B2;
+  background: #bff3b2;
   /* light green highlight like figma */
 }
 
@@ -79,7 +84,7 @@
 }
 
 .cmp-gear {
-  color: #0B1B12;
+  color: #0b1b12;
   font-size: 18px;
   opacity: 0.9;
 }
@@ -117,7 +122,7 @@
 .cmp-search-bar {
   width: 540px;
   height: 28px;
-  background: #E6F0EA;
+  background: #e6f0ea;
   border-radius: 2px;
 }
 
@@ -139,7 +144,7 @@
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -244,7 +249,7 @@
   min-width: 118px;
   padding: 0 14px;
   border-radius: 8px;
-  background: #EEF3F0;
+  background: #eef3f0;
   font-weight: 700;
   color: #1b1b1b;
 }
@@ -330,8 +335,8 @@
 /* ---- Link button ---- */
 .cmp-link-btn {
   background: none;
-  border: 1px solid #0C7A3B;
-  color: #0C7A3B;
+  border: 1px solid #0c7a3b;
+  color: #0c7a3b;
   border-radius: 6px;
   padding: 5px 10px;
   font-size: 12px;
@@ -499,7 +504,7 @@
 
 .cmp-response-author {
   font-weight: 700;
-  color: #0C7A3B;
+  color: #0c7a3b;
 }
 
 .cmp-response-date {
@@ -541,12 +546,12 @@
 }
 
 .cmp-response-input:focus {
-  border-color: #0C7A3B;
+  border-color: #0c7a3b;
 }
 
 .cmp-response-submit {
   align-self: flex-end;
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   border: none;
   border-radius: 8px;

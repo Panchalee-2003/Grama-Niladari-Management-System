@@ -22,7 +22,7 @@
   border: 1px solid #e6e6e6;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s;
 }
 
@@ -47,7 +47,7 @@
   width: 36px;
   height: 36px;
   background: #f0f7f4;
-  color: #0C7A3B;
+  color: #0c7a3b;
   border-radius: 8px;
 }
 
@@ -63,7 +63,8 @@
   margin-bottom: 8px;
 }
 
-.settings-select, .settings-input {
+.settings-select,
+.settings-input {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid #ddd;
@@ -74,12 +75,13 @@
   transition: border-color 0.2s;
 }
 
-.settings-select:focus, .settings-input:focus {
-  border-color: #0C7A3B;
+.settings-select:focus,
+.settings-input:focus {
+  border-color: #0c7a3b;
 }
 
 .settings-btn-save {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -101,7 +103,7 @@
 }
 
 .settings-success {
-  color: #0C7A3B;
+  color: #0c7a3b;
   background: #eef7f2;
   border-radius: 6px;
   padding: 10px;

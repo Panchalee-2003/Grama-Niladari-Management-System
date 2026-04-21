@@ -3,14 +3,14 @@
 .cp-page {
   width: 100vw;
   min-height: 100vh;
-  background: #D9D9D9;
+  background: #d9d9d9;
   color: #111;
 }
 
 /* ------------------ TOP HEADER (same as your other pages) ------------------ */
 .cd-top {
   height: 86px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,7 +50,7 @@
 }
 
 .cd-about-btn {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -68,7 +68,7 @@
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@
 /* ------------------ NAV ------------------ */
 .cd-nav {
   height: 62px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -151,7 +151,7 @@
   height: 56px;
   border: 1px solid #6f6f6f;
   border-radius: 10px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   padding: 0 22px;
   font-size: 20px;
   outline: none;
@@ -164,7 +164,7 @@
   height: 220px;
   border: 1px solid #6f6f6f;
   border-radius: 10px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   padding: 22px;
   font-size: 20px;
   outline: none;
@@ -184,7 +184,7 @@
   height: 56px;
   border: 1px solid #6f6f6f;
   border-radius: 10px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -216,7 +216,7 @@
   margin-top: 22px;
   width: 190px;
   height: 56px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   border: none;
   border-radius: 10px;
   color: #fff;
@@ -236,7 +236,7 @@
 
 /* Submit button (unchanged) */
 .cp-submit-btn {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -249,7 +249,7 @@
 /* Link under submit */
 .cp-link {
   font-size: 18px;
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-weight: 500;
   text-decoration: none;
 }
@@ -258,10 +258,9 @@
   text-decoration: underline;
 }
 
-
 /* ------------------ FOOTER (same as your other pages) ------------------ */
 .cd-footer {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   padding: 18px 22px 10px;
 }
@@ -352,7 +351,7 @@
 .cp-alert-link {
   background: none;
   border: none;
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-weight: 700;
   cursor: pointer;
   text-decoration: underline;

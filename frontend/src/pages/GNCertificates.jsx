@@ -6,18 +6,134 @@ import "../styles/householdVerify.css";
 import api from "../api/api";
 import GNProfileDropdown from "../components/GNProfileDropdown";
 
-
 /* --- Icons --- */
-function IconHome() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" strokeWidth="2" /></svg>; }
-function IconPeople() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" strokeWidth="2" /><path d="M2 21a8 8 0 0 1 16 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>; }
-function IconDoc() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="2" /><path d="M14 3v4h4" stroke="currentColor" strokeWidth="2" /></svg>; }
-function IconFlag() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 3v18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><path d="M6 4h10l-2 4 2 4H6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>; }
-function IconBell() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="currentColor" strokeWidth="2" /><path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>; }
-function IconCoin() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="7" rx="8" ry="3" stroke="currentColor" strokeWidth="2" /><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" stroke="currentColor" strokeWidth="2" /><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" strokeWidth="2" /></svg>; }
-function IconSettings() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" strokeWidth="2" /><path d="M19.4 15a7.7 7.7 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.4 7.4 0 0 0-1.7-1L15 6h-6l-.5 2.4a7.4 7.4 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 0 2l-2 1.2 2 3.4 2.3-.6a7.4 7.4 0 0 0 1.7 1L9 22h6l.5-2.4a7.4 7.4 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2a7.7 7.7 0 0 0-.1-1Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>; }
+function IconHome() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+function IconPeople() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M2 21a8 8 0 0 1 16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+function IconDoc() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+}
+function IconFlag() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M6 3v18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 4h10l-2 4 2 4H6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function IconBell() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M9.5 19a2.5 2.5 0 0 0 5 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+function IconCoin() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <ellipse
+        cx="12"
+        cy="7"
+        rx="8"
+        ry="3"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+function IconSettings() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M19.4 15a7.7 7.7 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.4 7.4 0 0 0-1.7-1L15 6h-6l-.5 2.4a7.4 7.4 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 0 2l-2 1.2 2 3.4 2.3-.6a7.4 7.4 0 0 0 1.7 1L9 22h6l.5-2.4a7.4 7.4 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2a7.7 7.7 0 0 0-.1-1Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 // All workflow statuses
-const TABS = ["ALL", "PENDING", "UNDER_REVIEW_GN", "PENDING_DS_APPROVAL", "VISIT_REQUIRED", "APPROVED", "REJECTED"];
+const TABS = [
+  "ALL",
+  "PENDING",
+  "UNDER_REVIEW_GN",
+  "PENDING_DS_APPROVAL",
+  "VISIT_REQUIRED",
+  "APPROVED",
+  "REJECTED",
+];
 
 const STATUS_LABELS = {
   PENDING: "Pending",
@@ -32,7 +148,11 @@ const STATUS_LABELS = {
 
 function formatDate(ts) {
   if (!ts) return "—";
-  return new Date(ts).toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "2-digit" });
+  return new Date(ts).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
 }
 
 function formatDateInput(ts) {
@@ -50,7 +170,6 @@ export default function GNCertificates() {
   // Review modal state
   const [modal, setModal] = useState(null);
 
-
   // GN action state inside modal
   const [gnRemarks, setGnRemarks] = useState("");
   const [activeAction, setActiveAction] = useState(""); // "approve" | "visit" | "reject"
@@ -62,7 +181,8 @@ export default function GNCertificates() {
   const [actionSuccess, setActionSuccess] = useState("");
 
   const loadRequests = useCallback(async (status) => {
-    setLoading(true); setError("");
+    setLoading(true);
+    setError("");
     try {
       const params = status && status !== "ALL" ? `?status=${status}` : "";
       const r = await api.get(`/api/certificate/all${params}`);
@@ -74,13 +194,17 @@ export default function GNCertificates() {
     }
   }, []);
 
-  useEffect(() => { loadRequests(activeTab); }, [activeTab, loadRequests]);
+  useEffect(() => {
+    loadRequests(activeTab);
+  }, [activeTab, loadRequests]);
 
   const openModal = (req) => {
     setModal(req);
     setGnRemarks(req.gn_remarks || req.gn_note || "");
     setActiveAction("");
-    setAppointmentDate(req.appointment_date ? formatDateInput(req.appointment_date) : "");
+    setAppointmentDate(
+      req.appointment_date ? formatDateInput(req.appointment_date) : "",
+    );
     setRequiredDocs(req.required_documents_list || "");
     setRejectionReason(req.rejection_reason || "");
     setActionError("");
@@ -94,21 +218,24 @@ export default function GNCertificates() {
   };
 
   const handleActionSelect = (action) => {
-    setActiveAction(prev => prev === action ? "" : action);
+    setActiveAction((prev) => (prev === action ? "" : action));
     setActionError("");
     setActionSuccess("");
   };
 
   const handleSubmitAction = async () => {
     if (!modal || !activeAction) return;
-    setActionError(""); setActionSuccess("");
+    setActionError("");
+    setActionSuccess("");
 
     // Frontend validation
     if (activeAction === "visit" && !appointmentDate) {
-      setActionError("Please select an appointment date."); return;
+      setActionError("Please select an appointment date.");
+      return;
     }
     if (activeAction === "reject" && !rejectionReason.trim()) {
-      setActionError("Rejection reason is required."); return;
+      setActionError("Rejection reason is required.");
+      return;
     }
 
     setSaving(true);
@@ -124,28 +251,40 @@ export default function GNCertificates() {
           rejection_reason: rejectionReason,
         }),
       };
-      const r = await api.patch(`/api/certificate/${modal.request_id}/gn-action`, payload);
+      const r = await api.patch(
+        `/api/certificate/${modal.request_id}/gn-action`,
+        payload,
+      );
       if (r.data.ok) {
         const newStatus = r.data.newStatus;
         const successMsg = {
-          approve: newStatus === "PENDING_DS_APPROVAL"
-            ? "✅ Forwarded to Divisional Secretary for approval."
-            : "✅ Certificate approved. Citizen has been notified.",
+          approve:
+            newStatus === "PENDING_DS_APPROVAL"
+              ? "✅ Forwarded to Divisional Secretary for approval."
+              : "✅ Certificate approved. Citizen has been notified.",
           visit: "📅 Visit appointment set. Citizen has been notified.",
           reject: "❌ Request rejected. Citizen has been notified.",
         }[activeAction];
 
         setActionSuccess(successMsg);
-        setRequests(prev => prev.map(req =>
-          req.request_id === modal.request_id
-            ? { ...req, status: newStatus, gn_remarks: gnRemarks }
-            : req
-        ));
-        setModal(prev => ({ ...prev, status: newStatus, gn_remarks: gnRemarks }));
+        setRequests((prev) =>
+          prev.map((req) =>
+            req.request_id === modal.request_id
+              ? { ...req, status: newStatus, gn_remarks: gnRemarks }
+              : req,
+          ),
+        );
+        setModal((prev) => ({
+          ...prev,
+          status: newStatus,
+          gn_remarks: gnRemarks,
+        }));
         setActiveAction("");
       }
     } catch (ex) {
-      setActionError(ex.response?.data?.error || "Action failed. Please try again.");
+      setActionError(
+        ex.response?.data?.error || "Action failed. Please try again.",
+      );
     } finally {
       setSaving(false);
     }
@@ -166,7 +305,9 @@ export default function GNCertificates() {
   };
 
   const canTakeAction = (status) =>
-    ["PENDING", "SUBMITTED", "UNDER_REVIEW_GN", "VISIT_REQUIRED"].includes(status);
+    ["PENDING", "SUBMITTED", "UNDER_REVIEW_GN", "VISIT_REQUIRED"].includes(
+      status,
+    );
 
   return (
     <div className="gn-wrap">
@@ -177,16 +318,49 @@ export default function GNCertificates() {
           <div className="gn-brand-sub">Grama Niladhari</div>
         </div>
         <nav className="gn-menu">
-          <Link to="/gn" className="gn-item"><span className="gn-ico"><IconHome /></span><span>Dashboard</span></Link>
-          <Link to="/gn-households" className="gn-item"><span className="gn-ico"><IconPeople /></span><span>Households</span></Link>
-          <Link to="/gn-certificates" className="gn-item gn-item-active"><span className="gn-ico"><IconDoc /></span><span>Certificates</span></Link>
-          <Link to="/gn-complaints" className="gn-item"><span className="gn-ico"><IconFlag /></span><span>Complaints</span></Link>
-          <Link to="/gn-notices" className="gn-item"><span className="gn-ico"><IconBell /></span><span>Notices</span></Link>
-          <Link to="/gn-allowances" className="gn-item"><span className="gn-ico"><IconCoin /></span><span>Allowances &amp; Aids</span></Link>
+          <Link to="/gn" className="gn-item">
+            <span className="gn-ico">
+              <IconHome />
+            </span>
+            <span>Dashboard</span>
+          </Link>
+          <Link to="/gn-households" className="gn-item">
+            <span className="gn-ico">
+              <IconPeople />
+            </span>
+            <span>Households</span>
+          </Link>
+          <Link to="/gn-certificates" className="gn-item gn-item-active">
+            <span className="gn-ico">
+              <IconDoc />
+            </span>
+            <span>Certificates</span>
+          </Link>
+          <Link to="/gn-complaints" className="gn-item">
+            <span className="gn-ico">
+              <IconFlag />
+            </span>
+            <span>Complaints</span>
+          </Link>
+          <Link to="/gn-notices" className="gn-item">
+            <span className="gn-ico">
+              <IconBell />
+            </span>
+            <span>Notices</span>
+          </Link>
+          <Link to="/gn-allowances" className="gn-item">
+            <span className="gn-ico">
+              <IconCoin />
+            </span>
+            <span>Allowances &amp; Aids</span>
+          </Link>
         </nav>
         <div className="gn-settings">
           <Link to="/gn/settings" className="gn-item gn-item-settings">
-            <span className="gn-ico"><IconSettings /></span><span>Settings</span>
+            <span className="gn-ico">
+              <IconSettings />
+            </span>
+            <span>Settings</span>
           </Link>
         </div>
       </aside>
@@ -196,7 +370,11 @@ export default function GNCertificates() {
         <header className="hv-topbar">
           <div className="hv-top-title">GN Digital System</div>
           <div className="hv-top-search">
-            <input className="hv-top-search-input" placeholder="Search…" readOnly />
+            <input
+              className="hv-top-search-input"
+              placeholder="Search…"
+              readOnly
+            />
           </div>
           <div className="hv-top-icons">
             <GNProfileDropdown />
@@ -209,20 +387,22 @@ export default function GNCertificates() {
 
           {/* Tab filters */}
           <div className="gnc-tabs">
-            {TABS.map(t => (
+            {TABS.map((t) => (
               <button
                 key={t}
                 className={`gnc-tab-btn ${activeTab === t ? "gnc-tab-active" : ""}`}
                 onClick={() => setActiveTab(t)}
               >
-                {STATUS_LABELS[t] || (t.charAt(0) + t.slice(1).toLowerCase())}
+                {STATUS_LABELS[t] || t.charAt(0) + t.slice(1).toLowerCase()}
               </button>
             ))}
           </div>
 
           {loading && <div className="gnc-state">Loading…</div>}
           {error && <div className="gnc-state gnc-state-err">{error}</div>}
-          {!loading && requests.length === 0 && <div className="gnc-state">No requests found.</div>}
+          {!loading && requests.length === 0 && (
+            <div className="gnc-state">No requests found.</div>
+          )}
 
           {!loading && requests.length > 0 && (
             <div className="gnc-table-wrap">
@@ -245,10 +425,19 @@ export default function GNCertificates() {
                       <td className="gnc-name">{r.applicant_name}</td>
                       <td className="gnc-nic">{r.nic_number || "—"}</td>
                       <td className="gnc-type">{r.cert_type}</td>
-                      <td><span className={pillClass(r.status)}>{STATUS_LABELS[r.status] || r.status}</span></td>
+                      <td>
+                        <span className={pillClass(r.status)}>
+                          {STATUS_LABELS[r.status] || r.status}
+                        </span>
+                      </td>
                       <td className="gnc-date">{formatDate(r.created_at)}</td>
                       <td className="gnc-actions">
-                        <button className="gnc-action-btn" onClick={() => openModal(r)}>Review</button>
+                        <button
+                          className="gnc-action-btn"
+                          onClick={() => openModal(r)}
+                        >
+                          Review
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -262,28 +451,69 @@ export default function GNCertificates() {
       {/* REVIEW MODAL */}
       {modal && (
         <div className="gnc-modal-overlay" onClick={closeModal}>
-          <div className="gnc-modal gnc-modal-wide" onClick={e => e.stopPropagation()}>
-            <button className="gnc-modal-close" onClick={closeModal}>✕</button>
+          <div
+            className="gnc-modal gnc-modal-wide"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="gnc-modal-close" onClick={closeModal}>
+              ✕
+            </button>
 
-            <h2 className="gnc-modal-title">Certificate Request #{modal.request_id}</h2>
+            <h2 className="gnc-modal-title">
+              Certificate Request #{modal.request_id}
+            </h2>
 
             {/* ── Citizen Info (Read-Only) ── */}
             <div className="gnc-modal-readonly-card">
-              <div className="gnc-readonly-label">📋 Citizen Information (Read-Only)</div>
+              <div className="gnc-readonly-label">
+                📋 Citizen Information (Read-Only)
+              </div>
               <div className="gnc-modal-grid">
-                <div className="gnc-modal-row"><span>Requested By:</span><strong>{modal.citizen_name}</strong></div>
+                <div className="gnc-modal-row">
+                  <span>Requested By:</span>
+                  <strong>{modal.citizen_name}</strong>
+                </div>
                 <div className="gnc-modal-row">
                   <span>NIC Owner:</span>
                   <strong>
-                    {modal.member_name
-                      ? <>{modal.member_name} <span style={{fontWeight:"normal",color:"#888",fontSize:"0.85rem"}}>({modal.relationship_to_head})</span></>
-                      : modal.citizen_name}
+                    {modal.member_name ? (
+                      <>
+                        {modal.member_name}{" "}
+                        <span
+                          style={{
+                            fontWeight: "normal",
+                            color: "#888",
+                            fontSize: "0.85rem",
+                          }}
+                        >
+                          ({modal.relationship_to_head})
+                        </span>
+                      </>
+                    ) : (
+                      modal.citizen_name
+                    )}
                   </strong>
                 </div>
-                <div className="gnc-modal-row"><span>NIC Number:</span><strong>{modal.nic_number || "—"}</strong></div>
-                <div className="gnc-modal-row"><span>Certificate Type:</span><strong>{modal.cert_type}</strong></div>
-                <div className="gnc-modal-row"><span>Date Requested:</span><strong>{formatDate(modal.created_at)}</strong></div>
-                <div className="gnc-modal-row"><span>Current Status:</span><strong><span className={pillClass(modal.status)}>{STATUS_LABELS[modal.status] || modal.status}</span></strong></div>
+                <div className="gnc-modal-row">
+                  <span>NIC Number:</span>
+                  <strong>{modal.nic_number || "—"}</strong>
+                </div>
+                <div className="gnc-modal-row">
+                  <span>Certificate Type:</span>
+                  <strong>{modal.cert_type}</strong>
+                </div>
+                <div className="gnc-modal-row">
+                  <span>Date Requested:</span>
+                  <strong>{formatDate(modal.created_at)}</strong>
+                </div>
+                <div className="gnc-modal-row">
+                  <span>Current Status:</span>
+                  <strong>
+                    <span className={pillClass(modal.status)}>
+                      {STATUS_LABELS[modal.status] || modal.status}
+                    </span>
+                  </strong>
+                </div>
               </div>
               {modal.purpose && (
                 <div className="gnc-modal-desc">
@@ -291,56 +521,123 @@ export default function GNCertificates() {
                   <p>{modal.purpose}</p>
                 </div>
               )}
-              {modal.certificate_data && typeof modal.certificate_data === 'object' && Object.keys(modal.certificate_data).length > 0 && (
-                <div className="gnc-modal-desc" style={{ marginTop: '15px' }}>
-                  <strong>Specific Certificate Details:</strong>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                    {Object.entries(modal.certificate_data).map(([key, value]) => {
-                      let displayValue;
-                      if (Array.isArray(value)) {
-                        // Render dependents / arrays as a mini table or readable list
-                        displayValue = value.length === 0 ? '—' : (
-                          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '4px', fontSize: '0.88rem' }}>
-                            <thead>
-                              <tr style={{ backgroundColor: '#e8edf3' }}>
-                                {Object.keys(value[0] || {}).map(col => (
-                                  <th key={col} style={{ border: '1px solid #cdd5e0', padding: '4px 8px', textAlign: 'left', textTransform: 'capitalize' }}>{col}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {value.map((row, i) => (
-                                <tr key={i}>
-                                  {Object.values(row).map((cell, j) => (
-                                    <td key={j} style={{ border: '1px solid #cdd5e0', padding: '4px 8px' }}>{cell || '—'}</td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        );
-                      } else if (value && typeof value === 'object') {
-                        displayValue = JSON.stringify(value, null, 2);
-                      } else {
-                        displayValue = value || '—';
-                      }
-                      return (
-                        <div key={key} style={{ backgroundColor: '#f4f6f8', padding: '8px', border: '1px solid #e1e8f0', borderRadius: '4px' }}>
-                          <span style={{ fontWeight: '600', textTransform: 'capitalize', color: '#555', fontSize: '0.9rem' }}>
-                            {key.replace(/_/g, ' ')}:
-                          </span>
-                          <div style={{ whiteSpace: 'pre-wrap', marginTop: '4px', color: '#111', fontSize: '0.95rem' }}>{displayValue}</div>
-                        </div>
-                      );
-                    })}
+              {modal.certificate_data &&
+                typeof modal.certificate_data === "object" &&
+                Object.keys(modal.certificate_data).length > 0 && (
+                  <div className="gnc-modal-desc" style={{ marginTop: "15px" }}>
+                    <strong>Specific Certificate Details:</strong>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "8px",
+                        marginTop: "8px",
+                      }}
+                    >
+                      {Object.entries(modal.certificate_data).map(
+                        ([key, value]) => {
+                          let displayValue;
+                          if (Array.isArray(value)) {
+                            // Render dependents / arrays as a mini table or readable list
+                            displayValue =
+                              value.length === 0 ? (
+                                "—"
+                              ) : (
+                                <table
+                                  style={{
+                                    width: "100%",
+                                    borderCollapse: "collapse",
+                                    marginTop: "4px",
+                                    fontSize: "0.88rem",
+                                  }}
+                                >
+                                  <thead>
+                                    <tr style={{ backgroundColor: "#e8edf3" }}>
+                                      {Object.keys(value[0] || {}).map(
+                                        (col) => (
+                                          <th
+                                            key={col}
+                                            style={{
+                                              border: "1px solid #cdd5e0",
+                                              padding: "4px 8px",
+                                              textAlign: "left",
+                                              textTransform: "capitalize",
+                                            }}
+                                          >
+                                            {col}
+                                          </th>
+                                        ),
+                                      )}
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {value.map((row, i) => (
+                                      <tr key={i}>
+                                        {Object.values(row).map((cell, j) => (
+                                          <td
+                                            key={j}
+                                            style={{
+                                              border: "1px solid #cdd5e0",
+                                              padding: "4px 8px",
+                                            }}
+                                          >
+                                            {cell || "—"}
+                                          </td>
+                                        ))}
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              );
+                          } else if (value && typeof value === "object") {
+                            displayValue = JSON.stringify(value, null, 2);
+                          } else {
+                            displayValue = value || "—";
+                          }
+                          return (
+                            <div
+                              key={key}
+                              style={{
+                                backgroundColor: "#f4f6f8",
+                                padding: "8px",
+                                border: "1px solid #e1e8f0",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  fontWeight: "600",
+                                  textTransform: "capitalize",
+                                  color: "#555",
+                                  fontSize: "0.9rem",
+                                }}
+                              >
+                                {key.replace(/_/g, " ")}:
+                              </span>
+                              <div
+                                style={{
+                                  whiteSpace: "pre-wrap",
+                                  marginTop: "4px",
+                                  color: "#111",
+                                  fontSize: "0.95rem",
+                                }}
+                              >
+                                {displayValue}
+                              </div>
+                            </div>
+                          );
+                        },
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
 
             {/* ── GN Administrative Fields ── */}
             <div className="gnc-modal-admin-section">
-              <div className="gnc-admin-label">✏️ GN Officer Fields (Editable)</div>
+              <div className="gnc-admin-label">
+                ✏️ GN Officer Fields (Editable)
+              </div>
 
               <label className="gnc-modal-label">GN Remarks</label>
               <textarea
@@ -348,9 +645,8 @@ export default function GNCertificates() {
                 rows={2}
                 placeholder="Internal remarks or notes about this request…"
                 value={gnRemarks}
-                onChange={e => setGnRemarks(e.target.value)}
+                onChange={(e) => setGnRemarks(e.target.value)}
               />
-
             </div>
 
             {/* ── Action Buttons ── */}
@@ -358,7 +654,8 @@ export default function GNCertificates() {
               <div className="gnc-action-section">
                 <div className="gnc-action-label">⚡ Choose Action</div>
                 <div className="gnc-action-btns-row">
-                  {modal.cert_type !== 'Residence and character Certificate' && (
+                  {modal.cert_type !==
+                    "Residence and character Certificate" && (
                     <button
                       className={`gnc-action-choice gnc-approve-btn ${activeAction === "approve" ? "gnc-action-active" : ""}`}
                       onClick={() => handleActionSelect("approve")}
@@ -383,21 +680,28 @@ export default function GNCertificates() {
                 {/* Conditional: Visit fields */}
                 {activeAction === "visit" && (
                   <div className="gnc-conditional-fields">
-                    <label className="gnc-modal-label">Appointment Date <span className="gnc-req">*</span></label>
+                    <label className="gnc-modal-label">
+                      Appointment Date <span className="gnc-req">*</span>
+                    </label>
                     <input
                       type="date"
                       className="gnc-modal-input"
                       value={appointmentDate}
                       min={new Date().toISOString().split("T")[0]}
-                      onChange={e => setAppointmentDate(e.target.value)}
+                      onChange={(e) => setAppointmentDate(e.target.value)}
                     />
-                    <label className="gnc-modal-label" style={{marginTop:"12px"}}>Required Documents / Instructions</label>
+                    <label
+                      className="gnc-modal-label"
+                      style={{ marginTop: "12px" }}
+                    >
+                      Required Documents / Instructions
+                    </label>
                     <textarea
                       className="gnc-modal-textarea"
                       rows={3}
                       placeholder="List documents the citizen must bring (e.g. Original NIC, utility bill, birth certificate)…"
                       value={requiredDocs}
-                      onChange={e => setRequiredDocs(e.target.value)}
+                      onChange={(e) => setRequiredDocs(e.target.value)}
                     />
                   </div>
                 )}
@@ -405,20 +709,26 @@ export default function GNCertificates() {
                 {/* Conditional: Reject reason */}
                 {activeAction === "reject" && (
                   <div className="gnc-conditional-fields">
-                    <label className="gnc-modal-label">Rejection Reason <span className="gnc-req">*</span></label>
+                    <label className="gnc-modal-label">
+                      Rejection Reason <span className="gnc-req">*</span>
+                    </label>
                     <textarea
                       className="gnc-modal-textarea"
                       rows={3}
                       placeholder="Provide a clear reason for rejection that will be shown to the citizen…"
                       value={rejectionReason}
-                      onChange={e => setRejectionReason(e.target.value)}
+                      onChange={(e) => setRejectionReason(e.target.value)}
                     />
                   </div>
                 )}
 
                 {/* Feedback messages */}
-                {actionError && <div className="gnc-action-error">{actionError}</div>}
-                {actionSuccess && <div className="gnc-action-success">{actionSuccess}</div>}
+                {actionError && (
+                  <div className="gnc-action-error">{actionError}</div>
+                )}
+                {actionSuccess && (
+                  <div className="gnc-action-success">{actionSuccess}</div>
+                )}
 
                 {/* Submit action button */}
                 {activeAction && (
@@ -428,13 +738,21 @@ export default function GNCertificates() {
                       onClick={handleSubmitAction}
                       disabled={saving}
                     >
-                      {saving ? "Processing…" : {
-                        approve: "✅ Confirm Approval",
-                        visit: "📅 Schedule Visit & Notify",
-                        reject: "❌ Confirm Rejection",
-                      }[activeAction]}
+                      {saving
+                        ? "Processing…"
+                        : {
+                            approve: "✅ Confirm Approval",
+                            visit: "📅 Schedule Visit & Notify",
+                            reject: "❌ Confirm Rejection",
+                          }[activeAction]}
                     </button>
-                    <button className="gnc-cancel-btn" onClick={() => { setActiveAction(""); setActionError(""); }}>
+                    <button
+                      className="gnc-cancel-btn"
+                      onClick={() => {
+                        setActiveAction("");
+                        setActionError("");
+                      }}
+                    >
                       Cancel
                     </button>
                   </div>
@@ -443,10 +761,15 @@ export default function GNCertificates() {
             ) : (
               <div className="gnc-no-action-note">
                 {modal.status === "PENDING_DS_APPROVAL" && (
-                  <span>⏳ This request is awaiting Divisional Secretary approval.</span>
+                  <span>
+                    ⏳ This request is awaiting Divisional Secretary approval.
+                  </span>
                 )}
                 {(modal.status === "APPROVED" || modal.status === "ISSUED") && (
-                  <span>✅ This certificate has been approved and is available to the citizen.</span>
+                  <span>
+                    ✅ This certificate has been approved and is available to
+                    the citizen.
+                  </span>
                 )}
                 {modal.status === "REJECTED" && (
                   <div>
@@ -458,22 +781,26 @@ export default function GNCertificates() {
                     )}
                   </div>
                 )}
-                {!actionSuccess && <div className="gnc-modal-btns" style={{marginTop:"12px"}}>
-                  <button className="gnc-cancel-btn" onClick={closeModal}>Close</button>
-                </div>}
+                {!actionSuccess && (
+                  <div className="gnc-modal-btns" style={{ marginTop: "12px" }}>
+                    <button className="gnc-cancel-btn" onClick={closeModal}>
+                      Close
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 
             {actionSuccess && (
-              <div className="gnc-modal-btns" style={{marginTop:"8px"}}>
-                <button className="gnc-cancel-btn" onClick={closeModal}>Close</button>
+              <div className="gnc-modal-btns" style={{ marginTop: "8px" }}>
+                <button className="gnc-cancel-btn" onClick={closeModal}>
+                  Close
+                </button>
               </div>
             )}
           </div>
         </div>
       )}
-
-
     </div>
   );
 }

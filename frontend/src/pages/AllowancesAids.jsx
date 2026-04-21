@@ -233,9 +233,9 @@ function AllowancesAids() {
     employment_status: "",
     household_size: "",
     aid_type: "",
-    special_needs: ""
+    special_needs: "",
   });
-  
+
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -250,7 +250,9 @@ function AllowancesAids() {
         if (value) params.append(key, value);
       });
 
-      const res = await api.get(`/api/gn/allowances/filter?${params.toString()}`);
+      const res = await api.get(
+        `/api/gn/allowances/filter?${params.toString()}`,
+      );
       if (res.data.ok) {
         setResults(res.data.results);
       } else {
@@ -271,7 +273,7 @@ function AllowancesAids() {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
   const downloadCSV = () => {
@@ -282,26 +284,29 @@ function AllowancesAids() {
 
     // Define CSV headers
     const headers = ["Member_ID", "Name", "NIC_Number"];
-    
+
     // Map data to CSV rows
-    const rows = results.map(r => [
+    const rows = results.map((r) => [
       r.id,
       `"${r.name}"`, // Quote strings to handle commas in names
-      r.nic
+      r.nic,
     ]);
 
     // Combine headers and rows
     const csvContent = [
       headers.join(","),
-      ...rows.map(row => row.join(","))
+      ...rows.map((row) => row.join(",")),
     ].join("\n");
 
     // Create a Blob and trigger download
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `eligible_citizens_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute(
+      "download",
+      `eligible_citizens_${new Date().toISOString().split("T")[0]}.csv`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -319,14 +324,20 @@ function AllowancesAids() {
         if (value) params.append(key, value);
       });
 
-      const res = await api.get(`/api/gn/allowances/download-pdf?${params.toString()}`, {
-        responseType: "blob" // Specify blob to handle binary PDF data
-      });
+      const res = await api.get(
+        `/api/gn/allowances/download-pdf?${params.toString()}`,
+        {
+          responseType: "blob", // Specify blob to handle binary PDF data
+        },
+      );
 
       const url = URL.createObjectURL(res.data);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `eligible_citizens_${new Date().toISOString().split('T')[0]}.pdf`);
+      link.setAttribute(
+        "download",
+        `eligible_citizens_${new Date().toISOString().split("T")[0]}.pdf`,
+      );
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -335,7 +346,6 @@ function AllowancesAids() {
       alert("Failed to download PDF.");
     }
   };
-
 
   return (
     <div className="aa-page">
@@ -348,34 +358,48 @@ function AllowancesAids() {
 
         <nav className="aa-nav">
           <Link className="aa-navItem" to="/gn">
-            <span className="aa-navIcon"><IconHome /></span>
+            <span className="aa-navIcon">
+              <IconHome />
+            </span>
             <span className="aa-navText">Dashboard</span>
           </Link>
           <Link className="aa-navItem" to="/gn-households">
-            <span className="aa-navIcon"><IconUsers /></span>
+            <span className="aa-navIcon">
+              <IconUsers />
+            </span>
             <span className="aa-navText">Households</span>
           </Link>
           <Link className="aa-navItem" to="/gn-certificates">
-            <span className="aa-navIcon"><IconDoc /></span>
+            <span className="aa-navIcon">
+              <IconDoc />
+            </span>
             <span className="aa-navText">Certificates</span>
           </Link>
           <Link className="aa-navItem" to="/gn-complaints">
-            <span className="aa-navIcon"><IconFlag /></span>
+            <span className="aa-navIcon">
+              <IconFlag />
+            </span>
             <span className="aa-navText">Complaints</span>
           </Link>
           <Link className="aa-navItem" to="/gn-notices">
-            <span className="aa-navIcon"><IconBell /></span>
+            <span className="aa-navIcon">
+              <IconBell />
+            </span>
             <span className="aa-navText">Notices</span>
           </Link>
           <Link className="aa-navItem aa-active" to="/gn-allowances">
-            <span className="aa-navIcon"><IconAid /></span>
+            <span className="aa-navIcon">
+              <IconAid />
+            </span>
             <span className="aa-navText">Allowances &amp; Aids</span>
           </Link>
         </nav>
 
         <div className="aa-sideBottom">
           <Link className="aa-settings" to="/gn">
-            <span className="aa-navIcon"><IconGear /></span>
+            <span className="aa-navIcon">
+              <IconGear />
+            </span>
             <span className="aa-navText">Settings</span>
           </Link>
         </div>
@@ -389,7 +413,9 @@ function AllowancesAids() {
           <div className="aa-topCenter">
             <div className="aa-searchWrap">
               <input className="aa-searchBar" type="text" />
-              <div className="aa-searchIcon"><IconSearch /></div>
+              <div className="aa-searchIcon">
+                <IconSearch />
+              </div>
             </div>
           </div>
           <div className="aa-topRight">
@@ -413,10 +439,13 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Age Group</div>
-                <select className="aa-select" name="age_group" value={filters.age_group} onChange={handleFilterChange}>
-                  <option value="">
-                    All Ages
-                  </option>
+                <select
+                  className="aa-select"
+                  name="age_group"
+                  value={filters.age_group}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">All Ages</option>
                   <option>18 - 25</option>
                   <option>26 - 40</option>
                   <option>41 - 60</option>
@@ -426,10 +455,13 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Income Level</div>
-                <select className="aa-select" name="income_range" value={filters.income_range} onChange={handleFilterChange}>
-                  <option value="">
-                    All Incomes
-                  </option>
+                <select
+                  className="aa-select"
+                  name="income_range"
+                  value={filters.income_range}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">All Incomes</option>
                   <option>&lt; 25,000</option>
                   <option>25,000 - 50,000</option>
                   <option>50,000 - 100,000</option>
@@ -439,10 +471,13 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Employment Type</div>
-                <select className="aa-select" name="employment_status" value={filters.employment_status} onChange={handleFilterChange}>
-                  <option value="">
-                    All Employment Types
-                  </option>
+                <select
+                  className="aa-select"
+                  name="employment_status"
+                  value={filters.employment_status}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">All Employment Types</option>
                   <option>Employed</option>
                   <option>Unemployed</option>
                   <option>Student</option>
@@ -452,10 +487,13 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Household Size</div>
-                <select className="aa-select" name="household_size" value={filters.household_size} onChange={handleFilterChange}>
-                  <option value="">
-                    Any Size
-                  </option>
+                <select
+                  className="aa-select"
+                  name="household_size"
+                  value={filters.household_size}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">Any Size</option>
                   <option>1 - 2</option>
                   <option>3 - 4</option>
                   <option>5+</option>
@@ -464,10 +502,13 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">By Aid Type</div>
-                <select className="aa-select" name="aid_type" value={filters.aid_type} onChange={handleFilterChange}>
-                  <option value="">
-                    Any Aid Type
-                  </option>
+                <select
+                  className="aa-select"
+                  name="aid_type"
+                  value={filters.aid_type}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">Any Aid Type</option>
                   <option>Samurdhi</option>
                   <option>Comfort Allowance</option>
                   <option>Elder</option>
@@ -480,30 +521,51 @@ function AllowancesAids() {
 
               <div className="aa-field">
                 <div className="aa-label">People with special needs</div>
-                <select className="aa-select" name="special_needs" value={filters.special_needs} onChange={handleFilterChange}>
-                  <option value="">
-                    Any
-                  </option>
+                <select
+                  className="aa-select"
+                  name="special_needs"
+                  value={filters.special_needs}
+                  onChange={handleFilterChange}
+                >
+                  <option value="">Any</option>
                   <option value="Yes">Yes</option>
                   <option value="None">No</option>
                 </select>
               </div>
 
               <div className="aa-applyRow">
-                <button className="aa-applyBtn" type="button" onClick={fetchResults} disabled={loading}>
+                <button
+                  className="aa-applyBtn"
+                  type="button"
+                  onClick={fetchResults}
+                  disabled={loading}
+                >
                   {loading ? "Searching..." : "Apply Filters"}
                 </button>
-                <button className="aa-applyBtn" type="button" style={{marginLeft: '10px', backgroundColor: '#e2e8f0', color: '#1e293b'}} onClick={() => {
-                  setFilters({
-                    age_group: "",
-                    income_range: "",
-                    employment_status: "",
-                    household_size: "",
-                    aid_type: "",
-                    special_needs: ""
-                  });
-                  setTimeout(() => document.querySelector(".aa-applyBtn").click(), 0);
-                }} disabled={loading}>
+                <button
+                  className="aa-applyBtn"
+                  type="button"
+                  style={{
+                    marginLeft: "10px",
+                    backgroundColor: "#e2e8f0",
+                    color: "#1e293b",
+                  }}
+                  onClick={() => {
+                    setFilters({
+                      age_group: "",
+                      income_range: "",
+                      employment_status: "",
+                      household_size: "",
+                      aid_type: "",
+                      special_needs: "",
+                    });
+                    setTimeout(
+                      () => document.querySelector(".aa-applyBtn").click(),
+                      0,
+                    );
+                  }}
+                  disabled={loading}
+                >
                   Clear
                 </button>
               </div>
@@ -512,39 +574,91 @@ function AllowancesAids() {
             {/* Eligible citizens */}
             <div className="aa-right">
               <div className="aa-rightHeader">
-                <div className="aa-rightTitle">Eligible citizens ({results.length})</div>
+                <div className="aa-rightTitle">
+                  Eligible citizens ({results.length})
+                </div>
 
                 <div className="aa-actions">
-                  <button className="aa-iconBtn" type="button" aria-label="download">
+                  <button
+                    className="aa-iconBtn"
+                    type="button"
+                    aria-label="download"
+                  >
                     <IconDownload />
                   </button>
-                  <button className="aa-iconBtn" type="button" aria-label="file">
+                  <button
+                    className="aa-iconBtn"
+                    type="button"
+                    aria-label="file"
+                  >
                     <IconFile />
                   </button>
 
-                  <button className="aa-csvBtn" type="button" onClick={downloadCSV} disabled={results.length === 0}>
-                    <span className="aa-csvIcon"><IconDownload /></span>
+                  <button
+                    className="aa-csvBtn"
+                    type="button"
+                    onClick={downloadCSV}
+                    disabled={results.length === 0}
+                  >
+                    <span className="aa-csvIcon">
+                      <IconDownload />
+                    </span>
                     Download CSV
                   </button>
-                  <button className="aa-csvBtn" type="button" onClick={downloadPDF} disabled={results.length === 0} style={{ marginLeft: "10px", backgroundColor: "#ef4444", color: "white", border: "none" }}>
-                    <span className="aa-csvIcon"><IconFile /></span>
+                  <button
+                    className="aa-csvBtn"
+                    type="button"
+                    onClick={downloadPDF}
+                    disabled={results.length === 0}
+                    style={{
+                      marginLeft: "10px",
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      border: "none",
+                    }}
+                  >
+                    <span className="aa-csvIcon">
+                      <IconFile />
+                    </span>
                     Download PDF
                   </button>
                 </div>
               </div>
 
               <div className="aa-card">
-                {error && <div style={{color: 'red', marginBottom: '10px'}}>{error}</div>}
+                {error && (
+                  <div style={{ color: "red", marginBottom: "10px" }}>
+                    {error}
+                  </div>
+                )}
                 <div className="aa-tableHead">
                   <div className="aa-th">Member_ID</div>
                   <div className="aa-th">Name</div>
-                  <div className="aa-th">NIC<br />NO</div>
+                  <div className="aa-th">
+                    NIC
+                    <br />
+                    NO
+                  </div>
                 </div>
 
                 {loading && results.length === 0 ? (
-                  <div className="aa-row"><div className="aa-td" style={{gridColumn: '1 / -1', textAlign: 'center'}}>Loading data...</div></div>
+                  <div className="aa-row">
+                    <div
+                      className="aa-td"
+                      style={{ gridColumn: "1 / -1", textAlign: "center" }}
+                    >
+                      Loading data...
+                    </div>
+                  </div>
                 ) : results.length === 0 ? (
-                  <div className="aa-row"><div className="aa-td" style={{gridColumn: '1 / -1', textAlign: 'center'}}>No citizens found matching the criteria.</div></div>
+                  <div className="aa-row">
+                    <div
+                      className="aa-td"
+                      style={{ gridColumn: "1 / -1", textAlign: "center" }}
+                    >
+                      No citizens found matching the criteria.
+                    </div>
+                  </div>
                 ) : (
                   results.map((r) => (
                     <div className="aa-row" key={r.id}>

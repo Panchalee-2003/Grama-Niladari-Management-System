@@ -18,8 +18,17 @@ import {
 function IconUser() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#000" strokeWidth="2" />
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="#000"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 20a8 8 0 0 1 16 0"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -36,48 +45,102 @@ function IconMail() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <path d="M4 6h16v12H4V6Z" stroke="#000" strokeWidth="2" />
-      <path d="m4 7 8 6 8-6" stroke="#000" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="m4 7 8 6 8-6"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function IconPhone() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3h3l2 5-2 2c1 2 3 4 5 5l2-2 5 2v3c0 1-1 2-2 2-9 0-16-7-16-16 0-1 1-2 2-2Z"
-        stroke="#000" strokeWidth="2" strokeLinejoin="round" />
+      <path
+        d="M7 3h3l2 5-2 2c1 2 3 4 5 5l2-2 5 2v3c0 1-1 2-2 2-9 0-16-7-16-16 0-1 1-2 2-2Z"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function IconHome() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M3 10.5 12 3l9 7.5V21H3V10.5Z" stroke="#000" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M9 21v-6h6v6" stroke="#000" strokeWidth="2" strokeLinejoin="round" />
+      <path
+        d="M3 10.5 12 3l9 7.5V21H3V10.5Z"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 21v-6h6v6"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function IconLock() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-      <rect x="5" y="11" width="14" height="11" rx="2" stroke="#000" strokeWidth="2" />
+      <path
+        d="M7 11V8a5 5 0 0 1 10 0v3"
+        stroke="#000"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <rect
+        x="5"
+        y="11"
+        width="14"
+        height="11"
+        rx="2"
+        stroke="#000"
+        strokeWidth="2"
+      />
     </svg>
   );
 }
 function EyeIcon({ open }) {
   return open ? (
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-      <path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z" stroke="#555" strokeWidth="2" />
+      <path
+        d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12Z"
+        stroke="#555"
+        strokeWidth="2"
+      />
       <circle cx="12" cy="12" r="3" stroke="#555" strokeWidth="2" />
     </svg>
   ) : (
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-      <path d="M3 3l18 18" stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <path d="M10.5 10.7a3 3 0 0 0 3.8 3.8" stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <path d="M6.5 6.6C4.6 8 3 10 3 12c0 0 3.5 6 9 6a9.3 9.3 0 0 0 4.5-1.1"
-        stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <path d="M9.9 5.1A8.5 8.5 0 0 1 12 5c5.5 0 9 6 9 7 0 .5-.6 1.5-1.6 2.6"
-        stroke="#555" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M3 3l18 18"
+        stroke="#555"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10.5 10.7a3 3 0 0 0 3.8 3.8"
+        stroke="#555"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6.5 6.6C4.6 8 3 10 3 12c0 0 3.5 6 9 6a9.3 9.3 0 0 0 4.5-1.1"
+        stroke="#555"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M9.9 5.1A8.5 8.5 0 0 1 12 5c5.5 0 9 6 9 7 0 .5-.6 1.5-1.6 2.6"
+        stroke="#555"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -153,19 +216,41 @@ export default function RegisterCitizen() {
 
   // ── Blur handlers ────────────────────────────────────────────────────────
 
-  const blurName = () => { const v = validateName(full_name); if (!v.valid) setNameError(v.message); };
-  const blurNic = () => { const v = validateNIC(nic); if (!v.valid) setNicError(v.message); };
-  const blurEmail = () => { const v = validateEmail(email); if (!v.valid) setEmailError(v.message); };
-  const blurPhone = () => { const v = validatePhone(phone); if (!v.valid) setPhoneError(v.message); };
-  const blurAddress = () => { const e = validateAddress(address); if (e) setAddressError(e); };
-  const blurPw = () => { const v = validatePassword(password); if (!v.valid) setPasswordError(v.message); };
-  const blurCpw = () => { const v = validatePasswordMatch(password, confirm); if (!v.valid) setConfirmError(v.message); };
+  const blurName = () => {
+    const v = validateName(full_name);
+    if (!v.valid) setNameError(v.message);
+  };
+  const blurNic = () => {
+    const v = validateNIC(nic);
+    if (!v.valid) setNicError(v.message);
+  };
+  const blurEmail = () => {
+    const v = validateEmail(email);
+    if (!v.valid) setEmailError(v.message);
+  };
+  const blurPhone = () => {
+    const v = validatePhone(phone);
+    if (!v.valid) setPhoneError(v.message);
+  };
+  const blurAddress = () => {
+    const e = validateAddress(address);
+    if (e) setAddressError(e);
+  };
+  const blurPw = () => {
+    const v = validatePassword(password);
+    if (!v.valid) setPasswordError(v.message);
+  };
+  const blurCpw = () => {
+    const v = validatePasswordMatch(password, confirm);
+    if (!v.valid) setConfirmError(v.message);
+  };
 
   // ── Submit ───────────────────────────────────────────────────────────────
 
   async function submit(e) {
     e.preventDefault();
-    setErr(""); setOk("");
+    setErr("");
+    setOk("");
 
     const nv = validateName(full_name);
     const niv = validateNIC(nic);
@@ -183,7 +268,15 @@ export default function RegisterCitizen() {
     setPasswordError(pwv.valid ? "" : pwv.message);
     setConfirmError(cpv.valid ? "" : cpv.message);
 
-    if (!nv.valid || !niv.valid || !ev.valid || !phv.valid || av || !pwv.valid || !cpv.valid) {
+    if (
+      !nv.valid ||
+      !niv.valid ||
+      !ev.valid ||
+      !phv.valid ||
+      av ||
+      !pwv.valid ||
+      !cpv.valid
+    ) {
       setErr("Please fix all validation errors before submitting.");
       return;
     }
@@ -197,13 +290,14 @@ export default function RegisterCitizen() {
         phone_number: phone,
       });
 
-
       const loginRes = await api.post("/api/auth/login", { email, password });
       saveAuth(loginRes.data.token, loginRes.data.user);
       setOk("Account created successfully ✅");
       nav("/login");
     } catch (ex) {
-      setErr(ex?.response?.data?.error || "Registration failed. Please try again.");
+      setErr(
+        ex?.response?.data?.error || "Registration failed. Please try again.",
+      );
     }
   }
 
@@ -227,7 +321,6 @@ export default function RegisterCitizen() {
       {ok && <div className="msg-ok">{ok}</div>}
 
       <form onSubmit={submit} noValidate>
-
         {/* ── Row 1: Full Name | NIC ─────────────────────────────────── */}
         <div className="form-grid">
           {/* Full Name */}
@@ -237,11 +330,16 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconUser /></span>
+              <span className="icon">
+                <IconUser />
+              </span>
               <input
                 className={inputClass(nameError, full_name)}
                 value={full_name}
-                onChange={(e) => { setFullName(e.target.value); setNameError(""); }}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  setNameError("");
+                }}
                 onBlur={blurName}
                 placeholder="Samadhi Perera"
                 autoComplete="name"
@@ -257,11 +355,16 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconId /></span>
+              <span className="icon">
+                <IconId />
+              </span>
               <input
                 className={inputClass(nicError, nic)}
                 value={nic}
-                onChange={(e) => { setNic(e.target.value); setNicError(""); }}
+                onChange={(e) => {
+                  setNic(e.target.value);
+                  setNicError("");
+                }}
                 onBlur={blurNic}
                 placeholder="123456789V or 199012345678"
                 autoComplete="off"
@@ -281,12 +384,17 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconMail /></span>
+              <span className="icon">
+                <IconMail />
+              </span>
               <input
                 className={inputClass(emailError, email)}
                 type="email"
                 value={email}
-                onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailError("");
+                }}
                 onBlur={blurEmail}
                 placeholder="you@example.com"
                 autoComplete="email"
@@ -302,11 +410,16 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconPhone /></span>
+              <span className="icon">
+                <IconPhone />
+              </span>
               <input
                 className={inputClass(phoneError, phone)}
                 value={phone}
-                onChange={(e) => { setPhone(e.target.value); setPhoneError(""); }}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setPhoneError("");
+                }}
                 onBlur={blurPhone}
                 placeholder="0771234567"
                 autoComplete="tel"
@@ -325,11 +438,16 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconHome /></span>
+              <span className="icon">
+                <IconHome />
+              </span>
               <input
                 className={inputClass(addressError, address)}
                 value={address}
-                onChange={(e) => { setAddress(e.target.value); setAddressError(""); }}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                  setAddressError("");
+                }}
                 onBlur={blurAddress}
                 placeholder="123, Main Street, Colombo"
                 autoComplete="street-address"
@@ -348,7 +466,9 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconLock /></span>
+              <span className="icon">
+                <IconLock />
+              </span>
               <input
                 className={inputClass(passwordError, password)}
                 type={showPw ? "text" : "password"}
@@ -365,15 +485,23 @@ export default function RegisterCitizen() {
                 onClick={() => setShowPw((v) => !v)}
                 aria-label={showPw ? "Hide password" : "Show password"}
                 style={{
-                  position: "absolute", right: 10, top: "50%",
-                  transform: "translateY(-50%)", background: "none",
-                  border: "none", cursor: "pointer", padding: 0, lineHeight: 0,
+                  position: "absolute",
+                  right: 10,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  lineHeight: 0,
                 }}
               >
                 <EyeIcon open={showPw} />
               </button>
             </div>
-            {passwordError && <div className="field-error">{passwordError}</div>}
+            {passwordError && (
+              <div className="field-error">{passwordError}</div>
+            )}
 
             {/* Strength bar */}
             {password && passwordStrength.level > 0 && (
@@ -387,7 +515,10 @@ export default function RegisterCitizen() {
                     }}
                   />
                 </div>
-                <span className="strength-text" style={{ color: passwordStrength.color }}>
+                <span
+                  className="strength-text"
+                  style={{ color: passwordStrength.color }}
+                >
                   {passwordStrength.text}
                 </span>
               </div>
@@ -397,7 +528,15 @@ export default function RegisterCitizen() {
             {password && (
               <div className="password-requirements">
                 {pwChecks.map(({ ok: met, text }) => (
-                  <div key={text} style={{ color: met ? "#38a169" : "#999", display: "flex", alignItems: "center", gap: 5 }}>
+                  <div
+                    key={text}
+                    style={{
+                      color: met ? "#38a169" : "#999",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
                     <span>{met ? "✔" : "○"}</span> {text}
                   </div>
                 ))}
@@ -412,7 +551,9 @@ export default function RegisterCitizen() {
               <span className="req-star">*</span>
             </div>
             <div className="field">
-              <span className="icon"><IconLock /></span>
+              <span className="icon">
+                <IconLock />
+              </span>
               <input
                 className={inputClass(confirmError, confirm)}
                 type={showCpw ? "text" : "password"}
@@ -427,11 +568,19 @@ export default function RegisterCitizen() {
               <button
                 type="button"
                 onClick={() => setShowCpw((v) => !v)}
-                aria-label={showCpw ? "Hide confirm password" : "Show confirm password"}
+                aria-label={
+                  showCpw ? "Hide confirm password" : "Show confirm password"
+                }
                 style={{
-                  position: "absolute", right: 10, top: "50%",
-                  transform: "translateY(-50%)", background: "none",
-                  border: "none", cursor: "pointer", padding: 0, lineHeight: 0,
+                  position: "absolute",
+                  right: 10,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  lineHeight: 0,
                 }}
               >
                 <EyeIcon open={showCpw} />
@@ -449,7 +598,6 @@ export default function RegisterCitizen() {
         <div className="center-links" style={{ marginTop: 12 }}>
           Already have an account? <Link to="/login">Sign In</Link>
         </div>
-
       </form>
     </AuthLayout>
   );

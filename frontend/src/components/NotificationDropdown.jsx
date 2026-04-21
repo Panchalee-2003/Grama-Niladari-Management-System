@@ -6,8 +6,18 @@ import "../styles/NotificationDropdown.css";
 function IconBell() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 19a2.5 2.5 0 0 0 5 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -48,7 +58,7 @@ export default function NotificationDropdown() {
         setNotifications(res.data.notifications);
         const unreadIds = JSON.parse(localStorage.getItem("readList") || "[]");
         const count = res.data.notifications.filter(
-          (n) => !unreadIds.includes(n.id)
+          (n) => !unreadIds.includes(n.id),
         ).length;
         setUnreadCount(count);
       }
@@ -87,7 +97,9 @@ export default function NotificationDropdown() {
       >
         <IconBell />
         {unreadCount > 0 && (
-          <span className="notif-badge">{unreadCount > 99 ? "99+" : unreadCount}</span>
+          <span className="notif-badge">
+            {unreadCount > 99 ? "99+" : unreadCount}
+          </span>
         )}
       </button>
 
@@ -119,9 +131,7 @@ export default function NotificationDropdown() {
                     </div>
                     <div className="notif-content">
                       <p className="notif-title">{n.title}</p>
-                      {n.message && (
-                        <p className="notif-desc">{n.message}</p>
-                      )}
+                      {n.message && <p className="notif-desc">{n.message}</p>}
                       <span className="notif-date">{formatDate(n.date)}</span>
                     </div>
                     {n.type === "notice" && (
@@ -134,7 +144,11 @@ export default function NotificationDropdown() {
           </div>
 
           <div className="notif-footer">
-            <Link to="/notices" className="notif-footer-link" onClick={() => setIsOpen(false)}>
+            <Link
+              to="/notices"
+              className="notif-footer-link"
+              onClick={() => setIsOpen(false)}
+            >
               View all notices →
             </Link>
           </div>

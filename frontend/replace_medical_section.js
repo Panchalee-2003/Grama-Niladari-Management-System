@@ -1,6 +1,6 @@
-const fs = require('fs');
-const file = './src/pages/CertificateRequest.jsx';
-let code = fs.readFileSync(file, 'utf8');
+const fs = require("fs");
+const file = "./src/pages/CertificateRequest.jsx";
+let code = fs.readFileSync(file, "utf8");
 
 const START_MARKER = `      {certType === "Request for financial assistance from the President's fund for medical treatment" && (`;
 const END_MARKER_AFTER = `        </>
@@ -15,7 +15,12 @@ const startIdx = code.indexOf(START_MARKER);
 const endIdx = code.indexOf(END_MARKER_AFTER);
 
 if (startIdx === -1 || endIdx === -1) {
-  console.error('Could not find markers! startIdx:', startIdx, 'endIdx:', endIdx);
+  console.error(
+    "Could not find markers! startIdx:",
+    startIdx,
+    "endIdx:",
+    endIdx,
+  );
   process.exit(1);
 }
 
@@ -150,5 +155,5 @@ const newSection = `      {certType === "Request for financial assistance from t
 `;
 
 const newCode = beforeSection + newSection + afterSection;
-fs.writeFileSync(file, newCode, 'utf8');
-console.log('Done! Section replaced successfully.');
+fs.writeFileSync(file, newCode, "utf8");
+console.log("Done! Section replaced successfully.");

@@ -11,7 +11,9 @@
   font-size: 0.82rem;
   font-weight: 600;
   color: #111;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   backdrop-filter: blur(4px);
   letter-spacing: 0.03em;
 }
@@ -44,6 +46,7 @@
 }
 
 /* Sinhala font support */
-:lang(si), [lang="si"] {
-  font-family: 'Noto Sans Sinhala', 'Iskoola Pota', sans-serif;
+:lang(si),
+[lang="si"] {
+  font-family: "Noto Sans Sinhala", "Iskoola Pota", sans-serif;
 }

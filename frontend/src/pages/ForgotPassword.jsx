@@ -7,7 +7,12 @@ function MailIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <path d="M4 6h16v12H4V6Z" stroke="#333" strokeWidth="2" />
-      <path d="m4 7 8 6 8-6" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="m4 7 8 6 8-6"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -29,7 +34,7 @@ export default function ForgotPassword() {
       return;
     }
 
-    if (!email.includes('@')) {
+    if (!email.includes("@")) {
       setErr("Please enter a valid email address");
       return;
     }
@@ -45,9 +50,8 @@ export default function ForgotPassword() {
       setTimeout(() => {
         nav("/verify-otp", { state: { email } });
       }, 2000);
-
     } catch (ex) {
-      console.error('Forgot password error:', ex);
+      console.error("Forgot password error:", ex);
 
       if (ex.response) {
         const errorMsg = ex.response.data?.error;
@@ -73,7 +77,9 @@ export default function ForgotPassword() {
       <form onSubmit={onSubmit}>
         <label className="label">Email Address</label>
         <div className="field">
-          <span className="icon"><MailIcon /></span>
+          <span className="icon">
+            <MailIcon />
+          </span>
           <input
             className="input"
             type="email"

@@ -27,7 +27,7 @@ body {
 /* SIDEBAR */
 .hv-sidebar {
   width: 320px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   padding: 26px 18px;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ body {
 }
 
 .hv-item-active {
-  background: #B8F7B8;
+  background: #b8f7b8;
 }
 
 .hv-settings {
@@ -129,7 +129,7 @@ body {
   height: 26px;
   border: none;
   outline: none;
-  background: #EAF5ED;
+  background: #eaf5ed;
   border-radius: 2px;
 }
 
@@ -149,7 +149,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,7 +169,7 @@ body {
 }
 
 .hv-sub {
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-size: 16px;
   margin-bottom: 16px;
 }
@@ -180,7 +180,7 @@ body {
   height: 54px;
   border: 1px solid #1f1f1f;
   border-radius: 10px;
-  background: #EAF5ED;
+  background: #eaf5ed;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -194,7 +194,7 @@ body {
 }
 
 .hv-big-search-text {
-  color: #0C7A3B;
+  color: #0c7a3b;
   font-size: 22px;
   font-weight: 500;
 }
@@ -207,7 +207,7 @@ body {
 }
 
 .hv-chip {
-  background: #EAF5ED;
+  background: #eaf5ed;
   border-radius: 8px;
   padding: 8px 18px;
   font-size: 14px;
@@ -274,7 +274,7 @@ body {
 
 .hv-view {
   margin-top: 10px;
-  background: #EAF5ED;
+  background: #eaf5ed;
   border: none;
   border-radius: 8px;
   padding: 10px 18px;
@@ -283,7 +283,6 @@ body {
   color: #000;
   /* ✅ FORCE BLACK TEXT */
 }
-
 
 .hv-divider {
   height: 2px;
@@ -342,25 +341,25 @@ body {
 
 /* Pending - yellow */
 .hv-status.pending {
-  color: #C9A400;
+  color: #c9a400;
   /* soft yellow like figma */
 }
 
 /* Verified - green */
 .hv-status.verified {
-  color: #0C7A3B;
+  color: #0c7a3b;
   /* GN green */
 }
 
 /* Rejected - red */
 .hv-status.rejected {
-  color: #B00020;
+  color: #b00020;
   /* clean red, not harsh */
 }
 
 /* Active filter chip */
 .hv-chip-active {
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
 }
 
@@ -377,11 +376,11 @@ body {
   background: transparent;
   font-size: 16px;
   font-weight: 500;
-  color: #0C7A3B;
+  color: #0c7a3b;
 }
 
 .hv-big-search-input::placeholder {
-  color: #0C7A3B;
+  color: #0c7a3b;
   opacity: 0.7;
 }
 
@@ -391,7 +390,7 @@ body {
   min-width: 22px;
   height: 22px;
   border-radius: 999px;
-  background: #DC2626;
+  background: #dc2626;
   color: #fff;
   font-size: 12px;
   font-weight: 900;
@@ -411,7 +410,7 @@ body {
 }
 
 .hv-state-error {
-  color: #DC2626;
+  color: #dc2626;
 }
 
 /* Extra meta line (members + date) */

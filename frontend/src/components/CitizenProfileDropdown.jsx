@@ -7,8 +7,17 @@ import "../styles/CitizenProfileDropdown.css";
 function IconUser() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 20a8 8 0 0 1 16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -16,9 +25,25 @@ function IconUser() {
 function IconLogout() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M16 17l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 17l5-5-5-5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 12H9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -43,7 +68,7 @@ export default function CitizenProfileDropdown() {
   const toggleDropdown = async () => {
     const willOpen = !isOpen;
     setIsOpen(willOpen);
-    
+
     if (willOpen && !profile) {
       setLoading(true);
       try {
@@ -82,7 +107,9 @@ export default function CitizenProfileDropdown() {
               <div className="cpd-info">
                 <div className="cpd-field">
                   <span className="cpd-label">Full Name</span>
-                  <span className="cpd-value">{profile.full_name || "N/A"}</span>
+                  <span className="cpd-value">
+                    {profile.full_name || "N/A"}
+                  </span>
                 </div>
                 <div className="cpd-field">
                   <span className="cpd-label">NIC Number</span>
@@ -104,9 +131,9 @@ export default function CitizenProfileDropdown() {
             )}
           </div>
           <div className="cpd-footer">
-             <button className="cpd-logout-btn" onClick={handleLogout}>
-               <IconLogout /> Logout
-             </button>
+            <button className="cpd-logout-btn" onClick={handleLogout}>
+              <IconLogout /> Logout
+            </button>
           </div>
         </div>
       )}

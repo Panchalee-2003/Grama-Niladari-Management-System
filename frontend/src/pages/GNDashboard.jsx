@@ -9,23 +9,45 @@ import GNProfileDropdown from "../components/GNProfileDropdown";
 function IconHome() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </svg>
   );
 }
 function IconPeople() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M2 21a8 8 0 0 1 16 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M6 7a3 3 0 1 0 0 .01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M2 21a8 8 0 0 1 16 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 7a3 3 0 1 0 0 .01"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function IconDoc() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
       <path d="M14 3v4h4" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
@@ -33,58 +55,135 @@ function IconDoc() {
 function IconFlag() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M6 3v18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M6 4h10l-2 4 2 4H6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path
+        d="M6 3v18"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 4h10l-2 4 2 4H6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function IconBell() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M9.5 19a2.5 2.5 0 0 0 5 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M9.5 19a2.5 2.5 0 0 0 5 0"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function IconCoin() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <ellipse cx="12" cy="7" rx="8" ry="3" stroke="currentColor" strokeWidth="2" />
-      <path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7" stroke="currentColor" strokeWidth="2" />
-      <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" stroke="currentColor" strokeWidth="2" />
+      <ellipse
+        cx="12"
+        cy="7"
+        rx="8"
+        ry="3"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </svg>
   );
 }
 function IconSearch() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M21 21l-4.3-4.3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M21 21l-4.3-4.3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function IconProfile() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#0B2B16" strokeWidth="2" />
-      <path d="M4 20a8 8 0 0 1 16 0" stroke="#0B2B16" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="#0B2B16"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 20a8 8 0 0 1 16 0"
+        stroke="#0B2B16"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function IconSettings() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" strokeWidth="2" />
-      <path d="M19.4 15a7.7 7.7 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.4 7.4 0 0 0-1.7-1L15 6h-6l-.5 2.4a7.4 7.4 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 0 2l-2 1.2 2 3.4 2.3-.6a7.4 7.4 0 0 0 1.7 1L9 22h6l.5-2.4a7.4 7.4 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2a7.7 7.7 0 0 0-.1-1Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path
+        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M19.4 15a7.7 7.7 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.4 7.4 0 0 0-1.7-1L15 6h-6l-.5 2.4a7.4 7.4 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 0 2l-2 1.2 2 3.4 2.3-.6a7.4 7.4 0 0 0 1.7 1L9 22h6l.5-2.4a7.4 7.4 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2a7.7 7.7 0 0 0-.1-1Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function IconLogout() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M16 17l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 17l5-5-5-5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 12H9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -92,7 +191,12 @@ function IconLogout() {
 function IconPlus() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 5v14m-7-7h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 5v14m-7-7h14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -181,52 +285,76 @@ export default function GNDashboard() {
 
         <nav className="gn-menu">
           <Link to="/gn" className="gn-item gn-item-active">
-            <span className="gn-ico"><IconHome /></span>
+            <span className="gn-ico">
+              <IconHome />
+            </span>
             <span>Dashboard</span>
           </Link>
 
           <Link to="/gn-availability" className="gn-item">
-            <span className="gn-ico"><IconBell /></span>
+            <span className="gn-ico">
+              <IconBell />
+            </span>
             <span>Availability</span>
           </Link>
 
           <Link to="/gn-households" className="gn-item">
-            <span className="gn-ico"><IconPeople /></span>
+            <span className="gn-ico">
+              <IconPeople />
+            </span>
             <span>Households</span>
           </Link>
 
           <Link to="/gn-certificates" className="gn-item">
-            <span className="gn-ico"><IconDoc /></span>
+            <span className="gn-ico">
+              <IconDoc />
+            </span>
             <span>Certificates</span>
           </Link>
 
           <Link to="/gn-complaints" className="gn-item">
-            <span className="gn-ico"><IconFlag /></span>
+            <span className="gn-ico">
+              <IconFlag />
+            </span>
             <span>Complaints</span>
           </Link>
 
           <Link to="/gn-notices" className="gn-item">
-            <span className="gn-ico"><IconBell /></span>
+            <span className="gn-ico">
+              <IconBell />
+            </span>
             <span>Notices</span>
           </Link>
 
           <Link to="/gn-allowances" className="gn-item">
-            <span className="gn-ico"><IconCoin /></span>
+            <span className="gn-ico">
+              <IconCoin />
+            </span>
             <span>Allowances &amp; Aids</span>
           </Link>
         </nav>
 
         <div className="gn-settings">
           <Link to="/gn/settings" className="gn-item gn-item-settings">
-            <span className="gn-ico"><IconSettings /></span>
+            <span className="gn-ico">
+              <IconSettings />
+            </span>
             <span>Settings</span>
           </Link>
           <button
             onClick={handleLogout}
             className="gn-item gn-item-settings"
-            style={{ width: "100%", border: "none", background: "transparent", cursor: "pointer", textAlign: "left" }}
+            style={{
+              width: "100%",
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              textAlign: "left",
+            }}
           >
-            <span className="gn-ico"><IconLogout /></span>
+            <span className="gn-ico">
+              <IconLogout />
+            </span>
             <span>Logout</span>
           </button>
         </div>
@@ -239,8 +367,14 @@ export default function GNDashboard() {
           <div className="gn-top-left">GN Digital System</div>
 
           <div className="gn-search">
-            <input className="gn-search-input" type="text" placeholder="Search..." />
-            <span className="gn-search-ico"><IconSearch /></span>
+            <input
+              className="gn-search-input"
+              type="text"
+              placeholder="Search..."
+            />
+            <span className="gn-search-ico">
+              <IconSearch />
+            </span>
           </div>
 
           <div className="gn-top-right">
@@ -254,30 +388,56 @@ export default function GNDashboard() {
             Welcome, {gnName ? `${gnName}` : loading ? "Loading..." : "Officer"}
           </h1>
 
-          {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
+          {error && (
+            <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
+          )}
 
           <h2 className="gn-section-title">Quick Summary</h2>
           <div className="gn-summary">
             <StatCard
-              title={<>Total Registered<br />Households</>}
+              title={
+                <>
+                  Total Registered
+                  <br />
+                  Households
+                </>
+              }
               value={stats?.total_households ?? 0}
               loading={loading}
               icon={<IconPeople />}
             />
             <StatCard
-              title={<>Certificates Issued<br />(Last 30 Days)</>}
+              title={
+                <>
+                  Certificates Issued
+                  <br />
+                  (Last 30 Days)
+                </>
+              }
               value={stats?.certificates_this_month ?? 0}
               loading={loading}
               icon={<IconDoc />}
             />
             <StatCard
-              title={<>Complaints<br />Received</>}
+              title={
+                <>
+                  Complaints
+                  <br />
+                  Received
+                </>
+              }
               value={stats?.complaints_received ?? 0}
               loading={loading}
               icon={<IconFlag />}
             />
             <StatCard
-              title={<>Active<br />Notices</>}
+              title={
+                <>
+                  Active
+                  <br />
+                  Notices
+                </>
+              }
               value={stats?.active_notices ?? 0}
               loading={loading}
               icon={<IconBell />}
@@ -286,19 +446,34 @@ export default function GNDashboard() {
 
           <h2 className="gn-section-title">Action Shortcuts</h2>
           <div className="gn-actions">
-            <button className="gn-action-btn" onClick={() => navigate("/gn-households")}>
+            <button
+              className="gn-action-btn"
+              onClick={() => navigate("/gn-households")}
+            >
               <IconPeople /> Verify Households
             </button>
-            <button className="gn-action-btn" onClick={() => navigate("/gn-certificates")}>
+            <button
+              className="gn-action-btn"
+              onClick={() => navigate("/gn-certificates")}
+            >
               <IconDoc /> Issue Certificates
             </button>
-            <button className="gn-action-btn" onClick={() => navigate("/gn-complaints")}>
+            <button
+              className="gn-action-btn"
+              onClick={() => navigate("/gn-complaints")}
+            >
               <IconFlag /> View Complaints
             </button>
-            <button className="gn-action-btn" onClick={() => navigate("/gn-notices")}>
+            <button
+              className="gn-action-btn"
+              onClick={() => navigate("/gn-notices")}
+            >
               <IconPlus /> Post Notice
             </button>
-            <button className="gn-action-btn" onClick={() => navigate("/gn-allowances")}>
+            <button
+              className="gn-action-btn"
+              onClick={() => navigate("/gn-allowances")}
+            >
               <IconCoin /> Allowances and Aids
             </button>
           </div>
@@ -308,59 +483,170 @@ export default function GNDashboard() {
             <div className="gn-chart">
               <div className="gn-chart-title">Household Status Breakdown</div>
               {!loading && stats && (
-                <div style={{ display: "flex", flex: 1, gap: "1.5rem", alignItems: "flex-end", padding: "1rem 1rem 0" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    gap: "1.5rem",
+                    alignItems: "flex-end",
+                    padding: "1rem 1rem 0",
+                  }}
+                >
                   {[
-                    { label: "Pending", value: stats.pending_households || 0, color: "#f59e0b" },
-                    { label: "Verified", value: stats.verified_households || 0, color: "#0C7A3B" },
-                    { label: "Rejected", value: stats.rejected_households || 0, color: "#ef4444" },
+                    {
+                      label: "Pending",
+                      value: stats.pending_households || 0,
+                      color: "#f59e0b",
+                    },
+                    {
+                      label: "Verified",
+                      value: stats.verified_households || 0,
+                      color: "#0C7A3B",
+                    },
+                    {
+                      label: "Rejected",
+                      value: stats.rejected_households || 0,
+                      color: "#ef4444",
+                    },
                   ].map(({ label, value, color }) => {
-                    const max = Math.max(stats.pending_households || 0, stats.verified_households || 0, stats.rejected_households || 0, 1);
+                    const max = Math.max(
+                      stats.pending_households || 0,
+                      stats.verified_households || 0,
+                      stats.rejected_households || 0,
+                      1,
+                    );
                     const height = Math.max((value / max) * 120, 4); // max 120px height
                     return (
-                      <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, gap: "0.6rem" }}>
-                        <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#333" }}>{value}</span>
-                        <div style={{ width: "100%", height: `${height}px`, background: color, borderRadius: "6px 6px 0 0", transition: "height 0.8s ease", opacity: 0.9 }} />
-                        <span style={{ fontSize: "0.85rem", fontWeight: 500, color: "#666" }}>{label}</span>
+                      <div
+                        key={label}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          flex: 1,
+                          gap: "0.6rem",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "1.1rem",
+                            fontWeight: 700,
+                            color: "#333",
+                          }}
+                        >
+                          {value}
+                        </span>
+                        <div
+                          style={{
+                            width: "100%",
+                            height: `${height}px`,
+                            background: color,
+                            borderRadius: "6px 6px 0 0",
+                            transition: "height 0.8s ease",
+                            opacity: 0.9,
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontSize: "0.85rem",
+                            fontWeight: 500,
+                            color: "#666",
+                          }}
+                        >
+                          {label}
+                        </span>
                       </div>
                     );
                   })}
                 </div>
               )}
-              {loading && <div style={{ padding: "3rem", textAlign: "center", color: "#888", flex: 1 }}>Loading chart data...</div>}
+              {loading && (
+                <div
+                  style={{
+                    padding: "3rem",
+                    textAlign: "center",
+                    color: "#888",
+                    flex: 1,
+                  }}
+                >
+                  Loading chart data...
+                </div>
+              )}
             </div>
 
             <div className="gn-chart">
               <div className="gn-chart-title">Complaints Overview</div>
               {!loading && stats && (
-                <div style={{ display: "flex", flexDirection: "column", flex: 1, justifyContent: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                    justifyContent: "center",
+                  }}
+                >
                   <div className="gn-analytics-row">
                     <div className="gn-analytics-label">
-                      <div className="gn-analytics-label-dot" style={{ background: "#3b82f6" }} />
+                      <div
+                        className="gn-analytics-label-dot"
+                        style={{ background: "#3b82f6" }}
+                      />
                       Total Complaints
                     </div>
-                    <div className="gn-analytics-val" style={{ color: "#3b82f6" }}>{stats.total_complaints || 0}</div>
-                  </div>
-                  
-                  <div className="gn-analytics-row">
-                    <div className="gn-analytics-label">
-                      <div className="gn-analytics-label-dot" style={{ background: "#ef4444" }} />
-                      Open / Unresolved
+                    <div
+                      className="gn-analytics-val"
+                      style={{ color: "#3b82f6" }}
+                    >
+                      {stats.total_complaints || 0}
                     </div>
-                    <div className="gn-analytics-val" style={{ color: "#ef4444" }}>{stats.open_complaints || 0}</div>
                   </div>
 
                   <div className="gn-analytics-row">
                     <div className="gn-analytics-label">
-                      <div className="gn-analytics-label-dot" style={{ background: "#0C7A3B" }} />
+                      <div
+                        className="gn-analytics-label-dot"
+                        style={{ background: "#ef4444" }}
+                      />
+                      Open / Unresolved
+                    </div>
+                    <div
+                      className="gn-analytics-val"
+                      style={{ color: "#ef4444" }}
+                    >
+                      {stats.open_complaints || 0}
+                    </div>
+                  </div>
+
+                  <div className="gn-analytics-row">
+                    <div className="gn-analytics-label">
+                      <div
+                        className="gn-analytics-label-dot"
+                        style={{ background: "#0C7A3B" }}
+                      />
                       Resolved
                     </div>
-                    <div className="gn-analytics-val" style={{ color: "#0C7A3B" }}>
-                      {(stats.total_complaints || 0) - (stats.open_complaints || 0)}
+                    <div
+                      className="gn-analytics-val"
+                      style={{ color: "#0C7A3B" }}
+                    >
+                      {(stats.total_complaints || 0) -
+                        (stats.open_complaints || 0)}
                     </div>
                   </div>
                 </div>
               )}
-              {loading && <div style={{ padding: "3rem", textAlign: "center", color: "#888", flex: 1 }}>Loading chart data...</div>}
+              {loading && (
+                <div
+                  style={{
+                    padding: "3rem",
+                    textAlign: "center",
+                    color: "#888",
+                    flex: 1,
+                  }}
+                >
+                  Loading chart data...
+                </div>
+              )}
             </div>
           </div>
         </div>

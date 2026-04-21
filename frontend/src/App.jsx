@@ -18,8 +18,6 @@ import CertificateSuccess from "./pages/CertificateSuccess";
 import Complaints from "./pages/Complaints";
 import ComplaintStatus from "./pages/ComplaintStatus";
 
-
-
 import GNDashboard from "./pages/GNDashboard";
 import HouseholdVerify from "./pages/HouseholdVerify";
 import HouseholdDetail from "./pages/HouseholdDetail";
@@ -28,8 +26,6 @@ import ComplaintManagement from "./pages/ComplaintManagement.jsx";
 import PostNotice from "./pages/PostNotice";
 import AllowancesAids from "./pages/AllowancesAids";
 import GNSettings from "./pages/GNSettings";
-
-
 
 import AdminStaffDashboard from "./pages/AdminStaffDashboard.jsx";
 import AdminVerifyCertificates from "./pages/AdminVerifyCertificates.jsx";
@@ -205,7 +201,6 @@ export default function App() {
           }
         />
 
-
         {/* Admin */}
         <Route
           path="/admin-dashboard"
@@ -223,7 +218,6 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-
       </Routes>
     </BrowserRouter>
   );

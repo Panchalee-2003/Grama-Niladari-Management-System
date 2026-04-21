@@ -881,11 +881,11 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "relationship", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Head">{t('household.rel_head')}</option>
-                      <option value="Spouse">{t('household.rel_spouse')}</option>
-                      <option value="Child">{t('household.rel_child')}</option>
-                      <option value="Parent">{t('household.rel_parent')}</option>
-                      <option value="Other">{t('household.rel_other')}</option>
+                      <option value="Head">{t('Head')}</option>
+                      <option value="Spouse">{t('Spouse')}</option>
+                      <option value="Child">{t('Child')}</option>
+                      <option value="Parent">{t('Parent')}</option>
+                      <option value="Other">{t('Other')}</option>
                     </select>
                   </div>
 
@@ -897,8 +897,8 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "gender", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Male">{t('household.gen_male')}</option>
-                      <option value="Female">{t('household.gen_female')}</option>
+                      <option value="Male">{t('Male')}</option>
+                      <option value="Female">{t('Female')}</option>
                     </select>
                   </div>
 
@@ -910,11 +910,11 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "religion", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Buddhist">{t('household.rel_buddhist')}</option>
-                      <option value="Hindu">{t('household.rel_hindu')}</option>
-                      <option value="Islam">{t('household.rel_islam')}</option>
-                      <option value="Christian">{t('household.rel_christian')}</option>
-                      <option value="Other">{t('household.rel_other')}</option>
+                      <option value="Buddhist">{t('Buddhist')}</option>
+                      <option value="Hindu">{t('Hindu')}</option>
+                      <option value="Islam">{t('Islam')}</option>
+                      <option value="Christian">{t('Christian')}</option>
+                      <option value="Other">{t('Other')}</option>
                     </select>
                   </div>
                 </div>
@@ -929,10 +929,10 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "civil_status", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Single">{t('household.civil_single')}</option>
-                      <option value="Married">{t('household.civil_married')}</option>
-                      <option value="Divorced">{t('household.civil_divorced')}</option>
-                      <option value="Widowed">{t('household.civil_widowed')}</option>
+                      <option value="Single">{t('Single')}</option>
+                      <option value="Married">{t('Married')}</option>
+                      <option value="Divorced">{t('Divorced')}</option>
+                      <option value="Widowed">{t('Widowed')}</option>
                     </select>
                   </div>
 
@@ -986,11 +986,11 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "education", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Primary">{t('household.edu_primary')}</option>
-                      <option value="O/L">{t('household.edu_ol')}</option>
-                      <option value="A/L">{t('household.edu_al')}</option>
-                      <option value="Diploma">{t('household.edu_diploma')}</option>
-                      <option value="Degree">{t('household.edu_degree')}</option>
+                      <option value="Primary">{t('Primary')}</option>
+                      <option value="O/L">{t('O/L')}</option>
+                      <option value="A/L">{t('A/L')}</option>
+                      <option value="Diploma">{t('Diploma')}</option>
+                      <option value="Degree">{t('Degree')}</option>
                     </select>
                   </div>
 
@@ -1002,10 +1002,10 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "employment", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="Employed">{t('household.emp_employed')}</option>
-                      <option value="Unemployed">{t('household.emp_unemployed')}</option>
-                      <option value="Student">{t('household.emp_student')}</option>
-                      <option value="Retired">{t('household.emp_retired')}</option>
+                      <option value="Employed">{t('Employed')}</option>
+                      <option value="Unemployed">{t('Unemployed')}</option>
+                      <option value="Student">{t('Student')}</option>
+                      <option value="Retired">{t('Retired')}</option>
                     </select>
                   </div>
 
@@ -1017,8 +1017,8 @@ export default function HouseholdRegistration() {
                       onChange={(e) => updateMember(idx, "special_needs", e.target.value)}
                     >
                       <option value=""></option>
-                      <option value="None">{t('household.sn_none')}</option>
-                      <option value="Yes">{t('household.sn_yes')}</option>
+                      <option value="None">{t('None')}</option>
+                      <option value="Yes">{t('Yes')}</option>
                     </select>
                   </div>
                 </div>
@@ -1062,11 +1062,11 @@ export default function HouseholdRegistration() {
                   onChange={(e) => setFin({ ...fin, income_source: e.target.value })}
                 >
                   <option value=""></option>
-                  <option value="Agriculture">{t('household.incomeAgriculture')}</option>
-                  <option value="Business">{t('household.incomeBusiness')}</option>
-                  <option value="Government">{t('household.incomeGovernment')}</option>
-                  <option value="Private">{t('household.incomePrivate')}</option>
-                  <option value="Other">{t('household.incomeOther')}</option>
+                  <option value="Agriculture">{t('Agriculture')}</option>
+                  <option value="Business">{t('Business')}</option>
+                  <option value="Government">{t('Government')}</option>
+                  <option value="Private">{t('Private')}</option>
+                  <option value="Other">{t('Other')}</option>
                 </select>
               </div>
 
@@ -1078,8 +1078,8 @@ export default function HouseholdRegistration() {
                   onChange={(e) => setFin({ ...fin, govt_aid: e.target.value })}
                 >
                   <option value=""></option>
-                  <option value="Yes">{t('household.yes')}</option>
-                  <option value="No">{t('household.no')}</option>
+                  <option value="Yes">{t('Yes')}</option>
+                  <option value="No">{t('No')}</option>
                 </select>
               </div>
 

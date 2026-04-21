@@ -7,511 +7,693 @@ import emblem from "../assets/emblem.png";
 
 /* ========= ICONS (SVG) ========= */
 function IconHome() {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ cursor: 'pointer' }}>
-        <path
-          d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z"
-          stroke="#0b0b0b"
-          strokeWidth="2"
-        />
-      </svg>
-    );
-  }
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ cursor: "pointer" }}
+    >
+      <path
+        d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
 
 function IconDashboard() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M3 11.5L12 4l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V11.5Z"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-            />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M3 11.5L12 4l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V11.5Z"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+      />
+    </svg>
+  );
 }
 
 function IconDoc() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-            />
-            <path d="M14 3v4h4" stroke="#0b0b0b" strokeWidth="2" />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M7 3h7l3 3v15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+      />
+      <path d="M14 3v4h4" stroke="#0b0b0b" strokeWidth="2" />
+    </svg>
+  );
 }
 
 function IconSearch() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                stroke="#111"
-                strokeWidth="2"
-            />
-            <path
-                d="M21 21l-4.3-4.3"
-                stroke="#111"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+        stroke="#111"
+        strokeWidth="2"
+      />
+      <path
+        d="M21 21l-4.3-4.3"
+        stroke="#111"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 function IconUser() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-            />
-            <path
-                d="M4 20a8 8 0 0 1 16 0"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 20a8 8 0 0 1 16 0"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 function IconSettings() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-            />
-            <path
-                d="M19.4 15a7.7 7.7 0 0 0 .1-2l2-1.2-2-3.4-2.3.6a7.6 7.6 0 0 0-1.7-1l-.3-2.3H11l-.3 2.3a7.6 7.6 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.6a7.6 7.6 0 0 0 1.7 1l.3 2.3h4l.3-2.3a7.6 7.6 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2Z"
-                stroke="#0b0b0b"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-            />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+      />
+      <path
+        d="M19.4 15a7.7 7.7 0 0 0 .1-2l2-1.2-2-3.4-2.3.6a7.6 7.6 0 0 0-1.7-1l-.3-2.3H11l-.3 2.3a7.6 7.6 0 0 0-1.7 1l-2.3-.6-2 3.4 2 1.2a7.7 7.7 0 0 0 .1 2l-2 1.2 2 3.4 2.3-.6a7.6 7.6 0 0 0 1.7 1l.3 2.3h4l.3-2.3a7.6 7.6 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2Z"
+        stroke="#0b0b0b"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 function IconLogout() {
-    return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-            <path
-                d="M16 17l5-5-5-5"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M21 12H9"
-                stroke="#0b0b0b"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 17l5-5-5-5"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21 12H9"
+        stroke="#0b0b0b"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 function IconChevronDown() {
-    return (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path
-                d="M6 9l6 6 6-6"
-                stroke="#111"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-        </svg>
-    );
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="#111"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 export default function AdminVerifyCertificates() {
-    const navigate = useNavigate();
-    const [certificates, setCertificates] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [certificates, setCertificates] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [selectedReq, setSelectedReq] = useState(null);
-    const [showDSModal, setShowDSModal] = useState(false);
-    const [dsRemarks, setDsRemarks] = useState("");
-    const [actionLoading, setActionLoading] = useState(false);
-    const [pdfUrl, setPdfUrl] = useState(null);
+  const [selectedReq, setSelectedReq] = useState(null);
+  const [showDSModal, setShowDSModal] = useState(false);
+  const [dsRemarks, setDsRemarks] = useState("");
+  const [actionLoading, setActionLoading] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState(null);
 
-    const [searchQuery, setSearchQuery] = useState("");
-    const [filterType, setFilterType] = useState("All Types");
-    const [filterStatus, setFilterStatus] = useState("All Statuses");
-    const [filterDateRange, setFilterDateRange] = useState("All Time");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("All Types");
+  const [filterStatus, setFilterStatus] = useState("All Statuses");
+  const [filterDateRange, setFilterDateRange] = useState("All Time");
 
-    const CERT_TYPES = [
-        "All Types",
-        "Residence and character Certificate",
-        "Income Certificate",
-        "Registration of delayed births",
-        "Request for financial assistance from the President's fund for medical treatment",
-        "Application for obtaining housing loan funds",
-        "Notification of the death of a pensioner",
-        "Registration of voluntary organizations",
-    ];
-    
-    const STATUS_OPTIONS = ["All Statuses", "PENDING", "VERIFIED", "REJECTED"];
-    const DATE_RANGES = ["All Time", "Today", "This Week", "This Month"];
+  const CERT_TYPES = [
+    "All Types",
+    "Residence and character Certificate",
+    "Income Certificate",
+    "Registration of delayed births",
+    "Request for financial assistance from the President's fund for medical treatment",
+    "Application for obtaining housing loan funds",
+    "Notification of the death of a pensioner",
+    "Registration of voluntary organizations",
+  ];
 
-    const handleLogout = () => {
-        clearAuth();
-        navigate("/login");
-    };
+  const STATUS_OPTIONS = ["All Statuses", "PENDING", "VERIFIED", "REJECTED"];
+  const DATE_RANGES = ["All Time", "Today", "This Week", "This Month"];
 
-    useEffect(() => {
-        const fetchCertificates = async () => {
-            try {
-                const res = await api.get("/api/certificate/all");
-                if (res.data.ok) {
-                    setCertificates(res.data.requests);
-                }
-            } catch (err) {
-                console.error("Failed to fetch certificates", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCertificates();
-    }, []);
+  const handleLogout = () => {
+    clearAuth();
+    navigate("/login");
+  };
 
-    const openDSModal = async (cert) => {
-        setSelectedReq(cert);
-        setDsRemarks("");
-        setPdfUrl(null);
-        setShowDSModal(true);
-
-        try {
-            const res = await api.get(`/api/certificate/${cert.request_id}/pdf`, { responseType: 'blob' });
-            const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
-            setPdfUrl(url);
-        } catch (err) {
-            console.error("Failed to load PDF preview:", err);
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const res = await api.get("/api/certificate/all");
+        if (res.data.ok) {
+          setCertificates(res.data.requests);
         }
+      } catch (err) {
+        console.error("Failed to fetch certificates", err);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchCertificates();
+  }, []);
 
-    const closeDSModal = () => {
-        setSelectedReq(null);
-        setShowDSModal(false);
-        if (pdfUrl) {
-            window.URL.revokeObjectURL(pdfUrl);
-            setPdfUrl(null);
-        }
-    };
+  const openDSModal = async (cert) => {
+    setSelectedReq(cert);
+    setDsRemarks("");
+    setPdfUrl(null);
+    setShowDSModal(true);
 
-    const handleDSAction = async (action) => {
-        if (action === "reject" && !dsRemarks.trim()) {
-            alert("Please provide remarks for returning the request to the GN.");
-            return;
-        }
+    try {
+      const res = await api.get(`/api/certificate/${cert.request_id}/pdf`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(
+        new Blob([res.data], { type: "application/pdf" }),
+      );
+      setPdfUrl(url);
+    } catch (err) {
+      console.error("Failed to load PDF preview:", err);
+    }
+  };
 
-        try {
-            setActionLoading(true);
-            const res = await api.patch(`/api/certificate/${selectedReq.request_id}/ds-action`, {
-                action,
-                ds_remarks: dsRemarks,
-            });
+  const closeDSModal = () => {
+    setSelectedReq(null);
+    setShowDSModal(false);
+    if (pdfUrl) {
+      window.URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(null);
+    }
+  };
 
-            if (res.data.ok) {
-                alert(action === "approve" ? "Certificate Approved!" : "Returned to GN!");
-                closeDSModal();
-                const freshRes = await api.get("/api/certificate/all");
-                if (freshRes.data.ok) setCertificates(freshRes.data.requests);
-            }
-        } catch (err) {
-            console.error("Action error", err);
-            alert(err.response?.data?.error || "Error processing action.");
-        } finally {
-            setActionLoading(false);
-        }
-    };
+  const handleDSAction = async (action) => {
+    if (action === "reject" && !dsRemarks.trim()) {
+      alert("Please provide remarks for returning the request to the GN.");
+      return;
+    }
 
-    const handleStatusUpdate = async (id, newStatus) => {
-        try {
-            setActionLoading(true);
-            const res = await api.patch(`/api/certificate/${id}/admin-status`, { admin_status: newStatus });
-            if (res.data.ok) {
-                setCertificates(prev => prev.map(cert => 
-                    cert.request_id === id ? { ...cert, admin_status: newStatus } : cert
-                ));
-                alert(`Successfully marked as ${newStatus}`);
-                closeDSModal();
-            }
-        } catch (err) {
-            alert(err.response?.data?.error || "Error updating status");
-        } finally {
-            setActionLoading(false);
-        }
-    };
+    try {
+      setActionLoading(true);
+      const res = await api.patch(
+        `/api/certificate/${selectedReq.request_id}/ds-action`,
+        {
+          action,
+          ds_remarks: dsRemarks,
+        },
+      );
 
-    const handleDownload = async (id) => {
-        try {
-            const res = await api.get(`/api/certificate/${id}/pdf`, { responseType: 'blob' });
-            const url = window.URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement('link');
-            link.href = url;
-            link.setAttribute('download', `certificate_${id}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            link.parentNode.removeChild(link);
-        } catch (err) {
-            alert("Error downloading certificate.");
-        }
-    };
+      if (res.data.ok) {
+        alert(
+          action === "approve" ? "Certificate Approved!" : "Returned to GN!",
+        );
+        closeDSModal();
+        const freshRes = await api.get("/api/certificate/all");
+        if (freshRes.data.ok) setCertificates(freshRes.data.requests);
+      }
+    } catch (err) {
+      console.error("Action error", err);
+      alert(err.response?.data?.error || "Error processing action.");
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
-    const getStatusClass = (status) => {
-        if (status === "VERIFIED") return "avc-status-verified";
-        if (status === "REJECTED") return "avc-status-rejected";
-        return "avc-status-pending";
-    };
+  const handleStatusUpdate = async (id, newStatus) => {
+    try {
+      setActionLoading(true);
+      const res = await api.patch(`/api/certificate/${id}/admin-status`, {
+        admin_status: newStatus,
+      });
+      if (res.data.ok) {
+        setCertificates((prev) =>
+          prev.map((cert) =>
+            cert.request_id === id
+              ? { ...cert, admin_status: newStatus }
+              : cert,
+          ),
+        );
+        alert(`Successfully marked as ${newStatus}`);
+        closeDSModal();
+      }
+    } catch (err) {
+      alert(err.response?.data?.error || "Error updating status");
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
-    const formatDate = (dateStr) => {
-        if (!dateStr) return "—";
-        return new Date(dateStr).toLocaleDateString("en-GB");
-    };
+  const handleDownload = async (id) => {
+    try {
+      const res = await api.get(`/api/certificate/${id}/pdf`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("link");
+      link.href = url;
+      link.setAttribute("download", `certificate_${id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (err) {
+      alert("Error downloading certificate.");
+    }
+  };
 
-    const filteredCertificates = certificates.filter(cert => {
-        // Search
-        const searchStr = searchQuery.toLowerCase();
-        const applicantName = cert.member_name || cert.citizen_name || "";
-        const matchesSearch = 
-            String(cert.request_id).toLowerCase().includes(searchStr) ||
-            applicantName.toLowerCase().includes(searchStr) ||
-            (cert.nic_number?.toLowerCase() || "").includes(searchStr);
+  const getStatusClass = (status) => {
+    if (status === "VERIFIED") return "avc-status-verified";
+    if (status === "REJECTED") return "avc-status-rejected";
+    return "avc-status-pending";
+  };
 
-        // Type
-        const matchesType = filterType === "All Types" || cert.cert_type === filterType;
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "—";
+    return new Date(dateStr).toLocaleDateString("en-GB");
+  };
 
-        // Status
-        const adminStatus = cert.admin_status || "PENDING";
-        const matchesStatus = filterStatus === "All Statuses" || adminStatus === filterStatus;
+  const filteredCertificates = certificates.filter((cert) => {
+    // Search
+    const searchStr = searchQuery.toLowerCase();
+    const applicantName = cert.member_name || cert.citizen_name || "";
+    const matchesSearch =
+      String(cert.request_id).toLowerCase().includes(searchStr) ||
+      applicantName.toLowerCase().includes(searchStr) ||
+      (cert.nic_number?.toLowerCase() || "").includes(searchStr);
 
-        // Date
-        let matchesDate = true;
-        if (filterDateRange !== "All Time" && cert.created_at) {
-            const certDate = new Date(cert.created_at);
-            const now = new Date();
-            if (filterDateRange === "Today") {
-                matchesDate = certDate.toDateString() === now.toDateString();
-            } else if (filterDateRange === "This Week") {
-                // Ensure we don't mutate `now` unnecessarily.
-                const oneWeekAgo = new Date();
-                oneWeekAgo.setDate(now.getDate() - 7);
-                matchesDate = certDate >= oneWeekAgo;
-            } else if (filterDateRange === "This Month") {
-                matchesDate = certDate.getMonth() === now.getMonth() && certDate.getFullYear() === now.getFullYear();
-            }
-        }
+    // Type
+    const matchesType =
+      filterType === "All Types" || cert.cert_type === filterType;
 
-        return matchesSearch && matchesType && matchesStatus && matchesDate;
-    });
+    // Status
+    const adminStatus = cert.admin_status || "PENDING";
+    const matchesStatus =
+      filterStatus === "All Statuses" || adminStatus === filterStatus;
 
-    return (
-        <div className="avc-page">
-              {/* CONTENT */}
-              <section className="avc-content">
-                  {/* TOP BAR */}
-                  <header className="avc-topbar">
-                      <div className="avc-top-left" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                          <div onClick={() => navigate('/admin-dashboard')} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} title="Back to Dashboard">
-                              <IconHome />
-                          </div>
-                          <div className="avc-topbar-title">Divisional Secretariat Digital System</div>
-                      </div>
+    // Date
+    let matchesDate = true;
+    if (filterDateRange !== "All Time" && cert.created_at) {
+      const certDate = new Date(cert.created_at);
+      const now = new Date();
+      if (filterDateRange === "Today") {
+        matchesDate = certDate.toDateString() === now.toDateString();
+      } else if (filterDateRange === "This Week") {
+        // Ensure we don't mutate `now` unnecessarily.
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(now.getDate() - 7);
+        matchesDate = certDate >= oneWeekAgo;
+      } else if (filterDateRange === "This Month") {
+        matchesDate =
+          certDate.getMonth() === now.getMonth() &&
+          certDate.getFullYear() === now.getFullYear();
+      }
+    }
 
-                    <div className="avc-search-wrap">
-                        <input
-                            type="text"
-                            className="avc-search-bar"
-                            placeholder="Search by Certificate ID or Citizen Name"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <div className="avc-search-icon">
-                            <IconSearch />
-                        </div>
-                    </div>
+    return matchesSearch && matchesType && matchesStatus && matchesDate;
+  });
 
-                    <div className="avc-user-circle" aria-label="profile">
-                        <IconUser />
-                    </div>
-                </header>
+  return (
+    <div className="avc-page">
+      {/* CONTENT */}
+      <section className="avc-content">
+        {/* TOP BAR */}
+        <header className="avc-topbar">
+          <div
+            className="avc-top-left"
+            style={{ display: "flex", alignItems: "center", gap: "15px" }}
+          >
+            <div
+              onClick={() => navigate("/admin-dashboard")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              title="Back to Dashboard"
+            >
+              <IconHome />
+            </div>
+            <div className="avc-topbar-title">
+              Divisional Secretariat Digital System
+            </div>
+          </div>
 
-                {/* MAIN */}
-                <main className="avc-main">
-                    <h1 className="avc-title">Analyze Certificates</h1>
+          <div className="avc-search-wrap">
+            <input
+              type="text"
+              className="avc-search-bar"
+              placeholder="Search by Certificate ID or Citizen Name"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="avc-search-icon">
+              <IconSearch />
+            </div>
+          </div>
 
-                    {/* FILTERS */}
-                    <div className="avc-filters">
-                        <div className="avc-filter">
-                            <select 
-                                value={filterType} 
-                                onChange={(e) => setFilterType(e.target.value)}
-                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
-                            >
-                                {CERT_TYPES.map(type => (
-                                    <option key={type} value={type}>{type}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="avc-filter">
-                            <select 
-                                value={filterStatus} 
-                                onChange={(e) => setFilterStatus(e.target.value)}
-                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
-                            >
-                                {STATUS_OPTIONS.map(status => (
-                                    <option key={status} value={status}>{status}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="avc-filter">
-                            <select 
-                                value={filterDateRange} 
-                                onChange={(e) => setFilterDateRange(e.target.value)}
-                                style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: '14px', fontWeight: '600', color: '#111', width: '100%', cursor: 'pointer' }}
-                            >
-                                {DATE_RANGES.map(range => (
-                                    <option key={range} value={range}>{range}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
+          <div className="avc-user-circle" aria-label="profile">
+            <IconUser />
+          </div>
+        </header>
 
-                    {/* TABLE */}
-                    <div className="avc-table-wrap">
-                        <table className="avc-table">
-                            <thead>
-                                <tr>
-                                    <th>Certificate ID</th>
-                                    <th>Citizen Name</th>
-                                    <th>Certificate Type</th>
-                                    <th>GN Verified</th>
-                                    <th>Submission Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {loading && (
-                                    <tr>
-                                        <td colSpan="7" style={{ textAlign: "center", padding: "20px" }}>Loading...</td>
-                                    </tr>
-                                )}
-                                {!loading && filteredCertificates.length === 0 && (
-                                    <tr>
-                                        <td colSpan="7" style={{ textAlign: "center", padding: "20px" }}>No certificates found.</td>
-                                    </tr>
-                                )}
-                                {!loading && filteredCertificates.map((cert) => (
-                                    <tr key={cert.request_id}>
-                                        <td className="avc-cert-id">{cert.request_id}</td>
-                                        <td className="avc-citizen-name">{cert.member_name || cert.citizen_name}</td>
-                                        <td className="avc-cert-type">{cert.cert_type}</td>
-                                        <td className="avc-gn-verified">
-                                            <span style={{color: cert.status === 'APPROVED' ? '#155724' : cert.status === 'REJECTED' ? '#721c24' : '#856404'}}>{cert.status || "PENDING"}</span>
-                                        </td>
-                                        <td className="avc-date">{formatDate(cert.created_at)}</td>
-                                        <td>
-                                            <span className={`avc-status ${getStatusClass(cert.admin_status || 'PENDING')}`}>
-                                                {cert.admin_status || "PENDING"}
-                                            </span>
-                                        </td>
-                                        <td className="avc-actions">
-                                            <button className="avc-action-btn" onClick={() => openDSModal(cert)} style={{ backgroundColor: "#2563eb", color: "white", padding: "6px 12px", borderRadius: "4px", textDecoration: "none" }}>
-                                                View & Decide
-                                            </button>
-                                            {(cert.admin_status === "VERIFIED" && cert.status === "APPROVED") && (
-                                                <button className="avc-action-btn" onClick={() => handleDownload(cert.request_id)} style={{ backgroundColor: "#155724", color: "white", padding: "6px 12px", borderRadius: "4px", textDecoration: "none", marginLeft: "10px" }}>
-                                                    Download
-                                                </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </main>
-            </section>
+        {/* MAIN */}
+        <main className="avc-main">
+          <h1 className="avc-title">Analyze Certificates</h1>
 
-            {/* DS Modal Overlay */}
-            {showDSModal && selectedReq && (
-                <div className="avc-modal-overlay">
-                    <div className="avc-modal-content">
-                        <button className="avc-modal-close" onClick={closeDSModal}>
-                            &times;
+          {/* FILTERS */}
+          <div className="avc-filters">
+            <div className="avc-filter">
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  outline: "none",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#111",
+                  width: "100%",
+                  cursor: "pointer",
+                }}
+              >
+                {CERT_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="avc-filter">
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  outline: "none",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#111",
+                  width: "100%",
+                  cursor: "pointer",
+                }}
+              >
+                {STATUS_OPTIONS.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="avc-filter">
+              <select
+                value={filterDateRange}
+                onChange={(e) => setFilterDateRange(e.target.value)}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  outline: "none",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#111",
+                  width: "100%",
+                  cursor: "pointer",
+                }}
+              >
+                {DATE_RANGES.map((range) => (
+                  <option key={range} value={range}>
+                    {range}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* TABLE */}
+          <div className="avc-table-wrap">
+            <table className="avc-table">
+              <thead>
+                <tr>
+                  <th>Certificate ID</th>
+                  <th>Citizen Name</th>
+                  <th>Certificate Type</th>
+                  <th>GN Verified</th>
+                  <th>Submission Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading && (
+                  <tr>
+                    <td
+                      colSpan="7"
+                      style={{ textAlign: "center", padding: "20px" }}
+                    >
+                      Loading...
+                    </td>
+                  </tr>
+                )}
+                {!loading && filteredCertificates.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan="7"
+                      style={{ textAlign: "center", padding: "20px" }}
+                    >
+                      No certificates found.
+                    </td>
+                  </tr>
+                )}
+                {!loading &&
+                  filteredCertificates.map((cert) => (
+                    <tr key={cert.request_id}>
+                      <td className="avc-cert-id">{cert.request_id}</td>
+                      <td className="avc-citizen-name">
+                        {cert.member_name || cert.citizen_name}
+                      </td>
+                      <td className="avc-cert-type">{cert.cert_type}</td>
+                      <td className="avc-gn-verified">
+                        <span
+                          style={{
+                            color:
+                              cert.status === "APPROVED"
+                                ? "#155724"
+                                : cert.status === "REJECTED"
+                                  ? "#721c24"
+                                  : "#856404",
+                          }}
+                        >
+                          {cert.status || "PENDING"}
+                        </span>
+                      </td>
+                      <td className="avc-date">
+                        {formatDate(cert.created_at)}
+                      </td>
+                      <td>
+                        <span
+                          className={`avc-status ${getStatusClass(cert.admin_status || "PENDING")}`}
+                        >
+                          {cert.admin_status || "PENDING"}
+                        </span>
+                      </td>
+                      <td className="avc-actions">
+                        <button
+                          className="avc-action-btn"
+                          onClick={() => openDSModal(cert)}
+                          style={{
+                            backgroundColor: "#2563eb",
+                            color: "white",
+                            padding: "6px 12px",
+                            borderRadius: "4px",
+                            textDecoration: "none",
+                          }}
+                        >
+                          View & Decide
                         </button>
-                        <h2 className="avc-modal-title">Certificate Approval</h2>
+                        {cert.admin_status === "VERIFIED" &&
+                          cert.status === "APPROVED" && (
+                            <button
+                              className="avc-action-btn"
+                              onClick={() => handleDownload(cert.request_id)}
+                              style={{
+                                backgroundColor: "#155724",
+                                color: "white",
+                                padding: "6px 12px",
+                                borderRadius: "4px",
+                                textDecoration: "none",
+                                marginLeft: "10px",
+                              }}
+                            >
+                              Download
+                            </button>
+                          )}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </section>
 
-                        <div className="avc-modal-info">
-                            <div className="info-row"><strong>Request ID:</strong> {selectedReq.request_id}</div>
-                            <div className="info-row"><strong>Type:</strong> {selectedReq.cert_type}</div>
-                            <div className="info-row"><strong>Applicant:</strong> {selectedReq.member_name || selectedReq.citizen_name}</div>
-                            <div className="info-row"><strong>NIC:</strong> {selectedReq.nic_number || selectedReq.citizen_nic}</div>
-                            <div className="info-row"><strong>GN Remarks:</strong> {selectedReq.gn_remarks || selectedReq.gn_note || "None"}</div>
-                        </div>
+      {/* DS Modal Overlay */}
+      {showDSModal && selectedReq && (
+        <div className="avc-modal-overlay">
+          <div className="avc-modal-content">
+            <button className="avc-modal-close" onClick={closeDSModal}>
+              &times;
+            </button>
+            <h2 className="avc-modal-title">Certificate Approval</h2>
 
-                        <div className="avc-modal-pdf">
-                            {pdfUrl ? (
-                                <iframe
-                                    title="Certificate PDF"
-                                    src={pdfUrl}
-                                    className="avc-pdf-viewer"
-                                />
-                            ) : (
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
-                                    Loading PDF preview...
-                                </div>
-                            )}
-                        </div>
+            <div className="avc-modal-info">
+              <div className="info-row">
+                <strong>Request ID:</strong> {selectedReq.request_id}
+              </div>
+              <div className="info-row">
+                <strong>Type:</strong> {selectedReq.cert_type}
+              </div>
+              <div className="info-row">
+                <strong>Applicant:</strong>{" "}
+                {selectedReq.member_name || selectedReq.citizen_name}
+              </div>
+              <div className="info-row">
+                <strong>NIC:</strong>{" "}
+                {selectedReq.nic_number || selectedReq.citizen_nic}
+              </div>
+              <div className="info-row">
+                <strong>GN Remarks:</strong>{" "}
+                {selectedReq.gn_remarks || selectedReq.gn_note || "None"}
+              </div>
+            </div>
 
-                        <div className="avc-modal-actions-area">
-                            <div className="avc-textarea-wrap">
-                                <label>Remarks/Comments {actionLoading ? "" : "(Mandatory for Return/Reject)"}</label>
-                                <textarea
-                                    rows="3"
-                                    placeholder="Enter any comments or rejection reason..."
-                                    value={dsRemarks}
-                                    onChange={(e) => setDsRemarks(e.target.value)}
-                                />
-                            </div>
-
-                            <div className="avc-btn-group">
-                                {selectedReq.status === "PENDING_DS_APPROVAL" ? (
-                                    <>
-                                        <button className="avc-btn-approve" disabled={actionLoading} onClick={() => handleDSAction("approve")}>{actionLoading ? "Processing..." : "Approve"}</button>
-                                        <button className="avc-btn-reject" disabled={actionLoading} onClick={() => handleDSAction("reject")}>{actionLoading ? "Processing..." : "Return to GN"}</button>
-                                    </>
-                                ) : (selectedReq.admin_status === "PENDING" || !selectedReq.admin_status) ? (
-                                    <>
-                                        <button className="avc-btn-approve" disabled={actionLoading} onClick={() => handleStatusUpdate(selectedReq.request_id, "VERIFIED")}>{actionLoading ? "Processing..." : "Verify"}</button>
-                                        <button className="avc-btn-reject" disabled={actionLoading} onClick={() => handleStatusUpdate(selectedReq.request_id, "REJECTED")}>{actionLoading ? "Processing..." : "Reject"}</button>
-                                    </>
-                                ) : (
-                                    <span style={{ color: "#64748b", fontWeight: 600, fontStyle: "italic", padding: "12px" }}>
-                                        No pending actions for this request.
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+            <div className="avc-modal-pdf">
+              {pdfUrl ? (
+                <iframe
+                  title="Certificate PDF"
+                  src={pdfUrl}
+                  className="avc-pdf-viewer"
+                />
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                    color: "#64748b",
+                  }}
+                >
+                  Loading PDF preview...
                 </div>
-            )}
-        </div>
-    );
-}
+              )}
+            </div>
 
+            <div className="avc-modal-actions-area">
+              <div className="avc-textarea-wrap">
+                <label>
+                  Remarks/Comments{" "}
+                  {actionLoading ? "" : "(Mandatory for Return/Reject)"}
+                </label>
+                <textarea
+                  rows="3"
+                  placeholder="Enter any comments or rejection reason..."
+                  value={dsRemarks}
+                  onChange={(e) => setDsRemarks(e.target.value)}
+                />
+              </div>
+
+              <div className="avc-btn-group">
+                {selectedReq.status === "PENDING_DS_APPROVAL" ? (
+                  <>
+                    <button
+                      className="avc-btn-approve"
+                      disabled={actionLoading}
+                      onClick={() => handleDSAction("approve")}
+                    >
+                      {actionLoading ? "Processing..." : "Approve"}
+                    </button>
+                    <button
+                      className="avc-btn-reject"
+                      disabled={actionLoading}
+                      onClick={() => handleDSAction("reject")}
+                    >
+                      {actionLoading ? "Processing..." : "Return to GN"}
+                    </button>
+                  </>
+                ) : selectedReq.admin_status === "PENDING" ||
+                  !selectedReq.admin_status ? (
+                  <>
+                    <button
+                      className="avc-btn-approve"
+                      disabled={actionLoading}
+                      onClick={() =>
+                        handleStatusUpdate(selectedReq.request_id, "VERIFIED")
+                      }
+                    >
+                      {actionLoading ? "Processing..." : "Verify"}
+                    </button>
+                    <button
+                      className="avc-btn-reject"
+                      disabled={actionLoading}
+                      onClick={() =>
+                        handleStatusUpdate(selectedReq.request_id, "REJECTED")
+                      }
+                    >
+                      {actionLoading ? "Processing..." : "Reject"}
+                    </button>
+                  </>
+                ) : (
+                  <span
+                    style={{
+                      color: "#64748b",
+                      fontWeight: 600,
+                      fontStyle: "italic",
+                      padding: "12px",
+                    }}
+                  >
+                    No pending actions for this request.
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

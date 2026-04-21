@@ -1,5 +1,7 @@
 /* ── Page ── */
-.gnc-page { padding: 34px 48px; }
+.gnc-page {
+  padding: 34px 48px;
+}
 
 .gnc-title {
   font-size: 34px;
@@ -41,13 +43,31 @@
   color: #111;
 }
 
-.gnc-table tbody tr:last-child td { border-bottom: none; }
+.gnc-table tbody tr:last-child td {
+  border-bottom: none;
+}
 
-.gnc-id    { color: #111; font-weight: 500; width: 80px; }
-.gnc-name  { color: #2d6a4f; font-weight: 600; }
-.gnc-type  { color: #2d6a4f; font-weight: 600; }
-.gnc-date  { color: #5f7f6e; font-weight: 500; }
-.gnc-nic   { color: #888; font-size: 12px; }
+.gnc-id {
+  color: #111;
+  font-weight: 500;
+  width: 80px;
+}
+.gnc-name {
+  color: #2d6a4f;
+  font-weight: 600;
+}
+.gnc-type {
+  color: #2d6a4f;
+  font-weight: 600;
+}
+.gnc-date {
+  color: #5f7f6e;
+  font-weight: 500;
+}
+.gnc-nic {
+  color: #888;
+  font-size: 12px;
+}
 
 /* ── Status Pills ── */
 .gnc-pill {
@@ -61,12 +81,30 @@
   white-space: nowrap;
 }
 
-.gnc-pill-pending        { background: #fff3cd; color: #856404; }
-.gnc-pill-review         { background: #cce5ff; color: #004085; }
-.gnc-pill-ds             { background: #e8d5f5; color: #5a1f8c; }
-.gnc-pill-visit          { background: #fde9d0; color: #7c4200; }
-.gnc-pill-approved       { background: #d4edda; color: #155724; }
-.gnc-pill-rejected       { background: #f8d7da; color: #721c24; }
+.gnc-pill-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+.gnc-pill-review {
+  background: #cce5ff;
+  color: #004085;
+}
+.gnc-pill-ds {
+  background: #e8d5f5;
+  color: #5a1f8c;
+}
+.gnc-pill-visit {
+  background: #fde9d0;
+  color: #7c4200;
+}
+.gnc-pill-approved {
+  background: #d4edda;
+  color: #155724;
+}
+.gnc-pill-rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
 
 /* ── Tab Filters ── */
 .gnc-tabs {
@@ -88,25 +126,39 @@
   transition: all 0.15s;
 }
 
-.gnc-tab-btn:hover  { background: #d6ece0; }
-.gnc-tab-active     { background: #0C7A3B; color: #fff; border-color: #0C7A3B; }
+.gnc-tab-btn:hover {
+  background: #d6ece0;
+}
+.gnc-tab-active {
+  background: #0c7a3b;
+  color: #fff;
+  border-color: #0c7a3b;
+}
 
 /* ── States ── */
-.gnc-state     { padding: 24px 0; font-size: 15px; color: #666; }
-.gnc-state-err { color: #dc3545; }
+.gnc-state {
+  padding: 24px 0;
+  font-size: 15px;
+  color: #666;
+}
+.gnc-state-err {
+  color: #dc3545;
+}
 
 /* ── Review Button ── */
 .gnc-action-btn {
   background: none;
-  border: 1px solid #0C7A3B;
-  color: #0C7A3B;
+  border: 1px solid #0c7a3b;
+  color: #0c7a3b;
   border-radius: 6px;
   padding: 5px 12px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
-.gnc-action-btn:hover { background: #e8f5ee; }
+.gnc-action-btn:hover {
+  background: #e8f5ee;
+}
 
 /* ══════════════════════════════════════════
    MODAL
@@ -133,7 +185,9 @@
   box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
 }
 
-.gnc-modal-wide { width: 660px; }
+.gnc-modal-wide {
+  width: 660px;
+}
 
 .gnc-modal-close {
   position: absolute;
@@ -145,7 +199,9 @@
   cursor: pointer;
   color: #666;
 }
-.gnc-modal-close:hover { color: #000; }
+.gnc-modal-close:hover {
+  color: #000;
+}
 
 .gnc-modal-title {
   font-size: 20px;
@@ -166,7 +222,7 @@
 .gnc-readonly-label {
   font-size: 12px;
   font-weight: 700;
-  color: #0C7A3B;
+  color: #0c7a3b;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -190,7 +246,9 @@
   flex-shrink: 0;
   font-weight: 600;
 }
-.gnc-modal-row strong { color: #111; }
+.gnc-modal-row strong {
+  color: #111;
+}
 
 .gnc-modal-desc {
   background: #f0f4f2;
@@ -199,8 +257,14 @@
   font-size: 13.5px;
   margin-top: 10px;
 }
-.gnc-modal-desc strong { color: #111; }
-.gnc-modal-desc p { margin: 6px 0 0; color: #333; line-height: 1.6; }
+.gnc-modal-desc strong {
+  color: #111;
+}
+.gnc-modal-desc p {
+  margin: 6px 0 0;
+  color: #333;
+  line-height: 1.6;
+}
 
 /* ── GN Admin Section ── */
 .gnc-modal-admin-section {
@@ -225,7 +289,10 @@
   color: #333;
 }
 
-.gnc-req { color: #dc3545; margin-left: 2px; }
+.gnc-req {
+  color: #dc3545;
+  margin-left: 2px;
+}
 
 .gnc-modal-textarea {
   border: 1px solid #d0d0d0;
@@ -238,7 +305,9 @@
   width: 100%;
   box-sizing: border-box;
 }
-.gnc-modal-textarea:focus { border-color: #0C7A3B; }
+.gnc-modal-textarea:focus {
+  border-color: #0c7a3b;
+}
 
 .gnc-modal-input {
   border: 1px solid #d0d0d0;
@@ -250,7 +319,9 @@
   width: 100%;
   box-sizing: border-box;
 }
-.gnc-modal-input:focus { border-color: #f6a623; }
+.gnc-modal-input:focus {
+  border-color: #f6a623;
+}
 
 .gnc-cert-fill-btn {
   background: #1a7f4f;
@@ -264,7 +335,9 @@
   align-self: flex-start;
   margin-top: 4px;
 }
-.gnc-cert-fill-btn:hover { background: #155d3a; }
+.gnc-cert-fill-btn:hover {
+  background: #155d3a;
+}
 
 /* ── Action Section ── */
 .gnc-action-section {
@@ -302,14 +375,35 @@
   transition: all 0.18s;
 }
 
-.gnc-approve-btn { border-color: #27ae60; color: #27ae60; }
-.gnc-approve-btn:hover, .gnc-approve-btn.gnc-action-active { background: #27ae60; color: #fff; }
+.gnc-approve-btn {
+  border-color: #27ae60;
+  color: #27ae60;
+}
+.gnc-approve-btn:hover,
+.gnc-approve-btn.gnc-action-active {
+  background: #27ae60;
+  color: #fff;
+}
 
-.gnc-visit-btn { border-color: #f6a623; color: #c97d00; }
-.gnc-visit-btn:hover, .gnc-visit-btn.gnc-action-active { background: #f6a623; color: #fff; }
+.gnc-visit-btn {
+  border-color: #f6a623;
+  color: #c97d00;
+}
+.gnc-visit-btn:hover,
+.gnc-visit-btn.gnc-action-active {
+  background: #f6a623;
+  color: #fff;
+}
 
-.gnc-reject-btn { border-color: #e74c3c; color: #e74c3c; }
-.gnc-reject-btn:hover, .gnc-reject-btn.gnc-action-active { background: #e74c3c; color: #fff; }
+.gnc-reject-btn {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+.gnc-reject-btn:hover,
+.gnc-reject-btn.gnc-action-active {
+  background: #e74c3c;
+  color: #fff;
+}
 
 /* ── Conditional Fields ── */
 .gnc-conditional-fields {
@@ -325,8 +419,14 @@
 }
 
 @keyframes gnc-slide-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Feedback Messages ── */
@@ -351,7 +451,11 @@
 }
 
 /* ── Submit Action Buttons ── */
-.gnc-modal-btns { display: flex; gap: 10px; margin-top: 8px; }
+.gnc-modal-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
 
 .gnc-submit-action-btn {
   border: none;
@@ -362,16 +466,31 @@
   cursor: pointer;
   color: #fff;
 }
-.gnc-submit-action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.gnc-submit-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-.gnc-submit-approve { background: #27ae60; }
-.gnc-submit-approve:hover:not(:disabled) { background: #1a8a4a; }
+.gnc-submit-approve {
+  background: #27ae60;
+}
+.gnc-submit-approve:hover:not(:disabled) {
+  background: #1a8a4a;
+}
 
-.gnc-submit-visit { background: #f6a623; }
-.gnc-submit-visit:hover:not(:disabled) { background: #d48a10; }
+.gnc-submit-visit {
+  background: #f6a623;
+}
+.gnc-submit-visit:hover:not(:disabled) {
+  background: #d48a10;
+}
 
-.gnc-submit-reject { background: #e74c3c; }
-.gnc-submit-reject:hover:not(:disabled) { background: #c0392b; }
+.gnc-submit-reject {
+  background: #e74c3c;
+}
+.gnc-submit-reject:hover:not(:disabled) {
+  background: #c0392b;
+}
 
 .gnc-cancel-btn {
   background: none;
@@ -382,7 +501,9 @@
   font-size: 14px;
   cursor: pointer;
 }
-.gnc-cancel-btn:hover { background: #f5f5f5; }
+.gnc-cancel-btn:hover {
+  background: #f5f5f5;
+}
 
 /* ── Status-Specific Info ── */
 .gnc-no-action-note {

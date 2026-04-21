@@ -5,7 +5,7 @@
   background: #f4f6f8;
   display: flex;
   flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* TOP HEADER */
@@ -15,8 +15,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid #0C7A3B;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-bottom: 3px solid #0c7a3b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .ds-brand {
@@ -98,18 +98,19 @@
 
 .ds-search-input:focus {
   outline: none;
-  border-color: #0C7A3B;
+  border-color: #0c7a3b;
   box-shadow: 0 0 0 2px rgba(12, 122, 59, 0.2);
 }
 
-.ds-loading, .ds-no-results {
+.ds-loading,
+.ds-no-results {
   text-align: center;
   padding: 60px;
   font-size: 18px;
   color: #666;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* GRID LAYOUT */
@@ -123,16 +124,18 @@
 .ds-card {
   background: #ffffff;
   border-radius: 8px;
-  border-top: 4px solid #0C7A3B;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  border-top: 4px solid #0c7a3b;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .ds-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
 
 .ds-card-header {
@@ -173,7 +176,7 @@
 
 .ds-open-btn {
   width: 100%;
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #ffffff;
   border: none;
   padding: 12px;

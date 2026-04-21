@@ -103,7 +103,16 @@ function IconMedal() {
 function IconCalendar() {
   return (
     <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="#000000" strokeWidth="2" />
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="18"
+        rx="2"
+        ry="2"
+        stroke="#000000"
+        strokeWidth="2"
+      />
       <line x1="16" y1="2" x2="16" y2="6" stroke="#000000" strokeWidth="2" />
       <line x1="8" y1="2" x2="8" y2="6" stroke="#000000" strokeWidth="2" />
       <line x1="3" y1="10" x2="21" y2="10" stroke="#000000" strokeWidth="2" />
@@ -122,14 +131,16 @@ export default function CitizenDashboard() {
         <div className="cd-brand">
           <img className="cd-emblem" src={emblem} alt="Sri Lanka Emblem" />
           <div className="cd-brand-text">
-            <div className="cd-title">{t('dashboard.title')}</div>
-            <div className="cd-subtitle">{t('dashboard.subtitle')}</div>
+            <div className="cd-title">{t("dashboard.title")}</div>
+            <div className="cd-subtitle">{t("dashboard.subtitle")}</div>
           </div>
         </div>
 
         <div className="cd-top-actions">
           <LanguageSwitcher />
-          <Link to="/about" className="cd-about">{t('nav.aboutUs')}</Link>
+          <Link to="/about" className="cd-about">
+            {t("nav.aboutUs")}
+          </Link>
           <NotificationDropdown />
           <CitizenProfileDropdown />
         </div>
@@ -139,44 +150,47 @@ export default function CitizenDashboard() {
       <nav className="cd-nav">
         <Link className="cd-nav-item" to="/citizen">
           <IconHome />
-          <span>{t('nav.home')}</span>
+          <span>{t("nav.home")}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/household">
           <IconUser />
-          <span>{t('nav.household')}</span>
+          <span>{t("nav.household")}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/certificates">
           <IconDoc />
-          <span>{t('nav.certificates')}</span>
+          <span>{t("nav.certificates")}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/complaints">
           <IconComplaint />
-          <span>{t('nav.complaints')}</span>
+          <span>{t("nav.complaints")}</span>
         </Link>
 
         <Link className="cd-nav-item" to="/notices">
           <IconBell />
-          <span>{t('nav.notices')}</span>
+          <span>{t("nav.notices")}</span>
         </Link>
         <Link className="cd-nav-item" to="/availability">
           <IconCalendar />
-          <span>{t('nav.gnSchedule')}</span>
+          <span>{t("nav.gnSchedule")}</span>
         </Link>
       </nav>
 
       <div className="cd-main">
         {/* HERO */}
-        <section className="cd-hero" style={{ backgroundImage: `url(${hero})` }}>
+        <section
+          className="cd-hero"
+          style={{ backgroundImage: `url(${hero})` }}
+        >
           <div className="cd-hero-overlay">
-            <h1>{t('dashboard.heroTitle')}</h1>
-            <p>{t('dashboard.heroDesc')}</p>
+            <h1>{t("dashboard.heroTitle")}</h1>
+            <p>{t("dashboard.heroDesc")}</p>
 
             {/* Register Now -> Household */}
             <Link to="/household" className="cd-hero-btn">
-              {t('dashboard.registerNow')}
+              {t("dashboard.registerNow")}
             </Link>
           </div>
         </section>
@@ -189,8 +203,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-green">
                 <IconMedal />
               </div>
-              <h3>{t('dashboard.cardCertTitle')}</h3>
-              <p>{t('dashboard.cardCertDesc')}</p>
+              <h3>{t("dashboard.cardCertTitle")}</h3>
+              <p>{t("dashboard.cardCertDesc")}</p>
             </div>
           </Link>
 
@@ -200,8 +214,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-yellow">
                 <IconUser />
               </div>
-              <h3>{t('dashboard.cardCitizenTitle')}</h3>
-              <p>{t('dashboard.cardCitizenDesc')}</p>
+              <h3>{t("dashboard.cardCitizenTitle")}</h3>
+              <p>{t("dashboard.cardCitizenDesc")}</p>
             </div>
           </Link>
 
@@ -211,8 +225,8 @@ export default function CitizenDashboard() {
               <div className="cd-card-icon cd-icon-blue">
                 <IconBell />
               </div>
-              <h3>{t('dashboard.cardNoticesTitle')}</h3>
-              <p>{t('dashboard.cardNoticesDesc')}</p>
+              <h3>{t("dashboard.cardNoticesTitle")}</h3>
+              <p>{t("dashboard.cardNoticesDesc")}</p>
             </div>
           </Link>
         </section>

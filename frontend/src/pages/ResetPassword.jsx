@@ -6,7 +6,12 @@ import AuthLayout from "../components/AuthLayout";
 function LockIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M7 11V8a5 5 0 0 1 10 0v3"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
       <path d="M6 11h12v10H6V11Z" stroke="#333" strokeWidth="2" />
     </svg>
   );
@@ -27,7 +32,9 @@ export default function ResetPassword() {
     setErr("");
 
     if (!verificationToken) {
-      setErr("Verification token not found. Please start from forgot password page.");
+      setErr(
+        "Verification token not found. Please start from forgot password page.",
+      );
       return;
     }
 
@@ -51,15 +58,16 @@ export default function ResetPassword() {
     try {
       await api.post("/api/auth/reset-password", {
         verificationToken,
-        newPassword
+        newPassword,
       });
 
       // Show success and redirect to login
-      alert("Password reset successfully! Please login with your new password.");
+      alert(
+        "Password reset successfully! Please login with your new password.",
+      );
       nav("/login");
-
     } catch (ex) {
-      console.error('Reset password error:', ex);
+      console.error("Reset password error:", ex);
 
       if (ex.response) {
         const status = ex.response.status;
@@ -83,16 +91,15 @@ export default function ResetPassword() {
   };
 
   return (
-    <AuthLayout
-      title="Reset Password"
-      subtitle="Enter your new password"
-    >
+    <AuthLayout title="Reset Password" subtitle="Enter your new password">
       {err && <div className="msg-err">{err}</div>}
 
       <form onSubmit={onSubmit}>
         <label className="label">New Password</label>
         <div className="field">
-          <span className="icon"><LockIcon /></span>
+          <span className="icon">
+            <LockIcon />
+          </span>
           <input
             className="input"
             type="password"
@@ -105,7 +112,9 @@ export default function ResetPassword() {
 
         <label className="label">Confirm Password</label>
         <div className="field">
-          <span className="icon"><LockIcon /></span>
+          <span className="icon">
+            <LockIcon />
+          </span>
           <input
             className="input"
             type="password"

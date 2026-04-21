@@ -3,7 +3,13 @@
   background: #d9d9d9;
   min-height: 100vh;
   width: 100vw;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
   color: #111;
 }
 
@@ -357,7 +363,7 @@
 .cr-info-box h3 {
   font-size: 16px;
   font-weight: 800;
-  color: #0C7A3B;
+  color: #0c7a3b;
   margin-bottom: 10px;
 }
 
@@ -430,7 +436,7 @@
 
 .cr-td-id {
   font-weight: 700;
-  color: #0C7A3B;
+  color: #0c7a3b;
 }
 
 .cr-td-muted {
@@ -468,9 +474,18 @@
 }
 
 /* New workflow status badges */
-.cr-badge-review { background: #cce5ff; color: #004085; }
-.cr-badge-ds     { background: #e8d5f5; color: #5a1f8c; }
-.cr-badge-visit  { background: #fde9d0; color: #7c4200; }
+.cr-badge-review {
+  background: #cce5ff;
+  color: #004085;
+}
+.cr-badge-ds {
+  background: #e8d5f5;
+  color: #5a1f8c;
+}
+.cr-badge-visit {
+  background: #fde9d0;
+  color: #7c4200;
+}
 
 /* ── Table wrapper ── */
 .cr-table-wrap {
@@ -563,6 +578,10 @@
 
 /* ── Auto-fill spinner animation ── */
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

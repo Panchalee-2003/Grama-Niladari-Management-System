@@ -18,13 +18,13 @@ body,
   height: 100%;
   width: 100%;
   display: flex;
-  background: #F5F7FB;
+  background: #f5f7fb;
 }
 
 /* Sidebar */
 .hd-side {
   width: 300px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -64,7 +64,7 @@ body,
   text-decoration: none;
   color: #fff;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .hd-side-item:hover {
@@ -91,7 +91,7 @@ body,
   height: 44px;
   border: none;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
   font-weight: 800;
   cursor: pointer;
@@ -109,7 +109,7 @@ body,
 .hd-top {
   height: 64px;
   background: #ffffff;
-  border-bottom: 1px solid #E6ECF5;
+  border-bottom: 1px solid #e6ecf5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -120,12 +120,12 @@ body,
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #7A8CA7;
+  color: #7a8ca7;
   font-weight: 700;
 }
 
 .hd-top-brand {
-  color: #7A8CA7;
+  color: #7a8ca7;
 }
 
 .hd-top-slash {
@@ -152,7 +152,7 @@ body,
   width: 38px;
   height: 38px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +171,7 @@ body,
 }
 
 .hd-back {
-  color: #6B7C99;
+  color: #6b7c99;
   text-decoration: none;
   font-weight: 700;
 }
@@ -192,21 +192,21 @@ body,
 .hd-h1 {
   font-size: 28px;
   font-weight: 900;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .hd-sub {
   margin-top: 6px;
-  color: #6B7C99;
+  color: #6b7c99;
   font-weight: 600;
 }
 
 /* Pending pill */
 .hd-pill {
   margin-top: 10px;
-  background: #FFF2D9;
-  border: 1px solid #FFE2AE;
-  color: #B45309;
+  background: #fff2d9;
+  border: 1px solid #ffe2ae;
+  color: #b45309;
   padding: 10px 16px;
   border-radius: 999px;
   font-weight: 800;
@@ -220,7 +220,7 @@ body,
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #F59E0B;
+  background: #f59e0b;
 }
 
 /* Grid */
@@ -239,13 +239,13 @@ body,
 /* Cards */
 .hd-card {
   background: #ffffff;
-  border: 1px solid #E6ECF5;
+  border: 1px solid #e6ecf5;
   border-radius: 14px;
   padding: 18px;
   box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
 }
 
-.hd-card+.hd-card {
+.hd-card + .hd-card {
   margin-top: 14px;
 }
 
@@ -259,7 +259,7 @@ body,
 .hd-card-title {
   font-size: 18px;
   font-weight: 900;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .hd-card-ico {
@@ -275,7 +275,7 @@ body,
 .hd-k {
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: #93A4BE;
+  color: #93a4be;
   font-weight: 900;
 }
 
@@ -305,15 +305,15 @@ body,
 }
 
 .hd-badge.blue {
-  background: #EAF2FF;
-  border: 1px solid #CFE0FF;
-  color: #1D4ED8;
+  background: #eaf2ff;
+  border: 1px solid #cfe0ff;
+  color: #1d4ed8;
 }
 
 .hd-badge.yellow {
-  background: #FFF7E8;
-  border: 1px solid #FFE0AA;
-  color: #B45309;
+  background: #fff7e8;
+  border: 1px solid #ffe0aa;
+  color: #b45309;
 }
 
 /* financial rows */
@@ -322,7 +322,7 @@ body,
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
-  border-top: 1px solid #EEF2F8;
+  border-top: 1px solid #eef2f8;
 }
 
 .hd-fin-row:first-of-type {
@@ -330,18 +330,18 @@ body,
 }
 
 .hd-fin-label {
-  color: #6B7C99;
+  color: #6b7c99;
   font-weight: 700;
 }
 
 .hd-fin-value {
   font-weight: 900;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .hd-fin-ok {
   font-weight: 900;
-  color: #16A34A;
+  color: #16a34a;
 }
 
 /* family members card */
@@ -351,7 +351,7 @@ body,
 
 /* table */
 .hd-table {
-  border-top: 1px solid #EEF2F8;
+  border-top: 1px solid #eef2f8;
 }
 
 .hd-tr {
@@ -359,7 +359,7 @@ body,
   grid-template-columns: 1.6fr 1fr 0.9fr 0.6fr;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid #EEF2F8;
+  border-bottom: 1px solid #eef2f8;
   align-items: center;
 }
 
@@ -373,9 +373,9 @@ body,
   padding-bottom: 10px;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: #93A4BE;
+  color: #93a4be;
   font-weight: 900;
-  border-bottom: 1px solid #EEF2F8;
+  border-bottom: 1px solid #eef2f8;
 }
 
 /* ── Remove member button ─── */
@@ -383,21 +383,23 @@ body,
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: #FFF1F1;
-  border: 1px solid #FECACA;
-  color: #DC2626;
+  background: #fff1f1;
+  border: 1px solid #fecaca;
+  color: #dc2626;
   font-size: 12px;
   font-weight: 700;
   padding: 5px 10px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
   white-space: nowrap;
 }
 
 .hd-del-btn:hover:not(:disabled) {
-  background: #FEE2E2;
-  border-color: #FCA5A5;
+  background: #fee2e2;
+  border-color: #fca5a5;
 }
 
 .hd-del-btn:disabled {
@@ -405,21 +407,20 @@ body,
   cursor: not-allowed;
 }
 
-
 .hd-namecell .hd-name {
   font-weight: 900;
-  color: #0F172A;
+  color: #0f172a;
 }
 
 .hd-namecell .hd-role {
   margin-top: 2px;
-  color: #93A4BE;
+  color: #93a4be;
   font-weight: 700;
   font-size: 13px;
 }
 
 .hd-muted {
-  color: #6B7C99;
+  color: #6b7c99;
   font-weight: 700;
 }
 
@@ -433,17 +434,17 @@ body,
 }
 
 .hd-chip.green {
-  background: #EAF7EF;
-  color: #15803D;
+  background: #eaf7ef;
+  color: #15803d;
 }
 
 .hd-chip.blue {
-  background: #EAF2FF;
-  color: #1D4ED8;
+  background: #eaf2ff;
+  color: #1d4ed8;
 }
 
 .hd-chip.gray {
-  background: #EEF2F6;
+  background: #eef2f6;
   color: #475569;
 }
 
@@ -454,7 +455,7 @@ body,
 .hd-linkbtn {
   border: none;
   background: transparent;
-  color: #15803D;
+  color: #15803d;
   font-weight: 900;
   cursor: pointer;
 }
@@ -471,14 +472,14 @@ body,
 }
 
 .hd-foot-left {
-  color: #6B7C99;
+  color: #6b7c99;
   font-weight: 700;
 }
 
 .hd-add {
   border: none;
   background: transparent;
-  color: #15803D;
+  color: #15803d;
   font-weight: 900;
   cursor: pointer;
 }
@@ -500,7 +501,7 @@ body,
 }
 
 .hd-doc {
-  border: 1px solid #E6ECF5;
+  border: 1px solid #e6ecf5;
   border-radius: 12px;
   padding: 12px;
   display: flex;
@@ -520,26 +521,26 @@ body,
 }
 
 .hd-doc-ico.pdf {
-  background: #FFECEC;
-  color: #DC2626;
-  border: 1px solid #FFCDCD;
+  background: #ffecec;
+  color: #dc2626;
+  border: 1px solid #ffcdcd;
 }
 
 .hd-doc-ico.img {
-  background: #EAF2FF;
-  color: #1D4ED8;
-  border: 1px solid #CFE0FF;
+  background: #eaf2ff;
+  color: #1d4ed8;
+  border: 1px solid #cfe0ff;
 }
 
 .hd-doc-name {
   font-weight: 900;
-  color: #0F172A;
+  color: #0f172a;
   font-size: 13px;
 }
 
 .hd-doc-size {
   margin-top: 2px;
-  color: #93A4BE;
+  color: #93a4be;
   font-weight: 800;
   font-size: 12px;
 }
@@ -548,7 +549,7 @@ body,
 .hd-actions {
   height: 74px;
   background: #ffffff;
-  border-top: 1px solid #E6ECF5;
+  border-top: 1px solid #e6ecf5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -560,7 +561,7 @@ body,
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #7A8CA7;
+  color: #7a8ca7;
   font-weight: 800;
   font-style: italic;
 }
@@ -585,23 +586,23 @@ body,
 
 .hd-btn.outline {
   background: #fff;
-  border: 2px solid #E6ECF5;
-  color: #0F172A;
+  border: 2px solid #e6ecf5;
+  color: #0f172a;
 }
 
 .hd-btn.outline.blue {
-  border-color: #D6E2FF;
+  border-color: #d6e2ff;
 }
 
 .hd-btn.outline.red {
-  background: #FFF1F1;
-  border-color: #FFD1D1;
-  color: #DC2626;
+  background: #fff1f1;
+  border-color: #ffd1d1;
+  color: #dc2626;
 }
 
 .hd-btn.solid.green {
   border: none;
-  background: #15803D;
+  background: #15803d;
   color: #fff;
   padding: 0 22px;
 }
@@ -635,29 +636,29 @@ body,
 
 /* Status pill variants */
 .hd-pill-verified {
-  background: #E9FBF0;
-  border: 1px solid #A7EFC5;
-  color: #15803D;
+  background: #e9fbf0;
+  border: 1px solid #a7efc5;
+  color: #15803d;
 }
 
 .hd-pill-verified .hd-pill-dot {
-  background: #16A34A;
+  background: #16a34a;
 }
 
 .hd-pill-rejected {
-  background: #FFF1F1;
-  border: 1px solid #FFD1D1;
-  color: #DC2626;
+  background: #fff1f1;
+  border: 1px solid #ffd1d1;
+  color: #dc2626;
 }
 
 .hd-pill-rejected .hd-pill-dot {
-  background: #DC2626;
+  background: #dc2626;
 }
 
 /* Gray badge for no-connection states */
 .hd-badge.gray {
-  background: #EEF2F6;
-  border: 1px solid #D4DAE3;
+  background: #eef2f6;
+  border: 1px solid #d4dae3;
   color: #475569;
 }
 
@@ -671,14 +672,14 @@ body,
 }
 
 .hd-state-error {
-  color: #DC2626;
+  color: #dc2626;
 }
 
 /* Action feedback message */
 .hd-action-msg {
   font-style: normal;
   font-weight: 700;
-  color: #0F172A;
+  color: #0f172a;
   margin-left: 12px;
 }
 
@@ -691,15 +692,15 @@ body,
 }
 
 .hd-status-done.hd-status-verified {
-  background: #E9FBF0;
-  color: #15803D;
-  border: 1px solid #A7EFC5;
+  background: #e9fbf0;
+  color: #15803d;
+  border: 1px solid #a7efc5;
 }
 
 .hd-status-done.hd-status-rejected {
-  background: #FFF1F1;
-  color: #DC2626;
-  border: 1px solid #FFD1D1;
+  background: #fff1f1;
+  color: #dc2626;
+  border: 1px solid #ffd1d1;
 }
 
 /* Disable style on action buttons */
@@ -710,28 +711,28 @@ body,
 
 /* outer wrapper that stacks the reject panel + action bar */
 .hd-actions-wrap {
-  border-top: 1px solid #E6ECF5;
+  border-top: 1px solid #e6ecf5;
   background: #ffffff;
 }
 
 /* ── GN Reject panel (textarea + confirm/cancel row) ── */
 .hd-reject-panel {
   padding: 16px 22px 14px;
-  border-bottom: 1px solid #E6ECF5;
-  background: #FFF9F9;
+  border-bottom: 1px solid #e6ecf5;
+  background: #fff9f9;
 }
 
 .hd-reject-label {
   display: block;
   font-size: 13px;
   font-weight: 900;
-  color: #B91C1C;
+  color: #b91c1c;
   margin-bottom: 8px;
 }
 
 .hd-reject-textarea {
   width: 100%;
-  border: 1.5px solid #FECACA;
+  border: 1.5px solid #fecaca;
   border-radius: 8px;
   background: #fff;
   padding: 10px 14px;
@@ -744,7 +745,7 @@ body,
 }
 
 .hd-reject-textarea:focus {
-  border-color: #DC2626;
+  border-color: #dc2626;
 }
 
 .hd-reject-textarea::placeholder {
@@ -762,7 +763,7 @@ body,
 /* Solid red button variant */
 .hd-btn.solid.red {
   border: none;
-  background: #DC2626;
+  background: #dc2626;
   color: #fff;
   padding: 0 22px;
 }

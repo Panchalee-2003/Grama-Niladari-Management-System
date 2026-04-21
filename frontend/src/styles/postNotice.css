@@ -2,7 +2,13 @@
 .pn-wrap,
 .pn-wrap * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 .pn-wrap {
@@ -16,7 +22,7 @@
 
 /* ---------- SIDEBAR ---------- */
 .pn-sidebar {
-  background: #0C7A3B;
+  background: #0c7a3b;
   padding: 26px 18px;
   position: relative;
 }
@@ -70,7 +76,7 @@
 }
 
 .pn-active {
-  background: #C8FFC3;
+  background: #c8ffc3;
   /* selected light green like figma */
 }
 
@@ -132,7 +138,7 @@
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,7 +235,7 @@
   height: 46px;
   border: none;
   border-radius: 8px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   font-weight: 800;
   cursor: pointer;
@@ -357,7 +363,7 @@
   height: 46px;
   border: none;
   border-radius: 8px;
-  background: #0C7A3B;
+  background: #0c7a3b;
   color: #fff;
   font-weight: 800;
   font-size: 15px;
